@@ -7,8 +7,6 @@ cc.Class({
             default: null,
             type: cc.Camera//GameObject
         },
-        // defaults, set visually when attaching this script to the Canvas
-        name: 'UIView',
         title: 'title',
         controller: {
             default: null,

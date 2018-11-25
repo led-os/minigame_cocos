@@ -1,16 +1,7 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-var UIViewController = require("UIViewController");
+var AppSceneBase = require("AppSceneBase");
 
 cc.Class({
-    extends: cc.Component,
+    extends: AppSceneBase,
 
     properties: {
         // foo: {
@@ -29,22 +20,11 @@ cc.Class({
         //     }
         // },
 
-        rootViewController: {
-            default: null,
-            type: UIViewController
-        },
-        canvasMain: cc.Canvas
-        // canvasMain: {
-        //     default: null,
-        //     type: cc.Canvas
-        // },
+
     },
-    onLoad: function () {
 
-    }
+    // onLoad: function () {
+    //     cc.log("AppScene onLoad");
+    // },
 
-
-
-
-    // update (dt) {},
 });

@@ -8,10 +8,32 @@ cc.Class({
             default: null,
             type: cc.Node//GameObject
         },
-        // defaults, set visually when attaching this script to the Canvas
-        name: 'UIViewController',
         title: 'title'
+    },
+
+
+    CreateObjController: function () {
+        ViewDidLoad();
+    },
+
+    DestroyObjController: function () {
+        ViewDidUnLoad();
+    },
+
+    //UIView view
+    AddView: function (view) {
+    },
+
+    //virtual
+    LayOutView: function () {
+    },
+    ViewDidLoad: function () {
+    },
+
+    ViewDidUnLoad: function () {
     }
+
+
 });
 
 
