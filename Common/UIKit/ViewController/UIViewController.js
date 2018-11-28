@@ -13,11 +13,31 @@ cc.Class({
 
 
     CreateObjController: function () {
-        ViewDidLoad();
+
+        if (this.objController == null) {
+            this.objController = new cc.Node('Controller');
+            this.ViewDidLoad();
+        }
+
     },
 
     DestroyObjController: function () {
-        ViewDidUnLoad();
+        this.ViewDidUnLoad();
+    },
+
+    SetViewParent: function (node) {
+
+        cc.log("SetViewParent node");
+        if (node == null) {
+            cc.log("SetViewParent node is null");
+        }
+        if (this.objController == null) {
+            this.CreateObjController();
+        }
+        if (this.objController == null) {
+            cc.log("objController is null");
+        }
+        //   this.objController.parent = node;
     },
 
     //UIView view

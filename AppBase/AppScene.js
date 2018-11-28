@@ -1,4 +1,5 @@
 var AppSceneBase = require("AppSceneBase");
+var MainViewController = require("MainViewController");
 
 cc.Class({
     extends: AppSceneBase,
@@ -19,12 +20,27 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
+        title: "sss",
 
+    },
+    test: function () {
+        //   cc.log("MainViewController test");
 
+    },
+    RunApp: function () {
+        cc.log("AppScene RunApp");
+        // base.RunApp();
+
+        // InitAd();
+
+        this.SetRootViewController(MainViewController.main);
     },
 
     // onLoad: function () {
     //     cc.log("AppScene onLoad");
+    //   
     // },
+
+
 
 });

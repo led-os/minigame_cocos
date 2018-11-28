@@ -33,19 +33,64 @@ cc.Class({
             default: null,
             type: UIViewController
         },
-        canvasMain: cc.Canvas
-        // canvasMain: {
-        //     default: null,
-        //     type: cc.Canvas
-        // },
+        // canvasMain: cc.Canvas,
+        canvasMain: {
+            default: null,
+            type: cc.Canvas
+        },
+        rootNode: {
+            default: null,
+            type: cc.Node
+        },
+        node1: {
+            default: null,
+            type: cc.Node
+        },
     },
     onLoad: function () {
-        cc.log("AppSceneBase onLoad");   
+        cc.log("AppSceneBase onLoad");
+        //  this.RunApp();
+
+        var node = new cc.Node('nodeest');
+
+        node.parent = cc.director.getScene();
+        cc.loader.loadRes("App/UIHome", function (err, prefab) {
+            var newNode = cc.instantiate(prefab);
+            // cc.director.getScene().addChild(newNode);
+            newNode.parent = this.rootNode;
+
+        }.bind(this)
+        );
+
+
+
+        //node.parent = this.rootNode;
+        // this.node1.parent = this.rootNode;
+        // this.rootNode.addChild(this.node1);
+        //this.node1.removeFromParent(false);
+    },
+
+    RunApp: function () {
+        cc.log("AppSceneBase RunApp");
+
+    },
+
+    LoadResFinish: function (err, prefab) {
+        cc.log("LoadResFinish ");
+
     },
 
     //UIViewController controller
     SetRootViewController: function (controller) {
-    }
+
+        if (this.rootViewController != null) {
+            this.rootViewController.DestroyObjController();
+        }
+        this.rootViewController = controller;
+        this.rootViewController.SetViewParent(this.canvasMain);
+
+    },
+
 
     // update (dt) {},
 });
