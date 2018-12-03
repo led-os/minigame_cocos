@@ -1,5 +1,6 @@
 var AppSceneBase = require("AppSceneBase");
 var MainViewController = require("MainViewController");
+var HomeViewController = require("HomeViewController");
 
 cc.Class({
     extends: AppSceneBase,
@@ -33,7 +34,7 @@ cc.Class({
 
         // InitAd();
 
-        this.SetRootViewController(MainViewController.main);
+        this.SetRootViewController(HomeViewController.main());//MainViewController
     },
 
     // onLoad: function () {

@@ -8,7 +8,7 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 var UIViewController = require("UIViewController");
-
+var HomeViewController = require("HomeViewController");
 cc.Class({
     extends: cc.Component,
 
@@ -29,11 +29,13 @@ cc.Class({
         //     }
         // },
 
-        rootViewController: {
-            default: null,
-            type: UIViewController
-        },
-        // canvasMain: cc.Canvas,
+        // rootViewController: {
+        //     default: null,
+        //     type: UIViewController
+        // },
+        rootViewController: UIViewController,
+
+
         canvasMain: {
             default: null,
             type: cc.Canvas
@@ -49,18 +51,18 @@ cc.Class({
     },
     onLoad: function () {
         cc.log("AppSceneBase onLoad");
-        //  this.RunApp();
+        this.RunApp();
 
-        var node = new cc.Node('nodeest');
+        // var node = new cc.Node('nodeest');
 
-        node.parent = cc.director.getScene();
-        cc.loader.loadRes("App/UIHome", function (err, prefab) {
-            var newNode = cc.instantiate(prefab);
-            // cc.director.getScene().addChild(newNode);
-            newNode.parent = this.rootNode;
+        // node.parent = cc.director.getScene();
+        // cc.loader.loadRes("App/UIHome", function (err, prefab) {
+        //     var newNode = cc.instantiate(prefab);
+        //     // cc.director.getScene().addChild(newNode);
+        //     newNode.parent = this.rootNode;
 
-        }.bind(this)
-        );
+        // }.bind(this)
+        // );
 
 
 
@@ -87,7 +89,8 @@ cc.Class({
             this.rootViewController.DestroyObjController();
         }
         this.rootViewController = controller;
-        this.rootViewController.SetViewParent(this.canvasMain);
+        this.rootViewController.SetViewParent(this.rootNode);
+
 
     },
 

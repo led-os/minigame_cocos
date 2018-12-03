@@ -1,12 +1,16 @@
 
-
+var UIView = require("UIView");
 cc.Class({
-    extends: cc.Node,
+    extends: cc.Object,
     properties: {
         objController: {
             //ui层 必须放在canvas下
             default: null,
             type: cc.Node//GameObject
+        },
+        view: {
+            default: null,
+            type: UIView
         },
         title: 'title'
     },
@@ -25,6 +29,7 @@ cc.Class({
         this.ViewDidUnLoad();
     },
 
+    //SetViewParent
     SetViewParent: function (node) {
 
         cc.log("SetViewParent node");
@@ -37,7 +42,7 @@ cc.Class({
         if (this.objController == null) {
             cc.log("objController is null");
         }
-        //   this.objController.parent = node;
+        this.objController.parent = node;
     },
 
     //UIView view
