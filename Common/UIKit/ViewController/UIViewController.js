@@ -1,6 +1,8 @@
 
 var UIView = require("UIView");
+//https://docs.cocos.com/creator/manual/zh/scripting/reference/class.html
 cc.Class({
+    //cc.js.getClassName
     extends: cc.Object,
     properties: {
         objController: {

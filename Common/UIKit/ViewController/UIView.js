@@ -7,12 +7,11 @@ cc.Class({
             default: null,
             type: cc.Camera//GameObject
         },
-        title: 'title',
         controller: {
             default: null,
-            type: UIViewController
-        }
-
+            type: UIViewController,
+        },
+        title: 'title'
     },
 
     //UIViewController
@@ -28,5 +27,5 @@ cc.Class({
         // this.transform.localPosition = new Vector3(0f, 0f, 0f);
     },
 });
- 
+
 

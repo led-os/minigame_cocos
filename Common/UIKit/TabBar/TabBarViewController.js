@@ -1,20 +1,27 @@
 var UIViewController = require("UIViewController");
 var UITabBar = require("UITabBar");
-var TabBarItemInfo = require("TabBarItemInfo");
+var TabBarItemInfo = require("UITabBarItem");
+var UITabBarItem = require("UITabBarItem");
+
 var TabBarViewController = cc.Class({
     extends: UIViewController,
-    objContent: cc.Node,
 
-    uiTabBarPrefab: UITabBar,
-    uiTabBar: UITabBar,
-    selectIndex: -1,
-    rootController: UIViewController,
+    properties: {
+        objContent: cc.Node,
 
-    //List < TabBarItemInfo > listItem; 
-    listItem: {
-        default: [],
-        type: TabBarItemInfo
+        uiTabBarPrefab: UITabBar,
+        uiTabBar: UITabBar,
+        selectIndex: -1,
+        rootController: UIViewController,
+
+
+        listItem: {
+            default: [],
+            type: TabBarItemInfo
+        },
     },
+
+
 
     ViewDidLoad: function () {
         this.CreateTabBar();

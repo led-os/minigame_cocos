@@ -1,8 +1,12 @@
 var UIView = require("UIView");
 var UIViewController = require("UIViewController");
-cc.Class({
+var UITabBarItem = cc.Class({
     extends: UIView,
-    index: 0,
+
+    properties: {
+        index: 0,
+        sprite: cc.Sprite,
+    },
     test: function () {
         cc.log("run test");
 
@@ -13,6 +17,8 @@ cc.Class({
 
 var TabBarItemInfo = cc.Class({
     extends: cc.Object,
-    title: 'title',
-    controller: UIViewController,
+    properties: {
+        title: 'title',
+        controller: UIViewController,
+    },
 }); 

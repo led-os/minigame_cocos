@@ -29,12 +29,10 @@ cc.Class({
         //     }
         // },
 
-        // rootViewController: {
-        //     default: null,
-        //     type: UIViewController
-        // },
-        rootViewController: UIViewController,
-
+        rootViewController: {
+            default: null,
+            type: UIViewController
+        },
 
         canvasMain: {
             default: null,
