@@ -1,7 +1,8 @@
 var AppSceneBase = require("AppSceneBase");
 var MainViewController = require("MainViewController");
 var HomeViewController = require("HomeViewController");
-
+var TabBarViewController = require("TabBarViewController");
+var TabBarItemInfo = require("UITabBarItem");
 cc.Class({
     extends: AppSceneBase,
 
@@ -33,8 +34,11 @@ cc.Class({
         // base.RunApp();
 
         // InitAd();
-
-        this.SetRootViewController(HomeViewController.main());//MainViewController
+        var info = new TabBarItemInfo();
+        var controller = TabBarViewController.main();
+        info.controller = HomeViewController.main();
+        controller.AddItem(info);
+        this.SetRootViewController(controller);//MainViewController HomeViewController
     },
 
     // onLoad: function () {

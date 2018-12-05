@@ -16,7 +16,7 @@ var HomeViewController = cc.Class({
     },
     Init: function () {
         cc.log("HomeViewController Init");
-        this.LoadPrefab();
+        //  this.LoadPrefab();
     },
     CreateUI: function () {
         cc.log("HomeViewController CreateUI");
@@ -54,7 +54,7 @@ var HomeViewController = cc.Class({
     ViewDidLoad: function () {
         cc.log("HomeViewController ViewDidLoad");
         // base.ViewDidLoad();
-        this.CreateUI();
+        this.LoadPrefab();
     },
     ViewDidUnLoad: function () {
         cc.log("HomeViewController ViewDidUnLoad");

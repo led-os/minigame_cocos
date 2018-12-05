@@ -9,34 +9,57 @@ var TabBarViewController = cc.Class({
     properties: {
         objContent: cc.Node,
 
-        uiTabBarPrefab: UITabBar,
-        uiTabBar: UITabBar,
-        selectIndex: -1,
-        rootController: UIViewController,
+        uiTabBarPrefab: {
+            default: null,
+            type: cc.Prefab,
+        },
+        uiTabBar: {
+            default: null,
+            type: UITabBar,
+        },
 
+        rootController: {
+            default: null,
+            type: UIViewController,
+        },
 
         listItem: {
             default: [],
             type: TabBarItemInfo
         },
+
+        selectIndex: -1,
     },
 
-
+    LoadPrefab: function () {
+        //   name = "UIHome" + Common.appType;
+        var strPrefab = "Common/Prefab/TabBar/UITabBar";
+        cc.loader.loadRes(strPrefab, function (err, prefab) {
+            this.uiTabBarPrefab = prefab;
+            this.CreateTabBar();
+        }.bind(this)
+        );
+    },
 
     ViewDidLoad: function () {
-        this.CreateTabBar();
+        this.CreateContent();
+        this.LoadPrefab();
     },
 
     CreateTabBar: function () {
-        this.CreateContent();
-        // string strPrefab = "Common/Prefab/TabBar/UITabBar";
-        // GameObject obj = (GameObject)Resources.Load(strPrefab);
-        // uiTabBarPrefab = obj.GetComponent<UITabBar>();
 
-        // uiTabBar = (UITabBar)GameObject.Instantiate(uiTabBarPrefab);
-        // uiTabBar.transform.parent = objController.transform;
-        // uiTabBar.callbackClick = OnUITabBarClick;
-        // ViewControllerManager.ClonePrefabRectTransform(uiTabBarPrefab.gameObject, uiTabBar.gameObject);
+        //this.listItem = new Array();
+
+        var node = cc.instantiate(this.uiTabBarPrefab);
+        this.uiTabBar = node.getComponent(UITabBar);
+        this.uiTabBar.parent = this.objContent;
+
+        this.listItem.forEach(function (value, index) {
+            this.uiTabBar.AddItem(value, index);
+        }.bind(this));
+
+        this.SelectItem(0);
+
     },
 
     CreateContent: function () {
@@ -58,7 +81,7 @@ var TabBarViewController = cc.Class({
         // if (listItem == null) {
         //     listItem = new List<TabBarItemInfo>();
         // }
-        // listItem.Add(info);
+        this.listItem.push(info);
         // uiTabBar.AddItem(info, listItem.Count - 1);
     },
 
@@ -83,7 +106,7 @@ var TabBarViewController = cc.Class({
             return;
         }
 
-        var info = GetItem(selectIndex);
+        var info = this.GetItem(this.selectIndex);
         if (info == null) {
             //   Debug.Log("DestroyController null,selectIndex=" + selectIndex);
             return;
@@ -95,11 +118,11 @@ var TabBarViewController = cc.Class({
     },
 
     SelectItem: function (idx) {
-        if (selectIndex == idx) {
+        if (this.selectIndex == idx) {
             //Debug.Log("tabbar click the same item selectIndex=" + idx);
             return;
         }
-        var info = GetItem(idx);
+        var info = this.GetItem(idx);
         if (info == null) {
             // Debug.Log("SelectItem null,idx=" + idx);
             return;
@@ -120,19 +143,19 @@ var TabBarViewController = cc.Class({
 });
 
 //单例对象 方法一
-TabBarViewController.main = new TabBarViewController();
+//TabBarViewController.main = new TabBarViewController();
 
 //单例对象 方法二
-// TabBarViewController._main = null;
-// TabBarViewController.main = function () {
-//     if (!TabBarViewController._main) {
-//         cc.log("_main is null");
-//         TabBarViewController._main = new TabBarViewController();
-//     } else {
-//         cc.log("_main is not null");
-//     }
-//     return TabBarViewController._main;
-// }
+TabBarViewController._main = null;
+TabBarViewController.main = function () {
+    if (!TabBarViewController._main) {
+        cc.log("_main is null");
+        TabBarViewController._main = new TabBarViewController();
+    } else {
+        cc.log("_main is not null");
+    }
+    return TabBarViewController._main;
+}
 
 
 
