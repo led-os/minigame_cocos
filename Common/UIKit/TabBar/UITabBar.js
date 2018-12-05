@@ -17,12 +17,27 @@ cc.Class({
             default: [],
             type: TabBarItemInfo
         },
+        spriteBg: cc.Sprite,
+
+
     },
     onLoad: function () {
         cc.log("UITabBar onLoad");
         this.LoadPrefab();
-    },
+        var strImage = "Common/UI/UIKit/barbg";
+        cc.loader.loadRes(strImage, cc.Texture2D, function (err, tex) {
+            //cc.url.raw('res/textures/content.png')
+            if (err) {
+                cc.log("UITabBar loadRes barbg fail");
+                cc.log(err.message || err);
+                return;
+            }
+            cc.log("UITabBar loadRes barbg ok");
+            this.spriteBg.spriteFrame = new cc.SpriteFrame(tex);
+            this.LayOut();
+        }.bind(this));
 
+    },
     LoadPrefab: function () {
         //   name = "UIHome" + Common.appType;
         var strPrefab = "Common/Prefab/TabBar/UITabBarItem";
@@ -31,6 +46,15 @@ cc.Class({
             this.CreateTabItem();
         }.bind(this)
         );
+    },
+
+    LayOut: function () {
+        var size = this.node.getContentSize();
+        var x = size.width / 2;
+        var y = size.height / 2;
+        cc.log("size = " + size + " x=" + x);
+
+        this.spriteBg.node.setPosition(x, 80);
     },
     CreateTabItem: function () {
         this.listItem.forEach(function (value, index) {

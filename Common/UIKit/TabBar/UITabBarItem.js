@@ -1,5 +1,6 @@
 var UIView = require("UIView");
 var UIViewController = require("UIViewController");
+
 var UITabBarItem = cc.Class({
     extends: UIView,
 
@@ -10,8 +11,22 @@ var UITabBarItem = cc.Class({
     },
 
     //TabBarItemInfo
-    UpdateItem: function (info) { 
+    UpdateItem: function (info) {
+
         this.textTitle.string = info.title;
+
+        //加载图片： https://www.jianshu.com/p/8bd1eb0240d7
+        cc.loader.loadRes(info.pic, cc.Texture2D, function (err, tex) {
+            //cc.url.raw('res/textures/content.png')
+            if (err) {
+                cc.log("UITabBarItem loadRes  fail");
+                cc.log(err.message || err);
+                return;
+            }
+            cc.log("UITabBarItem loadRes  ok");
+            this.sprite.spriteFrame = new cc.SpriteFrame(tex);
+            // this.sprite.spriteFrame.setTexture(tex);
+        }.bind(this));
     }
 
 });

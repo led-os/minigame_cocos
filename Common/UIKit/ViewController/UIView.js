@@ -26,6 +26,10 @@ cc.Class({
         // this.transform.localScale = new Vector3(1f, 1f, 1f);
         // this.transform.localPosition = new Vector3(0f, 0f, 0f);
     },
+
+    LayOut: function () {
+
+    },
 });
 
 
