@@ -37,6 +37,7 @@ var TabBarViewController = cc.Class({
         cc.loader.loadRes(strPrefab, function (err, prefab) {
             this.uiTabBarPrefab = prefab;
             this.CreateTabBar();
+
         }.bind(this)
         );
     },
@@ -49,10 +50,10 @@ var TabBarViewController = cc.Class({
     CreateTabBar: function () {
 
         //this.listItem = new Array();
-
+        cc.log("TabBarViewController CreateTabBar");
         var node = cc.instantiate(this.uiTabBarPrefab);
         this.uiTabBar = node.getComponent(UITabBar);
-        this.uiTabBar.parent = this.objContent;
+        this.uiTabBar.SetController(this);
 
         this.listItem.forEach(function (value, index) {
             this.uiTabBar.AddItem(value, index);

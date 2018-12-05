@@ -6,11 +6,13 @@ var UITabBarItem = cc.Class({
     properties: {
         index: 0,
         sprite: cc.Sprite,
+        textTitle: cc.Label,
     },
-    test: function () {
-        cc.log("run test");
 
-    },
+    //TabBarItemInfo
+    UpdateItem: function (info) { 
+        this.textTitle.string = info.title;
+    }
 
 });
 
@@ -19,6 +21,10 @@ var TabBarItemInfo = cc.Class({
     extends: cc.Object,
     properties: {
         title: 'title',
-        controller: UIViewController,
+        pic: 'pic',
+        controller: {
+            default: null,
+            type: UIViewController,
+        },
     },
 }); 

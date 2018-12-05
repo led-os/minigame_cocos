@@ -34,10 +34,19 @@ cc.Class({
         // base.RunApp();
 
         // InitAd();
-        var info = new TabBarItemInfo();
         var controller = TabBarViewController.main();
-        info.controller = HomeViewController.main();
-        controller.AddItem(info);
+        {
+            var info = new TabBarItemInfo();
+            info.controller = HomeViewController.main();
+            info.title = "home";
+            controller.AddItem(info);
+        }
+        {
+            var info = new TabBarItemInfo();
+            info.controller = MainViewController.main();
+            info.title = "main";
+            controller.AddItem(info);
+        }
         this.SetRootViewController(controller);//MainViewController HomeViewController
     },
 

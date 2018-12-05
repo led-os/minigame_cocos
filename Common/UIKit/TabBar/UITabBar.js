@@ -28,7 +28,6 @@ cc.Class({
         var strPrefab = "Common/Prefab/TabBar/UITabBarItem";
         cc.loader.loadRes(strPrefab, function (err, prefab) {
             this.uiTabBarItemPrefab = prefab;
-
             this.CreateTabItem();
         }.bind(this)
         );
@@ -37,7 +36,9 @@ cc.Class({
         this.listItem.forEach(function (value, index) {
             var node = cc.instantiate(this.uiTabBarItemPrefab);
             this.uiTabBarItem = node.getComponent(UITabBarItem);
-            this.uiTabBarItem.parent = this.node;
+            this.uiTabBarItem.node.parent = this.node;
+            this.uiTabBarItem.index = index;
+            this.uiTabBarItem.UpdateItem(value);
         }.bind(this));
     },
 
