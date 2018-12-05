@@ -36,7 +36,7 @@ var TabBarViewController = cc.Class({
         var strPrefab = "Common/Prefab/TabBar/UITabBar";
         cc.loader.loadRes(strPrefab, function (err, prefab) {
             this.uiTabBarPrefab = prefab;
-            this.CreateTabBar();
+            this.CreateBar();
 
         }.bind(this)
         );
@@ -47,7 +47,7 @@ var TabBarViewController = cc.Class({
         this.LoadPrefab();
     },
 
-    CreateTabBar: function () {
+    CreateBar: function () {
 
         //this.listItem = new Array();
         cc.log("TabBarViewController CreateTabBar");
