@@ -44,8 +44,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.26875,
-      "y": 0.26875,
+      "x": 0.233258247884202,
+      "y": 0.233258247884202,
       "z": 1
     },
     "_quat": {
@@ -137,6 +137,7 @@
       "__id__": 6
     },
     "node1": null,
+    "canvasSizeFit": null,
     "title": "sss",
     "_id": "4cq9S1vsVN7J2iPK4FRrgr"
   },
@@ -150,8 +151,8 @@
     "_enabled": true,
     "_designResolution": {
       "__type__": "cc.Size",
-      "width": 960,
-      "height": 640
+      "width": 2048,
+      "height": 1536
     },
     "_fitWidth": false,
     "_fitHeight": true,
@@ -193,8 +194,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 960,
-      "height": 640
+      "width": 2048,
+      "height": 1536
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -203,8 +204,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 480,
-      "y": 320,
+      "x": 1024,
+      "y": 768,
       "z": 0
     },
     "_scale": {
@@ -260,8 +261,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -480,
-      "y": -320,
+      "x": 0,
+      "y": 0,
       "z": 0
     },
     "_scale": {

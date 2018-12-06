@@ -1,6 +1,8 @@
 var UIView = require("UIView");
 var UITabBarItem = require("UITabBarItem");
 var TabBarItemInfo = require("UITabBarItem");
+var AppSceneBase = require("AppSceneBase");
+
 cc.Class({
     extends: UIView,
     properties: {
@@ -52,9 +54,11 @@ cc.Class({
         var size = this.node.getContentSize();
         var x = size.width / 2;
         var y = size.height / 2;
+        x = 0;
+        y = -AppSceneBase.main.canvasSizeFit.height/2+y;
         cc.log("size = " + size + " x=" + x);
 
-        this.spriteBg.node.setPosition(x, 80);
+        this.spriteBg.node.setPosition(x, y);
     },
     CreateTabItem: function () {
         this.listItem.forEach(function (value, index) {

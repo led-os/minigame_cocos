@@ -9,7 +9,7 @@
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 var UIViewController = require("UIViewController");
 var HomeViewController = require("HomeViewController");
-cc.Class({
+var AppSceneBase = cc.Class({
     extends: cc.Component,
 
     properties: {
@@ -46,9 +46,31 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+
+        //按屏幕分辨率等比例适配后的canvas大小
+        canvasSizeFit: {
+            default: null,
+            type: cc.size
+        },
     },
     onLoad: function () {
         cc.log("AppSceneBase onLoad");
+        AppSceneBase.main = this;
+        var size = this.canvasMain.designResolution;
+        this.canvasSizeFit = cc.size(0, 0);
+        this.canvasSizeFit.height = size.height;
+        cc.log("canvasMain size=" + size);
+        let screenSize = cc.view.getVisibleSize();
+        cc.log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
+
+        this.canvasSizeFit.width = screenSize.width * this.canvasSizeFit.height / screenSize.height;
+        cc.log("canvasSizeFit size=" + this.canvasSizeFit);
+        var framesize = cc.view.getFrameSize();
+        cc.log("frame size=" + framesize);
+        // cc.view.setFrameSize(windowSize.width,windowSize.height);
+        // var framesize1 = cc.view.getFrameSize();
+        //  cc.log("new frame size=" + framesize1);
+
         this.RunApp();
 
         // var node = new cc.Node('nodeest');
@@ -95,3 +117,5 @@ cc.Class({
 
     // update (dt) {},
 });
+
+AppSceneBase.main = null; 
