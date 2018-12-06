@@ -33,18 +33,20 @@ cc.Class({
         var controller = TabBarViewController.main();
         {
             var info = new TabBarItemInfo();
-            info.controller = HomeViewController.main();
-            info.title = "home";
-            info.pic = "App/UI/Home/BtnHome";
-            controller.AddItem(info);
-        }
-        {
-            var info = new TabBarItemInfo();
             info.controller = MainViewController.main();
             info.title = "main";
             info.pic = "App/UI/Home/BtnHome";
             controller.AddItem(info);
         }
+
+        //   {
+        //     var info = new TabBarItemInfo();
+        //     info.controller = HomeViewController.main();
+        //     info.title = "home";
+        //     info.pic = "App/UI/Home/BtnHome";
+        //     controller.AddItem(info);
+        // }
+
         this.SetRootViewController(controller);//MainViewController HomeViewController
     },
 

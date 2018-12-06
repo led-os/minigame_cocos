@@ -43,6 +43,7 @@ var TabBarViewController = cc.Class({
     },
 
     ViewDidLoad: function () {
+        this._super();
         this.CreateContent();
         this.LoadPrefab();
     },

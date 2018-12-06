@@ -53,12 +53,12 @@ var HomeViewController = cc.Class({
 
     ViewDidLoad: function () {
         cc.log("HomeViewController ViewDidLoad");
-        // base.ViewDidLoad();
+        this._super();
         this.LoadPrefab();
     },
     ViewDidUnLoad: function () {
         cc.log("HomeViewController ViewDidUnLoad");
-        //base.ViewDidUnLoad();
+        this._super();
 
     },
     LayOutView: function () {

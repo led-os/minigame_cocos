@@ -39,6 +39,7 @@ cc.Class({
     },
 
     ViewDidLoad: function () {
+        this._super();
         this.CreateContent();
         this.LoadPrefab();
     },
@@ -68,7 +69,7 @@ cc.Class({
         this.listController.push(controller);
         //  controller.type = UIViewController.Type.NAVIBAR;
         // controller.naviController = this;
-        // UpdateController();
+        this.UpdateController();
 
     },
     Pop: function () {
@@ -99,14 +100,16 @@ cc.Class({
         }
         this.DestroyController();
 
-        var controller = listController[listController.length - 1];
+        this.rootController = this.listController[this.listController.length - 1];
+        cc.log("UpdateController this.listController.length="+this.listController.length);
         if (this.objContent != null) {
-            controller.SetViewParent(this.objContent);
-            this.rootController = controller;
+            cc.log("UpdateController SetViewParent");
+            //this.rootController = controller;
+            this.rootController.SetViewParent(this.objContent);
             //controller.LayOutView();
         }
         if (this.uiNaviBar != null) {
-            this.uiNaviBar.HideBtnBack((listController.length < 2) ? true : false);
+            this.uiNaviBar.HideBtnBack((this.listController.length < 2) ? true : false);
             this.uiNaviBar.UpdateTitle(controller.title);
         }
 

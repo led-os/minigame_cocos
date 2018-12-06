@@ -1,10 +1,13 @@
-var UIViewController = require("UIViewController");
+var NaviViewController = require("NaviViewController");
+var HomeViewController = require("HomeViewController");
+
 var MainViewController = cc.Class({
-    extends: UIViewController,
+    extends: NaviViewController,
 
-    test: function () {
-        cc.log("MainViewController test");
-
+    ViewDidLoad: function () {
+        this._super();
+        //super.ViewDidLoad();
+        this.Push(HomeViewController.main());
     },
 
 });
