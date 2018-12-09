@@ -55,7 +55,7 @@ cc.Class({
         var x = size.width / 2;
         var y = size.height / 2;
         x = 0;
-        y = -AppSceneBase.main.canvasSizeFit.height/2+y;
+        y = -AppSceneBase.main.sizeCanvas.height/2+y;
         cc.log("size = " + size + " x=" + x);
 
         this.spriteBg.node.setPosition(x, y);

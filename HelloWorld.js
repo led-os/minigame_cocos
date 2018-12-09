@@ -20,7 +20,7 @@ cc.Class({
         //cc.director.loadScene("MyScene"); 
         cc.log("hello world onLoad");   
       TabBarViewController.main.test();
-      
+    
     
     },
 

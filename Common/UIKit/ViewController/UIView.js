@@ -11,6 +11,11 @@ cc.Class({
             default: null,
             type: UIViewController,
         },
+
+        frame: {
+            default: null,
+            type: cc.rect,
+        }, 
         title: 'title'
     },
 

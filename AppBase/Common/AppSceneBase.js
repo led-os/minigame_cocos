@@ -45,10 +45,9 @@ var AppSceneBase = cc.Class({
         node1: {
             default: null,
             type: cc.Node
-        },
-
+        }, 
         //按屏幕分辨率等比例适配后的canvas大小
-        canvasSizeFit: {
+        sizeCanvas: {
             default: null,
             type: cc.size
         },
@@ -56,15 +55,15 @@ var AppSceneBase = cc.Class({
     onLoad: function () {
         cc.log("AppSceneBase onLoad");
         AppSceneBase.main = this;
-        var size = this.canvasMain.designResolution;
-        this.canvasSizeFit = cc.size(0, 0);
-        this.canvasSizeFit.height = size.height;
+        var size = this.canvasMain.designResolution;//参考设计分辨率
+        this.sizeCanvas = cc.size(0, 0);
+        this.sizeCanvas.height = size.height;
         cc.log("canvasMain size=" + size);
-        let screenSize = cc.view.getVisibleSize();
+        let screenSize = cc.view.getVisibleSize();//屏幕分辨率
         cc.log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
 
-        this.canvasSizeFit.width = screenSize.width * this.canvasSizeFit.height / screenSize.height;
-        cc.log("canvasSizeFit size=" + this.canvasSizeFit);
+        this.sizeCanvas.width = screenSize.width * this.sizeCanvas.height / screenSize.height;
+        cc.log("sizeCanvas size=" + this.sizeCanvas);
         var framesize = cc.view.getFrameSize();
         cc.log("frame size=" + framesize);
         // cc.view.setFrameSize(windowSize.width,windowSize.height);
@@ -109,7 +108,7 @@ var AppSceneBase = cc.Class({
             this.rootViewController.DestroyObjController();
         }
         this.rootViewController = controller;
-        this.rootViewController.SetViewParent(this.rootNode);
+        this.rootViewController.SetViewParent(this.canvasMain.node);//this.rootNode  this.canvasMain.node
 
 
     },
