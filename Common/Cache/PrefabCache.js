@@ -1,7 +1,7 @@
 var Dictionary = require("Dictionary");
 //https://docs.cocos.com/creator/manual/zh/scripting/reference/class.html
 //api: https://docs.cocos.com/creator/api/zh/
-var TextureCache = cc.Class({
+var PrefabCache = cc.Class({
     //cc.js.getClassName
     extends: cc.Object,
     properties: {
@@ -32,24 +32,23 @@ var TextureCache = cc.Class({
             }
         } else {
             //加载图片： https://www.jianshu.com/p/8bd1eb0240d7
-            cc.loader.loadRes(filepath, cc.Texture2D, function (err, tex) {
+            cc.loader.loadRes(filepath, function (err, prefab) {
                 //cc.url.raw('res/textures/content.png')
                 if (err) {
                     cc.log("TextureCache loadRes fail");
                     cc.log(err.message || err);
                     if (completeCallback) {
-                        completeCallback(err, tex);
+                        completeCallback(err, prefab);
                     }
                     return ret;
                 }
                 cc.log("TextureCache loadRes ok");
-                if (tex != null) {
-                    this.dicItem.Add(key, tex);
+                if (prefab != null) {
+                    this.dicItem.Add(key, prefab);
                 }
                 if (completeCallback) {
-                    completeCallback(err, tex);
+                    completeCallback(err, prefab);
                 }
-                //this.sprite.spriteFrame = new cc.SpriteFrame(tex); 
             }.bind(this));
         }
         return ret;
@@ -59,6 +58,6 @@ var TextureCache = cc.Class({
 
 });
 
-TextureCache.main = new TextureCache();
- 
+PrefabCache.main = new PrefabCache();
+
 

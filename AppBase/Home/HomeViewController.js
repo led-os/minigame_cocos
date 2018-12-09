@@ -1,5 +1,7 @@
 var UIViewController = require("UIViewController");
 var UIViewHome = require("UIViewHome");
+var PrefabCache = require("PrefabCache");
+
 var HomeViewController = cc.Class({
     extends: UIViewController,
     properties: {
@@ -41,7 +43,7 @@ var HomeViewController = cc.Class({
 
         // uiHomePrefab = obj.GetComponent<UIHomeBase>();
 
-        cc.loader.loadRes(strPrefab, function (err, prefab) {
+        PrefabCache.main.Load(strPrefab, function (err, prefab) {
             this.uiHomePrefab = prefab;
             var node = cc.instantiate(prefab);
             this.uiHome = node.getComponent(UIViewHome);

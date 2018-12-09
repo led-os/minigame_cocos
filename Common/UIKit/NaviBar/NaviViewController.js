@@ -1,5 +1,6 @@
 var UIViewController = require("UIViewController");
 var UINaviBar = require("UINaviBar");
+var PrefabCache = require("PrefabCache");
 
 cc.Class({
     extends: UIViewController,
@@ -30,7 +31,7 @@ cc.Class({
     LoadPrefab: function () {
         //   name = "UIHome" + Common.appType;
         var strPrefab = "Common/Prefab/NaviBar/UINaviBar";
-        cc.loader.loadRes(strPrefab, function (err, prefab) {
+        PrefabCache.main.Load(strPrefab, function (err, prefab) {
             this.uiNaviBarPrefab = prefab;
             this.CreateBar();
 
@@ -101,7 +102,7 @@ cc.Class({
         this.DestroyController();
 
         this.rootController = this.listController[this.listController.length - 1];
-        cc.log("UpdateController this.listController.length="+this.listController.length);
+        cc.log("UpdateController this.listController.length=" + this.listController.length);
         if (this.objContent != null) {
             cc.log("UpdateController SetViewParent");
             //this.rootController = controller;

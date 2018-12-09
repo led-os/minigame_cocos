@@ -2,6 +2,8 @@ var UIView = require("UIView");
 var UIViewController = require("UIViewController");
 var TextureCache = require("TextureCache");
 
+
+
 var UITabBarItem = cc.Class({
     extends: UIView,
 

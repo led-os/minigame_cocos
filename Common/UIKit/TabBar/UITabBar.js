@@ -3,6 +3,8 @@ var UITabBarItem = require("UITabBarItem");
 var TabBarItemInfo = require("UITabBarItem");
 var AppSceneBase = require("AppSceneBase");
 var TextureCache = require("TextureCache");
+var PrefabCache = require("PrefabCache");
+
 cc.Class({
     extends: UIView,
     properties: {
@@ -48,7 +50,7 @@ cc.Class({
     LoadPrefab: function () {
         //   name = "UIHome" + Common.appType;
         var strPrefab = "Common/Prefab/TabBar/UITabBarItem";
-        cc.loader.loadRes(strPrefab, function (err, prefab) {
+        PrefabCache.main.Load(strPrefab, function (err, prefab) {
             this.uiTabBarItemPrefab = prefab;
             this.CreateTabItem();
         }.bind(this)
