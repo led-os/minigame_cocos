@@ -9,14 +9,50 @@ var TextureCache = cc.Class({
             default: null,
             type: Dictionary
         },
-
+    },
+    Init: function () {
+        if (this.dicItem != null) {
+            return;
+        }
+        this.dicItem = new Dictionary();
     },
 
+    // * loadRes(url: string, completeCallback: (error: Error, resource: any) => void): void
     //Texture2D
-    Load: function (filepath) {
-        if (this.dicItem == null) {
-            this.dicItem = new Dictionary();
+    Load: function (filepath, completeCallback) {
+        this.Init();
+        var ret = null;
+        var key = filepath;
+
+        if (this.dicItem.Contains(key) == true) {
+            ret = this.dicItem.Get(key);
+            cc.log("TextureCache  load tex from cache");
+            if (completeCallback) {
+                completeCallback(null, tex);
+            }
+        } else {
+            //加载图片： https://www.jianshu.com/p/8bd1eb0240d7
+            cc.loader.loadRes(filepath, cc.Texture2D, function (err, tex) {
+                //cc.url.raw('res/textures/content.png')
+                if (err) {
+                    cc.log("TextureCache loadRes fail");
+                    cc.log(err.message || err);
+                    if (completeCallback) {
+                        completeCallback(err, tex);
+                    }
+                    return ret;
+                }
+                cc.log("TextureCache loadRes ok");
+                if (tex != null) {
+                    this.dicItem.Add(key, tex);
+                }
+                if (completeCallback) {
+                    completeCallback(err, tex);
+                }
+                //this.sprite.spriteFrame = new cc.SpriteFrame(tex); 
+            }.bind(this));
         }
+        return ret;
 
     },
 
@@ -28,28 +64,7 @@ TextureCache.main = new TextureCache();
  /*
 public class TextureCache
 {
-    Dictionary<string, Texture2D> dicItem;
-
-    static private TextureCache _main = null;
-    public static TextureCache main
-    {
-        get
-        {
-            if (_main == null)
-            {
-                _main = new TextureCache();
-                _main.Init();
-            }
-            return _main;
-        }
-    }
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
-    void Init()
-    {
-        dicItem = new Dictionary<string, Texture2D>();
-    }
+   
 
     public Texture2D Load(string filepath)
     {

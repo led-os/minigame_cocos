@@ -1,60 +1,71 @@
 /*字典 Dictionary类*/
-function Dictionary() {
-    this.add = add;
-    this.datastore = new Array();
-    this.find = find;
-    this.remove = remove;
-    this.showAll = showAll;
-    this.count = count;
-    this.clear = clear;
-}
+cc.Class({
+    //cc.js.getClassName
+    extends: cc.Object,
+    properties: {
+        // datastore: {
+        //     default: [],
+        //     type: cc.Object
+        // },
+        datastore: new Array(),
+    },
+    Init: function () {
+        // this.datastore = new Array();
+    },
 
-function add(key, value) {
-    this.datastore[key] = value;
-}
 
-function find(key) {
-    return this.datastore[key];
-}
+    Add: function (key, value) {
+        this.datastore[key] = value;
+        // if (this.Contains(key)) {
+        //     cc.log("Contains key=" + key);
+        // } else {
+        //     cc.log("Contains fail key=" + key);
+        // }
+    },
 
-function remove(key) {
-    delete this.datastore[key];
-}
+    Get: function (key) {
+        return this.datastore[key];
+    },
 
-function showAll() {
-    var str = "";
-    for (var key in this.datastore) {
-        str += key + " -> " + this.datastore[key] + ";  "
-    }
-    console.log(str);
-}
-
-function count() {
-    /*var ss = Object.keys(this.datastore).length;
-    console.log("ssss   "+ss);
-    return Object.keys(this.datastore).length;*/
-    /**/
-    var n = 0;
-    for (var key in Object.keys(this.datastore)) {
-        ++n;
-    }
-    console.log(n);
-    return n;
-}
-
-function clear() {
-    for (var key in this.datastore) {
+    Remove: function (key) {
         delete this.datastore[key];
-    }
-}
+    },
 
-var pbook = new Dictionary();
-pbook.add("Mike", "723");
-pbook.add("Jennifer", "987");
-pbook.add("Jonathan", "666");
-pbook.showAll();//Mike -> 723;  Jennifer -> 987;  Jonathan -> 666;
-pbook.count();//3
-pbook.remove("Jennifer");
-//pbook.clear();
-pbook.showAll();//Mike -> 723;  Jonathan -> 666;
-pbook.count();//2
+    ShowAll: function () {
+        var str = "";
+        for (var key in this.datastore) {
+            str += key + " -> " + this.datastore[key] + ";  "
+        }
+        cc.log(str);
+    },
+
+    Count: function () {
+        /*var ss = Object.keys(this.datastore).length;
+        console.log("ssss   "+ss);
+        return Object.keys(this.datastore).length;*/
+        /**/
+        var n = 0;
+        for (var key in Object.keys(this.datastore)) {
+            ++n;
+        }
+        cc.log(n);
+        return n;
+    },
+
+    Clear: function () {
+        for (var key in this.datastore) {
+            delete this.datastore[key];
+        }
+    },
+
+    Contains: function (key) {
+        var v = this.Get(key);
+        if (v == null) {
+            return false;
+        }
+        return true;
+    },
+
+
+});
+
