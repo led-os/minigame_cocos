@@ -1,5 +1,7 @@
 var Dictionary = require("Dictionary");
 var Common = require("Common");
+var Source = require("Source");
+
 //creator 解析json： https://blog.csdn.net/foupwang/article/details/79660524
 var Config = cc.Class({
     //cc.js.getClassName

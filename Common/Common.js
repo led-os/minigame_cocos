@@ -1,10 +1,10 @@
 var Dictionary = require("Dictionary");
 //https://docs.cocos.com/creator/manual/zh/scripting/reference/class.html
 //api: https://docs.cocos.com/creator/api/zh/
-var Conmon = cc.Class({
+var Common = cc.Class({
     //cc.js.getClassName
     extends: cc.Object,
-    properties: {
+    statics: {
         GAME_DATA_DIR: "GameData",//streamingAssetsPath下的游戏配置等数据
         GAME_DATA_DIR_COMMON: "GameData/common",
         GAME_RES_DIR: "GameRes",//streamingAssetsPath 下的游戏图片等资源
@@ -24,6 +24,6 @@ var Conmon = cc.Class({
 
 });
 
-Conmon.main = new Conmon();
+Common.main = new Common();
 
 
