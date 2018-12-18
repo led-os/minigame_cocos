@@ -1,13 +1,16 @@
 var NaviViewController = require("NaviViewController");
 var HomeViewController = require("HomeViewController");
+var Language = require("Language");
 
 var MainViewController = cc.Class({
     extends: NaviViewController,
 
     ViewDidLoad: function () {
         this._super();
-        //super.ViewDidLoad();
         this.Push(HomeViewController.main());
+
+        var str = Language.main().GetString("APP_NAME");
+        cc.log("Language GetString=" + str);
     },
 
 });

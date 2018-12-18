@@ -34,7 +34,7 @@ var Config = cc.Class({
             return;
         }
 
-        var strDir = Common.main.RES_CONFIG_DATA + "/config";
+        var strDir = Common.RES_CONFIG_DATA + "/config";
 
         var fileName = "config_ios";
 

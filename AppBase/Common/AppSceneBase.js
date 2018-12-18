@@ -9,6 +9,9 @@
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 var UIViewController = require("UIViewController");
 var HomeViewController = require("HomeViewController");
+var Config = require("Config");
+var Common = require("Common");
+
 var AppSceneBase = cc.Class({
     extends: cc.Component,
 
@@ -45,7 +48,7 @@ var AppSceneBase = cc.Class({
         node1: {
             default: null,
             type: cc.Node
-        }, 
+        },
         //按屏幕分辨率等比例适配后的canvas大小
         sizeCanvas: {
             default: null,
@@ -55,21 +58,7 @@ var AppSceneBase = cc.Class({
     onLoad: function () {
         cc.log("AppSceneBase onLoad");
         AppSceneBase.main = this;
-        var size = this.canvasMain.designResolution;//参考设计分辨率
-        this.sizeCanvas = cc.size(0, 0);
-        this.sizeCanvas.height = size.height;
-        cc.log("canvasMain size=" + size);
-        let screenSize = cc.view.getVisibleSize();//屏幕分辨率
-        cc.log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
-
-        this.sizeCanvas.width = screenSize.width * this.sizeCanvas.height / screenSize.height;
-        cc.log("sizeCanvas size=" + this.sizeCanvas);
-        var framesize = cc.view.getFrameSize();
-        cc.log("frame size=" + framesize);
-        // cc.view.setFrameSize(windowSize.width,windowSize.height);
-        // var framesize1 = cc.view.getFrameSize();
-        //  cc.log("new frame size=" + framesize1);
-
+        this.InitValue();
         this.RunApp();
 
         // var node = new cc.Node('nodeest');
@@ -94,6 +83,33 @@ var AppSceneBase = cc.Class({
     RunApp: function () {
         cc.log("AppSceneBase RunApp");
 
+    },
+    InitValue: function () {
+
+        {
+            //初始化分辨率相关参数
+            var size = this.canvasMain.designResolution;//参考设计分辨率
+            this.sizeCanvas = cc.size(0, 0);
+            this.sizeCanvas.height = size.height;
+            cc.log("canvasMain size=" + size);
+            let screenSize = cc.view.getVisibleSize();//屏幕分辨率
+            cc.log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
+
+            this.sizeCanvas.width = screenSize.width * this.sizeCanvas.height / screenSize.height;
+            cc.log("sizeCanvas size=" + this.sizeCanvas);
+            var framesize = cc.view.getFrameSize();
+            cc.log("frame size=" + framesize);
+            // cc.view.setFrameSize(windowSize.width,windowSize.height);
+            // var framesize1 = cc.view.getFrameSize();
+            //  cc.log("new frame size=" + framesize1);
+        }
+
+        //config
+        var cf = Config.main();
+        cf.ParseJson(false);
+
+        //language
+        var lan = Language.main();
     },
 
     LoadResFinish: function (err, prefab) {
