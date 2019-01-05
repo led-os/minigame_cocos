@@ -11,6 +11,7 @@ var UIViewController = require("UIViewController");
 var HomeViewController = require("HomeViewController");
 var Config = require("Config");
 var Common = require("Common");
+var Language = require("Language");
 
 var AppSceneBase = cc.Class({
     extends: cc.Component,

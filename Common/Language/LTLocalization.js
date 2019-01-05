@@ -1,5 +1,6 @@
 //https://docs.cocos.com/creator/manual/zh/scripting/reference/class.html
 //api: https://docs.cocos.com/creator/api/zh/
+var CSVParser = require("CSVParser");
 cc.Class({
     //cc.js.getClassName
     extends: cc.Object,
@@ -20,13 +21,16 @@ cc.Class({
         dataContent: null,// byte[]
         KEY_CODE: "KEY",
         FILE_PATH: "Language/test_utf8",// test_utf8 LTLocalization/localization
-
+        csvParser: CSVParser,
         // private SystemLanguage language = SystemLanguage.Chinese;
         language: cc.sys.LANGUAGE_CHINESE,
         //  private Dictionary<string, string> textData = new Dictionary<string, string>();
     },
     ReadData: function (data) {
+        //  cc.log("LTLocalization=" + data);
         this.dataContent = data;
+        this.csvParser = new CSVParser();
+        this.csvParser.ReadData(data);
 
         //         textData.Clear();
         //         //string fileName = Application.dataPath + "/Resources/LTLocalization/localization.csv";

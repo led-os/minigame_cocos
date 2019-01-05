@@ -13,22 +13,25 @@ var Language = cc.Class({
 
     },
     properties: {
-        ltLocalization: LTLocalization,
+        // ltLocalization: LTLocalization,
+        ltLocalization: {
+            default: null,
+            type: LTLocalization,
+        },
     },
     Init: function (file) {
         this.ltLocalization = new LTLocalization();
         cc.loader.loadRes(file, function (err, file) {
-            cc.log(file.text); 
+             //cc.log(file.text);
             this.ltLocalization.ReadData(file.text);
-        });
+        }.bind(this));
     },
 
     SetLanguage: function (lan) {
-        // Init();
         this.ltLocalization.SetLanguage(lan);
-        this._common.ltLocalization.SetLanguage(lan);
-        if (this._game != null) {
-            this._game.ltLocalization.SetLanguage(lan);
+        Language._common.ltLocalization.SetLanguage(lan);
+        if (Language._game != null) {
+            Language._game.ltLocalization.SetLanguage(lan);
         }
     },
 
@@ -37,13 +40,13 @@ var Language = cc.Class({
 
     },
     GetString: function (key) {
-        // Init();
+
         var str = "0";
         if (this.IsContainsKey(key)) {
             str = this.ltLocalization.GetText(key);
         }
         else {
-            str = this._common.ltLocalization.GetText(key);
+           str = Language._common.ltLocalization.GetText(key);
         }
         return str;
 

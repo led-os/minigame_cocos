@@ -10,7 +10,26 @@ var CSVParser = cc.Class({
         listContentTable: new Array(),//整个内容表
     },
     ReadData: function (str) {
+        this.SplitLine(str);
+    },
+    SplitLine: function (str) {
+        //cc.log("SplitLine="+str);
+        var lines = str.split("\n");
 
+        //会卡死
+        // for (var i = 0; i = lines.length; i++) {
+        //   //  cc.log("line  =" + lines[i]);
+        // }
+
+        // lines.forEach(function (value, index) {
+        //     cc.log("line "+index+" =" + value);
+        // }.bind(this));
+
+        var index = 0;
+        for (let value of lines) {
+            cc.log("line " + index + " =" + value);
+            index++;
+        }
     },
 
     //bool 解析每一行
