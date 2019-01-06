@@ -9,5 +9,6 @@ cc.Class({
         // 声明静态变量
         CONFIG: "config",
         LANGUAGE: "language",
+
     },
 }); 

@@ -30,12 +30,12 @@ var Config = cc.Class({
     },
 
     InitValue: function () {
-        {
-            var info = new LoadItemInfo();
-            info.id = Config.COMMON;
-            info.isLoad = false;
-            Config.listLoad.push(info);
-        }
+        // {
+        //     var info = new LoadItemInfo();
+        //     info.id = Config.COMMON;
+        //     info.isLoad = false;
+        //     Config.listLoad.push(info);
+        // }
         {
             var info = new LoadItemInfo();
             info.id = Config.MAIN;
@@ -51,24 +51,63 @@ var Config = cc.Class({
         this.dicItem = new Dictionary();
     },
 
-    // * loadRes(url: string, completeCallback: (error: Error, resource: any) => void): void
-    //Texture2D
-    Load: function (filepath, completeCallback) {
+    Load: function (file, id) {
+        cc.loader.loadRes(file, function (err, file) {
+            //cc.log(file.text);
+            this.ParseData(file.text);
+            // cc.log("id=" + id);
+            var info = this.GetLoadInfoById(id);
+            if (info != null) {
+                info.isLoad = true;
+                // cc.log("id= info.isLoad=" + info.isLoad);
+            }
+            this.CheckAllLoad();
+        }.bind(this));
 
-        return ret;
-
+        //cc.log("isLoadAll=loadRes end");
     },
+
+    GetLoadInfoById: function (id) {
+        for (let info of Config.listLoad) {
+            if (info.id == id) {
+                return info;
+            }
+        }
+        return null;
+    },
+    CheckAllLoad: function () {
+        var isLoadAll = true;
+        for (let info of Config.listLoad) {
+            if (info.isLoad == false) {
+                isLoadAll = false;
+            }
+        }
+        // cc.log("isLoadAll=" + isLoadAll);
+        if (isLoadAll == true) {
+            // cc.log("isLoadAll= 1 " + isLoadAll);
+            if (Config.callbackFinish != null) {
+                Config.loadInfo.isLoad = true;
+                // cc.log("isLoadAll= 2 " + isLoadAll);
+                Config.callbackFinish(this);
+            } else {
+                cc.log("Config isLoadAll= callbackFinish is null ");
+            }
+        }
+    },
+    ParseData: function (data) {
+    },
+
     ParseJson: function (ishd) {
 
-        if (Config.callbackFinish != null) {
-            Config.loadInfo.isLoad = true;
-            // cc.log("isLoadAll= 2 " + isLoadAll);
-            Config.callbackFinish(this);
-        }
+        // if (Config.callbackFinish != null) {
+        //     Config.loadInfo.isLoad = true;
+        //     // cc.log("isLoadAll= 2 " + isLoadAll);
+        //     Config.callbackFinish(this);
+        // }
 
-        if (this.rootJson != null) {
-            return;
-        }
+        // if (this.rootJson != null) {
+        //     return;
+        // }
 
         var strDir = Common.RES_CONFIG_DATA + "/config";
 
@@ -100,7 +139,7 @@ var Config = cc.Class({
         }
         fileName += ".json";
 
-
+        this.Load(fileName, Config.MAIN);
         /*
                 string json = FileUtil.ReadStringFromResources(strDir + "/" + fileName);//ReadStringAsset
                 rootJson = JsonMapper.ToObject(json);
