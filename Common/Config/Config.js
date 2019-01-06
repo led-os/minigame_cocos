@@ -1,11 +1,19 @@
 var Dictionary = require("Dictionary");
 var Common = require("Common");
 var Source = require("Source");
-
+var LoadItemInfo = require("LoadItemInfo");
 //creator 解析json： https://blog.csdn.net/foupwang/article/details/79660524
 var Config = cc.Class({
     //cc.js.getClassName
     extends: cc.Object,
+    statics: {
+        // 声明静态变量
+        COMMON: "common",
+        MAIN: "main",
+        callbackFinish: null,
+        listLoad: [],
+        loadInfo: LoadItemInfo,
+    },
     properties: {
         dicItem: {
             default: null,
@@ -13,8 +21,29 @@ var Config = cc.Class({
         },
         rootJson: null,
         rootJsonCommon: null,
-        osDefault: "",//Source.IOS,
+        osDefault: "",//Source.IOS, 
     },
+
+    SetLoadFinishCallBack: function (callback, info) {
+        Config.callbackFinish = callback;
+        Config.loadInfo = info;
+    },
+
+    InitValue: function () {
+        {
+            var info = new LoadItemInfo();
+            info.id = Config.COMMON;
+            info.isLoad = false;
+            Config.listLoad.push(info);
+        }
+        {
+            var info = new LoadItemInfo();
+            info.id = Config.MAIN;
+            info.isLoad = false;
+            Config.listLoad.push(info);
+        }
+    },
+
     Init: function () {
         if (this.dicItem != null) {
             return;
@@ -30,6 +59,13 @@ var Config = cc.Class({
 
     },
     ParseJson: function (ishd) {
+
+        if (Config.callbackFinish != null) {
+            Config.loadInfo.isLoad = true;
+            // cc.log("isLoadAll= 2 " + isLoadAll);
+            Config.callbackFinish(this);
+        }
+
         if (this.rootJson != null) {
             return;
         }
@@ -63,6 +99,8 @@ var Config = cc.Class({
             fileName += "_hd";
         }
         fileName += ".json";
+
+
         /*
                 string json = FileUtil.ReadStringFromResources(strDir + "/" + fileName);//ReadStringAsset
                 rootJson = JsonMapper.ToObject(json);
@@ -134,6 +172,7 @@ Config.main = function () {
     if (!Config._main) {
         cc.log("_main is null");
         Config._main = new Config();
+        Config._main.InitValue();
         Config._main.Init();
     } else {
         cc.log("_main is not null");

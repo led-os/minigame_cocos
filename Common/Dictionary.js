@@ -15,12 +15,7 @@ cc.Class({
 
 
     Add: function (key, value) {
-        this.datastore[key] = value;
-        // if (this.Contains(key)) {
-        //     cc.log("Contains key=" + key);
-        // } else {
-        //     cc.log("Contains fail key=" + key);
-        // }
+        this.datastore[key] = value; 
     },
 
     Get: function (key) {

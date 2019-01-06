@@ -12,7 +12,7 @@ var HomeViewController = require("HomeViewController");
 var Config = require("Config");
 var Common = require("Common");
 var Language = require("Language");
-
+var LoadItemInfo = require("LoadItemInfo");
 var AppSceneBase = cc.Class({
     extends: cc.Component,
 
@@ -55,12 +55,18 @@ var AppSceneBase = cc.Class({
             default: null,
             type: cc.size
         },
+        listProLoad: {
+            default: [],
+            type: LoadItemInfo
+        },
+        isHasRunApp: false,
     },
     onLoad: function () {
         cc.log("AppSceneBase onLoad");
         AppSceneBase.main = this;
+        this.isHasRunApp = false;
         this.InitValue();
-        this.RunApp();
+        // this.RunApp();
 
         // var node = new cc.Node('nodeest');
 
@@ -106,16 +112,54 @@ var AppSceneBase = cc.Class({
         }
 
         //config
-        var cf = Config.main();
-        cf.ParseJson(false);
+        {
+            var info = new LoadItemInfo();
+            info.id = LoadItemInfo.CONFIG;
+            info.isLoad = false;
+            this.listProLoad.push(info);
 
+            var cf = Config.main();
+            cf.SetLoadFinishCallBack(this.AppPreLoadDidFinish.bind(this), info);
+            cf.ParseJson(false);
+        }
         //language
-        var lan = Language.main();
+        {
+            var info = new LoadItemInfo();
+            info.id = LoadItemInfo.LANGUAGE;
+            info.isLoad = false;
+            this.listProLoad.push(info);
+
+            var lan = Language.main();
+            lan.SetLoadFinishCallBack(this.AppPreLoadDidFinish.bind(this), info);
+        }
     },
+    CheckAllLoad: function () {
+        var isLoadAll = true;
+        for (let info of this.listProLoad) {
+            if (info.isLoad == false) {
+                isLoadAll = false;
+            }
+        }
+        cc.log("appscenebase isLoadAll=" + isLoadAll);
+        if (isLoadAll == true) {
 
-    LoadResFinish: function (err, prefab) {
-        cc.log("LoadResFinish ");
+            this.isHasRunApp = true;
+            this.RunApp();
+        }
+    },
+    AppPreLoadDidFinish: function (p) {
+        cc.log("AppPreLoadDidFinish ");
+        if (this.isHasRunApp == true) {
+            return;
+        }
+        this.CheckAllLoad();
 
+        // var lan = Language.main();
+        // lan.SetLanguage(cc.sys.LANGUAGE_CHINESE);
+        // cc.log("AppPreLoadDidFinish APP_NAME:" + lan.GetString("APP_NAME"));
+
+        // lan.SetLanguage(cc.sys.LANGUAGE_ENGLISH);
+        // cc.log("AppPreLoadDidFinish APP_NAME:" + lan.GetString("APP_NAME"));
     },
 
     //UIViewController controller

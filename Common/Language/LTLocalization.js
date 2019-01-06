@@ -1,7 +1,8 @@
 //https://docs.cocos.com/creator/manual/zh/scripting/reference/class.html
 //api: https://docs.cocos.com/creator/api/zh/
 var CSVParser = require("CSVParser");
-cc.Class({
+var Dictionary = require("Dictionary");
+var LTLocalization = cc.Class({
     //cc.js.getClassName
     extends: cc.Object,
     statics: {
@@ -18,65 +19,105 @@ cc.Class({
     },
 
     properties: {
-        dataContent: null,// byte[]
+        dicData: {
+            default: null,
+            type: Dictionary
+        },
         KEY_CODE: "KEY",
-        FILE_PATH: "Language/test_utf8",// test_utf8 LTLocalization/localization
-        csvParser: CSVParser,
+        indexLanguage: 0,
+        csvParser: {
+            default: null,
+            type: CSVParser
+        },
         // private SystemLanguage language = SystemLanguage.Chinese;
         language: cc.sys.LANGUAGE_CHINESE,
         //  private Dictionary<string, string> textData = new Dictionary<string, string>();
     },
+
+    GetLanguageKeyName: function (lan) {
+        var ret = LTLocalization.CHINESE;
+        // if (lan == cc.sys.LANGUAGE_ENGLISH) {
+        //     ret = LTLocalization.ENGLISH;
+        // }
+        // if (lan == cc.sys.LANGUAGE_CHINESE) {
+        //     ret = LTLocalization.CHINESE;
+        // }
+        switch (lan) {
+            case cc.sys.LANGUAGE_CHINESE:
+                {
+                    ret = LTLocalization.CHINESE;
+                }
+                break;
+            case cc.sys.LANGUAGE_ENGLISH:
+                {
+                    ret = LTLocalization.ENGLISH;
+                }
+                break;
+        }
+
+        return ret;
+    },
+
+    GetLanguageIndexByName: function (str) {
+        var listTable = this.csvParser.listTable;
+        var list = listTable[0];
+        for (var i = 1; i < list.length; i++) {
+            //cc.log("GetLanguageIndexByName indexLanguage i=" + i + " list[i]=" + list[i] + " str=" + str);
+            if (list[i] == str) {
+                // cc.log("indexLanguage i=" + i + " list[i]=" + list[i] + " str=" + str);
+                return i;
+            }
+        }
+        return 1;
+    },
     ReadData: function (data) {
-        //  cc.log("LTLocalization=" + data);
-        this.dataContent = data;
+        //  cc.log("LTLocalization=" + data); 
+        this.dicData = new Dictionary();
         this.csvParser = new CSVParser();
         this.csvParser.ReadData(data);
+        this.SetLanguage(this.language);
 
-        //         textData.Clear();
-        //         //string fileName = Application.dataPath + "/Resources/LTLocalization/localization.csv";
-        //         //FILE_PATH 
-        //         string csvStr = Encoding.UTF8.GetString(dataContent);
-        //         //Debug.Log(csvStr);
-        //         LTCSVLoader loader = new LTCSVLoader();
-        //         // loader.ReadFile(fileName);
-        //         loader.ReadMultiLine(csvStr);
-        //         int languageIndex = loader.GetFirstIndexAtRow(GetLanguageAB(language), 0);
-        //         if (- 1 == languageIndex) {
-        //             Debug.LogError("未读取到" + language + "任何数据，请检查配置表");
-        //             return;
-        //         }
-        //         int tempRow = loader.GetRow();
-        //         for (int i = 0; i < tempRow; ++i)
-        // {
-        //     textData.Add(loader.GetValueAt(0, i), loader.GetValueAt(languageIndex, i));
-        // }
     },
+
     SetLanguage: function (lan) {
         this.language = lan;
+        if (this.dicData == null) {
+            return;
+        }
+        this.dicData.Clear();
+        var key_lan = this.GetLanguageKeyName(lan);
+        this.indexLanguage = this.GetLanguageIndexByName(key_lan);
+
+        //var row_count = this.csvParser.listTable.length;
+        var row_count = this.csvParser.GetRowCount();
+
+        cc.log("indexLanguage=" + this.indexLanguage + " key_lan=" + key_lan);
+
+        for (var row = 0; row < row_count; row++) {
+            var key = this.csvParser.GetText(row, 0);
+            var value = this.csvParser.GetText(row, this.indexLanguage);
+            //cc.log("dicData.Add key=" + key + " value=" + value);
+            this.dicData.Add(key, value);
+        }
     },
     GetLanguage: function () {
         return this.language;
     },
 
     GetText: function (key) {
-
-        // if (null == mInstance)
-        // {
-        //     Debug.Log("LTLocalization Init");
-        //     Init();
-        // }
-        //Debug.Log("LTLocalization ContainsKey");
-        // if (this.textData.ContainsKey(key)) {
-        //     //Debug.Log("LTLocalization ContainsKey yes");
-        //     return this.textData[key];
-        // }
-
-        // //Debug.Log("LTLocalization ContainsKey NO");
-        // return "[NoDefine]" + key;
+        if (this.IsContainsKey(key)) {
+            return this.dicData.Get(key);
+        }
+        return "[NoDefine]" + key;
     },
 
     IsContainsKey: function (key) {
-        // return this.textData.ContainsKey(key);
+        if (this.dicData == null) {
+            return false;
+        }
+        var ret = this.dicData.Contains(key);
+        cc.log("IsContainsKey ret=" + ret);
+        return ret;
     },
 
 
