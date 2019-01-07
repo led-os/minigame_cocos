@@ -14,7 +14,36 @@ var Common = cc.Class({
         THUMB_SUFFIX: "_thumb",
         TOUCH_MOVE_STEP_MIN: 3.0,//6.0f
 
+        isAndroid: {
+            get: function () {
+                return (cc.sys.platform == cc.sys.OS_ANDROID) ? true : false;
+            },
+            // set: function (value) {
+            //     this._width = value;
+            // },
+        },
+
+        isiOS: {
+            get: function () {
+                return (cc.sys.platform == cc.sys.OS_IOS) ? true : false;
+            },
+        },
+
+
+        isWin: {
+            get: function () {
+                return (cc.sys.platform == cc.sys.OS_WINDOWS) ? true : false;
+            },
+
+        },
     },
+
+    properties: {
+
+    },
+
+
+
     Init: function () {
 
     },

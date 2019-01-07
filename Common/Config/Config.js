@@ -52,9 +52,15 @@ var Config = cc.Class({
     },
 
     Load: function (file, id) {
-        cc.loader.loadRes(file, function (err, file) {
-            //cc.log(file.text);
-            this.ParseData(file.text);
+        cc.loader.loadRes(file, function (err, object) {
+
+            if (err) {
+                cc.log("config:err=" + err);
+                return;
+            }
+
+            //cc.log("config:file.text=" + file.text);
+            this.ParseData(object);
             // cc.log("id=" + id);
             var info = this.GetLoadInfoById(id);
             if (info != null) {
@@ -94,7 +100,13 @@ var Config = cc.Class({
             }
         }
     },
-    ParseData: function (data) {
+    ParseData: function (object) {
+        let appid = object.APPID;
+        //let huawei = appid.huawei;
+        // cc.log("config:appid=" + huawei);
+
+        var tongji = object.APPTONGJI_ID;
+        cc.log("config:tongji=" + tongji);
     },
 
     ParseJson: function (ishd) {
@@ -111,7 +123,7 @@ var Config = cc.Class({
 
         var strDir = Common.RES_CONFIG_DATA + "/config";
 
-        var fileName = "config_ios";
+        var fileName = "";
 
         //Defualt
         fileName = "config_" + this.osDefault;
@@ -129,17 +141,20 @@ var Config = cc.Class({
         if (Common.isAndroid) {
             fileName = "config_android";
         }
-        if (Common.isWinUWP) {
+        if (Common.isWin) {
             fileName = "config_" + Source.WIN;
+            fileName = "config_android";
         }
+
 
         if (ishd == true)//AppVersion.appForPad
         {
             fileName += "_hd";
         }
-        fileName += ".json";
-
-        this.Load(fileName, Config.MAIN);
+        //fileName += ".json";
+        var filepath = strDir + "/" + fileName;
+        cc.log("config:filepath=" + filepath);
+        this.Load(filepath, Config.MAIN);
         /*
                 string json = FileUtil.ReadStringFromResources(strDir + "/" + fileName);//ReadStringAsset
                 rootJson = JsonMapper.ToObject(json);
