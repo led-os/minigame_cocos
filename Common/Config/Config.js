@@ -52,15 +52,20 @@ var Config = cc.Class({
     },
 
     Load: function (file, id) {
-        cc.loader.loadRes(file, function (err, object) {
+
+        //cc.JsonAsset
+        cc.loader.loadRes(file, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {
                 cc.log("config:err=" + err);
-                return;
+                // return;
             }
 
-            //cc.log("config:file.text=" + file.text);
-            this.ParseData(object);
+            // cc.log("config:rootJson.text=" + rootJson.text);
+            if (err == null) {
+                this.ParseData(rootJson.json);
+            }
+
             // cc.log("id=" + id);
             var info = this.GetLoadInfoById(id);
             if (info != null) {
@@ -69,6 +74,29 @@ var Config = cc.Class({
             }
             this.CheckAllLoad();
         }.bind(this));
+
+        /*
+                cc.loader.load(cc.url.raw('resources/config_android.json'), function (err, res) {
+                    if (err) {
+                        cc.log("config:" + err);
+                    } else {
+                        var list = res;
+        
+                        cc.log("config:load.text=" + res.text);
+                        this.ParseData(res);
+                    }
+        
+        
+                    // cc.log("id=" + id);
+                    var info = this.GetLoadInfoById(id);
+                    if (info != null) {
+                        info.isLoad = true;
+                        // cc.log("id= info.isLoad=" + info.isLoad);
+                    }
+                    this.CheckAllLoad();
+        
+                }.bind(this));
+                */
 
         //cc.log("isLoadAll=loadRes end");
     },
@@ -100,13 +128,13 @@ var Config = cc.Class({
             }
         }
     },
-    ParseData: function (object) {
-        let appid = object.APPID;
-        //let huawei = appid.huawei;
-        // cc.log("config:appid=" + huawei);
+    ParseData: function (json) {
+        if (json == null) {
+            cc.log("config:ParseData=null");
+        }
+        var appid = json.APPID.huawei;
+        cc.log("config:appid=" + appid);
 
-        var tongji = object.APPTONGJI_ID;
-        cc.log("config:tongji=" + tongji);
     },
 
     ParseJson: function (ishd) {
