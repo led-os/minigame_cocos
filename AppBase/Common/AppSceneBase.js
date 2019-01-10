@@ -120,7 +120,7 @@ var AppSceneBase = cc.Class({
 
             var cf = Config.main();
             cf.SetLoadFinishCallBack(this.AppPreLoadDidFinish.bind(this), info);
-            cf.ParseJson(false);
+            //cf.ParseJson(false);
         }
         //language
         {

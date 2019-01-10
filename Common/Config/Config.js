@@ -30,12 +30,12 @@ var Config = cc.Class({
     },
 
     InitValue: function () {
-        // {
-        //     var info = new LoadItemInfo();
-        //     info.id = Config.COMMON;
-        //     info.isLoad = false;
-        //     Config.listLoad.push(info);
-        // }
+        {
+            var info = new LoadItemInfo();
+            info.id = Config.COMMON;
+            info.isLoad = false;
+            Config.listLoad.push(info);
+        }
         {
             var info = new LoadItemInfo();
             info.id = Config.MAIN;
@@ -44,17 +44,55 @@ var Config = cc.Class({
         }
     },
 
-    Init: function () {
+    Load: function () {
+
         if (this.dicItem != null) {
             return;
         }
         this.dicItem = new Dictionary();
-    },
 
-    Load: function (file, id) {
+        var strDir = Common.RES_CONFIG_DATA + "/config";
+        var loadInfoId = "";
+        var fileName = "";
+        if (this == Config._main) {
+            loadInfoId = Config.MAIN;
+            //Defualt
+            fileName = "config_" + this.osDefault;
+            if (this.osDefault == Source.ANDROID) {
+                fileName = "config_android";
+            }
+            if (this.osDefault == Source.IOS) {
+                fileName = "config_ios";
+            }
+            if (this.osDefault == Source.WIN) {
+
+            }
+
+
+            if (Common.isAndroid) {
+                fileName = "config_android";
+            }
+            if (Common.isWin) {
+                fileName = "config_" + Source.WIN;
+                fileName = "config_android";
+            }
+            // if (ishd == true)//AppVersion.appForPad
+            // {
+            //     fileName += "_hd";
+            // }
+        }
+
+        if (this == Config._common) {
+            loadInfoId = Config.COMMON;
+            fileName = "config_common";
+        }
+
+        //fileName += ".json";
+        var filepath = strDir + "/" + fileName;
+        cc.log("config:filepath=" + filepath+" loadInfoId="+loadInfoId);
 
         //cc.JsonAsset
-        cc.loader.loadRes(file, cc.JsonAsset, function (err, rootJson) {
+        cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {
                 cc.log("config:err=" + err);
@@ -66,8 +104,8 @@ var Config = cc.Class({
                 this.ParseData(rootJson.json);
             }
 
-            // cc.log("id=" + id);
-            var info = this.GetLoadInfoById(id);
+           cc.log("config:loadInfoId=" + loadInfoId);
+            var info = this.GetLoadInfoById(loadInfoId);
             if (info != null) {
                 info.isLoad = true;
                 // cc.log("id= info.isLoad=" + info.isLoad);
@@ -116,7 +154,7 @@ var Config = cc.Class({
                 isLoadAll = false;
             }
         }
-        // cc.log("isLoadAll=" + isLoadAll);
+       cc.log("config:isLoadAll=" + isLoadAll);
         if (isLoadAll == true) {
             // cc.log("isLoadAll= 1 " + isLoadAll);
             if (Config.callbackFinish != null) {
@@ -132,116 +170,24 @@ var Config = cc.Class({
         if (json == null) {
             cc.log("config:ParseData=null");
         }
-        var appid = json.APPID.huawei;
-        cc.log("config:appid=" + appid);
+
+        if (this == Config._main) {
+            this.rootJson = json;
+            var appid = json.APPID.huawei;
+            cc.log("config:appid=" + appid);
+        }
+
+        if (this == Config._common) {
+            this.rootJsonCommon = json;
+            var app_name_keyword = json.APP_NAME_KEYWORD;
+            var app_type = json.APP_TYPE;
+            cc.log("config:app_name_keyword=" + app_name_keyword+" app_type="+app_type);
+        }
+
 
     },
 
-    ParseJson: function (ishd) {
 
-        // if (Config.callbackFinish != null) {
-        //     Config.loadInfo.isLoad = true;
-        //     // cc.log("isLoadAll= 2 " + isLoadAll);
-        //     Config.callbackFinish(this);
-        // }
-
-        // if (this.rootJson != null) {
-        //     return;
-        // }
-
-        var strDir = Common.RES_CONFIG_DATA + "/config";
-
-        var fileName = "";
-
-        //Defualt
-        fileName = "config_" + this.osDefault;
-        if (this.osDefault == Source.ANDROID) {
-            fileName = "config_android";
-        }
-        if (this.osDefault == Source.IOS) {
-            fileName = "config_ios";
-        }
-        if (this.osDefault == Source.WIN) {
-
-        }
-
-
-        if (Common.isAndroid) {
-            fileName = "config_android";
-        }
-        if (Common.isWin) {
-            fileName = "config_" + Source.WIN;
-            fileName = "config_android";
-        }
-
-
-        if (ishd == true)//AppVersion.appForPad
-        {
-            fileName += "_hd";
-        }
-        //fileName += ".json";
-        var filepath = strDir + "/" + fileName;
-        cc.log("config:filepath=" + filepath);
-        this.Load(filepath, Config.MAIN);
-        /*
-                string json = FileUtil.ReadStringFromResources(strDir + "/" + fileName);//ReadStringAsset
-                rootJson = JsonMapper.ToObject(json);
-        
-                //appid
-        
-                JsonData jsonAppId = rootJson["APPID"];
-                foreach (string key in jsonAppId.Keys)
-                {
-                    string value = (string)jsonAppId[key];
-                    Debug.Log("APPID:key=" + key + " value=" + value);
-                    ItemInfo iteminfo = new ItemInfo();
-                    iteminfo.source = key;
-                    iteminfo.appid = value;
-                    listAppStore.Add(iteminfo);
-        
-                }
-        
-        
-        
-        
-        
-        
-                jsonShare = rootJson["SHARE"];
-                jsonPay = rootJson["PAY"];
-        
-                if (listSharePlatform == null)
-                {
-                    listSharePlatform = new List<SharePlatformInfo>();
-                }
-        
-                JsonData jsonPlatform = jsonShare["platform"];
-                foreach (JsonData data in jsonPlatform)
-                {
-                    SharePlatformInfo info = new SharePlatformInfo();
-                    info.source = (string)data["source"];
-                    info.appId = (string)data["id"];
-                    info.appKey = (string)data["key"];
-                    listSharePlatform.Add(info);
-                    if (info.source == Source.WEIXIN)
-                    {
-                        //同时添加朋友圈
-                        AddShareBrother(Source.WEIXINFRIEND, info.appId, info.appKey);
-                    }
-        
-                    if (info.source == Source.QQ)
-                    {
-                        //同时添加qq空间
-                        AddShareBrother(Source.QQZONE, info.appId, info.appKey);
-                    }
-        
-                }
-        
-                //统一添加email和短信
-                AddShareBrother(Source.EMAIL, "0", "0");
-                AddShareBrother(Source.SMS, "0", "0");
-        
-                */
-    }
 
 });
 
@@ -250,12 +196,19 @@ var Config = cc.Class({
 
 //单例对象 方法二
 Config._main = null;
+Config._common = null;
 Config.main = function () {
     if (!Config._main) {
         cc.log("_main is null");
         Config._main = new Config();
         Config._main.InitValue();
-        Config._main.Init();
+
+        Config._common = new Config();
+
+
+        Config._main.Load();
+        Config._common.Load();
+
     } else {
         cc.log("_main is not null");
     }
