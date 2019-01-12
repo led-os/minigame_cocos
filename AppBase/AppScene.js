@@ -47,7 +47,7 @@ cc.Class({
         //     controller.AddItem(info);
         // }
 
-        this.SetRootViewController(controller);//MainViewController HomeViewController
+        this.SetRootViewController(MainViewController.main());//MainViewController HomeViewController controller
     },
 
     // onLoad: function () {

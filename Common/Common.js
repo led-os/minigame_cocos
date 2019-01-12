@@ -1,4 +1,6 @@
 var Dictionary = require("Dictionary");
+//var Config = require("Config");
+
 //https://docs.cocos.com/creator/manual/zh/scripting/reference/class.html
 //api: https://docs.cocos.com/creator/api/zh/
 var Common = cc.Class({
@@ -36,23 +38,38 @@ var Common = cc.Class({
             },
 
         },
+
+  
+
+
     },
 
     properties: {
 
+      
     },
-
-
 
     Init: function () {
 
     },
 
-
+    JsonDataContainsKey: function (json, key) {
+        return true;
+        // return (json.key == null ? false : true);
+    },
 
 
 });
 
-Common.main = new Common();
-
+//Common.main2 = new Common();
+Common._main = null;
+Common.main = function () {
+    if (!Common._main) {
+        cc.log("_main is null");
+        Common._main = new Common();
+    } else {
+        cc.log("_main is not null");
+    }
+    return Common._main;
+}
 

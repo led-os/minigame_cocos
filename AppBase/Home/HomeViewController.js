@@ -1,6 +1,8 @@
 var UIViewController = require("UIViewController");
-var UIViewHome = require("UIViewHome");
+var UIHomeBase = require("UIHomeBase");
 var PrefabCache = require("PrefabCache");
+var Common = require("Common");
+var Config = require("Config");
 
 var HomeViewController = cc.Class({
     extends: UIViewController,
@@ -11,7 +13,7 @@ var HomeViewController = cc.Class({
         },
         uiHome: {
             default: null,
-            type: UIViewHome
+            type: UIHomeBase
         },
 
 
@@ -33,8 +35,10 @@ var HomeViewController = cc.Class({
     },
 
     LoadPrefab: function () {
-        //   name = "UIHome" + Common.appType;
-        var strPrefab = "App/Prefab/Home/UIHome";
+        // var ishave = Common.main().JsonDataContainsKey(null, "key"); 
+        // var strPrefab = "App/Prefab/Home/UIHome" + Common.main().appType;
+        var strPrefab = "App/Prefab/Home/UIHome" + Config.main().appType;
+
         var strPrefabDefault = "Common/Prefab/Home/UIHomeDefault";
         // GameObject obj = PrefabCache.main.Load(strPrefab);
         // if (obj == null) {
@@ -42,13 +46,12 @@ var HomeViewController = cc.Class({
         // }
 
         // uiHomePrefab = obj.GetComponent<UIHomeBase>();
-
+        cc.log("HomeViewController LoadPrefab=" + strPrefab);
         PrefabCache.main.Load(strPrefab, function (err, prefab) {
             this.uiHomePrefab = prefab;
             var node = cc.instantiate(prefab);
-            this.uiHome = node.getComponent(UIViewHome);
+            this.uiHome = node.getComponent(UIHomeBase);
             this.uiHome.SetController(this);
-            // node.parent = this.objController;
         }.bind(this)
         );
     },

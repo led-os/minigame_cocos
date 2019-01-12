@@ -22,6 +22,18 @@ var Config = cc.Class({
         rootJson: null,
         rootJsonCommon: null,
         osDefault: "",//Source.IOS, 
+        appKeyName:
+        {
+            get: function () {
+                return this.rootJsonCommon.APP_NAME_KEYWORD;
+            },
+        },
+        appType:
+        {
+            get: function () {
+                return this.rootJsonCommon.APP_TYPE;
+            },
+        },
     },
 
     SetLoadFinishCallBack: function (callback, info) {
@@ -67,8 +79,6 @@ var Config = cc.Class({
             if (this.osDefault == Source.WIN) {
 
             }
-
-
             if (Common.isAndroid) {
                 fileName = "config_android";
             }
@@ -89,7 +99,7 @@ var Config = cc.Class({
 
         //fileName += ".json";
         var filepath = strDir + "/" + fileName;
-        cc.log("config:filepath=" + filepath+" loadInfoId="+loadInfoId);
+        cc.log("config:filepath=" + filepath + " loadInfoId=" + loadInfoId);
 
         //cc.JsonAsset
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
@@ -104,7 +114,7 @@ var Config = cc.Class({
                 this.ParseData(rootJson.json);
             }
 
-           cc.log("config:loadInfoId=" + loadInfoId);
+            cc.log("config:loadInfoId=" + loadInfoId);
             var info = this.GetLoadInfoById(loadInfoId);
             if (info != null) {
                 info.isLoad = true;
@@ -139,6 +149,32 @@ var Config = cc.Class({
         //cc.log("isLoadAll=loadRes end");
     },
 
+    GetStringJson: function (json, key, def) {
+        cc.log("GetStringJson key=" + key);
+        if (json == null) {
+            cc.log("GetStringJson json=null");
+        }
+        var str = def;
+        var ishave = Common.main().JsonDataContainsKey(json, key);
+        if (ishave == true) {
+            // str = json.APP_TYPE;
+            cc.log("GetStringJson  JsonDataContainsKey=" + str);
+        }
+        return str;
+    },
+
+    GetStringCommon: function (key, def) {
+        cc.log("GetStringJson GetStringCommon key=" + key);
+        return this.GetStringJson(this.rootJsonCommon, key, def);
+    },
+    GetString: function (key, def) {
+        return this.GetStringJson(this.rootJson, key, def);
+    },
+
+    IsHaveKey(key) {
+        return Common.main().JsonDataContainsKey(this.rootJson, key);
+    },
+
     GetLoadInfoById: function (id) {
         for (let info of Config.listLoad) {
             if (info.id == id) {
@@ -154,7 +190,7 @@ var Config = cc.Class({
                 isLoadAll = false;
             }
         }
-       cc.log("config:isLoadAll=" + isLoadAll);
+        cc.log("config:isLoadAll=" + isLoadAll);
         if (isLoadAll == true) {
             // cc.log("isLoadAll= 1 " + isLoadAll);
             if (Config.callbackFinish != null) {
@@ -179,9 +215,10 @@ var Config = cc.Class({
 
         if (this == Config._common) {
             this.rootJsonCommon = json;
+            Config._main.rootJsonCommon = json;
             var app_name_keyword = json.APP_NAME_KEYWORD;
             var app_type = json.APP_TYPE;
-            cc.log("config:app_name_keyword=" + app_name_keyword+" app_type="+app_type);
+            cc.log("config:app_name_keyword=" + app_name_keyword + " app_type=" + app_type);
         }
 
 
