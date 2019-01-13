@@ -27,8 +27,7 @@ cc.Class({
     },
     RunApp: function () {
         cc.log("AppScene RunApp");
-        // base.RunApp();
-
+        // base.RunApp(); 
         // InitAd();
         var controller = TabBarViewController.main();
         {

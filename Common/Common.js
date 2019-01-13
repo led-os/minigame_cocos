@@ -39,14 +39,22 @@ var Common = cc.Class({
 
         },
 
-  
+        _appSceneBase: null,
+        appSceneBase: {
+            get: function () {
+                return this._appSceneBase;
+            },
+            set: function (value) {
+                this._appSceneBase = value;
+            },
+        },
 
 
     },
 
     properties: {
 
-      
+
     },
 
     Init: function () {

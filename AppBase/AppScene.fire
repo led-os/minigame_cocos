@@ -44,8 +44,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.12935384114583334,
-      "y": 0.12935384114583334,
+      "x": 0.12961426377296448,
+      "y": 0.12961426377296448,
       "z": 1
     },
     "_quat": {
@@ -138,6 +138,8 @@
     },
     "node1": null,
     "sizeCanvas": null,
+    "listProLoad": [],
+    "isHasRunApp": false,
     "title": "sss",
     "_id": "4cq9S1vsVN7J2iPK4FRrgr"
   },

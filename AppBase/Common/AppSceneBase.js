@@ -63,7 +63,13 @@ var AppSceneBase = cc.Class({
     },
     onLoad: function () {
         cc.log("AppSceneBase onLoad");
-        AppSceneBase.main = this;
+        //AppSceneBase.main = this;
+        // if(AppSceneBase.main==null){
+        //     cc.log(" AppSceneBase.main onLoad size is null");
+        // }else{
+        //     cc.log(" AppSceneBase.main onLoad size is not null");
+        // }
+        Common.appSceneBase = this;
         this.isHasRunApp = false;
         this.InitValue();
         // this.RunApp();
@@ -178,4 +184,4 @@ var AppSceneBase = cc.Class({
     // update (dt) {},
 });
 
-AppSceneBase.main = null; 
+//AppSceneBase.main = null; 
