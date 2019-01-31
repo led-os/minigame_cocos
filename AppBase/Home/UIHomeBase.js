@@ -32,10 +32,10 @@ cc.Class({
         // }else{
         //     cc.log(" AppSceneBase.main size is not null");
         // }
-        w = Common.appSceneBase.sizeCanvas.width;
+        w = Common.appSceneMain.sizeCanvas.width;
         var size = this.objTopBar.getContentSize();
         h = size.height;
-        y = Common.appSceneBase.sizeCanvas.height / 2 - h / 2;
+        y = Common.appSceneMain.sizeCanvas.height / 2 - h / 2;
         this.objTopBar.setContentSize(cc.size(w, h));
         this.objTopBar.setPosition(0, y, 0);
 
@@ -43,7 +43,7 @@ cc.Class({
         cc.log("objTopBar size=" + size);
         size = this.objLayoutBtn.getContentSize();
         h = size.height;
-        y = -Common.appSceneBase.sizeCanvas.height / 2 + h / 2;
+        y = -Common.appSceneMain.sizeCanvas.height / 2 + h / 2;
         this.objLayoutBtn.setContentSize(cc.size(w, h));
         this.objLayoutBtn.setPosition(0, y, 0);
 
@@ -80,7 +80,7 @@ cc.Class({
         var size = this.imageBg.node.getContentSize();
         var x = size.width;
         var y = size.height;
-        var scale = Common.GetMaxFitScale(x, y, Common.appSceneBase.sizeCanvas.width, Common.appSceneBase.sizeCanvas.height); 
+        var scale = Common.GetMaxFitScale(x, y, Common.appSceneMain.sizeCanvas.width, Common.appSceneMain.sizeCanvas.height); 
         this.imageBg.node.scaleX = scale;
         this.imageBg.node.scaleY = scale;
     },

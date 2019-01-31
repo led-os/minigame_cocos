@@ -1,4 +1,5 @@
 var UIView = require("UIView");
+var SettingViewController = require("SettingViewController");
 cc.Class({
     extends: UIView,
     statics: {
@@ -32,5 +33,16 @@ cc.Class({
             default: null,
             type: cc.Button
         },
+    },
+    OnClickBtnNoAd: function (event, customEventData) {
+    },
+    OnClickBtnMore: function (event, customEventData) {
+    },
+    OnClickBtnShare: function (event, customEventData) {
+    },
+    OnClickBtnSetting: function (event, customEventData) {
+        SettingViewController.main().Show(null,null);
+    },
+    OnClickBtnAdVideo: function (event, customEventData) {
     },
 }); 

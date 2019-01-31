@@ -69,7 +69,7 @@ var AppSceneBase = cc.Class({
         // }else{
         //     cc.log(" AppSceneBase.main onLoad size is not null");
         // }
-        Common.appSceneBase = this;
+        Common.appSceneMain = this;
         this.isHasRunApp = false;
         this.InitValue();
         // this.RunApp();
