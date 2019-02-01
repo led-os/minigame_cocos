@@ -1,5 +1,5 @@
 var PopViewController = require("PopViewController");
-var UIHomeBase = require("UIHomeBase");
+var UISetting = require("UISetting");
 var PrefabCache = require("PrefabCache");
 var Common = require("Common");
 var Config = require("Config");
@@ -21,15 +21,21 @@ var SettingViewController = cc.Class({
     Init: function () {
     },
     CreateUI: function () {
-        var node = cc.instantiate(this.prefab);
-        this.ui = node.getComponent(UISetting);
-        this.ui.SetController(this);
-        
+        var node = cc.instantiate(this.uiPrefab);
+        if (node != null) {
+            this.ui = node.getComponent(UISetting);
+            this.ui.SetController(this);
+        }
+
+
     },
 
     LoadPrefab: function () {
-        var strPrefab = "App/Prefab/Setting/UISetting";
+        var strPrefab = "Common/Prefab/Setting/UISetting";
         PrefabCache.main.Load(strPrefab, function (err, prefab) {
+            if (err) {
+                cc.log(err.message || err);
+            }
             this.uiPrefab = prefab;
             this.CreateUI();
         }.bind(this)
