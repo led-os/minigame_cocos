@@ -39,30 +39,28 @@ var Common = cc.Class({
 
         },
 
-//cocos2d-js中Math对象的常用方法总结
-//https://blog.csdn.net/lianghui0811/article/details/76525065?utm_source=blogxgwz4
+        //cocos2d-js中Math对象的常用方法总结
+        //https://blog.csdn.net/lianghui0811/article/details/76525065?utm_source=blogxgwz4
         GetBestFitScale: function (w_content, h_content, w_rect, h_rect) {
-            if ((w_rect == 0) || (h_rect == 0))
-            {
+            if ((w_rect == 0) || (h_rect == 0)) {
                 return 1;
             }
             var scalex = w_rect / w_content;
             var scaley = h_rect / h_content;
             var scale = Math.min(scalex, scaley);
-             return scale;
+            return scale;
         },
 
         GetMaxFitScale: function (w_content, h_content, w_rect, h_rect) {
-            if ((w_rect == 0) || (h_rect == 0))
-            {
+            if ((w_rect == 0) || (h_rect == 0)) {
                 return 1;
             }
             var scalex = w_rect / w_content;
             var scaley = h_rect / h_content;
-            var scale = Math.max(scalex, scaley); 
+            var scale = Math.max(scalex, scaley);
             return scale;
         },
-
+    
 
         _appSceneBase: null,
         appSceneBase: {

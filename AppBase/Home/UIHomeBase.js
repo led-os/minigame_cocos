@@ -2,6 +2,7 @@ var UIView = require("UIView");
 var Common = require("Common");
 var TextureCache = require("TextureCache");
 var AppRes = require("AppRes");
+var LayoutScale = require("LayoutScale");
 
 cc.Class({
     extends: UIView,
@@ -77,12 +78,7 @@ cc.Class({
     },
 
     LayOut: function () {
-        var size = this.imageBg.node.getContentSize();
-        var x = size.width;
-        var y = size.height;
-        var scale = Common.GetMaxFitScale(x, y, Common.appSceneMain.sizeCanvas.width, Common.appSceneMain.sizeCanvas.height); 
-        this.imageBg.node.scaleX = scale;
-        this.imageBg.node.scaleY = scale;
+        LayoutScale.ScaleImage(this.imageBg,true);
     },
 
 });

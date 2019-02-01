@@ -31,7 +31,7 @@ cc.Class({
     DestroyObjController: function () {
         this.ViewDidUnLoad();
         if (this.objController != null) {
-            this.objController.destroy();
+            this.objController.destroy(); 
             this.objController = null;
         }
     },
