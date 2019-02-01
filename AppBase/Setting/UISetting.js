@@ -4,6 +4,7 @@ var AppRes = require("AppRes");
 var TextureCache = require("TextureCache");
 var Common = require("Common");
 var LayoutScale = require("LayoutScale");
+var LayoutAlign = require("LayoutAlign");
 
 cc.Class({
     extends: UIView,
@@ -14,12 +15,13 @@ cc.Class({
         },
 
         imageBg: cc.Sprite,
+        topBar: cc.Node,
     },
 
-    onLoad: function () { 
+    onLoad: function () {
 
         var strImage = AppRes.IMAGE_HOME_BG;
-        TextureCache.main.Load(strImage, function (err, tex) { 
+        TextureCache.main.Load(strImage, function (err, tex) {
             if (err) {
                 cc.log(err.message || err);
                 return;
@@ -28,16 +30,19 @@ cc.Class({
             this.LayOut();
         }.bind(this));
 
+        var layoutAlign = this.topBar.addComponent(LayoutAlign)
+        layoutAlign.alignType = LayoutAlign.ALIGN_UP;
+
     },
 
-    OnClickBtnBack: function (event, customEventData) { 
+    OnClickBtnBack: function (event, customEventData) {
         cc.log("UISetting OnClickBtnBack");
-       this.controller.Close();
+        this.controller.Close();
     },
 
-    
+
     LayOut: function () {
-        LayoutScale.ScaleImage(this.imageBg,true);
+        LayoutScale.ScaleImage(this.imageBg, true);
     },
 });
 
