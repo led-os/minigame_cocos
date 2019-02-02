@@ -30,8 +30,12 @@ cc.Class({
             this.LayOut();
         }.bind(this));
 
-        var layoutAlign = this.topBar.addComponent(LayoutAlign)
-        layoutAlign.alignType = LayoutAlign.ALIGN_UP;
+        //var layoutAlign = this.topBar.addComponent(LayoutAlign)
+        var layoutAlign = this.topBar.getComponent(LayoutAlign);
+        if (layoutAlign != null) {
+            // layoutAlign.alignType = LayoutAlign.AlignType.UP;
+        }
+
 
     },
 

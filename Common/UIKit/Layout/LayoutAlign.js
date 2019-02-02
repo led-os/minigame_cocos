@@ -1,48 +1,44 @@
 var Common = require("Common");
 
-
-// var AlignType = cc.Enum({
-//     Up: 0,
-//     Down: 1,
-//     Left: 2,
-//     Right: 3
-// });
-
-// //其他脚本访问
-// module.exports = {
-//     AlignType:AlignType, 
-// };
+var AlignType = cc.Enum({
+    //区分大小写
+    UP: 0,
+    DOWN: 1,
+    LEFT: 2,
+    RIGHT: 3
+});
 
 //对齐
 var LayoutAlign = cc.Class({
     extends: cc.Component,
+
+    statics: {
+        //enum
+        AlignType: AlignType,
+
+    },
+
     properties: {
-        // _alignType: {
-        //     default: AlignType.Up,
-        //     type: AlignType,
-        // },
-        _alignType:0,
+        _alignType: AlignType.UP,
         alignType: {
+            //default 和 get set 不能同时存在
+            // default:AlignType.UP, 
+            type: AlignType,
             get: function () {
                 return this._alignType;
             },
             set: function (value) {
-                this.UpdateType(value);
+                return this.UpdateType(value);
             },
         },
     },
 
-    statics: {
-        ALIGN_UP:0,
-        ALIGN_DOWN:1,
-        ALIGN_LEFT:2,
-        ALIGN_RIGHT:3,
 
-    },
 
 
     onLoad: function () {
-        cc.log("onLoad this.alignType=" + this._alignType);
+        cc.log("onLoad this.alignType=" + this.alignType);
+        this.UpdateType(this.alignType);
 
     },
 
@@ -50,21 +46,37 @@ var LayoutAlign = cc.Class({
         this._alignType = type;
         cc.log("UpdateType this.alignType=" + this._alignType);
         var x, y, w, h;
-        w = Common.appSceneMain.sizeCanvas.width;
         var size = this.node.getContentSize();
+        w = size.width;
         h = size.height;
- 
+
         switch (this._alignType) {
-            case LayoutAlign.ALIGN_UP:
+            case AlignType.UP:
                 {
+                    x = 0;
                     y = Common.appSceneMain.sizeCanvas.height / 2 - h / 2;
-                    this.node.setPosition(0, y, 0);
+                    this.node.setPosition(x, y, 0);
                 }
                 break;
-            case LayoutAlign.ALIGN_DOWN:
+            case AlignType.DOWN:
                 {
+                    x = 0;
                     y = -Common.appSceneMain.sizeCanvas.height / 2 + h / 2;
-                    this.node.setPosition(0, y, 0);
+                    this.node.setPosition(x, y, 0);
+                }
+                break;
+            case AlignType.LEFT:
+                {
+                    x = -Common.appSceneMain.sizeCanvas.width / 2 + w / 2;
+                    y = 0;
+                    this.node.setPosition(x, y, 0);
+                }
+                break;
+            case AlignType.RIGHT:
+                {
+                    x = Common.appSceneMain.sizeCanvas.width / 2 - w / 2;
+                    y = 0;
+                    this.node.setPosition(x, y, 0);
                 }
                 break;
         }
