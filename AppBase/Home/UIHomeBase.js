@@ -27,9 +27,14 @@ cc.Class({
     },
 
     onLoad: function () {
+        this._super();
+       // this.node.setContentSize(Common.appSceneMain.sizeCanvas); 
+       this.node.setContentSize(this.node.parent.getContentSize());
+
         var x, y, w, h;
+
         // if(AppSceneBase.main==null){
-        //     cc.log(" AppSceneBase.main size is null");
+        //     cc. this.node.setContentSize(Common.appSceneMain.sizeCanvas); log(" AppSceneBase.main size is null");
         // }else{
         //     cc.log(" AppSceneBase.main size is not null");
         // }

@@ -7,7 +7,7 @@ cc.Class({
     },
 
     onLoad: function () {
-
+        this._super();
     },
 });
 

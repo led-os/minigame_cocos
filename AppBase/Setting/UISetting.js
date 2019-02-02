@@ -19,6 +19,8 @@ cc.Class({
     },
 
     onLoad: function () {
+        this._super();
+        this.node.setContentSize(this.node.parent.getContentSize());
 
         var strImage = AppRes.IMAGE_HOME_BG;
         TextureCache.main.Load(strImage, function (err, tex) {

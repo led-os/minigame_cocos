@@ -61,7 +61,7 @@ var AppSceneBase = cc.Class({
         },
         isHasRunApp: false,
     },
-    onLoad: function () {
+    onLoad: function () { 
         cc.log("AppSceneBase onLoad");
         //AppSceneBase.main = this;
         // if(AppSceneBase.main==null){

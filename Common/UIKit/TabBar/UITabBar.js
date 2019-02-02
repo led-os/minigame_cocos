@@ -27,6 +27,7 @@ cc.Class({
     },
     onLoad: function () {
         cc.log("UITabBar onLoad");
+        this._super();
         this.LoadPrefab();
         var strImage = "Common/UI/UIKit/barbg";
         TextureCache.main.Load(strImage, function (err, tex) {

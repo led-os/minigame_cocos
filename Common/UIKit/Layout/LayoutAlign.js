@@ -5,7 +5,12 @@ var AlignType = cc.Enum({
     UP: 0,
     DOWN: 1,
     LEFT: 2,
-    RIGHT: 3
+    RIGHT: 3,
+    UP_LEFT: 4,
+    UP_RIGHT: 5,
+    DOWN_LEFT: 6,
+    DOWN_RIGHT: 7,
+
 });
 
 //对齐
@@ -36,7 +41,7 @@ var LayoutAlign = cc.Class({
 
 
 
-    onLoad: function () {
+    onLoad: function () { 
         cc.log("onLoad this.alignType=" + this.alignType);
         this.UpdateType(this.alignType);
 
@@ -44,41 +49,82 @@ var LayoutAlign = cc.Class({
 
     UpdateType: function (type) {
         this._alignType = type;
-        cc.log("UpdateType this.alignType=" + this._alignType);
+
         var x, y, w, h;
+        var rectParent = this.node.parent.getBoundingBox();
+        var sizeParent = this.node.parent.getContentSize();
+        var w_parent = rectParent.width;
+        var h_parent = rectParent.height;
+        w_parent = sizeParent.width;
+        h_parent = sizeParent.height;
+
         var size = this.node.getContentSize();
         w = size.width;
         h = size.height;
-
+        x = this.node.getPosition().x;
+        y = this.node.getPosition().y;
+        cc.log("UpdateType this.alignType=" + this._alignType + " w=" + w + " h=" + h + " x=" + x + " y=" + y + " rectParent=" + rectParent);
+        //Common.appSceneMain.sizeCanvas.height 
         switch (this._alignType) {
             case AlignType.UP:
                 {
-                    x = 0;
-                    y = Common.appSceneMain.sizeCanvas.height / 2 - h / 2;
+                    x = this.node.getPosition().x;
+                    y = h_parent / 2 - h / 2;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case AlignType.DOWN:
                 {
-                    x = 0;
-                    y = -Common.appSceneMain.sizeCanvas.height / 2 + h / 2;
+                    x = this.node.getPosition().x;
+                    y = -h_parent / 2 + h / 2;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case AlignType.LEFT:
                 {
-                    x = -Common.appSceneMain.sizeCanvas.width / 2 + w / 2;
-                    y = 0;
+                    x = -w_parent / 2 + w / 2;
+                    y = this.node.getPosition().y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case AlignType.RIGHT:
                 {
-                    x = Common.appSceneMain.sizeCanvas.width / 2 - w / 2;
-                    y = 0;
+                    x = w_parent / 2 - w / 2;
+                    y = this.node.getPosition().y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
+
+            case AlignType.UP_LEFT:
+                {
+                    //x = this.node.getPosition().x;
+                    x = -w_parent / 2 + w / 2;
+                    y = h_parent / 2 - h / 2;
+                    this.node.setPosition(x, y, 0);
+                }
+                break;
+            case AlignType.UP_RIGHT:
+                {
+                    x = w_parent / 2 - w / 2;
+                    y = h_parent / 2 - h / 2;
+                    this.node.setPosition(x, y, 0);
+                }
+                break;
+            case AlignType.DOWN_LEFT:
+                {
+                    x = -w_parent / 2 + w / 2;
+                    y = -h_parent / 2 + h / 2;
+                    this.node.setPosition(x, y, 0);
+                }
+                break;
+            case AlignType.DOWN_RIGHT:
+                {
+                    x = w_parent / 2 - w / 2;
+                    y = -h_parent / 2 + h / 2;
+                    this.node.setPosition(x, y, 0);
+                }
+                break;
+
         }
     },
 

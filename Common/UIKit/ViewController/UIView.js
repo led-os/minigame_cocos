@@ -1,4 +1,6 @@
 var UIViewController = require("UIViewController");
+var Common = require("Common");
+
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -19,11 +21,19 @@ cc.Class({
         title: 'title'
     },
 
+    onLoad: function () {  
+    
+    },
+
     //UIViewController
     SetController: function (con) {
         this.controller = con;
         this.node.parent = con.objController;
         con.view = this;
+
+        // this.node.setContentSize(Common.appSceneMain.sizeCanvas); 
+        // this.node.setPosition(0, 0, 0);
+
     },
 
     SetViewParent: function (node) {
