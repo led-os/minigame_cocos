@@ -17,12 +17,12 @@ cc.Class({
         frame: {
             default: null,
             type: cc.rect,
-        }, 
+        },
         title: 'title'
     },
 
-    onLoad: function () {  
-    
+    onLoad: function () {
+
     },
 
     //UIViewController
@@ -44,6 +44,14 @@ cc.Class({
 
     LayOut: function () {
 
+    },
+
+    //统一按钮状态图片
+    UnifyButtonSprite: function (btn) {
+        if (btn != null) {
+            btn.pressedSprite = btn.normalSprite;
+            btn.hoverSprite = btn.normalSprite;
+        }
     },
 });
 

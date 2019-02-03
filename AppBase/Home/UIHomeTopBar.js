@@ -1,5 +1,7 @@
 var UIView = require("UIView");
 var SettingViewController = require("SettingViewController");
+var TextureCache = require("TextureCache");
+
 cc.Class({
     extends: UIView,
     statics: {
@@ -37,8 +39,18 @@ cc.Class({
 
     onLoad:function()
     {
-       
+        
+        this.UnifyButtonSprite(this.btnNoAd);
+        this.UnifyButtonSprite(this.btnRestoreIAP);
+        this.UnifyButtonSprite(this.btnMore);
+        this.UnifyButtonSprite(this.btnSetting);
+        this.UnifyButtonSprite(this.btnShare);
+        this.UnifyButtonSprite(this.btnAdVideo);
     },
+
+    LayOut: function () { 
+    },
+
 
     OnClickBtnNoAd: function (event, customEventData) {
     },
