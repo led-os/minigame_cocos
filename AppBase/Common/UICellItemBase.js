@@ -1,6 +1,6 @@
 var UIView = require("UIView");
 
-cc.Class({
+var UICellItemBase = cc.Class({
     extends: UIView,
     properties: {
 
@@ -10,4 +10,6 @@ cc.Class({
         this._super();
     },
 });
+
+cc.UICellItemBase = module.export = UICellItemBase;
 
