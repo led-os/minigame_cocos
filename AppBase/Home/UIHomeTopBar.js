@@ -34,6 +34,12 @@ cc.Class({
             type: cc.Button
         },
     },
+
+    onLoad:function()
+    {
+       
+    },
+
     OnClickBtnNoAd: function (event, customEventData) {
     },
     OnClickBtnMore: function (event, customEventData) {

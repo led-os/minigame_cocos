@@ -16,6 +16,11 @@ var Common = cc.Class({
         THUMB_SUFFIX: "_thumb",
         TOUCH_MOVE_STEP_MIN: 3.0,//6.0f
 
+        //默认参考设计分辨率
+        WIDTH_DESIGN_DEFAULT:2048,
+        HEIGHT_DESIGN_DEFAULT:1536,
+
+
         isAndroid: {
             get: function () {
                 return (cc.sys.platform == cc.sys.OS_ANDROID) ? true : false;
@@ -60,8 +65,25 @@ var Common = cc.Class({
             var scale = Math.max(scalex, scaley);
             return scale;
         },
-    
 
+
+        GetSizeCanvas: function (sizeDesign) {
+            //初始化分辨率相关参数
+            var size =cc.size(Common.WIDTH_DESIGN_DEFAULT, Common.HEIGHT_DESIGN_DEFAULT) // this.canvasMain.designResolution; 参考设计分辨率
+            if(sizeDesign!=null)
+            {
+                size = sizeDesign;
+            }
+            var sizeCanvas = cc.size(0, 0);
+            sizeCanvas.height = size.height;
+            cc.log("canvasMain size=" + size);
+            let screenSize = cc.view.getVisibleSize();//屏幕分辨率
+            cc.log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
+
+            sizeCanvas.width = screenSize.width * sizeCanvas.height / screenSize.height;
+            cc.log("sizeCanvas size=" + sizeCanvas);
+            return sizeCanvas;
+        },
         _appSceneBase: null,
         appSceneBase: {
             get: function () {

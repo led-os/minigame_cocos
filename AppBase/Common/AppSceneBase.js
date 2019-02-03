@@ -61,7 +61,7 @@ var AppSceneBase = cc.Class({
         },
         isHasRunApp: false,
     },
-    onLoad: function () { 
+    onLoad: function () {
         cc.log("AppSceneBase onLoad");
         //AppSceneBase.main = this;
         // if(AppSceneBase.main==null){
@@ -101,20 +101,23 @@ var AppSceneBase = cc.Class({
 
         {
             //初始化分辨率相关参数
-            var size = this.canvasMain.designResolution;//参考设计分辨率
-            this.sizeCanvas = cc.size(0, 0);
-            this.sizeCanvas.height = size.height;
-            cc.log("canvasMain size=" + size);
-            let screenSize = cc.view.getVisibleSize();//屏幕分辨率
-            cc.log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
+            // var size = this.canvasMain.designResolution;//参考设计分辨率
+            // this.sizeCanvas = cc.size(0, 0);
+            // this.sizeCanvas.height = size.height;
+            // cc.log("canvasMain size=" + size);
+            // let screenSize = cc.view.getVisibleSize();//屏幕分辨率
+            // cc.log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
 
-            this.sizeCanvas.width = screenSize.width * this.sizeCanvas.height / screenSize.height;
-            cc.log("sizeCanvas size=" + this.sizeCanvas);
-            var framesize = cc.view.getFrameSize();
-            cc.log("frame size=" + framesize);
-            // cc.view.setFrameSize(windowSize.width,windowSize.height);
-            // var framesize1 = cc.view.getFrameSize();
-            //  cc.log("new frame size=" + framesize1);
+            // this.sizeCanvas.width = screenSize.width * this.sizeCanvas.height / screenSize.height;
+            // cc.log("sizeCanvas size=" + this.sizeCanvas);
+            // var framesize = cc.view.getFrameSize();
+            // cc.log("frame size=" + framesize);
+            // // cc.view.setFrameSize(windowSize.width,windowSize.height);
+            // // var framesize1 = cc.view.getFrameSize();
+            // //  cc.log("new frame size=" + framesize1);
+
+
+            this.sizeCanvas = Common.GetSizeCanvas(this.canvasMain.designResolution);
         }
 
         //config
