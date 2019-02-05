@@ -5,7 +5,7 @@ var LayoutScale = require("LayoutScale");
 var Common = require("Common");
 var PlaceViewController = require("PlaceViewController");
 var GuankaViewController = require("GuankaViewController");
-//var NaviViewController = require("NaviViewController");
+//var NaviViewController = require("NaviViewController"); 
 
 cc.Class({
     extends: UIHomeBase,
@@ -72,19 +72,18 @@ cc.Class({
     },
 
 
-    OnClickBtnShape: function (event, customEventData) {
-
+    OnClickBtnShape: function (event, customEventData) { 
         if (this.controller != null) {
             var navi = this.controller.naviController;
             var total = 2;//GameManager.placeTotal;
             if (total > 1) {
                 if (navi != null) {
-                    navi.Push(PlaceViewController.main);
+                    navi.Push(PlaceViewController.main());
                 }
 
             }
             else {
-                navi.Push(GuankaViewController.main);
+                navi.Push(GuankaViewController.main());
             }
         }
 
