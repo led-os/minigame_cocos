@@ -39,7 +39,7 @@ cc.Class({
 
     onLoad:function()
     {
-        
+       
         this.UnifyButtonSprite(this.btnNoAd);
         this.UnifyButtonSprite(this.btnRestoreIAP);
         this.UnifyButtonSprite(this.btnMore);
@@ -49,6 +49,7 @@ cc.Class({
     },
 
     LayOut: function () { 
+       
     },
 
 

@@ -11,5 +11,5 @@ var UICellItemBase = cc.Class({
     },
 });
 
-cc.UICellItemBase = module.export = UICellItemBase;
+//cc.UICellItemBase = module.export = UICellItemBase;
 

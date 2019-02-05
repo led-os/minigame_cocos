@@ -17,6 +17,8 @@ cc.Class({
             default: null,
             type: UIView
         },
+        naviController:null,
+
         title: 'title'
     },
 

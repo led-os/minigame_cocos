@@ -1,7 +1,8 @@
 var UIView = require("UIView");
+var UICellItemBase = require("UICellItemBase");
 
 cc.Class({
-    extends: UIView,
+    extends: UICellItemBase,
     properties: {
 
     },

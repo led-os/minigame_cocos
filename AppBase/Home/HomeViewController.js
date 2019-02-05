@@ -7,11 +7,11 @@ var Config = require("Config");
 var HomeViewController = cc.Class({
     extends: UIViewController,
     properties: {
-        uiHomePrefab: {
+        uiPrefab: {
             default: null,
             type: cc.Prefab
         },
-        uiHome: {
+        ui: {
             default: null,
             type: UIHomeBase
         },
@@ -24,34 +24,37 @@ var HomeViewController = cc.Class({
     },
     CreateUI: function () {
         cc.log("HomeViewController CreateUI");
+        var node = cc.instantiate(this.uiPrefab);
+        this.ui = node.getComponent(UIHomeBase);
+        this.ui.SetController(this);
+    },
 
-        // if (this.naviController != null) {
-        //     this.naviController.HideNavibar(true);
-        // }
-        // uiHome = (UIHomeBase)GameObject.Instantiate(uiHomePrefab);
-        // uiHome.SetController(this);
-        // ViewControllerManager.ClonePrefabRectTransform(uiHomePrefab.gameObject, uiHome.gameObject);
-        // uiHome.Init();
+    LoadPrefabDefault: function () {
+        var strPrefabDefault = "Common/Prefab/Home/UIHomeDefault";
+        PrefabCache.main.Load(strPrefabDefault, function (err, prefab) {
+            if (err) {
+                cc.log(err.message || err);
+                this.LoadPrefab();
+                return;
+            }
+            this.uiPrefab = prefab;
+            this.CreateUI();
+        }.bind(this)
+        );
     },
 
     LoadPrefab: function () {
-        // var ishave = Common.main().JsonDataContainsKey(null, "key"); 
-        // var strPrefab = "App/Prefab/Home/UIHome" + Common.main().appType;
         var strPrefab = "App/Prefab/Home/UIHome" + Config.main().appType;
 
-        var strPrefabDefault = "Common/Prefab/Home/UIHomeDefault";
-        // GameObject obj = PrefabCache.main.Load(strPrefab);
-        // if (obj == null) {
-        //     obj = PrefabCache.main.Load(strPrefabDefault);
-        // }
-
-        // uiHomePrefab = obj.GetComponent<UIHomeBase>();
         cc.log("HomeViewController LoadPrefab=" + strPrefab);
         PrefabCache.main.Load(strPrefab, function (err, prefab) {
-            this.uiHomePrefab = prefab;
-            var node = cc.instantiate(prefab);
-            this.uiHome = node.getComponent(UIHomeBase);
-            this.uiHome.SetController(this);
+            if (err) {
+                cc.log(err.message || err);
+                this.LoadPrefab();
+                return;
+            }
+            this.uiPrefab = prefab;
+            this.CreateUI();
         }.bind(this)
         );
     },
@@ -59,7 +62,7 @@ var HomeViewController = cc.Class({
     ViewDidLoad: function () {
         cc.log("HomeViewController ViewDidLoad");
         this._super();
-        this.LoadPrefab();
+        this.LoadPrefabDefault();
     },
     ViewDidUnLoad: function () {
         cc.log("HomeViewController ViewDidUnLoad");

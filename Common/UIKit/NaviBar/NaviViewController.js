@@ -69,7 +69,7 @@ cc.Class({
         }
         this.listController.push(controller);
         //  controller.type = UIViewController.Type.NAVIBAR;
-        // controller.naviController = this;
+        controller.naviController = this;
         this.UpdateController();
 
     },
