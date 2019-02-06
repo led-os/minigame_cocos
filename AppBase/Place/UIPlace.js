@@ -3,6 +3,7 @@ var UIPlaceBase = require("UIPlaceBase");
 cc.Class({
     extends: UIPlaceBase,
     properties: {
+        imageBg: cc.Sprite,
         tableView: cc.tableView,
         btnBack: {
             default: null,

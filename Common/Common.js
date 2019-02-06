@@ -84,6 +84,22 @@ var Common = cc.Class({
             cc.log("sizeCanvas size=" + sizeCanvas);
             return sizeCanvas;
         },
+
+        GetSizeOfParnet(node)
+        {
+            var sizeParent = node.parent.getContentSize();
+            var w_parent = sizeParent.width;
+            var h_parent = sizeParent.height; 
+            var sizeCanvas = Common.GetSizeCanvas(null);//屏幕分辨率
+            if (w_parent == 0) {
+                w_parent = sizeCanvas.width;
+            }
+            if (h_parent == 0) {
+                h_parent = sizeCanvas.height;
+            }
+            return new cc.size(w_parent,h_parent);
+
+        },
         _appSceneBase: null,
         appSceneBase: {
             get: function () {

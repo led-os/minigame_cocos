@@ -68,7 +68,7 @@ cc.Class({
     },
 
     LayOut: function () {
-        LayoutScale.ScaleImage(this.imageBg, true);
+       // LayoutScale.ScaleImage(this.imageBg, true);
     },
 
 
