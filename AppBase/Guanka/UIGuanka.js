@@ -1,13 +1,21 @@
 var UIView = require("UIView");
 var Common = require("Common");
 var UIGuankaBase = require("UIGuankaBase");
+var GameManager = require("GameManager");
+
 cc.Class({
     extends: UIGuankaBase,
     properties: {
         tableView: cc.tableView,
+        
+        btnBack: {
+            default: null,
+            type: cc.Button
+        },
     },
 
     onLoad: function () {
+        this.UnifyButtonSprite(this.btnBack);
         this.InitList();
     },
 
@@ -23,7 +31,12 @@ cc.Class({
     InitList: function () {
         var data = this._getdata(100);
         this.tableView.initTableView(data.length, { array: data, target: this });
-       // this.tableView.getComponent(cc.tableView).initTableView(data.length, { array: data, target: this });
+        // this.tableView.getComponent(cc.tableView).initTableView(data.length, { array: data, target: this });
+    },
+
+    GotoGame: function (idx) {
+        GameManager.gameLevel = idx;
+        GameManager.main.GotoGame(this.controller);
     },
 });
 

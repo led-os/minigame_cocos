@@ -7,15 +7,14 @@ cc.Class({
         textTitle: cc.Label,
         btnBack: cc.Button,
     },
-    test: function () {
-        cc.log("run test");
-
+    onLoad: function () {
+        this.btnBack.node.active = false;
     },
 
     UpdateTitle: function (title) {
         this.textTitle.string = title;
     },
     HideBtnBack: function (isHide) {
-        this.btnBack.node.active = !isHide;
+       // this.btnBack.node.active = !isHide;
     }
 }); 

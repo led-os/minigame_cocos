@@ -57,20 +57,22 @@ var PlaceViewController = cc.Class({
     },
 
     ViewDidLoad: function () {
-        cc.log("GuankaViewController ViewDidLoad");
+        cc.log("PlaceViewController ViewDidLoad");
         this._super();
         this.LoadPrefabDefault();
     },
     ViewDidUnLoad: function () {
-        cc.log("GuankaViewController ViewDidUnLoad");
+        cc.log("PlaceViewController ViewDidUnLoad");
         this._super();
 
     },
     LayOutView: function () {
-        cc.log("HomeViewController LayOutView");
+        cc.log("PlaceViewController LayOutView");
         //  base.LayOutView();
 
     },
+
+    
 
 });
 

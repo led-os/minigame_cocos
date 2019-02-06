@@ -44,8 +44,7 @@ var GuankaViewController = cc.Class({
         var strPrefab = "App/Prefab/Guanka/UIGuanka" + Config.main().appType;
         PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.log(err.message || err);
-                this.LoadPrefab();
+                cc.log(err.message || err); 
                 return;
             }
             this.uiPrefab = prefab;
@@ -68,6 +67,14 @@ var GuankaViewController = cc.Class({
         cc.log("GuankaViewController LayOutView");
         //  base.LayOutView();
 
+    },
+    OnClickBtnBack: function (event, customEventData) {
+        if (this.controller != null) {
+            var navi = this.controller.naviController;
+            if (navi != null) {
+                navi.Pop();
+            }
+        }
     },
 
 });

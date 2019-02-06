@@ -28,8 +28,10 @@ cc.Class({
         if (this.objController == null) {
             this.objController = new cc.Node('Controller');
             this.objController.setContentSize(Common.appSceneMain.sizeCanvas); 
-            this.ViewDidLoad();
+          
         }
+        this.ViewDidLoad();
+        
 
     },
 

@@ -76,11 +76,8 @@ cc.Class({
     Pop: function () {
         if (this.listController.length == 0) {
             return;
-        }
-
-        this.DestroyController();
-        // listController.RemoveAt(listController.Count - 1);
-
+        } 
+        this.listController.splice(this.listController.length - 1,1);
         this.UpdateController();
     },
     HideNavibar: function (isHide) {
@@ -111,7 +108,7 @@ cc.Class({
         }
         if (this.uiNaviBar != null) {
             this.uiNaviBar.HideBtnBack((this.listController.length < 2) ? true : false);
-            this.uiNaviBar.UpdateTitle(controller.title);
+            this.uiNaviBar.UpdateTitle(this.rootController.title);
         }
 
     }

@@ -1,10 +1,10 @@
 var UIViewController = require("UIViewController");
-var UIHomeBase = require("UIHomeBase");
+var UIGameBase = require("UIGameBase");
 var PrefabCache = require("PrefabCache");
 var Common = require("Common");
 var Config = require("Config");
 
-var GuankaViewController = cc.Class({
+var GameViewController = cc.Class({
     extends: UIViewController,
     properties: {
         uiPrefab: {
@@ -13,77 +13,69 @@ var GuankaViewController = cc.Class({
         },
         ui: {
             default: null,
-            type: UIHomeBase
+            type: UIGameBase
         },
 
 
     },
-    Init: function () { 
+    Init: function () {
     },
-    CreateUI: function () { 
-        // if (this.naviController != null) {
-        //     this.naviController.HideNavibar(true);
-        // }
-        // uiHome = (UIHomeBase)GameObject.Instantiate(uiHomePrefab);
-        // uiHome.SetController(this);
-        // ViewControllerManager.ClonePrefabRectTransform(uiHomePrefab.gameObject, uiHome.gameObject);
-        // uiHome.Init();
+
+    CreateUI: function () {
+        var node = cc.instantiate(this.uiPrefab);
+        this.ui = node.getComponent(UIGameBase);
+        this.ui.SetController(this);
     },
 
     LoadPrefab: function () {
-        // var ishave = Common.main().JsonDataContainsKey(null, "key"); 
-        // var strPrefab = "App/Prefab/Home/UIHome" + Common.main().appType;
-        var strPrefab = "App/Prefab/Home/UIHome" + Config.main().appType;
-
-        var strPrefabDefault = "Common/Prefab/Home/UIHomeDefault";
-        // GameObject obj = PrefabCache.main.Load(strPrefab);
-        // if (obj == null) {
-        //     obj = PrefabCache.main.Load(strPrefabDefault);
-        // }
-
-        // uiHomePrefab = obj.GetComponent<UIHomeBase>();
-        cc.log("GuankaViewController LoadPrefab=" + strPrefab);
+        var strPrefab = "App/Prefab/Game/UIGame" + Config.main().appType;
         PrefabCache.main.Load(strPrefab, function (err, prefab) {
+            if (err) {
+                cc.log(err.message || err);
+                return;
+            }
             this.uiPrefab = prefab;
-            var node = cc.instantiate(prefab);
-            this.ui= node.getComponent(UIHomeBase);
-            this.ui.SetController(this);
+            this.CreateUI();
         }.bind(this)
         );
     },
 
+
     ViewDidLoad: function () {
-        cc.log("GuankaViewController ViewDidLoad");
+        cc.log("GameViewController ViewDidLoad");
         this._super();
         this.LoadPrefab();
     },
     ViewDidUnLoad: function () {
-        cc.log("GuankaViewController ViewDidUnLoad");
+        cc.log("GameViewController ViewDidUnLoad");
         this._super();
 
     },
     LayOutView: function () {
-        cc.log("HomeViewController LayOutView");
+        cc.log("GameViewController LayOutView");
         //  base.LayOutView();
 
+    },
+
+    GotoGame: function (name) {
     },
 
 });
 
 //单例对象 方法一
-//GuankaViewController.main = new GuankaViewController(); 
+//GameViewController.main = new GameViewController(); 
 
 //单例对象 方法二
-GuankaViewController._main = null;
-GuankaViewController.main = function () {
+GameViewController._main = null;
+GameViewController.main = function () {
     // 
     if (!HomeViewController._main) {
         cc.log("_main is null");
-        GuankaViewController._main = new GuankaViewController();
-        GuankaViewController._main.Init();
+        GameViewController._main = new GameViewController();
+        GameViewController._main.Init();
     } else {
         cc.log("_main is not null");
     }
 
-    return GuankaViewController._main;
+    return GameViewController._main;
 }
