@@ -45,7 +45,7 @@ cc.Class({
                 cc.log(err.message || err);
                 return;
             }
-            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+            //   this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
             this.LayOut();
         }.bind(this));
 
@@ -63,16 +63,16 @@ cc.Class({
         }.bind(this));
 
 
-        
+
 
     },
 
     LayOut: function () {
-       // LayoutScale.ScaleImage(this.imageBg, true);
+        // LayoutScale.ScaleImage(this.imageBg, true);
     },
 
 
-    OnClickBtnShape: function (event, customEventData) { 
+    OnClickBtnShape: function (event, customEventData) {
         if (this.controller != null) {
             var navi = this.controller.naviController;
             var total = 2;//GameManager.placeTotal;

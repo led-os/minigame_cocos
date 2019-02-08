@@ -76,12 +76,12 @@ var Common = cc.Class({
             }
             var sizeCanvas = cc.size(0, 0);
             sizeCanvas.height = size.height;
-            cc.log("canvasMain size=" + size);
+            //cc.log("canvasMain size=" + size);
             let screenSize = cc.view.getVisibleSize();//屏幕分辨率
-            cc.log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
+            //cc.log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
 
             sizeCanvas.width = screenSize.width * sizeCanvas.height / screenSize.height;
-            cc.log("sizeCanvas size=" + sizeCanvas);
+            //cc.log("sizeCanvas size=" + sizeCanvas);
             return sizeCanvas;
         },
 

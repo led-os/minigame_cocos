@@ -1,3 +1,4 @@
+var RectTransform = require("RectTransform");
 var ScrollModel = cc.Enum({ Horizontal: 0, Vertical: 1 });
 var ScrollDirection = cc.Enum({ None: 0, Up: 1, Down: 2, Left: 3, Rigth: 4 });
 var Direction = cc.Enum({ LEFT_TO_RIGHT__TOP_TO_BOTTOM: 0, TOP_TO_BOTTOM__LEFT_TO_RIGHT: 1 });
@@ -138,6 +139,8 @@ var tableView = cc.Class({
     },
     onLoad: function () {
         var self = this;
+
+
         tableView._tableView.push(this);
 
         //当销毁tableView的时候，回收cell
@@ -894,6 +897,24 @@ var tableView = cc.Class({
         this._getScrollDirection();
         this._updateCells();
     },
+
+    //@moon
+    UpdateSize: function (size) {
+        this.node.setContentSize(size);
+        this.content.setContentSize(size);
+        this._view.setContentSize(size);
+    },
+
+    start: function () {
+
+        var rctran = this.node.getComponent(RectTransform);
+        if (rctran != null) {
+            var size = cc.size(rctran.width, rctran.height);
+            this.UpdateSize(size);
+        }
+
+    },
+    //@moon
 });
 tableView._tableView = [];
 tableView.reload = function () {
