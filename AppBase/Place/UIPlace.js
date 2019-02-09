@@ -7,11 +7,12 @@ cc.Class({
     extends: UIPlaceBase,
     properties: {
         imageBg: cc.Sprite,
-        tableView: cc.tableView,
+        tableView: cc.TableView,
         btnBack: {
             default: null,
             type: cc.Button
         },
+        oneCellNum:4,
 
     },
 
@@ -60,6 +61,9 @@ cc.Class({
     },
 
     OnClickBtnBack: function (event, customEventData) {
+        this.InitList();
+        return;
+
         if (this.controller != null) {
             var navi = this.controller.naviController;
             if (navi != null) {

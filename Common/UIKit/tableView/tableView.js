@@ -261,6 +261,8 @@ var tableView = cc.Class({
             } else {
                 node.height = cell.height;
                 var childrenCount = Math.floor((this.content.width) / (cell.width));
+                //childrenCount = 4;
+
                 node.width = this.content.width;
 
                 for (var index = 0; index < childrenCount; ++index) {
@@ -928,4 +930,4 @@ tableView.clear = function () {
     }
 }
 
-cc.tableView = module.export = tableView;
+cc.TableView = module.export = tableView;

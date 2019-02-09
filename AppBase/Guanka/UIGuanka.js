@@ -6,7 +6,7 @@ var GameManager = require("GameManager");
 cc.Class({
     extends: UIGuankaBase,
     properties: {
-        tableView: cc.tableView,
+        tableView: cc.TableView,
         
         btnBack: {
             default: null,

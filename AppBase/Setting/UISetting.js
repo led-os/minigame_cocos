@@ -13,7 +13,7 @@ cc.Class({
             default: null,
             type: cc.Button
         },
-        tableView: cc.tableView,
+        tableView: cc.TableView,
         
         imageBg: cc.Sprite,
         topBar: cc.Node,

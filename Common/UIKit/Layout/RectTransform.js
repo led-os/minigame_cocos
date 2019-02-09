@@ -88,12 +88,15 @@ var RectTransform = cc.Class({
         this._sizeType = type;
         var sizeParent = Common.GetSizeOfParnet(this.node);
         var x, y, w, h;
-
+        x = 0;
+        y = 0;
         switch (this._sizeType) {
             case RectSizeType.MATCH_CONTENT:
                 {
                     this.width = this.node.getContentSize().width;
                     this.height = this.node.getContentSize().height;
+                    x = 0;
+                    y = 0;
                 }
                 break;
             case RectSizeType.MATCH_PARENT:
@@ -103,10 +106,14 @@ var RectTransform = cc.Class({
                     this.width = w;
                     this.height = h;
                     this.node.setContentSize(new cc.size(w, h));
+                    x = this.offsetMin.x / 2 - this.offsetMax.x / 2;
+                    y = this.offsetMin.y / 2 - this.offsetMax.y / 2;
                 }
                 break;
 
         }
+
+        this.node.setPosition(x, y, 0);
     },
 
 });
