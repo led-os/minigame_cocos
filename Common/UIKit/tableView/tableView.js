@@ -133,6 +133,11 @@ var tableView = cc.Class({
             type: cc.Component.EventHandler,
             tooltip: '仅当ViewType为pageView时有效，初始化或翻页时触发回调，向回调传入两个参数，参数一为当前处于哪一页，参数二为一共多少页',
         },
+
+        //@moon
+        oneCellNum: 0,
+        cellHeight: 0,
+        //@moon
     },
     statics: {
         _cellPoolCache: {},
@@ -241,12 +246,31 @@ var tableView = cc.Class({
             var node = new cc.Node();
             node.anchorX = 0.5;
             node.anchorY = 0.5;
-
+            //@moon
+            var layout = node.addComponent(cc.Layout);
+            layout.type = cc.Layout.Type.HORIZONTAL;
+            //CHILDREN 等距离均分排列 CONTAINER 居中排列
+            layout.resizeMode = cc.Layout.ResizeMode.CHILDREN;
+            //@moon
             var length = 0;
             if (this.ScrollModel === ScrollModel.Horizontal) {
                 node.width = cell.width;
-                var childrenCount = Math.floor((this.content.height) / (cell.height));
                 node.height = this.content.height;
+
+                
+                var childrenCount = Math.floor((this.content.height) / (cell.height));
+                //@moon
+                if (this.oneCellNum != 0) {
+                    childrenCount = this.oneCellNum;
+                }
+
+                if (this.cellHeight != 0) {
+                    node.width = this.cellHeight;
+                }
+                //@moon
+
+
+
 
                 for (var index = 0; index < childrenCount; ++index) {
                     if (!cell) {
@@ -261,8 +285,14 @@ var tableView = cc.Class({
             } else {
                 node.height = cell.height;
                 var childrenCount = Math.floor((this.content.width) / (cell.width));
-                //childrenCount = 4;
-
+                //@moon
+                if (this.oneCellNum != 0) {
+                    childrenCount = this.oneCellNum;
+                }
+                if (this.cellHeight != 0) {
+                    node.height = this.cellHeight;
+                }
+                //@moon
                 node.width = this.content.width;
 
                 for (var index = 0; index < childrenCount; ++index) {

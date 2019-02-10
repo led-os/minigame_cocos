@@ -12,7 +12,7 @@ cc.Class({
             default: null,
             type: cc.Button
         },
-        oneCellNum:4,
+        oneCellNum: 4,
 
     },
 
@@ -24,7 +24,7 @@ cc.Class({
         var sizeParent = Common.GetSizeOfParnet(this.node);// cc.size(rctran.width,rctran.height); 
         // this.tableView.content.node.setContentSize(sizeParent);
         //     this.tableView.UpdateSize(sizeParent);
-       // this.tableView.node.active = false;
+        // this.tableView.node.active = false;
         this.scheduleOnce(this.OnInitTableView, 0.001);
     },
 
@@ -52,7 +52,8 @@ cc.Class({
 
 
         //    this.tableView.UpdateSize(sizeParent);
-
+        this.tableView.oneCellNum = this.oneCellNum;
+        this.tableView.cellHeight = 512;
         var data = this._getdata(100);
         this.tableView.initTableView(data.length, { array: data, target: this });
         // this.tableView.getComponent(cc.tableView).initTableView(data.length, { array: data, target: this });
@@ -61,8 +62,8 @@ cc.Class({
     },
 
     OnClickBtnBack: function (event, customEventData) {
-        this.InitList();
-        return;
+        // this.InitList();
+        // return;
 
         if (this.controller != null) {
             var navi = this.controller.naviController;
