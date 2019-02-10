@@ -19,21 +19,12 @@ cc.Class({
     onLoad: function () {
         this._super();
         this.UnifyButtonSprite(this.btnBack);
-        //  this.InitList();
-        var rctran = this.tableView.node.getComponent(RectTransform);
-        var sizeParent = Common.GetSizeOfParnet(this.node);// cc.size(rctran.width,rctran.height); 
-        // this.tableView.content.node.setContentSize(sizeParent);
-        //     this.tableView.UpdateSize(sizeParent);
-        // this.tableView.node.active = false;
-        this.scheduleOnce(this.OnInitTableView, 0.001);
+        this.InitList();
+        //  this.scheduleOnce(this.OnInitTableView, 0.001);
     },
 
     start: function () {
-        // this.InitList();
-    },
-    OnInitTableView: function () {
-        //this.tableView.node.active = true;
-        this.InitList();
+     
     },
     _getdata: function (num) {
         var array = [];

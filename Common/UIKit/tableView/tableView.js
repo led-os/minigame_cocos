@@ -257,7 +257,7 @@ var tableView = cc.Class({
                 node.width = cell.width;
                 node.height = this.content.height;
 
-                
+
                 var childrenCount = Math.floor((this.content.height) / (cell.height));
                 //@moon
                 if (this.oneCellNum != 0) {
@@ -477,7 +477,13 @@ var tableView = cc.Class({
             this.node.getComponent(cc.Widget).updateAlignment();
         }
 
-        this._initTableView();
+
+        //@moon
+        //this._initTableView();
+        //等等tableview 大小调整完成
+        this.scheduleOnce(this._initTableView, 0.001);
+        //@moon
+
     },
     //*************************************************重写ScrollView方法*************************************************//
     // touch event handler
