@@ -1,21 +1,24 @@
 var UIView = require("UIView");
 var UICellItemBase = require("UICellItemBase");
+var GuankaViewController = require("GuankaViewController");
 
 cc.Class({
-    //extends: UICellItemBase,
-    extends: require('viewCell'),
+    extends: UICellItemBase,
+    //extends: require('viewCell'),
     properties: {
         imageBg: cc.Sprite,
-        textTitle:cc.Label,
+        textTitle: cc.Label,
     },
 
     onLoad: function () {
-       // this._super();
+        this._super();
 
     },
 
-    init: function init(index, data, reload, group) {
+    //init: function init(index, data, reload, group) 
+    init: function (index, data, reload, group) {
         this.node.active = true;
+        this.index = index;
         if (index >= data.array.length) {
             // this.index.string = '越界';
             // this.group.string = group.toString();
@@ -24,10 +27,21 @@ cc.Class({
         }
         //this._target = data.target;
         //this._data = data.array[index];
-        this.textTitle.string = index; 
+        this.textTitle.string = index;
+
+        //  this.node.clicked = this.OnItemclicked.bind(this);
     },
-    clicked: function clicked() {
-       // this._target.show('下标:' + this.index.string + ',组:' + this.group.string);
+    clicked: function () {
+        cc.log('下标:' + this.textTitle.string);
+        // if(this.onClickCallBack!=null)
+        // {
+        //     this.onClickCallBack(this);
+        // }
+
+        if (this.controller != null) {
+            var navi = this.controller.naviController;
+            navi.Push(GuankaViewController.main());
+        }
     }
 });
 

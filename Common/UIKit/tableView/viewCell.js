@@ -1,6 +1,7 @@
+var UIView = require("UIView");
 cc.Class({
-    extends: cc.Component,
-
+    //extends: cc.Component,
+    extends: UIView,
     properties: {
         tableView: {
             default: null,

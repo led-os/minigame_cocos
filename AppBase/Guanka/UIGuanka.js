@@ -6,12 +6,13 @@ var GameManager = require("GameManager");
 cc.Class({
     extends: UIGuankaBase,
     properties: {
+        imageBg: cc.Sprite,
         tableView: cc.TableView,
-        
         btnBack: {
             default: null,
             type: cc.Button
         },
+        oneCellNum: 3,
     },
 
     onLoad: function () {
@@ -29,9 +30,10 @@ cc.Class({
         return array;
     },
     InitList: function () {
+        this.tableView.oneCellNum = this.oneCellNum;
+        this.tableView.cellHeight = 512;
         var data = this._getdata(100);
         this.tableView.initTableView(data.length, { array: data, target: this });
-        // this.tableView.getComponent(cc.tableView).initTableView(data.length, { array: data, target: this });
     },
 
     GotoGame: function (idx) {

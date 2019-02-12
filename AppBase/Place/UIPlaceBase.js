@@ -9,5 +9,15 @@ cc.Class({
     onLoad: function () {
 
     },
+
+
+    OnClickBtnBack: function (event, customEventData) {
+        if (this.controller != null) {
+            var navi = this.controller.naviController;
+            if (navi != null) {
+                navi.Pop();
+            }
+        }
+    },
 });
 

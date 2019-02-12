@@ -51,17 +51,5 @@ cc.Class({
 
 
     },
-
-    OnClickBtnBack: function (event, customEventData) {
-        // this.InitList();
-        // return;
-
-        if (this.controller != null) {
-            var navi = this.controller.naviController;
-            if (navi != null) {
-                navi.Pop();
-            }
-        }
-    },
 });
 
