@@ -30,6 +30,7 @@ cc.Class({
         return array;
     },
     InitList: function () {
+        this.tableView.uiViewParent = this;
         this.tableView.oneCellNum = this.oneCellNum;
         this.tableView.cellHeight = 512;
         var data = this._getdata(100);
@@ -38,7 +39,7 @@ cc.Class({
 
     GotoGame: function (idx) {
         GameManager.gameLevel = idx;
-        GameManager.main.GotoGame(this.controller);
+        GameManager.main().GotoGame(this.controller);
     },
 });
 

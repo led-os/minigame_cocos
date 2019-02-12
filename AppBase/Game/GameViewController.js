@@ -69,7 +69,7 @@ var GameViewController = cc.Class({
 GameViewController._main = null;
 GameViewController.main = function () {
     // 
-    if (!HomeViewController._main) {
+    if (!GameViewController._main) {
         cc.log("_main is null");
         GameViewController._main = new GameViewController();
         GameViewController._main.Init();

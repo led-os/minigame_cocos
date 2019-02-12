@@ -1,4 +1,5 @@
 var RectTransform = require("RectTransform");
+var UIView = require("UIView");
 var ScrollModel = cc.Enum({ Horizontal: 0, Vertical: 1 });
 var ScrollDirection = cc.Enum({ None: 0, Up: 1, Down: 2, Left: 3, Rigth: 4 });
 var Direction = cc.Enum({ LEFT_TO_RIGHT__TOP_TO_BOTTOM: 0, TOP_TO_BOTTOM__LEFT_TO_RIGHT: 1 });
@@ -137,6 +138,7 @@ var tableView = cc.Class({
         //@moon
         oneCellNum: 0,
         cellHeight: 0,
+        uiViewParent: UIView,//包含tableview 的父uiview
         //@moon
     },
     statics: {
@@ -246,7 +248,7 @@ var tableView = cc.Class({
             var node = new cc.Node();
             node.anchorX = 0.5;
             node.anchorY = 0.5;
-            //@moon
+            //@moon 
             var layout = node.addComponent(cc.Layout);
             layout.type = cc.Layout.Type.HORIZONTAL;
             //CHILDREN 等距离均分排列 CONTAINER 居中排列
@@ -308,8 +310,11 @@ var tableView = cc.Class({
             }
             this._cellPool.put(node);
         }
-        var cell = this._cellPool.get();
-        return cell;
+        var table_cell = this._cellPool.get();
+        //@moon 
+        table_cell.uiViewParent = this.uiViewParent;
+        //@moon
+        return table_cell;
     },
     _getCellSize: function () {
         var cell = this._getCell();

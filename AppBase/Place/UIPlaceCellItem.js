@@ -37,9 +37,11 @@ cc.Class({
         // {
         //     this.onClickCallBack(this);
         // }
+        var uiViewParent = this.GetUIViewParent();//UIPlace
 
-        if (this.controller != null) {
-            var navi = this.controller.naviController;
+        if (uiViewParent.controller != null) {
+            var navi = uiViewParent.controller.naviController;
+            cc.log('goto GuankaViewController');
             navi.Push(GuankaViewController.main());
         }
     }

@@ -43,8 +43,11 @@ cc.Class({
 
 
         //    this.tableView.UpdateSize(sizeParent);
+        cc.log('UIPlace:InitList');
+
         this.tableView.oneCellNum = this.oneCellNum;
         this.tableView.cellHeight = 512;
+        this.tableView.uiViewParent = this;
         var data = this._getdata(100);
         this.tableView.initTableView(data.length, { array: data, target: this });
         // this.tableView.getComponent(cc.tableView).initTableView(data.length, { array: data, target: this });

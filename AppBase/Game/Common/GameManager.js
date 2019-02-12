@@ -35,7 +35,7 @@ var GameManager = cc.Class({
         var navi = fromController.naviController;
         if (navi != null)
         {
-            navi.Push(GameViewController.main);
+            navi.Push(GameViewController.main());
         }
     },
 

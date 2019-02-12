@@ -1,12 +1,13 @@
 var UIView = require("UIView");
 var UICellItemBase = require("UICellItemBase");
+var GameViewController = require("GameViewController");
 
 cc.Class({
     extends: UICellItemBase,
     //extends: require('viewCell'),
     properties: {
         imageBg: cc.Sprite,
-        textTitle:cc.Label,
+        textTitle: cc.Label,
     },
 
     onLoad: function () {
@@ -16,6 +17,7 @@ cc.Class({
 
     init: function init(index, data, reload, group) {
         this.node.active = true;
+        this.index = index;
         if (index >= data.array.length) {
             // this.index.string = '越界';
             // this.group.string = group.toString();
@@ -24,10 +26,15 @@ cc.Class({
         }
         //this._target = data.target;
         //this._data = data.array[index];
-        this.textTitle.string = index; 
+        this.textTitle.string = index;
     },
     clicked: function clicked() {
-       // this._target.show('下标:' + this.index.string + ',组:' + this.group.string);
+        var uiViewParent = this.GetUIViewParent();// 
+        uiViewParent.GotoGame(this.index);
+        // if (uiViewParent.controller != null) {
+        //     var navi = uiViewParent.controller.naviController; 
+        //     navi.Push(GameViewController.main());
+        // }
     }
 });
 

@@ -18,7 +18,8 @@ cc.Class({
             default: null,
             type: cc.rect,
         },
-        title: 'title'
+        title: 'title',
+        objTag:cc.Object,
     },
 
     onLoad: function () {

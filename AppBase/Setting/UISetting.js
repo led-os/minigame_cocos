@@ -17,6 +17,7 @@ cc.Class({
         
         imageBg: cc.Sprite,
         topBar: cc.Node,
+        oneCellNum:1,
     },
 
     onLoad: function () {
@@ -24,16 +25,6 @@ cc.Class({
         this.node.setContentSize(this.node.parent.getContentSize());
 
         this.UnifyButtonSprite(this.btnBack);
-
-        var strImage = AppRes.IMAGE_HOME_BG;
-        TextureCache.main.Load(strImage, function (err, tex) {
-            if (err) {
-                cc.log(err.message || err);
-                return;
-            }
-            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
-            this.LayOut();
-        }.bind(this));
 
         //var layoutAlign = this.topBar.addComponent(LayoutAlign)
         var layoutAlign = this.topBar.getComponent(LayoutAlign);
@@ -65,9 +56,11 @@ cc.Class({
         return array;
     },
     InitList: function () {
+        this.tableView.oneCellNum = this.oneCellNum;
+        this.tableView.cellHeight = 256;
+        this.tableView.uiViewParent = this;
         var data = this._getdata(100);
         this.tableView.initTableView(data.length, { array: data, target: this });
-       // this.tableView.getComponent(cc.tableView).initTableView(data.length, { array: data, target: this });
     },
     //下一页(pageview下有效)
     nextPage: function () {

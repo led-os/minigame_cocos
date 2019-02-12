@@ -1,4 +1,4 @@
-var UIViewController = require("UIViewController"); 
+var UIViewController = require("UIViewController");
 var PrefabCache = require("PrefabCache");
 var Common = require("Common");
 var Config = require("Config");
@@ -6,11 +6,21 @@ var UIGameBase = require("UIGameBase");
 
 var UIGameShapeColor = cc.Class({
     extends: UIGameBase,
-    properties: { 
-
+    properties: {
+        imageBg: cc.Sprite,
+        btnBack: {
+            default: null,
+            type: cc.Button
+        },
     },
-    Init: function () { 
-    }, 
+    onLoad: function () {
+        this._super();
+        this.UnifyButtonSprite(this.btnBack);
+    },
+
+    Init: function () {
+    },
+
 });
 
 //单例对象 方法一
