@@ -3,6 +3,7 @@ var PrefabCache = require("PrefabCache");
 var Common = require("Common");
 var Config = require("Config");
 var UIGameBase = require("UIGameBase");
+var Language = require("Language");
 
 var UIGameShapeColor = cc.Class({
     extends: UIGameBase,

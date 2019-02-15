@@ -3,6 +3,7 @@ var Common = require("Common");
 var TextureCache = require("TextureCache");
 var AppRes = require("AppRes");
 var LayoutScale = require("LayoutScale");
+var Language = require("Language");
 
 cc.Class({
     extends: UIView,
@@ -31,8 +32,8 @@ cc.Class({
        // this.node.setContentSize(Common.appSceneMain.sizeCanvas); 
        this.node.setContentSize(this.node.parent.getContentSize());
 
-        var x, y, w, h; 
-        this.textName.string = "ImageNameText";
+        var x, y, w, h;  
+        this.textName.string = Language.main().GetString("APP_NAME");
 
         var strImage = AppRes.IMAGE_HOME_BG;
         TextureCache.main.Load(strImage, function (err, tex) {

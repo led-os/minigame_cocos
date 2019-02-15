@@ -6,6 +6,7 @@ var Common = require("Common");
 var PlaceViewController = require("PlaceViewController");
 var GuankaViewController = require("GuankaViewController");
 //var NaviViewController = require("NaviViewController"); 
+var Language = require("Language");
 
 cc.Class({
     extends: UIHomeBase,
@@ -35,40 +36,10 @@ cc.Class({
         this.UnifyButtonSprite(this.btnColor);
         this.UnifyButtonSprite(this.btnShapeColor);
         this.UnifyButtonSprite(this.btnBoard);
-
-        this.textName.string = "ImageNameText";
-
-        var strImage = AppRes.IMAGE_HOME_BG;
-        TextureCache.main.Load(strImage, function (err, tex) {
-            //cc.url.raw('res/textures/content.png')
-            if (err) {
-                cc.log(err.message || err);
-                return;
-            }
-            //   this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
-            this.LayOut();
-        }.bind(this));
-
-
-        strImage = "Common/UI/UIKit/barbg";
-        TextureCache.main.Load(strImage, function (err, tex) {
-            //cc.url.raw('res/textures/content.png')
-            if (err) {
-                cc.log(err.message || err);
-                return;
-            }
-            this.imageNameBg.spriteFrame = new cc.SpriteFrame(tex);
-            this.LayOut();
-
-        }.bind(this));
-
-
-
-
+ 
     },
 
-    LayOut: function () {
-        // LayoutScale.ScaleImage(this.imageBg, true);
+    LayOut: function () { 
     },
 
 

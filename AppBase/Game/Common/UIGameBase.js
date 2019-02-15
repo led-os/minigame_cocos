@@ -3,6 +3,7 @@ var PrefabCache = require("PrefabCache");
 var Common = require("Common");
 var Config = require("Config");
 var UIView = require("UIView");
+var Language = require("Language");
 
 var UIGameBase = cc.Class({
     extends: UIView,
