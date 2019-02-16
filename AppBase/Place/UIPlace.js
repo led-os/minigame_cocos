@@ -12,6 +12,7 @@ cc.Class({
             default: null,
             type: cc.Button
         },
+        textTitle:cc.Label,
         oneCellNum: 4,
 
     },
