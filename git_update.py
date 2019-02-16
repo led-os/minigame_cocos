@@ -12,9 +12,9 @@ import socket
  
 
 def upload():
-    os.system("git stash")
+    # os.system("git stash")
     os.system("git add .")
-    os.system("git commit -m \"ui\"")
+    os.system("git commit -m \"moonui\"")
     os.system("git push -u origin master")
 
    
