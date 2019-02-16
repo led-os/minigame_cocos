@@ -1,4 +1,5 @@
 var Common = require("Common");
+var LayoutAlign = require("LayoutAlign");
 
 var RectSizeType = cc.Enum({
     //区分大小写
@@ -15,16 +16,29 @@ var RectTransform = cc.Class({
     },
 
     properties: {
-        _sizeType: RectSizeType.MATCH_PARENT,
-        sizeType: {
+        _sizeTypeX: RectSizeType.MATCH_PARENT,
+        sizeTypeX: {
             //default 和 get set 不能同时存在
             // default:AlignType.UP, 
             type: RectSizeType,
             get: function () {
-                return this._sizeType;
+                return this._sizeTypeX;
             },
             set: function (value) {
-                this.UpdateType(value);
+                this.UpdateType(value, true);
+            },
+        },
+
+        _sizeTypeY: RectSizeType.MATCH_PARENT,
+        sizeTypeY: {
+            //default 和 get set 不能同时存在
+            // default:AlignType.UP, 
+            type: RectSizeType,
+            get: function () {
+                return this._sizeTypeY;
+            },
+            set: function (value) {
+                this.UpdateType(value, false);
             },
         },
 
@@ -39,7 +53,8 @@ var RectTransform = cc.Class({
             },
             set: function (value) {
                 this._offsetMin = value;
-                this.UpdateType(this.sizeType);
+                this.UpdateType(this.sizeType, true);
+                this.UpdateType(this.sizeType, false);
             },
         },
 
@@ -54,7 +69,8 @@ var RectTransform = cc.Class({
             },
             set: function (value) {
                 this._offsetMax = value;
-                this.UpdateType(this.sizeType);
+                this.UpdateType(this.sizeType, true);
+                this.UpdateType(this.sizeType, false);
             },
         },
         _width: 0,
@@ -82,36 +98,98 @@ var RectTransform = cc.Class({
 
     },
     onLoad: function () {
-        this.UpdateType(this.sizeType);
+        this.OnResize();
+
     },
-    UpdateType: function (type) {
-        this._sizeType = type;
-        var sizeParent = Common.GetSizeOfParnet(this.node);
+
+    OnResize: function () {
+
+        this.UpdateType(this.sizeTypeX, true);
+        this.UpdateType(this.sizeTypeY, false);
+
         var x, y, w, h;
-        x = 0;
-        y = 0;
-        switch (this._sizeType) {
-            case RectSizeType.MATCH_CONTENT:
-                {
-                    this.width = this.node.getContentSize().width;
-                    this.height = this.node.getContentSize().height;
-                    x = 0;
-                    y = 0;
-                }
-                break;
-            case RectSizeType.MATCH_PARENT:
-                {
-                    w = sizeParent.width - this.offsetMin.x - this.offsetMax.x;
-                    h = sizeParent.height - this.offsetMin.y - this.offsetMax.y;
-                    this.width = w;
-                    this.height = h;
-                    this.node.setContentSize(new cc.size(w, h));
-                    x = this.offsetMin.x / 2 - this.offsetMax.x / 2;
-                    y = this.offsetMin.y / 2 - this.offsetMax.y / 2;
-                }
-                break;
+        w = this.node.getContentSize().width;
+        h = this.node.getContentSize().height;
+        cc.log("OnResize w=" + w + " h=" + h);
+
+        var children = this.node._children;
+        for (var i = 0; i < children.length; i++) {
+            var child = children[i];
+            var rctran = child.getComponent(RectTransform);
+            if (rctran != null) {
+                cc.log("OnResize child");
+                rctran.OnResize();
+            }
 
         }
+
+        var lA = this.node.getComponent(LayoutAlign);
+        if(lA!=null){
+            lA.UpdateType(lA.alignType);
+        }
+    },
+
+    UpdateType: function (type, isX) {
+        if (isX == true) {
+            this._sizeTypeX = type;
+        } else {
+            this._sizeTypeY = type;
+        }
+        var sizeParent = Common.GetSizeOfParnet(this.node);
+        var pos = this.node.getPosition();
+        var x, y, w, h;
+        x = pos.x;
+        y = pos.y;
+
+        if (isX == true) {
+            switch (this._sizeTypeX) {
+                case RectSizeType.MATCH_CONTENT:
+                    {
+                        this.width = this.node.getContentSize().width;
+                        this.height = this.node.getContentSize().height;
+                    }
+                    break;
+                case RectSizeType.MATCH_PARENT:
+                    {
+                        w = sizeParent.width - this.offsetMin.x - this.offsetMax.x;
+                        //h = sizeParent.height - this.offsetMin.y - this.offsetMax.y;
+                        h = this.node.getContentSize().height;
+                        this.width = w;
+                        this.height = h;
+                        this.node.setContentSize(new cc.size(w, h));
+                        x = this.offsetMin.x / 2 - this.offsetMax.x / 2;
+                        y = this.offsetMin.y / 2 - this.offsetMax.y / 2;
+                    }
+                    break;
+
+            }
+        } else {
+            switch (this._sizeTypeY) {
+                case RectSizeType.MATCH_CONTENT:
+                    {
+                        this.width = this.node.getContentSize().width;
+                        this.height = this.node.getContentSize().height;
+                    }
+                    break;
+                case RectSizeType.MATCH_PARENT:
+                    {
+                        //w = sizeParent.width - this.offsetMin.x - this.offsetMax.x;
+                        h = sizeParent.height - this.offsetMin.y - this.offsetMax.y;
+                        w = this.node.getContentSize().width;
+                        this.width = w;
+                        this.height = h;
+                        this.node.setContentSize(new cc.size(w, h));
+                        x = this.offsetMin.x / 2 - this.offsetMax.x / 2;
+                        y = this.offsetMin.y / 2 - this.offsetMax.y / 2;
+                    }
+                    break;
+
+            }
+        }
+
+
+
+
 
         this.node.setPosition(x, y, 0);
     },

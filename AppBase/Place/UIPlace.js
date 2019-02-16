@@ -2,6 +2,7 @@ var UIView = require("UIView");
 var UIPlaceBase = require("UIPlaceBase");
 var Common = require("Common");
 var RectTransform = require("RectTransform");
+var Language = require("Language");
 
 cc.Class({
     extends: UIPlaceBase,
@@ -21,7 +22,7 @@ cc.Class({
         this._super();
         this.UnifyButtonSprite(this.btnBack);
         this.InitList();
-        //  this.scheduleOnce(this.OnInitTableView, 0.001);
+        this.textTitle.string = Language.main().GetString("STR_PLACE");
     },
 
     start: function () {

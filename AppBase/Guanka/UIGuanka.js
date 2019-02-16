@@ -2,6 +2,7 @@ var UIView = require("UIView");
 var Common = require("Common");
 var UIGuankaBase = require("UIGuankaBase");
 var GameManager = require("GameManager");
+var Language = require("Language");
 
 cc.Class({
     extends: UIGuankaBase,
@@ -19,6 +20,7 @@ cc.Class({
     onLoad: function () {
         this.UnifyButtonSprite(this.btnBack);
         this.InitList();
+        this.textTitle.string = Language.main().GetString("STR_GUANKA");
     },
 
     _getdata: function (num) {
