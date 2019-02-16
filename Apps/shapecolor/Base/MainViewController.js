@@ -6,11 +6,11 @@ var GuankaViewController = require("GuankaViewController");
 
 var MainViewController = cc.Class({
     extends: NaviViewController,
-
+  
     ViewDidLoad: function () {
         this._super();
         this.Push(HomeViewController.main());
-      //moon test
+      //moon ui test
         var str = Language.main().GetString("APP_NAME");
         cc.log("Language GetString=" + str);
     },
