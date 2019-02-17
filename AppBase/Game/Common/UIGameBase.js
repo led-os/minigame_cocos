@@ -1,4 +1,4 @@
-var UIViewController = require("UIViewController"); 
+var UIViewController = require("UIViewController");
 var PrefabCache = require("PrefabCache");
 var Common = require("Common");
 var Config = require("Config");
@@ -7,11 +7,34 @@ var Language = require("Language");
 
 var UIGameBase = cc.Class({
     extends: UIView,
-    properties: { 
+    properties: {
+        gamePrefab: {
+            default: null,
+            type: cc.Prefab
+        },
+        listGuanka: {
+            default: [],
+            type: cc.Object
+        },
 
     },
-    Init: function () { 
-    }, 
+    Init: function () {
+    },
+
+    LoadGamePrefab: function () {
+        var strPrefab = "App/Prefab/Game/Game" + Config.main().appType;
+        PrefabCache.main.Load(strPrefab, function (err, prefab) {
+            if (err) {
+                cc.log(err.message || err);
+                return;
+            }
+            this.gamePrefab = prefab;
+            this.CreateGame();
+        }.bind(this)
+        );
+    },
+    CreateGame: function () {
+    },
 
     OnClickBtnBack: function (event, customEventData) {
         if (this.controller != null) {
@@ -21,6 +44,41 @@ var UIGameBase = cc.Class({
             }
         }
     },
+
+
+    //guanka
+
+    GetGuankaTotal: function () {
+        return 0;
+    },
+
+    CleanGuankaList: function () {
+        if (this.listGuanka != null) { 
+            this.listGuanka.splice(0,this.listGuanka.length);
+        }
+    },
+    ParseGuanka: function () {
+        cc.log("ParseGuanka UIGameBase");
+        return 0;
+    },
+
+    //ItemInfo
+    GetGuankaItemInfo: function (idx) {
+        if (this.listGuanka == null) {
+            return null;
+        }
+        if (idx >= this.listGuanka.Count) {
+            return null;
+        } 
+        var info = this.listGuanka[idx];
+        return info;
+    },
+
+    UpdateGuankaLevel: function (level) {
+    },
+    UpdatePlaceLevel: function (level) {
+    },
+    //guanka
 });
 
 //单例对象 方法一

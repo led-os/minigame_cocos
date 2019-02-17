@@ -26,6 +26,7 @@ var GameManager = cc.Class({
 
     },
     Init: function () {
+      //this.ParseGuanka();
     },
     LoadPrefab: function () {
 
@@ -33,13 +34,18 @@ var GameManager = cc.Class({
     //UIViewController
     GotoGame: function (fromController) {
         var navi = fromController.naviController;
-        if (navi != null)
-        {
+        if (navi != null) {
             navi.Push(GameViewController.main());
         }
     },
+    CleanGuankaList: function () {
+        GameViewController.main().ui.CleanGuankaList();
+    },
+    ParseGuanka: function () {
+        this.CleanGuankaList();
+        GameViewController.main().ui.ParseGuanka();
+    },
 
-  
 
 });
 

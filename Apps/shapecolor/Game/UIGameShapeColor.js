@@ -4,6 +4,8 @@ var Common = require("Common");
 var Config = require("Config");
 var UIGameBase = require("UIGameBase");
 var Language = require("Language");
+var GameShapeColor = require("GameShapeColor");
+
 
 var UIGameShapeColor = cc.Class({
     extends: UIGameBase,
@@ -13,13 +15,29 @@ var UIGameShapeColor = cc.Class({
             default: null,
             type: cc.Button
         },
+        game: {
+            default: null,
+            type: GameShapeColor
+        },
     },
     onLoad: function () {
         this._super();
         this.UnifyButtonSprite(this.btnBack);
+        this.LoadGamePrefab();
     },
 
     Init: function () {
+    },
+
+    CreateGame: function () {
+        var node = cc.instantiate(this.gamePrefab);
+        this.game = node.getComponent(GameShapeColor); 
+        this.game.node.parent = this.node;
+    },
+
+    ParseGuanka: function () {
+        cc.log("ParseGuanka UIGameShapeColor");
+        return 0;
     },
 
 });
