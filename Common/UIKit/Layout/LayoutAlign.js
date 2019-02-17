@@ -2,6 +2,7 @@ var Common = require("Common");
 
 var AlignType = cc.Enum({
     //区分大小写
+    NONE: -1,
     UP: 0,
     DOWN: 1,
     LEFT: 2,
@@ -24,7 +25,7 @@ var LayoutAlign = cc.Class({
     },
 
     properties: {
-        _alignType: AlignType.UP,
+        _alignType: AlignType.NONE,
         alignType: {
             //default 和 get set 不能同时存在
             // default:AlignType.UP, 
@@ -41,7 +42,7 @@ var LayoutAlign = cc.Class({
 
 
 
-    onLoad: function () { 
+    onLoad: function () {
         cc.log("onLoad this.alignType=" + this.alignType);
         this.UpdateType(this.alignType);
 
@@ -49,7 +50,9 @@ var LayoutAlign = cc.Class({
 
     UpdateType: function (type) {
         this._alignType = type;
-
+        if (type == AlignType.NONE) {
+            return;
+        }
         var x, y, w, h;
         var rectParent = this.node.parent.getBoundingBox();
         var sizeParent = this.node.parent.getContentSize();
@@ -58,12 +61,12 @@ var LayoutAlign = cc.Class({
         w_parent = sizeParent.width;
         h_parent = sizeParent.height;
         var sizeCanvas = Common.GetSizeCanvas(null);//屏幕分辨率
-        if(w_parent==0){
+        if (w_parent == 0) {
             w_parent = sizeCanvas.width;
         }
-        if(h_parent==0){
+        if (h_parent == 0) {
             h_parent = sizeCanvas.height;
-        }    
+        }
 
 
         var size = this.node.getContentSize();
@@ -71,7 +74,7 @@ var LayoutAlign = cc.Class({
         h = size.height;
         x = this.node.getPosition().x;
         y = this.node.getPosition().y;
-        cc.log("UpdateType this.alignType=" + this._alignType + " w=" + w + " h=" + h + " x=" + x + " y=" + y + " w_parent=" + w_parent+" h_parent="+h_parent);
+        cc.log("UpdateType this.alignType=" + this._alignType + " w=" + w + " h=" + h + " x=" + x + " y=" + y + " w_parent=" + w_parent + " h_parent=" + h_parent);
         //Common.appSceneMain.sizeCanvas.height 
         switch (this._alignType) {
             case AlignType.UP:

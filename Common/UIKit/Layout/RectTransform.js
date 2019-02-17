@@ -53,8 +53,9 @@ var RectTransform = cc.Class({
             },
             set: function (value) {
                 this._offsetMin = value;
-                this.UpdateType(this.sizeType, true);
-                this.UpdateType(this.sizeType, false);
+                // this.UpdateType(this.sizeType, true);
+                // this.UpdateType(this.sizeType, false);
+                this.OnResize();
             },
         },
 
@@ -69,8 +70,60 @@ var RectTransform = cc.Class({
             },
             set: function (value) {
                 this._offsetMax = value;
-                this.UpdateType(this.sizeType, true);
-                this.UpdateType(this.sizeType, false);
+                // this.UpdateType(this.sizeType, true);
+                // this.UpdateType(this.sizeType, false);
+                this.OnResize();
+            },
+        },
+
+        
+        //     The normalized position in the parent RectTransform that the lower left corner
+        //     is anchored to.
+        _anchorMin: cc.Vec2,
+        anchorMin:
+        {
+            type: cc.Vec2,
+            get: function () {
+                return this._anchorMin;
+            },
+            set: function (value) {
+                this._anchorMin = value;
+                // this.UpdateType(this.sizeType, true);
+                // this.UpdateType(this.sizeType, false);
+                this.OnResize();
+            },
+        },
+        
+        //     The normalized position in the parent RectTransform that the upper right corner
+        //     is anchored to.
+        _anchorMax: cc.Vec2,
+        anchorMax:
+        {
+            type: cc.Vec2,
+            get: function () {
+                return this._anchorMax;
+            },
+            set: function (value) {
+                this._anchorMax = value;
+                // this.UpdateType(this.sizeType, true);
+                // this.UpdateType(this.sizeType, false);
+                this.OnResize();
+            },
+        },
+
+
+
+        //     The position of the pivot of this RectTransform relative to the anchor reference
+        //     point. 
+        _anchoredPosition: cc.Vec2,
+        anchoredPosition:
+        {
+            type: cc.Vec2,
+            get: function () {
+                return this._anchoredPosition;
+            },
+            set: function (value) {
+                this._anchoredPosition = value;
             },
         },
         _width: 0,
@@ -124,7 +177,7 @@ var RectTransform = cc.Class({
         }
 
         var lA = this.node.getComponent(LayoutAlign);
-        if(lA!=null){
+        if (lA != null) {
             lA.UpdateType(lA.alignType);
         }
     },
