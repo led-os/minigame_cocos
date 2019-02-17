@@ -39,11 +39,11 @@ var GameManager = cc.Class({
         }
     },
     CleanGuankaList: function () {
-        GameViewController.main().ui.CleanGuankaList();
+        GameViewController.main().gameBase.CleanGuankaList();
     },
     ParseGuanka: function () {
         this.CleanGuankaList();
-        GameViewController.main().ui.ParseGuanka();
+        GameViewController.main().gameBase.ParseGuanka();
     },
 
 

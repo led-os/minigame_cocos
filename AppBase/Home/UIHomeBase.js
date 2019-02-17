@@ -4,6 +4,7 @@ var TextureCache = require("TextureCache");
 var AppRes = require("AppRes");
 var LayoutScale = require("LayoutScale");
 var Language = require("Language");
+var GameViewController = require("GameViewController");
 
 cc.Class({
     extends: UIView,
@@ -58,6 +59,8 @@ cc.Class({
             this.LayOut();
         }.bind(this));
  
+         
+     
     },
 
     LayOut: function () {

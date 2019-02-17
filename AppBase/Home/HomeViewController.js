@@ -3,6 +3,7 @@ var UIHomeBase = require("UIHomeBase");
 var PrefabCache = require("PrefabCache");
 var Common = require("Common");
 var Config = require("Config");
+var GameViewController = require("GameViewController");
 
 var HomeViewController = cc.Class({
     extends: UIViewController,
@@ -50,7 +51,6 @@ var HomeViewController = cc.Class({
         PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
                 cc.log(err.message || err);
-                this.LoadPrefab();
                 return;
             }
             this.uiPrefab = prefab;
@@ -59,10 +59,21 @@ var HomeViewController = cc.Class({
         );
     },
 
+    AppPreLoadDidFinish: function (p) {
+        cc.log("HomeViewController AppPreLoadDidFinish ");
+        this.LoadPrefabDefault();
+    },
+
     ViewDidLoad: function () {
         cc.log("HomeViewController ViewDidLoad");
         this._super();
-        this.LoadPrefabDefault();
+
+        //提前加载game prefab
+        {
+            var game = GameViewController.main();
+            game.SetLoadFinishCallBack(this.AppPreLoadDidFinish.bind(this), null);
+        }
+        //this.LoadPrefabDefault();
     },
     ViewDidUnLoad: function () {
         cc.log("HomeViewController ViewDidUnLoad");

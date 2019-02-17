@@ -13,6 +13,8 @@ var Config = require("Config");
 var Common = require("Common");
 var Language = require("Language");
 var LoadItemInfo = require("LoadItemInfo");
+var GameViewController = require("GameViewController");
+
 var AppSceneBase = cc.Class({
     extends: cc.Component,
 
@@ -141,6 +143,8 @@ var AppSceneBase = cc.Class({
             var lan = Language.main();
             lan.SetLoadFinishCallBack(this.AppPreLoadDidFinish.bind(this), info);
         }
+
+
     },
     CheckAllLoad: function () {
         var isLoadAll = true;

@@ -21,6 +21,7 @@ cc.Class({
         this.UnifyButtonSprite(this.btnBack);
         this.InitList();
         this.textTitle.string = Language.main().GetString("STR_GUANKA");
+        GameManager.main().ParseGuanka();
     },
 
     _getdata: function (num) {

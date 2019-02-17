@@ -3,9 +3,16 @@ var UIGameBase = require("UIGameBase");
 var PrefabCache = require("PrefabCache");
 var Common = require("Common");
 var Config = require("Config");
+var LoadItemInfo = require("LoadItemInfo");
 
 var GameViewController = cc.Class({
     extends: UIViewController,
+    statics: {
+        // 声明静态变量 
+        callbackFinish: null,
+        loadInfo: LoadItemInfo,
+    },
+
     properties: {
         uiPrefab: {
             default: null,
@@ -15,15 +22,39 @@ var GameViewController = cc.Class({
             default: null,
             type: UIGameBase
         },
-
+        _gameBase: {
+            default: null,
+            type: UIGameBase
+        },
+        gameBase: {
+            //default 和 get set 不能同时存在  
+            type: UIGameBase,
+            get: function () {
+                this.LoadUI();
+                return this.ui;
+            },
+        },
 
     },
     Init: function () {
+        //提前加载
+        this.LoadPrefab();
+    },
+
+    SetLoadFinishCallBack: function (callback, info) {
+        GameViewController.callbackFinish = callback;
+        GameViewController.loadInfo = info;
+    },
+
+    LoadUI: function () {
+        if (this.ui == null) {
+            var node = cc.instantiate(this.uiPrefab);
+            this.ui = node.getComponent(UIGameBase);
+        }
     },
 
     CreateUI: function () {
-        var node = cc.instantiate(this.uiPrefab);
-        this.ui = node.getComponent(UIGameBase);
+        this.LoadUI();
         this.ui.SetController(this);
     },
 
@@ -35,7 +66,16 @@ var GameViewController = cc.Class({
                 return;
             }
             this.uiPrefab = prefab;
-            this.CreateUI();
+            this.LoadUI();
+
+            if (GameViewController.callbackFinish != null) {
+                if (GameViewController.loadInfo != null) {
+                    GameViewController.loadInfo.isLoad = true;
+                }
+
+                GameViewController.callbackFinish(this);
+            }
+            // //this.CreateUI();
         }.bind(this)
         );
     },
@@ -44,7 +84,8 @@ var GameViewController = cc.Class({
     ViewDidLoad: function () {
         cc.log("GameViewController ViewDidLoad");
         this._super();
-        this.LoadPrefab();
+        //this.LoadPrefab();
+        this.CreateUI();
     },
     ViewDidUnLoad: function () {
         cc.log("GameViewController ViewDidUnLoad");
