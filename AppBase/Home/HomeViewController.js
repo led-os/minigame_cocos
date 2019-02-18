@@ -7,6 +7,9 @@ var GameViewController = require("GameViewController");
 
 var HomeViewController = cc.Class({
     extends: UIViewController,
+    statics: {
+        isGameHasInit: false,
+    },
     properties: {
         uiPrefab: {
             default: null,
@@ -61,6 +64,7 @@ var HomeViewController = cc.Class({
 
     AppPreLoadDidFinish: function (p) {
         cc.log("HomeViewController AppPreLoadDidFinish ");
+        HomeViewController.isGameHasInit = true;
         this.LoadPrefabDefault();
     },
 
@@ -69,11 +73,13 @@ var HomeViewController = cc.Class({
         this._super();
 
         //提前加载game prefab
+        if(!HomeViewController.isGameHasInit)
         {
             var game = GameViewController.main();
             game.SetLoadFinishCallBack(this.AppPreLoadDidFinish.bind(this), null);
-        }
-        //this.LoadPrefabDefault();
+        }else{
+            this.LoadPrefabDefault();
+        } 
     },
     ViewDidUnLoad: function () {
         cc.log("HomeViewController ViewDidUnLoad");
