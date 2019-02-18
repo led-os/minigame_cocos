@@ -15,6 +15,7 @@ var GameManager = cc.Class({
         gameLevelFinish: 0,//streamingAssetsPath 下的游戏图片等资源
         gameMode: 0,
         maxGuankaNum: 0,
+        placeLevel:0,
 
     },
     properties: {

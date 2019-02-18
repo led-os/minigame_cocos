@@ -1,7 +1,7 @@
 var UIView = require("UIView");
 var UICellItemBase = require("UICellItemBase");
 var GuankaViewController = require("GuankaViewController");
-
+var GameManager = require("GameManager");
 cc.Class({
     extends: UICellItemBase,
     //extends: require('viewCell'),
@@ -37,6 +37,7 @@ cc.Class({
         // {
         //     this.onClickCallBack(this);
         // }
+        GameManager.placeLevel = this.index;
         var uiViewParent = this.GetUIViewParent();//UIPlace
 
         if (uiViewParent.controller != null) {
