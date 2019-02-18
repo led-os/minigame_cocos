@@ -90,6 +90,7 @@ var GameViewController = cc.Class({
     ViewDidUnLoad: function () {
         cc.log("GameViewController ViewDidUnLoad");
         this._super();
+        this.ui = null;
 
     },
     LayOutView: function () {

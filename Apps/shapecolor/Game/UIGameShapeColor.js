@@ -7,7 +7,7 @@ var Language = require("Language");
 var GameShapeColor = require("GameShapeColor");
 var GameManager = require("GameManager");
 var ShapeColorItemInfo = require("ShapeColorItemInfo");
-
+var AppType = require("AppType");
 
 var UIGameShapeColor = cc.Class({
     extends: UIGameBase,
@@ -94,23 +94,22 @@ var UIGameShapeColor = cc.Class({
 
         for (var i = 0; i < items.length; i++) {
             var info = new ShapeColorItemInfo();
-            // JsonData item = items[i];
-            // info.id = (string)item["id"];
-            // //string picdir = Common.GAME_RES_DIR + "/image/" + info.id;
-            // string picdir = Common.GAME_RES_DIR + "/image/" + info.id;
-            // if (Common.appKeyName != AppType.SHAPECOLOR) {
-            //     picdir = Common.GAME_RES_DIR + "/image/" + strPlace;
+            var item = items[i];
+            info.id = items.id;
+            var picdir = Common.GAME_RES_DIR + "/image/" + info.id;
+            if (Config.main().appKeyName != AppType.SHAPECOLOR) {
+                picdir = Common.GAME_RES_DIR + "/image/" + strPlace;
 
-            // }
-            // info.pic = picdir + "/" + info.id + ".png";
-            // info.picInner = picdir + "/" + info.id + "_inner.png";
-            // info.picOuter = picdir + "/" + info.id + "_outer.png";
-            // if (Common.appKeyName != AppType.SHAPECOLOR) {
-            //     info.picInner = info.pic;
-            //     info.picOuter = info.pic;
-            // }
-            // listShape.Add(info);
-            // listGuanka.Add(info);
+            }
+            info.pic = picdir + "/" + info.id + ".png";
+            info.picInner = picdir + "/" + info.id + "_inner.png";
+            info.picOuter = picdir + "/" + info.id + "_outer.png";
+            if (Config.main().appKeyName != AppType.SHAPECOLOR) {
+                info.picInner = info.pic;
+                info.picOuter = info.pic;
+            }
+            this.listShape.push(info);
+            this.listGuanka.push(info);
         }
 
     },
@@ -118,21 +117,15 @@ var UIGameShapeColor = cc.Class({
         if ((this.listColor != null) && (this.listColor.length != 0)) {
             return;
         }
-
-
         var idx = GameManager.placeLevel;
-        // string json = Encoding.UTF8.GetString(data);
-        // // Debug.Log("json::"+json);
-        // JsonData root = JsonMapper.ToObject(json);
-        // JsonData items = root["list"];
-        // for (int i = 0; i < items.Count; i++)
-        // {
-        //     ShapeColorItemInfo info = new ShapeColorItemInfo();
-        //     JsonData item = items[i];
-        //     info.id = (string)item["id"];
-        //     info.color = Common.RGBString2Color((string)item["color"]);
-        //     listColor.Add(info);
-        // }
+        var items = json.list;
+        for (var i = 0; i < items.length; i++) {
+            var info = new ShapeColorItemInfo();
+            var item = items[i];
+            info.id = item.id; 
+            info.color = Common.RGBString2Color(item.color);
+            this.listColor.push(info);
+        }
 
     },
 

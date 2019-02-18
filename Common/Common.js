@@ -17,8 +17,8 @@ var Common = cc.Class({
         TOUCH_MOVE_STEP_MIN: 3.0,//6.0f
 
         //默认参考设计分辨率
-        WIDTH_DESIGN_DEFAULT:2048,
-        HEIGHT_DESIGN_DEFAULT:1536,
+        WIDTH_DESIGN_DEFAULT: 2048,
+        HEIGHT_DESIGN_DEFAULT: 1536,
 
 
         isAndroid: {
@@ -69,9 +69,8 @@ var Common = cc.Class({
 
         GetSizeCanvas: function (sizeDesign) {
             //初始化分辨率相关参数
-            var size =cc.size(Common.WIDTH_DESIGN_DEFAULT, Common.HEIGHT_DESIGN_DEFAULT) // this.canvasMain.designResolution; 参考设计分辨率
-            if(sizeDesign!=null)
-            {
+            var size = cc.size(Common.WIDTH_DESIGN_DEFAULT, Common.HEIGHT_DESIGN_DEFAULT) // this.canvasMain.designResolution; 参考设计分辨率
+            if (sizeDesign != null) {
                 size = sizeDesign;
             }
             var sizeCanvas = cc.size(0, 0);
@@ -85,11 +84,10 @@ var Common = cc.Class({
             return sizeCanvas;
         },
 
-        GetSizeOfParnet(node)
-        {
+        GetSizeOfParnet: function (node) {
             var sizeParent = node.parent.getContentSize();
             var w_parent = sizeParent.width;
-            var h_parent = sizeParent.height; 
+            var h_parent = sizeParent.height;
             var sizeCanvas = Common.GetSizeCanvas(null);//屏幕分辨率
             if (w_parent == 0) {
                 w_parent = sizeCanvas.width;
@@ -97,9 +95,34 @@ var Common = cc.Class({
             if (h_parent == 0) {
                 h_parent = sizeCanvas.height;
             }
-            return new cc.size(w_parent,h_parent);
+            return new cc.size(w_parent, h_parent);
 
         },
+
+        // 255,100,200 to color return cc.Color
+        RGBString2Color: function (strrgb) {
+            var r, g, b;
+            var strsplit = ",";
+            var list = strrgb.split(strsplit);
+            var index = 0;
+            for (let value of list) {
+                if (index == 0) {
+                    r = new Number(value);
+                }
+                if (index == 1) {
+                    g = new Number(value);
+                }
+                if (index == 2) {
+                    b = new Number(value);
+                }
+                index++;
+            }
+
+            var color = new cc.Color(r, g, b, 255);//Color(r, g, b, 1f);
+            return color;
+        },
+
+
         _appSceneBase: null,
         appSceneBase: {
             get: function () {
