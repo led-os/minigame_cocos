@@ -122,6 +122,16 @@ var Common = cc.Class({
             return color;
         },
 
+        //return bool
+        CheckAllLoad: function (listProLoad) {
+            var isLoadAll = true;
+            for (let info of listProLoad) {
+                if (info.isLoad == false) {
+                    isLoadAll = false;
+                }
+            }
+            return isLoadAll;
+        },
 
         _appSceneBase: null,
         appSceneBase: {

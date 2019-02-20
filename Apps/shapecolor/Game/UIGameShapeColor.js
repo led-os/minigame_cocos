@@ -97,14 +97,7 @@ var UIGameShapeColor = cc.Class({
     },
 
     CheckAllLoad: function () {
-        var isLoadAll = true;
-        for (let info of this.listProLoad) {
-            if (info.isLoad == false) {
-                isLoadAll = false;
-            }
-        }
-        cc.log("appscenebase isLoadAll=" + isLoadAll);
-        if (isLoadAll == true) {
+        if (Common.CheckAllLoad(this.listProLoad) == true) {
             this.UpdateGuankaLevel(GameManager.gameLevel);
         }
     },
