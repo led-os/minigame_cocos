@@ -47,14 +47,16 @@ var UIGameBase = cc.Class({
 
 
     //guanka
+    UpdateGuankaLevel: function (level) {
+    },
 
     GetGuankaTotal: function () {
         return 0;
     },
 
     CleanGuankaList: function () {
-        if (this.listGuanka != null) { 
-            this.listGuanka.splice(0,this.listGuanka.length);
+        if (this.listGuanka != null) {
+            this.listGuanka.splice(0, this.listGuanka.length);
         }
     },
     ParseGuanka: function () {
@@ -69,7 +71,7 @@ var UIGameBase = cc.Class({
         }
         if (idx >= this.listGuanka.Count) {
             return null;
-        } 
+        }
         var info = this.listGuanka[idx];
         return info;
     },

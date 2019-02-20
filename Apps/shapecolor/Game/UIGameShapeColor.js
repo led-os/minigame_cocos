@@ -8,6 +8,7 @@ var GameShapeColor = require("GameShapeColor");
 var GameManager = require("GameManager");
 var ShapeColorItemInfo = require("ShapeColorItemInfo");
 var AppType = require("AppType");
+var LoadItemInfo = require("LoadItemInfo");
 
 var UIGameShapeColor = cc.Class({
     extends: UIGameBase,
@@ -30,14 +31,58 @@ var UIGameShapeColor = cc.Class({
             default: [],
             type: cc.Object
         },
+        listBg: {
+            default: [],
+            type: cc.Object
+        },
+
+        listProLoad: {
+            default: [],
+            type: LoadItemInfo
+        },
+
     },
     onLoad: function () {
         this._super();
         this.UnifyButtonSprite(this.btnBack);
         this.LoadGamePrefab();
-        this.StartParseShape();
-        this.StartParseColor();
+
+
+        //shape
+        {
+            var info = new LoadItemInfo();
+            info.id = "shape";
+            info.isLoad = false;
+            this.listProLoad.push(info);
+            this.StartParseShape();
+        }
+        //color
+        {
+            var info = new LoadItemInfo();
+            info.id = "color";
+            info.isLoad = false;
+            this.listProLoad.push(info);
+            this.StartParseColor();
+        }
+        //bglist
+        {
+            var info = new LoadItemInfo();
+            info.id = "bglist";
+            info.isLoad = false;
+            this.listProLoad.push(info);
+            this.StartParseBgList();
+        }
+
     },
+    start: function () {
+
+    },
+
+    // void Start()
+    // {
+    //     UpdateGuankaLevel(GameManager.gameLevel);
+    //     LayOut();
+    // }
 
     // Init: function () {
     // },
@@ -47,6 +92,23 @@ var UIGameShapeColor = cc.Class({
         this.game = node.getComponent(GameShapeColor);
         this.game.node.parent = this.node;
     },
+
+    UpdateGuankaLevel: function (level) {
+    },
+
+    CheckAllLoad: function () {
+        var isLoadAll = true;
+        for (let info of this.listProLoad) {
+            if (info.isLoad == false) {
+                isLoadAll = false;
+            }
+        }
+        cc.log("appscenebase isLoadAll=" + isLoadAll);
+        if (isLoadAll == true) {
+            this.UpdateGuankaLevel(GameManager.gameLevel);
+        }
+    },
+
 
     ParseGuanka: function () {
         cc.log("ParseGuanka UIGameShapeColor");
@@ -80,7 +142,19 @@ var UIGameShapeColor = cc.Class({
         }.bind(this));
 
     },
+    StartParseBgList: function () {
+        var filepath = Common.GAME_RES_DIR + "/image_bg/bg.json";
+        cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
+            if (err) {
+                cc.log("config:err=" + err);
+            }
+            if (err == null) {
+                this.ParseBgList(rootJson.json);
+            }
+        }.bind(this));
+
+    },
     ParseShape: function (json) {
         if ((this.listShape != null) && (this.listShape.length != 0)) {
             return;
@@ -112,6 +186,7 @@ var UIGameShapeColor = cc.Class({
             this.listGuanka.push(info);
         }
 
+        this.CheckAllLoad();
     },
     ParseColor: function (json) {
         if ((this.listColor != null) && (this.listColor.length != 0)) {
@@ -122,11 +197,34 @@ var UIGameShapeColor = cc.Class({
         for (var i = 0; i < items.length; i++) {
             var info = new ShapeColorItemInfo();
             var item = items[i];
-            info.id = item.id; 
+            info.id = item.id;
             info.color = Common.RGBString2Color(item.color);
             this.listColor.push(info);
         }
-
+        this.CheckAllLoad();
     },
+    ParseBgList: function (json) {
+        if ((this.listBg != null) && (this.listBg.length != 0)) {
+            return;
+        }
+        var items = json.list;
+        for (var i = 0; i < items.length; i++) {
+            var info = new ShapeColorItemInfo();
+            var item = items[i];
+            var strdir = Common.GAME_RES_DIR + "/image_bg";
+            info.pic = strdir + "/" + item.pic;
+            var colorFilter = item.color_filter;
+            for (var j = 0; j < colorFilter.length; j++) {
+                var itemtmp = colorFilter[j];
+                var infotmp = new ShapeColorItemInfo();
+                infotmp.id = itemtmp.color_id;
+                info.listColorFilter.push(infotmp);
+
+            }
+            this.listBg.push(info);
+        }
+
+        this.CheckAllLoad();
+    }
 
 });
