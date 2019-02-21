@@ -1,8 +1,7 @@
 var UIViewController = require("UIViewController");
-var UIHomeBase = require("UIHomeBase");
-var PrefabCache = require("PrefabCache");
-var Common = require("Common");
-var Config = require("Config");
+var UIHomeBase = require("UIHomeBase"); 
+//var Common = require("Common");
+//var Config = require("Config");
 var GameViewController = require("GameViewController");
 
 

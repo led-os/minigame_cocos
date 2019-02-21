@@ -39,5 +39,5 @@ var Source = cc.Class({
 
 
 });
-
+cc.Source = module.export = Source; 
 

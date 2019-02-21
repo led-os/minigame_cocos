@@ -1,6 +1,5 @@
 var UIView = require("UIView");
-var SettingViewController = require("SettingViewController");
-var TextureCache = require("TextureCache");
+var SettingViewController = require("SettingViewController"); 
 
 cc.Class({
     extends: UIView,

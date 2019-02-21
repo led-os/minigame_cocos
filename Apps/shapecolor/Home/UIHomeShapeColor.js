@@ -1,12 +1,11 @@
-var UIHomeBase = require("UIHomeBase");
-var TextureCache = require("TextureCache");
+var UIHomeBase = require("UIHomeBase"); 
 var AppRes = require("AppRes");
-var LayoutScale = require("LayoutScale");
-var Common = require("Common");
+//var LayoutScale = require("LayoutScale");
+// var Common = require("Common");
 var PlaceViewController = require("PlaceViewController");
 var GuankaViewController = require("GuankaViewController");
 //var NaviViewController = require("NaviViewController"); 
-var Language = require("Language");
+//var Language = require("Language"); 
 
 cc.Class({
     extends: UIHomeBase,
@@ -36,7 +35,9 @@ cc.Class({
         this.UnifyButtonSprite(this.btnColor);
         this.UnifyButtonSprite(this.btnShapeColor);
         this.UnifyButtonSprite(this.btnBoard);
- 
+        cc.UITest.test = 1;
+        cc.UITest.onTest();
+        
     },
 
     LayOut: function () { 

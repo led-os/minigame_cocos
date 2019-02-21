@@ -1,4 +1,4 @@
-var RectTransform = require("RectTransform");
+//var RectTransform = require("RectTransform");
 var UIView = require("UIView");
 var ScrollModel = cc.Enum({ Horizontal: 0, Vertical: 1 });
 var ScrollDirection = cc.Enum({ None: 0, Up: 1, Down: 2, Left: 3, Rigth: 4 });
@@ -950,7 +950,7 @@ var tableView = cc.Class({
 
     start: function () {
 
-        var rctran = this.node.getComponent(RectTransform);
+        var rctran = this.node.getComponent(cc.RectTransform);
         if (rctran != null) {
             var size = cc.size(rctran.width, rctran.height);
             this.UpdateSize(size);

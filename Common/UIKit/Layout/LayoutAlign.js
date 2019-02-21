@@ -1,4 +1,4 @@
-var Common = require("Common");
+// var Common = require("Common");
 
 var AlignType = cc.Enum({
     //区分大小写
@@ -60,7 +60,7 @@ var LayoutAlign = cc.Class({
         var h_parent = rectParent.height;
         w_parent = sizeParent.width;
         h_parent = sizeParent.height;
-        var sizeCanvas = Common.GetSizeCanvas(null);//屏幕分辨率
+        var sizeCanvas = cc.Common.GetSizeCanvas(null);//屏幕分辨率
         if (w_parent == 0) {
             w_parent = sizeCanvas.width;
         }
@@ -140,3 +140,5 @@ var LayoutAlign = cc.Class({
     },
 
 }); 
+
+cc.LayoutAlign = module.export = LayoutAlign; 

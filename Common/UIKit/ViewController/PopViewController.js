@@ -1,6 +1,6 @@
 //关于js模拟c#的Delegate(委托)实现:https://www.cnblogs.com/kazetotori/p/5842379.html
 var UIViewController = require("UIViewController");
-var Common = require("Common");
+// var Common = require("Common");
 
 var IPopViewControllerDelegate = cc.Class({
     extends: cc.Object,
@@ -43,7 +43,7 @@ var PopViewController = cc.Class({
         //this.iDelegate = dele;
         var root = controller;
         if (root == null) {
-            root = Common.appSceneMain.rootViewController;
+            root = cc.Common.appSceneMain.rootViewController;
         }
         this.SetViewParent(root.objController);
     },

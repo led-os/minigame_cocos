@@ -60,4 +60,5 @@ var PrefabCache = cc.Class({
 
 PrefabCache.main = new PrefabCache();
 
+cc.PrefabCache = module.export = PrefabCache; 
 

@@ -1,9 +1,7 @@
 var UIView = require("UIView");
 var UITabBarItem = require("UITabBarItem");
 var TabBarItemInfo = require("UITabBarItem");
-var AppSceneBase = require("AppSceneBase");
-var TextureCache = require("TextureCache");
-var PrefabCache = require("PrefabCache");
+var AppSceneBase = require("AppSceneBase"); 
 
 cc.Class({
     extends: UIView,
@@ -30,7 +28,7 @@ cc.Class({
         this._super();
         this.LoadPrefab();
         var strImage = "Common/UI/UIKit/barbg";
-        TextureCache.main.Load(strImage, function (err, tex) {
+        cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
                 //cc.log("UITabBar loadRes barbg fail");
@@ -45,13 +43,13 @@ cc.Class({
 
         }.bind(this));
 
-        // TextureCache.main.Load(strImage, null);
+        // cc.TextureCache.main.Load(strImage, null);
 
     },
     LoadPrefab: function () {
         //   name = "UIHome" + Common.appType;
         var strPrefab = "Common/Prefab/TabBar/UITabBarItem";
-        PrefabCache.main.Load(strPrefab, function (err, prefab) {
+       cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             this.uiTabBarItemPrefab = prefab;
             this.CreateTabItem();
         }.bind(this)

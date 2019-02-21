@@ -1,4 +1,4 @@
-cc.Class({
+var ItemInfo = cc.Class({
     extends: cc.Object,
     properties: {
         source: '',
@@ -19,4 +19,6 @@ cc.Class({
         obj: cc.Node,
         time: '',
     },
-}); 
+});
+
+cc.ItemInfo = module.export = ItemInfo; 

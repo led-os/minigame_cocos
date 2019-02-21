@@ -1,7 +1,7 @@
 var Dictionary = require("Dictionary");
-var Common = require("Common");
-var Source = require("Source");
-var LoadItemInfo = require("LoadItemInfo");
+// var Common = require("Common");
+//var Source = require("Source");
+//var LoadItemInfo = require("LoadItemInfo");
 //creator 解析json： https://blog.csdn.net/foupwang/article/details/79660524
 var AdConfig = cc.Class({
     //cc.js.getClassName
@@ -12,7 +12,7 @@ var AdConfig = cc.Class({
         MAIN: "main",
         callbackFinish: null,
         listLoad: [],
-        loadInfo: LoadItemInfo,
+        loadInfo: cc.LoadItemInfo,
     },
     properties: {
         dicItem: {
@@ -37,7 +37,7 @@ var AdConfig = cc.Class({
         //     AdConfig.listLoad.push(info);
         // }
         {
-            var info = new LoadItemInfo();
+            var info = new cc.LoadItemInfo();
             info.id = AdConfig.MAIN;
             info.isLoad = false;
             AdConfig.listLoad.push(info);
@@ -149,28 +149,28 @@ var AdConfig = cc.Class({
         //     return;
         // }
 
-        var strDir = Common.RES_CONFIG_DATA + "/config";
+        var strDir = cc.Common.RES_CONFIG_DATA + "/config";
 
         var fileName = "";
 
         //Defualt
         fileName = "config_" + this.osDefault;
-        if (this.osDefault == Source.ANDROID) {
+        if (this.osDefault == cc.Source.ANDROID) {
             fileName = "config_android";
         }
-        if (this.osDefault == Source.IOS) {
+        if (this.osDefault == cc.Source.IOS) {
             fileName = "config_ios";
         }
-        if (this.osDefault == Source.WIN) {
+        if (this.osDefault == cc.Source.WIN) {
 
         }
 
 
-        if (Common.isAndroid) {
+        if (cc.Common.isAndroid) {
             fileName = "config_android";
         }
-        if (Common.isWin) {
-            fileName = "config_" + Source.WIN;
+        if (cc.Common.isWin) {
+            fileName = "config_" + cc.Source.WIN;
             fileName = "config_android";
         }
 

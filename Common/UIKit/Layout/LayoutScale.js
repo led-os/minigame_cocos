@@ -1,4 +1,4 @@
-var Common = require("Common");
+// var Common = require("Common");
 
 var LayoutScaleType = cc.Enum({
     //区分大小写
@@ -70,7 +70,7 @@ var LayoutScale = cc.Class({
         var h_parent = rectParent.height;
         w_parent = sizeParent.width;
         h_parent = sizeParent.height;
-        var sizeCanvas = Common.GetSizeCanvas(null);//屏幕分辨率
+        var sizeCanvas = cc.Common.GetSizeCanvas(null);//屏幕分辨率
         if (w_parent == 0) {
             w_parent = sizeCanvas.width;
         }
@@ -83,9 +83,9 @@ var LayoutScale = cc.Class({
 
         var scale = 0;
         if (isMaxFit == true) {
-            scale = Common.GetMaxFitScale(w, h, w_parent, h_parent);
+            scale = cc.Common.GetMaxFitScale(w, h, w_parent, h_parent);
         } else {
-            scale = Common.GetBestFitScale(w, h, w_parent, h_parent);
+            scale = cc.Common.GetBestFitScale(w, h, w_parent, h_parent);
         }
 
         node.scaleX = scale;
@@ -93,3 +93,5 @@ var LayoutScale = cc.Class({
     },
 
 }); 
+
+cc.LayoutScale = module.export = LayoutScale; 

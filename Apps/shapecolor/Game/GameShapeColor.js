@@ -1,8 +1,7 @@
-var UIViewController = require("UIViewController");
-var PrefabCache = require("PrefabCache");
-var Common = require("Common");
-var Config = require("Config"); 
-var Language = require("Language");
+var UIViewController = require("UIViewController"); 
+// var Common = require("Common");
+//var Config = require("Config"); 
+//var Language = require("Language");
 var UIView = require("UIView");
 
 var GameShapeColor = cc.Class({

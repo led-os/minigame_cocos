@@ -1,6 +1,5 @@
 var UIView = require("UIView");
-var UIViewController = require("UIViewController");
-var TextureCache = require("TextureCache");
+var UIViewController = require("UIViewController"); 
 
 
 
@@ -19,7 +18,7 @@ var UITabBarItem = cc.Class({
         this.textTitle.string = info.title;
 
         //加载图片： https://www.jianshu.com/p/8bd1eb0240d7
-        TextureCache.main.Load(info.pic, function (err, tex) {
+        cc.TextureCache.main.Load(info.pic, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
                 cc.log("UITabBarItem loadRes  fail");

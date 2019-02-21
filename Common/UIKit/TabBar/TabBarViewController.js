@@ -1,8 +1,7 @@
 var UIViewController = require("UIViewController");
 var UITabBar = require("UITabBar");
 var TabBarItemInfo = require("UITabBarItem");
-var UITabBarItem = require("UITabBarItem");
-var PrefabCache = require("PrefabCache");
+var UITabBarItem = require("UITabBarItem"); 
 
 var TabBarViewController = cc.Class({
     extends: UIViewController,
@@ -35,7 +34,7 @@ var TabBarViewController = cc.Class({
     LoadPrefab: function () {
         //   name = "UIHome" + Common.appType;
         var strPrefab = "Common/Prefab/TabBar/UITabBar";
-        PrefabCache.main.Load(strPrefab, function (err, prefab) {
+       cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             this.uiTabBarPrefab = prefab;
             this.CreateBar();
 

@@ -1,4 +1,4 @@
-var Common = require("Common");
+// var Common = require("Common");
 var LayoutAlign = require("LayoutAlign");
 
 var RectSizeType = cc.Enum({
@@ -205,7 +205,7 @@ var RectTransform = cc.Class({
         } else {
             this._sizeTypeY = type;
         }
-        var sizeParent = Common.GetSizeOfParnet(this.node);
+        var sizeParent = cc.Common.GetSizeOfParnet(this.node);
         var pos = this.node.getPosition();
         var x, y, w, h;
         x = pos.x;
@@ -277,7 +277,7 @@ var RectTransform = cc.Class({
         var h_parent = rectParent.height;
         w_parent = sizeParent.width;
         h_parent = sizeParent.height;
-        var sizeCanvas = Common.GetSizeCanvas(null);//屏幕分辨率
+        var sizeCanvas = cc.Common.GetSizeCanvas(null);//屏幕分辨率
         if (w_parent == 0) {
             w_parent = sizeCanvas.width;
         }
@@ -355,6 +355,6 @@ var RectTransform = cc.Class({
 
         }
     },
-});
-// cc.RectTransform = module.export = RectTransform;
+}); 
+cc.RectTransform = module.export = RectTransform; 
 

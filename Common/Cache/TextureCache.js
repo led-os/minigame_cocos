@@ -62,3 +62,5 @@ var TextureCache = cc.Class({
 TextureCache.main = new TextureCache();
 
 
+cc.TextureCache = module.export = TextureCache; 
+

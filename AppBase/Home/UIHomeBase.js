@@ -1,9 +1,8 @@
 var UIView = require("UIView");
-var Common = require("Common");
-var TextureCache = require("TextureCache");
+// var Common = require("Common"); 
 var AppRes = require("AppRes");
-var LayoutScale = require("LayoutScale");
-var Language = require("Language");
+//var LayoutScale = require("LayoutScale");
+//var Language = require("Language");
 var GameViewController = require("GameViewController");
 
 cc.Class({
@@ -34,10 +33,10 @@ cc.Class({
        this.node.setContentSize(this.node.parent.getContentSize());
 
         var x, y, w, h;  
-        this.textName.string = Language.main().GetString("APP_NAME");
+        this.textName.string = cc.Language.main().GetString("APP_NAME");
 
         var strImage = AppRes.IMAGE_HOME_BG;
-        TextureCache.main.Load(strImage, function (err, tex) {
+        cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
                 cc.log(err.message || err);
@@ -49,7 +48,7 @@ cc.Class({
 
 
         strImage = "Common/UI/UIKit/barbg";
-        TextureCache.main.Load(strImage, function (err, tex) {
+        cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
                 cc.log(err.message || err);

@@ -1,8 +1,7 @@
 var UIViewController = require("UIViewController");
-var UIHomeBase = require("UIHomeBase");
-var PrefabCache = require("PrefabCache");
-var Common = require("Common");
-var Config = require("Config");
+var UIHomeBase = require("UIHomeBase"); 
+//var Common = require("Common");
+//var Config = require("Config");
 var GameViewController = require("GameViewController");
 
 var HomeViewController = cc.Class({
@@ -35,7 +34,7 @@ var HomeViewController = cc.Class({
 
     LoadPrefabDefault: function () {
         var strPrefabDefault = "Common/Prefab/Home/UIHomeDefault";
-        PrefabCache.main.Load(strPrefabDefault, function (err, prefab) {
+       cc.PrefabCache.main.Load(strPrefabDefault, function (err, prefab) {
             if (err) {
                 cc.log(err.message || err);
                 this.LoadPrefab();
@@ -48,10 +47,10 @@ var HomeViewController = cc.Class({
     },
 
     LoadPrefab: function () {
-        var strPrefab = "App/Prefab/Home/UIHome" + Config.main().appType;
+        var strPrefab = "App/Prefab/Home/UIHome" + cc.Config.main().appType;
 
         cc.log("HomeViewController LoadPrefab=" + strPrefab);
-        PrefabCache.main.Load(strPrefab, function (err, prefab) {
+       cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
                 cc.log(err.message || err);
                 return;

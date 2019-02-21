@@ -1,14 +1,13 @@
-var UIViewController = require("UIViewController");
-var PrefabCache = require("PrefabCache");
-var Common = require("Common");
-var Config = require("Config");
+var UIViewController = require("UIViewController"); 
+// var Common = require("Common");
+//var Config = require("Config");
 var UIGameBase = require("UIGameBase");
-var Language = require("Language");
+//var Language = require("Language");
 var GameShapeColor = require("GameShapeColor");
 var GameManager = require("GameManager");
 var ShapeColorItemInfo = require("ShapeColorItemInfo");
 var AppType = require("AppType");
-var LoadItemInfo = require("LoadItemInfo");
+//var LoadItemInfo = require("LoadItemInfo");
 
 var UIGameShapeColor = cc.Class({
     extends: UIGameBase,
@@ -38,7 +37,7 @@ var UIGameShapeColor = cc.Class({
 
         listProLoad: {
             default: [],
-            type: LoadItemInfo
+            type: cc.LoadItemInfo
         },
 
     },
@@ -50,7 +49,7 @@ var UIGameShapeColor = cc.Class({
 
         //shape
         {
-            var info = new LoadItemInfo();
+            var info = new cc.LoadItemInfo();
             info.id = "shape";
             info.isLoad = false;
             this.listProLoad.push(info);
@@ -58,7 +57,7 @@ var UIGameShapeColor = cc.Class({
         }
         //color
         {
-            var info = new LoadItemInfo();
+            var info = new cc.LoadItemInfo();
             info.id = "color";
             info.isLoad = false;
             this.listProLoad.push(info);
@@ -66,7 +65,7 @@ var UIGameShapeColor = cc.Class({
         }
         //bglist
         {
-            var info = new LoadItemInfo();
+            var info = new cc.LoadItemInfo();
             info.id = "bglist";
             info.isLoad = false;
             this.listProLoad.push(info);
@@ -97,7 +96,7 @@ var UIGameShapeColor = cc.Class({
     },
 
     CheckAllLoad: function () {
-        if (Common.CheckAllLoad(this.listProLoad) == true) {
+        if (cc.Common.CheckAllLoad(this.listProLoad) == true) {
             this.UpdateGuankaLevel(GameManager.gameLevel);
         }
     },
@@ -109,7 +108,7 @@ var UIGameShapeColor = cc.Class({
     },
 
     StartParseShape: function () {
-        var filepath = Common.GAME_RES_DIR + "/guanka/shape_list_place" + GameManager.placeLevel + ".json";
+        var filepath = cc.Common.GAME_RES_DIR + "/guanka/shape_list_place" + GameManager.placeLevel + ".json";
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {
@@ -123,7 +122,7 @@ var UIGameShapeColor = cc.Class({
     },
 
     StartParseColor: function () {
-        var filepath = Common.GAME_RES_DIR + "/guanka/color.json";
+        var filepath = cc.Common.GAME_RES_DIR + "/guanka/color.json";
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {
@@ -136,7 +135,7 @@ var UIGameShapeColor = cc.Class({
 
     },
     StartParseBgList: function () {
-        var filepath = Common.GAME_RES_DIR + "/image_bg/bg.json";
+        var filepath = cc.Common.GAME_RES_DIR + "/image_bg/bg.json";
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {
@@ -163,15 +162,15 @@ var UIGameShapeColor = cc.Class({
             var info = new ShapeColorItemInfo();
             var item = items[i];
             info.id = items.id;
-            var picdir = Common.GAME_RES_DIR + "/image/" + info.id;
-            if (Config.main().appKeyName != AppType.SHAPECOLOR) {
-                picdir = Common.GAME_RES_DIR + "/image/" + strPlace;
+            var picdir = cc.Common.GAME_RES_DIR + "/image/" + info.id;
+            if (cc.Config.main().appKeyName != AppType.SHAPECOLOR) {
+                picdir = cc.Common.GAME_RES_DIR + "/image/" + strPlace;
 
             }
             info.pic = picdir + "/" + info.id + ".png";
             info.picInner = picdir + "/" + info.id + "_inner.png";
             info.picOuter = picdir + "/" + info.id + "_outer.png";
-            if (Config.main().appKeyName != AppType.SHAPECOLOR) {
+            if (cc.Config.main().appKeyName != AppType.SHAPECOLOR) {
                 info.picInner = info.pic;
                 info.picOuter = info.pic;
             }
@@ -191,7 +190,7 @@ var UIGameShapeColor = cc.Class({
             var info = new ShapeColorItemInfo();
             var item = items[i];
             info.id = item.id;
-            info.color = Common.RGBString2Color(item.color);
+            info.color = cc.Common.RGBString2Color(item.color);
             this.listColor.push(info);
         }
         this.CheckAllLoad();
@@ -204,7 +203,7 @@ var UIGameShapeColor = cc.Class({
         for (var i = 0; i < items.length; i++) {
             var info = new ShapeColorItemInfo();
             var item = items[i];
-            var strdir = Common.GAME_RES_DIR + "/image_bg";
+            var strdir = cc.Common.GAME_RES_DIR + "/image_bg";
             info.pic = strdir + "/" + item.pic;
             var colorFilter = item.color_filter;
             for (var j = 0; j < colorFilter.length; j++) {

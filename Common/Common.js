@@ -69,7 +69,7 @@ var Common = cc.Class({
 
         GetSizeCanvas: function (sizeDesign) {
             //初始化分辨率相关参数
-            var size = cc.size(Common.WIDTH_DESIGN_DEFAULT, Common.HEIGHT_DESIGN_DEFAULT) // this.canvasMain.designResolution; 参考设计分辨率
+            var size = cc.size(cc.Common.WIDTH_DESIGN_DEFAULT, cc.Common.HEIGHT_DESIGN_DEFAULT) // this.canvasMain.designResolution; 参考设计分辨率
             if (sizeDesign != null) {
                 size = sizeDesign;
             }
@@ -88,7 +88,7 @@ var Common = cc.Class({
             var sizeParent = node.parent.getContentSize();
             var w_parent = sizeParent.width;
             var h_parent = sizeParent.height;
-            var sizeCanvas = Common.GetSizeCanvas(null);//屏幕分辨率
+            var sizeCanvas = cc.Common.GetSizeCanvas(null);//屏幕分辨率
             if (w_parent == 0) {
                 w_parent = sizeCanvas.width;
             }
@@ -174,4 +174,6 @@ Common.main = function () {
     }
     return Common._main;
 }
+
+cc.Common = module.export = Common; 
 

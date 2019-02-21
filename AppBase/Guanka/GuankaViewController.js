@@ -1,8 +1,7 @@
 var UIViewController = require("UIViewController");
-var UIGuankaBase = require("UIGuankaBase");
-var PrefabCache = require("PrefabCache");
-var Common = require("Common");
-var Config = require("Config");
+var UIGuankaBase = require("UIGuankaBase"); 
+//var Common = require("Common");
+//var Config = require("Config");
 
 var GuankaViewController = cc.Class({
     extends: UIViewController,
@@ -28,7 +27,7 @@ var GuankaViewController = cc.Class({
 
     LoadPrefabDefault: function () {
         var strPrefabDefault = "Common/Prefab/Guanka/UIGuanka";
-        PrefabCache.main.Load(strPrefabDefault, function (err, prefab) {
+       cc.PrefabCache.main.Load(strPrefabDefault, function (err, prefab) {
             if (err) {
                 cc.log(err.message || err);
                 this.LoadPrefab();
@@ -41,8 +40,8 @@ var GuankaViewController = cc.Class({
     },
 
     LoadPrefab: function () {
-        var strPrefab = "App/Prefab/Guanka/UIGuanka" + Config.main().appType;
-        PrefabCache.main.Load(strPrefab, function (err, prefab) {
+        var strPrefab = "App/Prefab/Guanka/UIGuanka" + cc.Config.main().appType;
+       cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
                 cc.log(err.message || err); 
                 return;

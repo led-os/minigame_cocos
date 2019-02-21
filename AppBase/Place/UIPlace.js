@@ -1,8 +1,8 @@
 var UIView = require("UIView");
 var UIPlaceBase = require("UIPlaceBase");
-var Common = require("Common");
-var RectTransform = require("RectTransform");
-var Language = require("Language");
+// var Common = require("Common");
+//var RectTransform = require("RectTransform");
+//var Language = require("Language");
 var GameManager = require("GameManager");
 
 cc.Class({
@@ -23,7 +23,7 @@ cc.Class({
         this._super();
         this.UnifyButtonSprite(this.btnBack);
         this.InitList();
-        this.textTitle.string = Language.main().GetString("STR_PLACE");
+        this.textTitle.string = cc.Language.main().GetString("STR_PLACE");
         GameManager.main().ParseGuanka();
     },
 

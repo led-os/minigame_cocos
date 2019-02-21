@@ -1,5 +1,5 @@
 var UIView = require("UIView");
-var Common = require("Common");
+// var Common = require("Common");
 cc.Class({
     extends: UIView,
     properties: {

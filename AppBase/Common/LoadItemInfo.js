@@ -1,5 +1,5 @@
 //var ItemInfo = require("ItemInfo");
-cc.Class({
+var LoadItemInfo =cc.Class({
     extends: cc.Object,
     properties: {
         id: '',
@@ -12,3 +12,5 @@ cc.Class({
         GAME: "game",
     },
 }); 
+
+cc.LoadItemInfo = module.export = LoadItemInfo; 

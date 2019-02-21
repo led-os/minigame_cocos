@@ -1,6 +1,5 @@
 var UIViewController = require("UIViewController");
-var UINaviBar = require("UINaviBar");
-var PrefabCache = require("PrefabCache");
+var UINaviBar = require("UINaviBar"); 
 
 cc.Class({
     extends: UIViewController,
@@ -31,7 +30,7 @@ cc.Class({
     LoadPrefab: function () {
         //   name = "UIHome" + Common.appType;
         var strPrefab = "Common/Prefab/NaviBar/UINaviBar";
-        PrefabCache.main.Load(strPrefab, function (err, prefab) {
+       cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             this.uiNaviBarPrefab = prefab;
             this.CreateBar();
 

@@ -1,6 +1,6 @@
 
 var UIView = require("UIView");
-var Common = require("Common");
+// var Common = require("Common");
 
 //https://docs.cocos.com/creator/manual/zh/scripting/reference/class.html
 //api: https://docs.cocos.com/creator/api/zh/
@@ -27,7 +27,7 @@ cc.Class({
 
         if (this.objController == null) {
             this.objController = new cc.Node('Controller');
-            this.objController.setContentSize(Common.appSceneMain.sizeCanvas); 
+            this.objController.setContentSize(cc.Common.appSceneMain.sizeCanvas); 
           
         }
         this.ViewDidLoad();

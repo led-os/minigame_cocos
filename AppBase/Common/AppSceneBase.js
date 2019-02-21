@@ -9,10 +9,10 @@
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 var UIViewController = require("UIViewController");
 var HomeViewController = require("HomeViewController");
-var Config = require("Config");
-var Common = require("Common");
-var Language = require("Language");
-var LoadItemInfo = require("LoadItemInfo");
+//var Config = require("Config");
+//var Common = require("Common");
+//var Language = require("Language");
+//var LoadItemInfo = require("LoadItemInfo");
 var GameViewController = require("GameViewController");
 
 var AppSceneBase = cc.Class({
@@ -59,7 +59,7 @@ var AppSceneBase = cc.Class({
         },
         listProLoad: {
             default: [],
-            type: LoadItemInfo
+            type: cc.LoadItemInfo
         },
         isHasRunApp: false,
     },
@@ -71,7 +71,8 @@ var AppSceneBase = cc.Class({
         // }else{
         //     cc.log(" AppSceneBase.main onLoad size is not null");
         // }
-        Common.appSceneMain = this;
+        
+        cc.Common.appSceneMain = this;
         this.isHasRunApp = false;
         this.InitValue();
         // this.RunApp();
@@ -119,28 +120,28 @@ var AppSceneBase = cc.Class({
             // //  cc.log("new frame size=" + framesize1);
 
 
-            this.sizeCanvas = Common.GetSizeCanvas(this.canvasMain.designResolution);
+            this.sizeCanvas = cc.Common.GetSizeCanvas(this.canvasMain.designResolution);
         }
 
         //config
         {
-            var info = new LoadItemInfo();
-            info.id = LoadItemInfo.CONFIG;
+            var info = new cc.LoadItemInfo();
+            info.id = cc.LoadItemInfo.CONFIG;
             info.isLoad = false;
             this.listProLoad.push(info);
 
-            var cf = Config.main();
+            var cf = cc.Config.main();
             cf.SetLoadFinishCallBack(this.AppPreLoadDidFinish.bind(this), info);
             //cf.ParseJson(false);
         }
         //language
         {
-            var info = new LoadItemInfo();
-            info.id = LoadItemInfo.LANGUAGE;
+            var info = new cc.LoadItemInfo();
+            info.id = cc.LoadItemInfo.LANGUAGE;
             info.isLoad = false;
             this.listProLoad.push(info);
 
-            var lan = Language.main();
+            var lan = cc.Language.main();
             lan.SetLoadFinishCallBack(this.AppPreLoadDidFinish.bind(this), info);
         }
 

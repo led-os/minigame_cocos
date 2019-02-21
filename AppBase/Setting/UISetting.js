@@ -1,10 +1,9 @@
 var UIView = require("UIView");
 var PopViewController = require("PopViewController");
-var AppRes = require("AppRes");
-var TextureCache = require("TextureCache");
-var Common = require("Common");
-var LayoutScale = require("LayoutScale");
-var LayoutAlign = require("LayoutAlign");
+var AppRes = require("AppRes"); 
+// var Common = require("Common");
+//var LayoutScale = require("LayoutScale");
+//var LayoutAlign = require("LayoutAlign");
 
 cc.Class({
     extends: UIView,
@@ -27,7 +26,7 @@ cc.Class({
         this.UnifyButtonSprite(this.btnBack);
 
         //var layoutAlign = this.topBar.addComponent(LayoutAlign)
-        var layoutAlign = this.topBar.getComponent(LayoutAlign);
+        var layoutAlign = this.topBar.getComponent(cc.LayoutAlign);
         if (layoutAlign != null) {
             // layoutAlign.alignType = LayoutAlign.AlignType.UP;
         }

@@ -1,6 +1,6 @@
 var NaviViewController = require("NaviViewController");
 var HomeViewController = require("HomeViewController");
-var Language = require("Language");
+//var Language = require("Language");
 var PlaceViewController = require("PlaceViewController");
 var GuankaViewController = require("GuankaViewController");
 
@@ -11,7 +11,7 @@ var MainViewController = cc.Class({
         this._super();
         this.Push(HomeViewController.main());
       //moon ui for test
-        var str = Language.main().GetString("APP_NAME");
+        var str = cc.Language.main().GetString("APP_NAME");
         cc.log("Language GetString=" + str);
     },
 

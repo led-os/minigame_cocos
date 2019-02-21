@@ -1,5 +1,5 @@
 var UIViewController = require("UIViewController");
-var Common = require("Common");
+// var Common = require("Common");
 
 cc.Class({
     extends: cc.Component,

@@ -1,16 +1,15 @@
 var UIViewController = require("UIViewController");
-var UIGameBase = require("UIGameBase");
-var PrefabCache = require("PrefabCache");
-var Common = require("Common");
-var Config = require("Config");
-var LoadItemInfo = require("LoadItemInfo");
+var UIGameBase = require("UIGameBase"); 
+//var Common = require("Common");
+//var Config = require("Config");
+//var LoadItemInfo = require("LoadItemInfo");
 
 var GameViewController = cc.Class({
     extends: UIViewController,
     statics: {
         // 声明静态变量 
         callbackFinish: null,
-        loadInfo: LoadItemInfo,
+        loadInfo: cc.LoadItemInfo,
     },
 
     properties: {
@@ -59,8 +58,8 @@ var GameViewController = cc.Class({
     },
 
     LoadPrefab: function () {
-        var strPrefab = "App/Prefab/Game/UIGame" + Config.main().appType;
-        PrefabCache.main.Load(strPrefab, function (err, prefab) {
+        var strPrefab = "App/Prefab/Game/UIGame" + cc.Config.main().appType;
+       cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
                 cc.log(err.message || err);
                 return;

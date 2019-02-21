@@ -58,4 +58,4 @@ var AudioCache = cc.Class({
 
 AudioCache.main = new AudioCache();
 
-
+cc.AudioCache = module.export = AudioCache; 

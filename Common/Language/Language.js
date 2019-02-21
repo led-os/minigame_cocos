@@ -1,8 +1,8 @@
 var Dictionary = require("Dictionary");
-var Common = require("Common");
+// var Common = require("Common");
 var Source = require("Source");
 var LTLocalization = require("LTLocalization");
-var LoadItemInfo = require("LoadItemInfo");
+//var LoadItemInfo = require("LoadItemInfo");
 //creator 解析json： https://blog.csdn.net/foupwang/article/details/79660524
 var Language = cc.Class({
     //cc.js.getClassName
@@ -13,7 +13,7 @@ var Language = cc.Class({
         LANGUAGE_MAIN: "language_main",
         callbackFinish: null,
         listLoad: [],
-        loadInfo: LoadItemInfo,
+        loadInfo: cc.LoadItemInfo,
 
     },
     properties: {
@@ -27,13 +27,13 @@ var Language = cc.Class({
     },
     InitValue: function () {
         {
-            var info = new LoadItemInfo();
+            var info = new cc.LoadItemInfo();
             info.id = Language.LANGUAGE_COMMON;
             info.isLoad = false;
             Language.listLoad.push(info);
         }
         {
-            var info = new LoadItemInfo();
+            var info = new cc.LoadItemInfo();
             info.id = Language.LANGUAGE_MAIN;
             info.isLoad = false;
             Language.listLoad.push(info);
@@ -159,11 +159,11 @@ Language.main = function () {
         Language._main.InitValue();
 
 
-        fileName = Common.RES_CONFIG_DATA + "/language/language.csv";
+        fileName = cc.Common.RES_CONFIG_DATA + "/language/language.csv";
         Language._main.Init(fileName);
         Language._main.SetLanguage(cc.sys.LANGUAGE_CHINESE);
 
-        fileName = Common.RES_CONFIG_DATA_COMMON + "/language/language.csv";
+        fileName = cc.Common.RES_CONFIG_DATA_COMMON + "/language/language.csv";
         Language._common = new Language();
         Language._common.Init(fileName);
 
@@ -188,5 +188,5 @@ Language.game = function () {
     return Language._game;
 }
 
-
+cc.Language = module.export = Language; 
 

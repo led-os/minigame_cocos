@@ -1,7 +1,7 @@
 var Dictionary = require("Dictionary");
-var Common = require("Common");
-var Source = require("Source");
-var LoadItemInfo = require("LoadItemInfo");
+// var Common = require("Common");
+//var Source = require("Source");
+//var LoadItemInfo = require("LoadItemInfo");
 //creator 解析json： https://blog.csdn.net/foupwang/article/details/79660524
 var Config = cc.Class({
     //cc.js.getClassName
@@ -12,7 +12,7 @@ var Config = cc.Class({
         MAIN: "main",
         callbackFinish: null,
         listLoad: [],
-        loadInfo: LoadItemInfo,
+        loadInfo: cc.LoadItemInfo,
     },
     properties: {
         dicItem: {
@@ -43,13 +43,13 @@ var Config = cc.Class({
 
     InitValue: function () {
         {
-            var info = new LoadItemInfo();
+            var info = new cc.LoadItemInfo();
             info.id = Config.COMMON;
             info.isLoad = false;
             Config.listLoad.push(info);
         }
         {
-            var info = new LoadItemInfo();
+            var info = new cc.LoadItemInfo();
             info.id = Config.MAIN;
             info.isLoad = false;
             Config.listLoad.push(info);
@@ -63,27 +63,27 @@ var Config = cc.Class({
         }
         this.dicItem = new Dictionary();
 
-        var strDir = Common.RES_CONFIG_DATA + "/config";
+        var strDir = cc.Common.RES_CONFIG_DATA + "/config";
         var loadInfoId = "";
         var fileName = "";
         if (this == Config._main) {
             loadInfoId = Config.MAIN;
             //Defualt
             fileName = "config_" + this.osDefault;
-            if (this.osDefault == Source.ANDROID) {
+            if (this.osDefault == cc.Source.ANDROID) {
                 fileName = "config_android";
             }
-            if (this.osDefault == Source.IOS) {
+            if (this.osDefault == cc.Source.IOS) {
                 fileName = "config_ios";
             }
-            if (this.osDefault == Source.WIN) {
+            if (this.osDefault == cc.Source.WIN) {
 
             }
-            if (Common.isAndroid) {
+            if (cc.Common.isAndroid) {
                 fileName = "config_android";
             }
-            if (Common.isWin) {
-                fileName = "config_" + Source.WIN;
+            if (cc.Common.isWin) {
+                fileName = "config_" + cc.Source.WIN;
                 fileName = "config_android";
             }
             // if (ishd == true)//AppVersion.appForPad
@@ -155,7 +155,7 @@ var Config = cc.Class({
             cc.log("GetStringJson json=null");
         }
         var str = def;
-        var ishave = Common.main().JsonDataContainsKey(json, key);
+        var ishave = cc.Common.main().JsonDataContainsKey(json, key);
         if (ishave == true) {
             // str = json.APP_TYPE;
             cc.log("GetStringJson  JsonDataContainsKey=" + str);
@@ -172,7 +172,7 @@ var Config = cc.Class({
     },
 
     IsHaveKey(key) {
-        return Common.main().JsonDataContainsKey(this.rootJson, key);
+        return cc.Common.main().JsonDataContainsKey(this.rootJson, key);
     },
 
     GetLoadInfoById: function (id) {
@@ -252,4 +252,5 @@ Config.main = function () {
     return Config._main;
 }
 
+cc.Config = module.export = Config; 
 

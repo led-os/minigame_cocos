@@ -1,9 +1,8 @@
-var UIViewController = require("UIViewController");
-var PrefabCache = require("PrefabCache");
-var Common = require("Common");
-var Config = require("Config");
+var UIViewController = require("UIViewController"); 
+//var Common = require("Common");
+//var Config = require("Config");
 var UIView = require("UIView");
-var Language = require("Language");
+//var Language = require("Language");
 
 var UIGameBase = cc.Class({
     extends: UIView,
@@ -22,8 +21,8 @@ var UIGameBase = cc.Class({
     },
 
     LoadGamePrefab: function () {
-        var strPrefab = "App/Prefab/Game/Game" + Config.main().appType;
-        PrefabCache.main.Load(strPrefab, function (err, prefab) {
+        var strPrefab = "App/Prefab/Game/Game" + cc.Config.main().appType;
+        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
                 cc.log(err.message || err);
                 return;

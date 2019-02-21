@@ -1,8 +1,7 @@
 var UIViewController = require("UIViewController");
-var UIHomeBase = require("UIHomeBase");
-var PrefabCache = require("PrefabCache");
-var Common = require("Common");
-var Config = require("Config");
+var UIHomeBase = require("UIHomeBase"); 
+// var Common = require("Common");
+//var Config = require("Config");
 
 var GuankaViewController = cc.Class({
     extends: UIViewController,
@@ -33,17 +32,17 @@ var GuankaViewController = cc.Class({
     LoadPrefab: function () {
         // var ishave = Common.main().JsonDataContainsKey(null, "key"); 
         // var strPrefab = "App/Prefab/Home/UIHome" + Common.main().appType;
-        var strPrefab = "App/Prefab/Home/UIHome" + Config.main().appType;
+        var strPrefab = "App/Prefab/Home/UIHome" + cc.Config.main().appType;
 
         var strPrefabDefault = "Common/Prefab/Home/UIHomeDefault";
-        // GameObject obj = PrefabCache.main.Load(strPrefab);
+        // GameObject obj =cc.PrefabCache.main.Load(strPrefab);
         // if (obj == null) {
-        //     obj = PrefabCache.main.Load(strPrefabDefault);
+        //     obj =cc.PrefabCache.main.Load(strPrefabDefault);
         // }
 
         // uiHomePrefab = obj.GetComponent<UIHomeBase>();
         cc.log("GuankaViewController LoadPrefab=" + strPrefab);
-        PrefabCache.main.Load(strPrefab, function (err, prefab) {
+       cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             this.uiPrefab = prefab;
             var node = cc.instantiate(prefab);
             this.ui= node.getComponent(UIHomeBase);
