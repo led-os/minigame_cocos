@@ -35,8 +35,6 @@ cc.Class({
         this.UnifyButtonSprite(this.btnColor);
         this.UnifyButtonSprite(this.btnShapeColor);
         this.UnifyButtonSprite(this.btnBoard);
-        cc.UITest.test = 1;
-        cc.UITest.onTest();
         
     },
 

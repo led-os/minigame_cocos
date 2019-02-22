@@ -164,3 +164,5 @@ GameManager.main = function () {
 
     return GameManager._main;
 }
+
+cc.GameManager = module.export = GameManager; 

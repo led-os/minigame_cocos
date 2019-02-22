@@ -4,7 +4,7 @@ var UIViewController = require("UIViewController");
 var UIGameBase = require("UIGameBase");
 //var Language = require("Language");
 var GameShapeColor = require("GameShapeColor");
-var GameManager = require("GameManager");
+//var GameManager = require("GameManager");
 var ShapeColorItemInfo = require("ShapeColorItemInfo");
 var AppType = require("AppType");
 //var LoadItemInfo = require("LoadItemInfo");
@@ -35,42 +35,11 @@ var UIGameShapeColor = cc.Class({
             type: cc.Object
         },
 
-        listProLoad: {
-            default: [],
-            type: cc.LoadItemInfo
-        },
-
     },
     onLoad: function () {
         this._super();
         this.UnifyButtonSprite(this.btnBack);
         this.LoadGamePrefab();
-
-
-        //shape
-        {
-            var info = new cc.LoadItemInfo();
-            info.id = "shape";
-            info.isLoad = false;
-            this.listProLoad.push(info);
-            this.StartParseShape();
-        }
-        //color
-        {
-            var info = new cc.LoadItemInfo();
-            info.id = "color";
-            info.isLoad = false;
-            this.listProLoad.push(info);
-            this.StartParseColor();
-        }
-        //bglist
-        {
-            var info = new cc.LoadItemInfo();
-            info.id = "bglist";
-            info.isLoad = false;
-            this.listProLoad.push(info);
-            this.StartParseBgList();
-        }
 
     },
     start: function () {
@@ -90,14 +59,31 @@ var UIGameShapeColor = cc.Class({
         var node = cc.instantiate(this.gamePrefab);
         this.game = node.getComponent(GameShapeColor);
         this.game.node.parent = this.node;
+           //shape
+           {
+            this.StartParseShape();
+        }
+        //color
+        {
+            this.StartParseColor();
+        }
+        //bglist
+        {
+            this.StartParseBgList();
+        }
+
     },
 
     UpdateGuankaLevel: function (level) {
+
+        this.game.listShape = listShape;
+        this.game.listColor = listColor; 
+        this.game.LoadGame(cc.GameManager.gameMode);
     },
 
     CheckAllLoad: function () {
         if (cc.Common.CheckAllLoad(this.listProLoad) == true) {
-            this.UpdateGuankaLevel(GameManager.gameLevel);
+            this.UpdateGuankaLevel(cc.GameManager.gameLevel);
         }
     },
 
@@ -108,7 +94,14 @@ var UIGameShapeColor = cc.Class({
     },
 
     StartParseShape: function () {
-        var filepath = cc.Common.GAME_RES_DIR + "/guanka/shape_list_place" + GameManager.placeLevel + ".json";
+
+        
+        var info = new cc.LoadItemInfo();
+        info.id = "shape";
+        info.isLoad = false;
+        this.listProLoad.push(info);
+
+        var filepath = cc.Common.GAME_RES_DIR + "/guanka/shape_list_place" + cc.GameManager.placeLevel + ".json";
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {
@@ -122,6 +115,12 @@ var UIGameShapeColor = cc.Class({
     },
 
     StartParseColor: function () {
+        
+        var info = new cc.LoadItemInfo();
+        info.id = "color";
+        info.isLoad = false;
+        this.listProLoad.push(info);
+
         var filepath = cc.Common.GAME_RES_DIR + "/guanka/color.json";
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
@@ -135,6 +134,13 @@ var UIGameShapeColor = cc.Class({
 
     },
     StartParseBgList: function () {
+
+        
+        var info = new cc.LoadItemInfo();
+        info.id = "bglist";
+        info.isLoad = false;
+        this.listProLoad.push(info);
+
         var filepath = cc.Common.GAME_RES_DIR + "/image_bg/bg.json";
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
@@ -151,7 +157,7 @@ var UIGameShapeColor = cc.Class({
         if ((this.listShape != null) && (this.listShape.length != 0)) {
             return;
         }
-        var idx = GameManager.placeLevel;
+        var idx = cc.GameManager.placeLevel;
         var strPlace = json.place;
         var items = json.list;
         if (items == null) {
@@ -184,7 +190,7 @@ var UIGameShapeColor = cc.Class({
         if ((this.listColor != null) && (this.listColor.length != 0)) {
             return;
         }
-        var idx = GameManager.placeLevel;
+        var idx = cc.GameManager.placeLevel;
         var items = json.list;
         for (var i = 0; i < items.length; i++) {
             var info = new ShapeColorItemInfo();

@@ -1,7 +1,7 @@
 var UIView = require("UIView");
 // var Common = require("Common");
 var UIGuankaBase = require("UIGuankaBase");
-var GameManager = require("GameManager");
+//var GameManager = require("GameManager");
 //var Language = require("Language");
 
 cc.Class({
@@ -21,7 +21,7 @@ cc.Class({
         this.UnifyButtonSprite(this.btnBack);
         this.InitList();
         this.textTitle.string = cc.Language.main().GetString("STR_GUANKA");
-        GameManager.main().ParseGuanka();
+        cc.GameManager.main().ParseGuanka();
     },
 
     _getdata: function (num) {
@@ -42,8 +42,8 @@ cc.Class({
     },
 
     GotoGame: function (idx) {
-        GameManager.gameLevel = idx;
-        GameManager.main().GotoGame(this.controller);
+        cc.GameManager.gameLevel = idx;
+        cc.GameManager.main().GotoGame(this.controller);
     },
 });
 

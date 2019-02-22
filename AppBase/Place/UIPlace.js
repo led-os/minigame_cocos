@@ -3,7 +3,7 @@ var UIPlaceBase = require("UIPlaceBase");
 // var Common = require("Common");
 //var RectTransform = require("RectTransform");
 //var Language = require("Language");
-var GameManager = require("GameManager");
+//var GameManager = require("GameManager");
 
 cc.Class({
     extends: UIPlaceBase,
@@ -24,7 +24,7 @@ cc.Class({
         this.UnifyButtonSprite(this.btnBack);
         this.InitList();
         this.textTitle.string = cc.Language.main().GetString("STR_PLACE");
-        GameManager.main().ParseGuanka();
+        cc.GameManager.main().ParseGuanka();
     },
 
     start: function () {

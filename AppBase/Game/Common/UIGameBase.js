@@ -15,6 +15,10 @@ var UIGameBase = cc.Class({
             default: [],
             type: cc.Object
         },
+        listProLoad: {
+            default: [],
+            type: cc.LoadItemInfo
+        },
 
     },
     Init: function () {
