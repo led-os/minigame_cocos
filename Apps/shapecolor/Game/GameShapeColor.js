@@ -1,7 +1,7 @@
 var UIViewController = require("UIViewController");
 // var Common = require("Common");
 //var Config = require("Config"); 
-//var Language = require("Language");
+var ShapeColorItemInfo = require("ShapeColorItemInfo");
 var UIView = require("UIView");
 
 var GameShapeColor = cc.Class({
@@ -29,15 +29,16 @@ var GameShapeColor = cc.Class({
         listColor: null,
         listItem: {
             default: [],
-            type: cc.Object
+            type: ShapeColorItemInfo
         },
         listColorShow: {
             default: [],
-            type: cc.Object
+            type: ShapeColorItemInfo
         },
 
         totalRow: 0,
         totalCol: 0,
+        itemPosZ: -20.0,
 
 
     },
@@ -53,7 +54,7 @@ var GameShapeColor = cc.Class({
     },
 
     //ShapeColorItemInfo
-    GetItemInfoShapeColor: function(idx, list) {
+    GetItemInfoShapeColor: function (idx, list) {
         if (list == null) {
             return null;
         }
@@ -64,35 +65,68 @@ var GameShapeColor = cc.Class({
         return info;
     },
 
-     CalcRowCol( total)
-    {
+    CalcRowCol: function (total) {
         var sqr = Math.sqrt(total);
-        if (total > sqr * sqr)
-        {
+        if (total > sqr * sqr) {
             sqr++;
         }
         return sqr;
     },
+    //c.Rect
+    GetRectItem: function (i, j, totalRow, totalCol) {
+        var x, y, w, h;
+        var sizeCanvas = cc.Common.appSceneMain.sizeCanvas;
+        //var w_world = Common.GetCameraWorldSizeWidth(mainCam) * 2;
+        var height_topbar_canvas = 160.0;
+        var height_adbanner_canvas = 160.0;
+        //var height_topbar_world = Common.CanvasToWorldHeight(mainCam, sizeCanvas, height_topbar_canvas);
+        // if (!Device.isLandscape)
+        // {
+        //     height_topbar_world += Common.ScreenToWorldHeight(mainCam, Device.heightSystemTopBar);
+        // }
+        //var h_world = mainCam.orthographicSize * 2;
+        w = sizeCanvas.width / totalCol;
+        h = (sizeCanvas.height - height_topbar_canvas - height_adbanner_canvas) / totalRow;
+        var oftx = -sizeCanvas.width / 2;
+        var ofty = -sizeCanvas.height / 2 + height_adbanner_canvas;
+        x = oftx + w * i;
+        y = ofty + h * j;
+        var rc = new cc.Rect(x, y, w, h);
+        return rc;
+    },
+    //return Vector2
+    RandomPointOfRect: function (rc, offsetx, offsety) {
+        var x, y, w, h;
+        w = rc.width - offsetx * 2;
+        h = rc.height - offsety * 2;
+        var rdx = cc.Common.RandomRange(0, 100);
+        //rdx = 50;
+        x = rc.x + (offsetx + w * rdx / 100);
+
+        rdx = cc.Common.RandomRange(0, 100);
+
+        //rdx = 50;
+        y = rc.y + (offsety + h * rdx / 100);
+
+        return new Vector2(x, y);
+    },
 
     //从数组里随机抽取newsize个元素
-    RandomIndex: function( size,  newsize)
-    {
-       var listIndex = [];
+    RandomIndex: function (size, newsize) {
+        var listIndex = [];
         var total = size;
-        for (var i = 0; i < total; i++)
-        {
+        for (var i = 0; i < total; i++) {
             listIndex.push(i);
         }
 
-        var idxTmp = [] ;//new int[newsize];
-        for (var i = 0; i < newsize; i++)
-        {
-            total = listIndex.length; 
-            var rdm = Math.floor((Math.random() *total));
+        var idxTmp = [];//new int[newsize];
+        for (var i = 0; i < newsize; i++) {
+            total = listIndex.length;
+            var rdm = Math.floor((Math.random() * total));
             var idx = listIndex[rdm];
             idxTmp.push(idx);
             //listIndex.RemoveAt(rdm);
-            listIndex.splice(rdm,1);
+            listIndex.splice(rdm, 1);
         }
 
         return idxTmp;
@@ -100,7 +134,7 @@ var GameShapeColor = cc.Class({
 
     LoadGame: function (mode) {
 
-        Debug.Log("LoadGame:mode=" + mode);
+        cc.log("LoadGame:mode=" + mode);
         //清空
         this.listItem.length = 0;
         this.listColorShow.length = 0;
@@ -131,7 +165,7 @@ var GameShapeColor = cc.Class({
 
         var level = cc.GameManager.gameLevel;
         var idx = level / GameShapeColor.GUANKA_NUM_PER_ITEM;
-        var infoshape = this.GetItemInfoShapeColor(idx, listShape);
+        var infoshape = this.GetItemInfoShapeColor(idx, this.listShape);
         if (infoshape == null) {
             cc.log("LoadGameByShape null");
             return;
@@ -146,22 +180,21 @@ var GameShapeColor = cc.Class({
         var totalOtherShape = otherShapeNum[idx_sub];
 
         var totalItem = totalMainShape + totalOtherShape;
-        this.totalRow = CalcRowCol(totalItem);
-        this.totalCol = totalRow;
+        this.totalRow = this.CalcRowCol(totalItem);
+        this.totalCol = this.totalRow;
 
         // Debug.Log("totalItem=" + totalItem + " row=" + totalRow + " col=" + totalCol);
 
-        var indexRectList = this.RandomIndex(totalRow * totalCol, totalItem);
+        var indexRectList = this.RandomIndex(this.totalRow * this.totalCol, totalItem);
 
         // //mainshape
 
 
-        var indexColor = this.RandomIndex(listColor.length, totalMainShape / 2);
-        for (var k = 0; k < totalMainShape; k++)
-        {
+        var indexColor = this.RandomIndex(this.listColor.length, totalMainShape / 2);
+        for (var k = 0; k < totalMainShape; k++) {
             var indexRect = indexRectList[k];
-            var i = indexRect % totalCol;
-            var j = indexRect / totalRow;
+            var i = indexRect % this.totalCol;
+            var j = indexRect / this.totalRow;
 
             var idx_color = indexColor[k / 2];
             var infocolor = this.listColor[idx_color];
@@ -169,47 +202,172 @@ var GameShapeColor = cc.Class({
             // GameObject obj = null;
             var isInner = (k % 2 == 0) ? true : false;
             this.listColorShow.push(infocolor);
-            // obj = CreateItem(infoshape, isInner, infocolor.color);
-            // Rect rc = GetRectItem(i, j, totalRow, totalCol);
+            var node = this.CreateItem(infoshape, isInner, infocolor.color);
+            var rc = this.GetRectItem(i, j, this.totalRow, this.totalCol);
 
 
-            // var infoitem = AddItem(rc, infoshape, infocolor, obj, isInner, true);
-            // infoitem.i = i;
-            // infoitem.j = j;
+            var infoitem = this.AddItem(rc, infoshape, infocolor, node, isInner, true);
+            infoitem.i = i;
+            infoitem.j = j;
         }
 
-        // //othershape
-        // indexColor = RandomIndex(listColor.Count, totalOtherShape);
-        // List<object> listOther = GetOtherItemList(infoshape, listShape);
-        // int[] indexOther = RandomIndex(listOther.Count, totalOtherShape);
-        // for (int k = 0; k < totalOtherShape; k++)
-        // {
-        //     int indexRect = indexRectList[totalMainShape + k];
-        //     int i = indexRect % totalCol;
-        //     int j = indexRect / totalRow;
+        //othershape
+        indexColor = this.RandomIndex(this.listColor.length, totalOtherShape);
+        var listOther = this.GetOtherItemList(infoshape, this.listShape);
+        var indexOther = this.RandomIndex(listOther.length, totalOtherShape);
+        for (var k = 0; k < totalOtherShape; k++) {
+            var indexRect = indexRectList[totalMainShape + k];
+            var i = indexRect % this.totalCol;
+            var j = indexRect / this.totalRow;
 
-        //     int idxtmp = indexOther[k];
-        //     ShapeColorItemInfo infoOther = listOther[idxtmp] as ShapeColorItemInfo;
+            var idxtmp = indexOther[k];
+            var infoOther = listOther[idxtmp];
 
-        //     int idx_color = indexColor[k];
-        //     if (mode == GAME_MODE_SHAPE)
-        //     {
-        //         // 统一颜色
-        //         idx_color = indexColor[0];
-        //     }
-        //     ShapeColorItemInfo infocolor = listColor[idx_color] as ShapeColorItemInfo;
-        //     Color color = infocolor.color;
-        //     listColorShow.Add(infocolor);
-        //     GameObject obj = CreateItem(infoOther, true, color);
-        //     Rect rc = GetRectItem(i, j, totalRow, totalCol);
+            var idx_color = indexColor[k];
+            if (mode == GameShapeColor.GAME_MODE_SHAPE) {
+                // 统一颜色
+                idx_color = indexColor[0];
+            }
+            var infocolor = listColor[idx_color];
+            var color = infocolor.color;
+            this.listColorShow.push(infocolor);
+            var node = CreateItem(infoOther, true, color);
+            var rc = this.GetRectItem(i, j, this.totalRow, this.totalCol);
 
-        //     ShapeColorItemInfo infoitem = AddItem(rc, infoOther, infocolor, obj, true, false);
-        //     infoitem.i = i;
-        //     infoitem.j = j;
-        // }
+            var infoitem = this.AddItem(rc, infoOther, infocolor, node, true, false);
+            infoitem.i = i;
+            infoitem.j = j;
+        }
     },
     LoadGameByColor: function (mode) {
     },
     LoadGameByShapeColor: function (mode) {
     },
+
+    //node:
+    CreateItem: function (info, isInner, color) {
+        var x, y, w, h;
+        var name = info.id + "_outer";
+        if (isInner == true) {
+            name = info.id + "_inner";
+        }
+
+        var node = new cc.Node(name);
+        node.parent = this.node;
+        var sprite = node.addComponent(cc.Sprite)
+        //sprite.spriteFrame = spriteFrame  
+
+        // RectTransform rcTran = obj.AddComponent<RectTransform>();
+        // SpriteRenderer objSR = obj.AddComponent<SpriteRenderer>();
+        var pic = info.picOuter;
+        if (isInner == true) {
+            pic = info.picInner;
+        }
+        // {
+        //     TextureUtil.UpdateSpriteTexture(obj, pic);
+        //     info.textureHasLoad = true;
+        //     objSR.sprite.name = info.id;
+        // }
+
+        var z = this.itemPosZ;
+        if (isInner == true) {
+            z = this.itemPosZ - 1;
+        }
+        //obj.transform.position = new Vector3(0, 0, z);
+        node.setPosition(0, 0, z);
+
+        var is_add_shader = true;
+        //color
+        if (cc.Config.main().appKeyName != cc.AppType.SHAPECOLOR) {
+            if (isInner == true) {
+                is_add_shader = false;
+                //ShapeHighlighterController hlc = AddHighLight(obj);
+                //hlc.UpdateColor(color);
+            }
+        }
+        if (is_add_shader == true) {
+            //objSR.material = new Material(shaderColor);
+            //Material mat = objSR.material;
+            // mat.SetColor("_ColorShape", color);
+        }
+
+
+        //添加物理特性
+        if (isInner == true) {
+            // Rigidbody2D bd = obj.AddComponent<Rigidbody2D>();
+            // bd.gravityScale = 0;
+            // // bd.useGravity = false;
+            // bd.freezeRotation = true;
+            // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            // PolygonCollider2D collider = obj.AddComponent<PolygonCollider2D>();
+        }
+
+        //添加尾巴 ShapeTrail
+        // if (isInner)
+        // {
+        //     info.objTrail = new GameObject("trail");
+        //     info.objTrail.transform.parent = obj.transform;
+        //     info.objTrail.transform.localPosition = Vector3.zero;
+        //     ShapeTrail trail = info.objTrail.AddComponent<ShapeTrail>();
+
+        // }
+
+        return node;
+    },
+    //return ShapeColorItemInfo
+    AddItem: function (rc, infoshape, infocolor, node, isInner, isMain) {
+        var infoItem = new ShapeColorItemInfo();
+        infoItem.node = node;
+        infoItem.nodeTrail = infoshape.nodeTrail;
+        infoItem.id = infoshape.id;
+        infoItem.color = infocolor.color;
+        infoItem.isMain = isMain;
+        infoItem.isInner = isInner;
+        infoItem.colorid = infocolor.id;
+        infoItem.textureHasLoad = infoshape.textureHasLoad;
+
+        if (isInner == true) {
+            this.SetItemLock(infoItem, false);
+        }
+        else {
+            this.SetItemLock(infoItem, true);
+        }
+        this.listItem.push(infoItem);
+
+
+        return infoItem;
+    },
+    //ItemInfo
+    SetItemLock: function (info, isLock) {
+        if (isLock) {
+            info.tag = GameShapeColor.TAG_ITEM_LOCK;
+        }
+        else {
+            info.tag = GameShapeColor.TAG_ITEM_UNLOCK;
+        }
+    },
+    //bool
+    IsItemLock: function (info) {
+        var ret = false;
+        if (info.tag == GameShapeColor.TAG_ITEM_LOCK) {
+            ret = true;
+        }
+        return ret;
+    },
+
+    GetOtherItemList: function (info, list) {
+        if (list == null) {
+            return null;
+        }
+        var listother = [];
+        for (var i = 0; i < list.length; i++) {
+            var infotmp = list[i];
+            if (infotmp != info) {
+                listother.push(infotmp);
+            }
+        }
+        return listother;
+
+    },
+
 });

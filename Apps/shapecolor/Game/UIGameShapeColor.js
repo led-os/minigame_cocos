@@ -1,4 +1,4 @@
-var UIViewController = require("UIViewController"); 
+var UIViewController = require("UIViewController");
 // var Common = require("Common");
 //var Config = require("Config");
 var UIGameBase = require("UIGameBase");
@@ -59,8 +59,8 @@ var UIGameShapeColor = cc.Class({
         var node = cc.instantiate(this.gamePrefab);
         this.game = node.getComponent(GameShapeColor);
         this.game.node.parent = this.node;
-           //shape
-           {
+        //shape
+        {
             this.StartParseShape();
         }
         //color
@@ -75,13 +75,14 @@ var UIGameShapeColor = cc.Class({
     },
 
     UpdateGuankaLevel: function (level) {
-
-        this.game.listShape = listShape;
-        this.game.listColor = listColor; 
+        cc.log("UIGameShapeColor::UpdateGuankaLevel");
+        this.game.listShape = this.listShape;
+        this.game.listColor = this.listColor;
         this.game.LoadGame(cc.GameManager.gameMode);
     },
 
     CheckAllLoad: function () {
+        cc.log("UIGameShapeColor::CheckAllLoad");
         if (cc.Common.CheckAllLoad(this.listProLoad) == true) {
             this.UpdateGuankaLevel(cc.GameManager.gameLevel);
         }
@@ -95,9 +96,9 @@ var UIGameShapeColor = cc.Class({
 
     StartParseShape: function () {
 
-        
-        var info = new cc.LoadItemInfo();
-        info.id = "shape";
+
+        var info = new cc.LoadItemInfo(); 
+        info.id = this.shapeId = "shape";
         info.isLoad = false;
         this.listProLoad.push(info);
 
@@ -107,7 +108,11 @@ var UIGameShapeColor = cc.Class({
             if (err) {
                 cc.log("config:err=" + err);
             }
-            if (err == null) {
+            if (err == null) { 
+                var infoload = cc.Common.GetLoadItemById(this.listProLoad,this.shapeId); 
+                if (infoload != null) {
+                    infoload.isLoad = true;
+                }
                 this.ParseShape(rootJson.json);
             }
         }.bind(this));
@@ -115,9 +120,9 @@ var UIGameShapeColor = cc.Class({
     },
 
     StartParseColor: function () {
-        
-        var info = new cc.LoadItemInfo();
-        info.id = "color";
+
+        var info = new cc.LoadItemInfo(); 
+        info.id = this.colorId = "color";
         info.isLoad = false;
         this.listProLoad.push(info);
 
@@ -128,6 +133,11 @@ var UIGameShapeColor = cc.Class({
                 cc.log("config:err=" + err);
             }
             if (err == null) {
+                var infoload = cc.Common.GetLoadItemById(this.listProLoad,this.colorId); 
+                if (infoload != null) {
+                    infoload.isLoad = true;
+                }
+
                 this.ParseColor(rootJson.json);
             }
         }.bind(this));
@@ -135,9 +145,9 @@ var UIGameShapeColor = cc.Class({
     },
     StartParseBgList: function () {
 
-        
-        var info = new cc.LoadItemInfo();
-        info.id = "bglist";
+
+        var info = new cc.LoadItemInfo(); 
+        info.id = this.bglistId = "bglist";
         info.isLoad = false;
         this.listProLoad.push(info);
 
@@ -148,6 +158,10 @@ var UIGameShapeColor = cc.Class({
                 cc.log("config:err=" + err);
             }
             if (err == null) {
+                var infoload = cc.Common.GetLoadItemById(this.listProLoad,this.bglistId); 
+                if (infoload != null) {
+                    infoload.isLoad = true;
+                }
                 this.ParseBgList(rootJson.json);
             }
         }.bind(this));
@@ -169,14 +183,14 @@ var UIGameShapeColor = cc.Class({
             var item = items[i];
             info.id = items.id;
             var picdir = cc.Common.GAME_RES_DIR + "/image/" + info.id;
-            if (cc.Config.main().appKeyName != AppType.SHAPECOLOR) {
+            if (cc.Config.main().appKeyName != cc.AppType.SHAPECOLOR) {
                 picdir = cc.Common.GAME_RES_DIR + "/image/" + strPlace;
 
             }
             info.pic = picdir + "/" + info.id + ".png";
             info.picInner = picdir + "/" + info.id + "_inner.png";
             info.picOuter = picdir + "/" + info.id + "_outer.png";
-            if (cc.Config.main().appKeyName != AppType.SHAPECOLOR) {
+            if (cc.Config.main().appKeyName != cc.AppType.SHAPECOLOR) {
                 info.picInner = info.pic;
                 info.picOuter = info.pic;
             }

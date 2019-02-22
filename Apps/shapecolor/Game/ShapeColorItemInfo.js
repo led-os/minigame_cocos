@@ -1,6 +1,5 @@
-var ItemInfo = require("ItemInfo");
 cc.Class({
-    extends: ItemInfo,
+    extends: cc.ItemInfo,
     properties: {
         picInner: "",
         picOuter: "",
@@ -15,6 +14,6 @@ cc.Class({
             default: [],
             type: cc.Object
         }, 
-        objTrail:cc.Node, 
+        nodeTrail:cc.Node, 
     },
 }); 

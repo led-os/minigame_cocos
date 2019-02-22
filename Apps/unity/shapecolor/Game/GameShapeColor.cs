@@ -579,7 +579,7 @@ public class GameShapeColor : UIGameBase
 
         bool is_add_shader = true;
         //color
-        if (Common.appKeyName != AppType.SHAPECOLOR)
+        if (Common.appKeyName != cc.AppType.SHAPECOLOR)
         {
             if (isInner)
             {
@@ -756,7 +756,7 @@ public class GameShapeColor : UIGameBase
         Debug.Log("LoadGameByShape start");
         int level = GameManager.gameLevel;
         int idx = level / GUANKA_NUM_PER_ITEM;
-        ShapeColorItemInfo infoshape = GetItemInfoShapeColor(idx, listShape);
+        ShapeColorItemInfo infoshape = GetItemInfoShapeColor(idx, this.listShape);
         if (infoshape == null)
         {
             Debug.Log("LoadGameByShape null");
@@ -806,7 +806,7 @@ public class GameShapeColor : UIGameBase
 
         //othershape
         indexColor = RandomIndex(listColor.Count, totalOtherShape);
-        List<object> listOther = GetOtherItemList(infoshape, listShape);
+        List<object> listOther = GetOtherItemList(infoshape, this.listShape);
         int[] indexOther = RandomIndex(listOther.Count, totalOtherShape);
         for (int k = 0; k < totalOtherShape; k++)
         {
@@ -868,7 +868,7 @@ public class GameShapeColor : UIGameBase
         //maincolor
 
 
-        int[] indexShape = RandomIndex(listShape.Count, totalMainColor / 2);
+        int[] indexShape = RandomIndex(this.listShape.Count, totalMainColor / 2);
         for (int k = 0; k < totalMainColor; k++)
         {
             int indexRect = indexRectList[k];

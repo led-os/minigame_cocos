@@ -12,11 +12,11 @@ var ItemInfo = cc.Class({
         appid: '',
         category: '',
         sound: '',
-        tag: '',
+        tag: 0,
         index: '',
         row: '',
         col: '',
-        obj: cc.Node,
+        node: cc.Node,
         time: '',
     },
 });

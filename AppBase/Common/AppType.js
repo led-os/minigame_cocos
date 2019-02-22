@@ -13,5 +13,7 @@ var AppType = cc.Class({
 
 });
 
+cc.AppType = module.export = AppType; 
+
 
 

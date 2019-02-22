@@ -133,6 +133,25 @@ var Common = cc.Class({
             return isLoadAll;
         },
 
+        GetLoadItemById: function (list, strId) {
+            for (var info of list) {
+                if (info.id == strId) {
+                    return info;
+                }
+            }
+            return null;
+        },
+        //without max
+        RandomRange: function (min, max) {
+            var count = max - min;
+            var rdm = min + Math.floor((Math.random() * count));
+            if (rdm >= max) {
+                rdm = max - 1;
+            }
+            return rdm;
+        },
+
+
         _appSceneBase: null,
         appSceneBase: {
             get: function () {
@@ -175,5 +194,5 @@ Common.main = function () {
     return Common._main;
 }
 
-cc.Common = module.export = Common; 
+cc.Common = module.export = Common;
 
