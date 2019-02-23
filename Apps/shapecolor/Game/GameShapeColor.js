@@ -264,7 +264,7 @@ var GameShapeColor = cc.Class({
         var node = new cc.Node(name);
         node.parent = this.node;
         var sprite = node.addComponent(cc.Sprite)
-        //sprite.spriteFrame = spriteFrame  
+        sprite.name = info.id;
 
         // RectTransform rcTran = obj.AddComponent<RectTransform>();
         // SpriteRenderer objSR = obj.AddComponent<SpriteRenderer>();
@@ -278,17 +278,18 @@ var GameShapeColor = cc.Class({
         //     objSR.sprite.name = info.id;
         // }
 
+        //加载图片
         var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(info.pic);
-        cc.log("item_pic="+info.pic);
-        this.sp_item = sprite;
+        cc.log("item_pic=" + info.pic);
         cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
                 cc.log(err.message || err);
                 return;
             }
-            this.sp_item.spriteFrame = new cc.SpriteFrame(tex);
+            sprite.spriteFrame = new cc.SpriteFrame(tex);
             this.LayOut();
+            // }.bind(this).bind(sprite));
         }.bind(this));
 
         var z = this.itemPosZ;
