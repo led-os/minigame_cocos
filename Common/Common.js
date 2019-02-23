@@ -144,6 +144,7 @@ var Common = cc.Class({
         //without max
         RandomRange: function (min, max) {
             var count = max - min;
+            //floor() 方法执行的是向下取整计算，它返回的是小于或等于函数参数，并且与之最接近的整数 
             var rdm = min + Math.floor((Math.random() * count));
             if (rdm >= max) {
                 rdm = max - 1;

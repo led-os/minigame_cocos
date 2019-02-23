@@ -27,6 +27,11 @@ var GameShapeColor = cc.Class({
 
         listShape: null,
         listColor: null,
+        // listColor: {
+        //     default: [],
+        //     type: ShapeColorItemInfo
+        // },
+
         listItem: {
             default: [],
             type: ShapeColorItemInfo
@@ -135,6 +140,10 @@ var GameShapeColor = cc.Class({
     LoadGame: function (mode) {
 
         cc.log("LoadGame:mode=" + mode);
+
+        var infocolor = this.listColor[0];
+        var color = infocolor.color;
+
         //清空
         this.listItem.length = 0;
         this.listColorShow.length = 0;
@@ -153,8 +162,7 @@ var GameShapeColor = cc.Class({
         }
 
         if (this.listColorShow.length != 0) {
-            //floor() 方法执行的是向下取整计算，它返回的是小于或等于函数参数，并且与之最接近的整数
-            var idx = Math.floor((Math.random() * listColorShow.Count));
+            var idx = cc.Common.RandomRange(0, this.listColorShow.length)
             var infocolor = this.listColor[idx];
         }
 
@@ -187,21 +195,22 @@ var GameShapeColor = cc.Class({
 
         var indexRectList = this.RandomIndex(this.totalRow * this.totalCol, totalItem);
 
-        // //mainshape
-
-
-        var indexColor = this.RandomIndex(this.listColor.length, totalMainShape / 2);
+        // //mainshape 
+        var indexColor = this.RandomIndex(this.listColor.length, Math.floor(totalMainShape / 2));
         for (var k = 0; k < totalMainShape; k++) {
             var indexRect = indexRectList[k];
             var i = indexRect % this.totalCol;
-            var j = indexRect / this.totalRow;
-
-            var idx_color = indexColor[k / 2];
+            var j = Math.floor(indexRect / this.totalRow);
+            //向下取整
+            var idx_color = indexColor[Math.floor(k / 2)];
+            //cc.log("LoadGameByShape length="+this.listColor.length+" idx_color="+idx_color+" k="+k+" idx_new="+idx_new+" indexColor.len="+indexColor.length);
             var infocolor = this.listColor[idx_color];
 
             // GameObject obj = null;
             var isInner = (k % 2 == 0) ? true : false;
+
             this.listColorShow.push(infocolor);
+            var infocolor1 = this.listColor[idx_color];
             var node = this.CreateItem(infoshape, isInner, infocolor.color);
             var rc = this.GetRectItem(i, j, this.totalRow, this.totalCol);
 
@@ -218,7 +227,7 @@ var GameShapeColor = cc.Class({
         for (var k = 0; k < totalOtherShape; k++) {
             var indexRect = indexRectList[totalMainShape + k];
             var i = indexRect % this.totalCol;
-            var j = indexRect / this.totalRow;
+            var j = Math.floor(indexRect / this.totalRow);
 
             var idxtmp = indexOther[k];
             var infoOther = listOther[idxtmp];
@@ -268,6 +277,19 @@ var GameShapeColor = cc.Class({
         //     info.textureHasLoad = true;
         //     objSR.sprite.name = info.id;
         // }
+
+        var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(info.pic);
+        cc.log("item_pic="+info.pic);
+        this.sp_item = sprite;
+        cc.TextureCache.main.Load(strImage, function (err, tex) {
+            //cc.url.raw('res/textures/content.png')
+            if (err) {
+                cc.log(err.message || err);
+                return;
+            }
+            this.sp_item.spriteFrame = new cc.SpriteFrame(tex);
+            this.LayOut();
+        }.bind(this));
 
         var z = this.itemPosZ;
         if (isInner == true) {

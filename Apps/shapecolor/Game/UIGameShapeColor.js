@@ -77,7 +77,8 @@ var UIGameShapeColor = cc.Class({
     UpdateGuankaLevel: function (level) {
         cc.log("UIGameShapeColor::UpdateGuankaLevel");
         this.game.listShape = this.listShape;
-        this.game.listColor = this.listColor;
+        this.game.listColor = this.listColor; 
+
         this.game.LoadGame(cc.GameManager.gameMode);
     },
 
@@ -97,7 +98,7 @@ var UIGameShapeColor = cc.Class({
     StartParseShape: function () {
 
 
-        var info = new cc.LoadItemInfo(); 
+        var info = new cc.LoadItemInfo();
         info.id = this.shapeId = "shape";
         info.isLoad = false;
         this.listProLoad.push(info);
@@ -108,8 +109,8 @@ var UIGameShapeColor = cc.Class({
             if (err) {
                 cc.log("config:err=" + err);
             }
-            if (err == null) { 
-                var infoload = cc.Common.GetLoadItemById(this.listProLoad,this.shapeId); 
+            if (err == null) {
+                var infoload = cc.Common.GetLoadItemById(this.listProLoad, this.shapeId);
                 if (infoload != null) {
                     infoload.isLoad = true;
                 }
@@ -121,7 +122,7 @@ var UIGameShapeColor = cc.Class({
 
     StartParseColor: function () {
 
-        var info = new cc.LoadItemInfo(); 
+        var info = new cc.LoadItemInfo();
         info.id = this.colorId = "color";
         info.isLoad = false;
         this.listProLoad.push(info);
@@ -133,7 +134,7 @@ var UIGameShapeColor = cc.Class({
                 cc.log("config:err=" + err);
             }
             if (err == null) {
-                var infoload = cc.Common.GetLoadItemById(this.listProLoad,this.colorId); 
+                var infoload = cc.Common.GetLoadItemById(this.listProLoad, this.colorId);
                 if (infoload != null) {
                     infoload.isLoad = true;
                 }
@@ -146,7 +147,7 @@ var UIGameShapeColor = cc.Class({
     StartParseBgList: function () {
 
 
-        var info = new cc.LoadItemInfo(); 
+        var info = new cc.LoadItemInfo();
         info.id = this.bglistId = "bglist";
         info.isLoad = false;
         this.listProLoad.push(info);
@@ -158,7 +159,7 @@ var UIGameShapeColor = cc.Class({
                 cc.log("config:err=" + err);
             }
             if (err == null) {
-                var infoload = cc.Common.GetLoadItemById(this.listProLoad,this.bglistId); 
+                var infoload = cc.Common.GetLoadItemById(this.listProLoad, this.bglistId);
                 if (infoload != null) {
                     infoload.isLoad = true;
                 }
@@ -181,7 +182,7 @@ var UIGameShapeColor = cc.Class({
         for (var i = 0; i < items.length; i++) {
             var info = new ShapeColorItemInfo();
             var item = items[i];
-            info.id = items.id;
+            info.id = item.id;
             var picdir = cc.Common.GAME_RES_DIR + "/image/" + info.id;
             if (cc.Config.main().appKeyName != cc.AppType.SHAPECOLOR) {
                 picdir = cc.Common.GAME_RES_DIR + "/image/" + strPlace;

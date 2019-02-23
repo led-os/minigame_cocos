@@ -1,9 +1,9 @@
 cc.Class({
-    extends: cc.ItemInfo,
+    extends: cc.Object,// cc.ItemInfo,
     properties: {
         picInner: "",
         picOuter: "",
-        color:cc.Color,
+        color:new cc.Color(0,0,0,0),
         isMain: false,//主要项
         isInner: false,
         colorid: "",
@@ -13,7 +13,8 @@ cc.Class({
         listColorFilter: {
             default: [],
             type: cc.Object
-        }, 
-        nodeTrail:cc.Node, 
+        },
+        nodeTrail: cc.Node,
+        node: cc.Node,
     },
 }); 
