@@ -79,7 +79,7 @@ var GameShapeColor = cc.Class({
             //offsety=0;
             var pt = this.RandomPointOfRect(rc, offsetx, offsety);
             //cc.log("LayOut:i=" + info.i + " j=" + info.j + " rc=" + rc + " pt=" + pt + " bd=" + bd.size);
-            var z = node.getPosition().z; 
+            var z = node.getPosition().z;
             node.setPosition(pt.x, pt.y, z);
         }
 
@@ -284,8 +284,167 @@ var GameShapeColor = cc.Class({
         }
     },
     LoadGameByColor: function (mode) {
+        var level = cc.GameManager.gameLevel;
+        var idx = level / GameShapeColor.GUANKA_NUM_PER_ITEM;
+        var infocolor = this.GetItemInfoShapeColor(idx, this.listColor);
+        if (infocolor == null) {
+            return;
+        }
+
+        this.listColorShow.push(infocolor);
+
+        //color 数量（单位 inner和outer一对）
+        var mainColorPair = [1, 2, 2, 2, 3];
+        var otherColorNum = [0, 0, 1, 2, 2];
+
+        var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
+        var totalMainColor = mainColorPair[idx_sub] * 2;
+        var totalOtherColor = otherColorNum[idx_sub];
+
+        var totalItem = totalMainColor + totalOtherColor;
+        this.totalRow = this.CalcRowCol(totalItem);
+        this.totalCol = this.totalRow;
+
+
+        var indexRectList = this.RandomIndex(this.totalRow * this.totalCol, totalItem);
+
+        //maincolor
+
+
+        var indexShape = this.RandomIndex(this.listShape.length, totalMainColor / 2);
+        for (var k = 0; k < totalMainColor; k++) {
+            var indexRect = indexRectList[k];
+            var i = indexRect % totalCol;
+            var j = indexRect / totalRow;
+
+            var idx_shape = indexShape[k / 2];
+
+            var infoshape = this.listShape[idx_shape];
+
+            var node = null;
+            var isInner = (k % 2 == 0) ? true : false;
+            node = this.CreateItem(infoshape, isInner, infocolor.color);
+            var rc = this.GetRectItem(i, j, this.totalRow, this.totalCol);
+
+            var infoitem = this.AddItem(rc, infoshape, infocolor, node, isInner, true);
+            infoitem.i = i;
+            infoitem.j = j;
+        }
+
+        //othershape
+        indexShape = this.RandomIndex(this.listShape.length, totalOtherColor);
+        var listOther = this.GetOtherItemList(infocolor, listColor);
+        var indexOther = this.RandomIndex(listOther.length, totalOtherColor);
+        for (var k = 0; k < totalOtherColor; k++) {
+            var indexRect = indexRectList[totalMainColor + k];
+            var i = indexRect % totalCol;
+            var j = indexRect / totalRow;
+
+            var idxtmp = indexOther[k];
+            var infoOther = listOther[idxtmp];
+
+            var idx_shape = indexShape[k];
+
+            var infoshape = listShape[idx_shape];
+            var color = infoOther.color;
+
+            var node = this.CreateItem(infoshape, true, color);
+            var rc = GetRectItem(i, j, totalRow, totalCol);
+
+            var infoItem = this.AddItem(rc, infoshape, infoOther, obj, true, false);
+            infoItem.i = i;
+            infoItem.j = j;
+        }
+
     },
     LoadGameByShapeColor: function (mode) {
+        var level = cc.GameManager.gameLevel;
+        var idx = level / GameShapeColor.GUANKA_NUM_PER_ITEM;
+        var infoshape = this.GetItemInfoShapeColor(idx, this.listShape);
+        if (infoshape == null) {
+
+            return;
+        }
+
+        //shape 数量（单位 inner和outer一对）
+        var mainShapePair = [2, 3, 3, 3, 4];
+        var otherShapeNum = [0, 1, 2, 3, 3];
+
+        var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
+        var totalMainShape = mainShapePair[idx_sub] * 2;
+        var totalOtherShape = otherShapeNum[idx_sub];
+
+
+        var totalItem = totalMainShape + totalOtherShape;
+        this.totalRow = this.CalcRowCol(totalItem);
+        this.totalCol = this.totalRow;
+        cc.log("totalItem=" + totalItem + " row=" + totalRow + " col=" + totalCol);
+
+        var listShapeOther = this.GetOtherItemList(infoshape, this.listShape);
+        var indexShapeOther = this.RandomIndex(listShapeOther.length, (totalMainShape / 2 - 1));
+
+        var indexRectList = this.RandomIndex(this.totalRow * this.totalCol, totalItem);
+
+        //mainshape 
+        var indexColor = this.RandomIndex(this.listColor.length, totalMainShape / 2);
+        for (var k = 0; k < totalMainShape; k++) {
+            var indexRect = indexRectList[k];
+            var i = indexRect % this.totalCol;
+            var j = indexRect / this.totalRow;
+
+            var idx_color = indexColor[k / 2];
+            var infocolor = this.listColor[idx_color];
+
+            var node = null;
+            //mainshape
+            var isInner = (k % 2 == 0) ? true : false;
+            this.listColorShow.push(infocolor);
+            if (k < 2) {
+                node = this.CreateItem(infoshape, isInner, infocolor.color);
+            }
+            else {
+                //other
+                var idx_ohter = (k - 2) / 2;
+                var infoshape_other = listShapeOther[indexShapeOther[idx_ohter]];
+                node = this.CreateItem(infoshape_other, isInner, infocolor.color);
+            }
+
+            var rc = this.GetRectItem(i, j, this.totalRow, this.totalCol);
+
+            var infoitem = this.AddItem(rc, infoshape, infocolor, node, isInner, true);
+            infoitem.i = i;
+            infoitem.j = j;
+        }
+
+        //othershape
+        indexColor = this.RandomIndex(this.listColor.length, totalOtherShape);
+        var listOther = this.GetOtherItemList(infoshape, this.listShape);
+        var indexOther = this.RandomIndex(listOther.length, totalOtherShape);
+        for (var k = 0; k < totalOtherShape; k++) {
+            var indexRect = indexRectList[totalMainShape + k];
+            var i = indexRect % this.totalCol;
+            var j = indexRect / this.totalRow;
+
+            var idxtmp = indexOther[k];
+            var infoOther = listOther[idxtmp];
+
+            var idx_color = indexColor[k];
+            if (mode == GameShapeColor.GAME_MODE_SHAPE) {
+                // 统一颜色
+                idx_color = indexColor[0];
+            }
+            var infocolor = this.listColor[idx_color];
+            var color = infocolor.color;
+            this.listColorShow.push(infocolor);
+            var node = this.CreateItem(infoOther, true, color);
+            var rc = this.GetRectItem(i, j, totalRow, totalCol);
+
+
+            var infoitem = this.AddItem(rc, infoOther, infocolor, node, true, false);
+            infoitem.i = i;
+            infoitem.j = j;
+        }
+
     },
 
     //node:
