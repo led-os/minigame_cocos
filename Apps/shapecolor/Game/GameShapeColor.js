@@ -56,6 +56,33 @@ var GameShapeColor = cc.Class({
     },
 
     LayOut: function () {
+
+        var x, y, w, h;
+        // UpdateBoard();
+
+        for (let info of this.listItem) {
+            var node = info.node;
+            var sprite = node.getComponent(cc.Sprite);
+            if (sprite == null) {
+                continue;
+            }
+            var rc = this.GetRectItem(info.i, info.j, this.totalRow, this.totalCol);
+            var scale = this.GetItmeScaleInRect(rc, node);
+            node.scaleX = scale;
+            node.scaleY = scale;
+
+
+            var bd = node.getBoundingBox();
+            var offsetx = bd.width / 2;
+            //offsetx =0;
+            var offsety = bd.height / 2;
+            //offsety=0;
+            var pt = this.RandomPointOfRect(rc, offsetx, offsety);
+            //cc.log("LayOut:i=" + info.i + " j=" + info.j + " rc=" + rc + " pt=" + pt + " bd=" + bd.size);
+            var z = node.getPosition().z; 
+            node.setPosition(pt.x, pt.y, z);
+        }
+
     },
 
     //ShapeColorItemInfo
@@ -77,6 +104,18 @@ var GameShapeColor = cc.Class({
         }
         return sqr;
     },
+
+    GetItmeScaleInRect: function (rc, node) {
+        var scale = 1.0;
+        var sprite = node.getComponent(cc.Sprite);
+        var size = node.getContentSize();
+        var ratio = 0.7;
+        var scalex = rc.width * ratio / size.width;
+        var scaley = rc.height * ratio / size.height;
+        scale = Math.min(scalex, scaley);
+        return scale;
+    },
+
     //c.Rect
     GetRectItem: function (i, j, totalRow, totalCol) {
         var x, y, w, h;
@@ -113,7 +152,7 @@ var GameShapeColor = cc.Class({
         //rdx = 50;
         y = rc.y + (offsety + h * rdx / 100);
 
-        return new Vector2(x, y);
+        return new cc.Vec2(x, y);
     },
 
     //从数组里随机抽取newsize个元素
@@ -140,10 +179,6 @@ var GameShapeColor = cc.Class({
     LoadGame: function (mode) {
 
         cc.log("LoadGame:mode=" + mode);
-
-        var infocolor = this.listColor[0];
-        var color = infocolor.color;
-
         //清空
         this.listItem.length = 0;
         this.listColorShow.length = 0;
