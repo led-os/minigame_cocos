@@ -19,7 +19,7 @@ var shader = {
     frag: `uniform sampler2D texture;
     varying vec2 uv0;
     uniform vec3 iResolution;
-
+    uniform vec3 colorShow;
     void main()
     {
         vec2 onePixel = vec2(1.0 / iResolution.x, 1.0 / iResolution.y);
@@ -35,7 +35,13 @@ var shader = {
         color.r >1.0 ? 1.0 : color.r;
         color.g >1.0 ? 1.0 : color.g;
         color.b >1.0 ? 1.0 : color.b;
-        gl_FragColor = vec4(color.rgb, 1);
+
+
+        color.r =colorShow.x;
+        color.g =colorShow.y;
+        color.b =colorShow.z;
+
+        gl_FragColor = vec4(color.rgb, color.a);
     }`,
 }
 

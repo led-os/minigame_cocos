@@ -543,20 +543,23 @@ var GameShapeColor = cc.Class({
             //     mat.setParamValue("iResolution", iResolution);
             // }
 
-            // {
-            //     const name = 'Outline';
-            //     let mat = sprite.getMaterial(name);
-            //     if (!mat) {
-            //         const CustomMaterial = require("CustomMaterial");
-            //         mat = new CustomMaterial(name, [
-            //             { name: 'iResolution', type: renderer.PARAM_FLOAT3 },
-            //         ]);
-            //         sprite.setMaterial(name, mat);
-            //     }
-            //     sprite.activateMaterial(name);
-            //     var iResolution = new cc.Vec3(sprite.node.width, sprite.node.height, 0);
-            //     mat.setParamValue("iResolution", iResolution);
-            // }
+            {
+                const name = 'Outline';
+                let mat = sprite.getMaterial(name);
+                if (!mat) {
+                    const CustomMaterial = require("CustomMaterial");
+                    mat = new CustomMaterial(name, [
+                        { name: 'iResolution', type: renderer.PARAM_FLOAT3 },
+                        { name: 'colorShow', type: renderer.PARAM_FLOAT3 },
+                    ]);
+                    sprite.setMaterial(name, mat);
+                }
+                sprite.activateMaterial(name);
+                var iResolution = new cc.Vec3(sprite.node.width, sprite.node.height, 0);
+                mat.setParamValue("iResolution", iResolution);
+                var color = new cc.Vec3(1.0, 0, 0);
+                mat.setParamValue("colorShow", color);
+            }
         }
 
 
