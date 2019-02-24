@@ -1,5 +1,5 @@
-cc.Class({
-    extends: cc.Object,// cc.ItemInfo,
+var ShapeColorItemInfo =cc.Class({
+    extends: cc.ItemInfo,// cc.ItemInfo,
     properties: {
         picInner: "",
         picOuter: "",
@@ -15,6 +15,7 @@ cc.Class({
             type: cc.Object
         },
         nodeTrail: cc.Node,
-        node: cc.Node,
+        //node: cc.Node,
     },
 }); 
+cc.ShapeColorItemInfo = module.export = ShapeColorItemInfo; 

@@ -1,11 +1,6 @@
-var UIViewController = require("UIViewController");
-// var Common = require("Common");
-//var Config = require("Config");
-var UIGameBase = require("UIGameBase");
-//var Language = require("Language");
+var UIViewController = require("UIViewController"); 
+var UIGameBase = require("UIGameBase"); 
 var GameShapeColor = require("GameShapeColor");
-//var GameManager = require("GameManager");
-var ShapeColorItemInfo = require("ShapeColorItemInfo");
 var AppType = require("AppType");
 //var LoadItemInfo = require("LoadItemInfo");
 
@@ -110,7 +105,7 @@ var UIGameShapeColor = cc.Class({
                 cc.log("config:err=" + err);
             }
             if (err == null) {
-                var infoload = cc.Common.GetLoadItemById(this.listProLoad, this.shapeId);
+                var infoload = cc.Common.GetLoadItemById(this.listProLoad, info.id);
                 if (infoload != null) {
                     infoload.isLoad = true;
                 }
@@ -134,7 +129,7 @@ var UIGameShapeColor = cc.Class({
                 cc.log("config:err=" + err);
             }
             if (err == null) {
-                var infoload = cc.Common.GetLoadItemById(this.listProLoad, this.colorId);
+                var infoload = cc.Common.GetLoadItemById(this.listProLoad, info.id);
                 if (infoload != null) {
                     infoload.isLoad = true;
                 }
@@ -159,7 +154,7 @@ var UIGameShapeColor = cc.Class({
                 cc.log("config:err=" + err);
             }
             if (err == null) {
-                var infoload = cc.Common.GetLoadItemById(this.listProLoad, this.bglistId);
+                var infoload = cc.Common.GetLoadItemById(this.listProLoad, info.id);
                 if (infoload != null) {
                     infoload.isLoad = true;
                 }
@@ -180,7 +175,7 @@ var UIGameShapeColor = cc.Class({
         }
 
         for (var i = 0; i < items.length; i++) {
-            var info = new ShapeColorItemInfo();
+            var info = new cc.ShapeColorItemInfo();
             var item = items[i];
             info.id = item.id;
             var picdir = cc.Common.GAME_RES_DIR + "/image/" + info.id;
@@ -208,7 +203,7 @@ var UIGameShapeColor = cc.Class({
         var idx = cc.GameManager.placeLevel;
         var items = json.list;
         for (var i = 0; i < items.length; i++) {
-            var info = new ShapeColorItemInfo();
+            var info = new cc.ShapeColorItemInfo();
             var item = items[i];
             info.id = item.id;
             info.color = cc.Common.RGBString2Color(item.color);
@@ -222,14 +217,14 @@ var UIGameShapeColor = cc.Class({
         }
         var items = json.list;
         for (var i = 0; i < items.length; i++) {
-            var info = new ShapeColorItemInfo();
+            var info = new cc.ShapeColorItemInfo();
             var item = items[i];
             var strdir = cc.Common.GAME_RES_DIR + "/image_bg";
             info.pic = strdir + "/" + item.pic;
             var colorFilter = item.color_filter;
             for (var j = 0; j < colorFilter.length; j++) {
                 var itemtmp = colorFilter[j];
-                var infotmp = new ShapeColorItemInfo();
+                var infotmp = new cc.ShapeColorItemInfo();
                 infotmp.id = itemtmp.color_id;
                 info.listColorFilter.push(infotmp);
 

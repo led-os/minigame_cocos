@@ -1,7 +1,7 @@
 var UIViewController = require("UIViewController");
 // var Common = require("Common");
 //var Config = require("Config"); 
-var ShapeColorItemInfo = require("ShapeColorItemInfo");
+//var ShapeColorItemInfo = require("ShapeColorItemInfo");
 var UIView = require("UIView");
 
 var GameShapeColor = cc.Class({
@@ -34,11 +34,11 @@ var GameShapeColor = cc.Class({
 
         listItem: {
             default: [],
-            type: ShapeColorItemInfo
+            type: cc.ShapeColorItemInfo
         },
         listColorShow: {
             default: [],
-            type: ShapeColorItemInfo
+            type: cc.ShapeColorItemInfo
         },
 
         totalRow: 0,
@@ -207,7 +207,7 @@ var GameShapeColor = cc.Class({
     LoadGameByShape: function (mode) {
 
         var level = cc.GameManager.gameLevel;
-        var idx = level / GameShapeColor.GUANKA_NUM_PER_ITEM;
+        var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
         var infoshape = this.GetItemInfoShapeColor(idx, this.listShape);
         if (infoshape == null) {
             cc.log("LoadGameByShape null");
@@ -272,10 +272,10 @@ var GameShapeColor = cc.Class({
                 // 统一颜色
                 idx_color = indexColor[0];
             }
-            var infocolor = listColor[idx_color];
+            var infocolor = this.listColor[idx_color];
             var color = infocolor.color;
             this.listColorShow.push(infocolor);
-            var node = CreateItem(infoOther, true, color);
+            var node = this.CreateItem(infoOther, true, color);
             var rc = this.GetRectItem(i, j, this.totalRow, this.totalCol);
 
             var infoitem = this.AddItem(rc, infoOther, infocolor, node, true, false);
@@ -285,7 +285,7 @@ var GameShapeColor = cc.Class({
     },
     LoadGameByColor: function (mode) {
         var level = cc.GameManager.gameLevel;
-        var idx = level / GameShapeColor.GUANKA_NUM_PER_ITEM;
+        var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
         var infocolor = this.GetItemInfoShapeColor(idx, this.listColor);
         if (infocolor == null) {
             return;
@@ -311,13 +311,13 @@ var GameShapeColor = cc.Class({
         //maincolor
 
 
-        var indexShape = this.RandomIndex(this.listShape.length, totalMainColor / 2);
+        var indexShape = this.RandomIndex(this.listShape.length, Math.floor(totalMainColor / 2));
         for (var k = 0; k < totalMainColor; k++) {
             var indexRect = indexRectList[k];
-            var i = indexRect % totalCol;
-            var j = indexRect / totalRow;
+            var i = indexRect % this.totalCol;
+            var j = Math.floor(indexRect / this.totalRow);
 
-            var idx_shape = indexShape[k / 2];
+            var idx_shape = indexShape[Math.floor(k / 2)];
 
             var infoshape = this.listShape[idx_shape];
 
@@ -337,21 +337,21 @@ var GameShapeColor = cc.Class({
         var indexOther = this.RandomIndex(listOther.length, totalOtherColor);
         for (var k = 0; k < totalOtherColor; k++) {
             var indexRect = indexRectList[totalMainColor + k];
-            var i = indexRect % totalCol;
-            var j = indexRect / totalRow;
+            var i = indexRect % this.totalCol;
+            var j = Math.floor(indexRect / this.totalRow);
 
             var idxtmp = indexOther[k];
             var infoOther = listOther[idxtmp];
 
             var idx_shape = indexShape[k];
 
-            var infoshape = listShape[idx_shape];
+            var infoshape = this.listShape[idx_shape];
             var color = infoOther.color;
 
             var node = this.CreateItem(infoshape, true, color);
-            var rc = GetRectItem(i, j, totalRow, totalCol);
+            var rc = this.GetRectItem(i, j, this.totalRow, this.totalCol);
 
-            var infoItem = this.AddItem(rc, infoshape, infoOther, obj, true, false);
+            var infoItem = this.AddItem(rc, infoshape, infoOther, node, true, false);
             infoItem.i = i;
             infoItem.j = j;
         }
@@ -359,7 +359,7 @@ var GameShapeColor = cc.Class({
     },
     LoadGameByShapeColor: function (mode) {
         var level = cc.GameManager.gameLevel;
-        var idx = level / GameShapeColor.GUANKA_NUM_PER_ITEM;
+        var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
         var infoshape = this.GetItemInfoShapeColor(idx, this.listShape);
         if (infoshape == null) {
 
@@ -378,21 +378,21 @@ var GameShapeColor = cc.Class({
         var totalItem = totalMainShape + totalOtherShape;
         this.totalRow = this.CalcRowCol(totalItem);
         this.totalCol = this.totalRow;
-        cc.log("totalItem=" + totalItem + " row=" + totalRow + " col=" + totalCol);
+        //cc.log("totalItem=" + totalItem + " row=" + totalRow + " col=" + totalCol);
 
         var listShapeOther = this.GetOtherItemList(infoshape, this.listShape);
-        var indexShapeOther = this.RandomIndex(listShapeOther.length, (totalMainShape / 2 - 1));
+        var indexShapeOther = this.RandomIndex(listShapeOther.length, (Math.floor(totalMainShape / 2) - 1));
 
         var indexRectList = this.RandomIndex(this.totalRow * this.totalCol, totalItem);
 
         //mainshape 
-        var indexColor = this.RandomIndex(this.listColor.length, totalMainShape / 2);
+        var indexColor = this.RandomIndex(this.listColor.length, Math.floor(totalMainShape / 2));
         for (var k = 0; k < totalMainShape; k++) {
             var indexRect = indexRectList[k];
             var i = indexRect % this.totalCol;
-            var j = indexRect / this.totalRow;
+            var j = Math.floor(indexRect / this.totalRow);
 
-            var idx_color = indexColor[k / 2];
+            var idx_color = indexColor[Math.floor(k / 2)];
             var infocolor = this.listColor[idx_color];
 
             var node = null;
@@ -404,7 +404,7 @@ var GameShapeColor = cc.Class({
             }
             else {
                 //other
-                var idx_ohter = (k - 2) / 2;
+                var idx_ohter = Math.floor((k - 2) / 2);
                 var infoshape_other = listShapeOther[indexShapeOther[idx_ohter]];
                 node = this.CreateItem(infoshape_other, isInner, infocolor.color);
             }
@@ -423,7 +423,7 @@ var GameShapeColor = cc.Class({
         for (var k = 0; k < totalOtherShape; k++) {
             var indexRect = indexRectList[totalMainShape + k];
             var i = indexRect % this.totalCol;
-            var j = indexRect / this.totalRow;
+            var j = Math.floor(indexRect / this.totalRow);
 
             var idxtmp = indexOther[k];
             var infoOther = listOther[idxtmp];
@@ -437,7 +437,7 @@ var GameShapeColor = cc.Class({
             var color = infocolor.color;
             this.listColorShow.push(infocolor);
             var node = this.CreateItem(infoOther, true, color);
-            var rc = this.GetRectItem(i, j, totalRow, totalCol);
+            var rc = this.GetRectItem(i, j, this.totalRow, this.totalCol);
 
 
             var infoitem = this.AddItem(rc, infoOther, infocolor, node, true, false);
@@ -533,7 +533,7 @@ var GameShapeColor = cc.Class({
     },
     //return ShapeColorItemInfo
     AddItem: function (rc, infoshape, infocolor, node, isInner, isMain) {
-        var infoItem = new ShapeColorItemInfo();
+        var infoItem = new cc.ShapeColorItemInfo();
         infoItem.node = node;
         infoItem.nodeTrail = infoshape.nodeTrail;
         infoItem.id = infoshape.id;
