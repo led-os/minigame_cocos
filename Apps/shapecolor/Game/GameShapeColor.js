@@ -3,6 +3,8 @@ var UIViewController = require("UIViewController");
 //var Config = require("Config"); 
 //var ShapeColorItemInfo = require("ShapeColorItemInfo");
 var UIView = require("UIView");
+const renderEngine = cc.renderer.renderEngine;
+const renderer = renderEngine.renderer;
 
 var GameShapeColor = cc.Class({
     extends: UIView,
@@ -50,9 +52,23 @@ var GameShapeColor = cc.Class({
     },
     onLoad: function () {
         this._super();
-
+        this.initShaders();
     },
 
+    initShaders() {
+        require("SpriteHook").init();
+        var ShaderLib = require("ShaderLib");
+        ShaderLib.addShader(require("OverlayShader"));
+        ShaderLib.addShader(require("RainShader"));
+        ShaderLib.addShader(require("WaveShader"));
+        ShaderLib.addShader(require("GaussBlurs"));
+        ShaderLib.addShader(require("Outline"));
+        ShaderLib.addShader(require("Glowing"));
+        ShaderLib.addShader(require("Water"));
+        ShaderLib.addShader(require("Mosaic"));
+        ShaderLib.addShader(require("RadialBlur"));
+        // TODO: 加更多Shader
+    },
     Init: function () {
     },
 
@@ -507,6 +523,40 @@ var GameShapeColor = cc.Class({
             //objSR.material = new Material(shaderColor);
             //Material mat = objSR.material;
             // mat.SetColor("_ColorShape", color);
+            //cc.ShaderUtil.main().setShader(sprite, "gray");
+
+            // onClickWater()
+            // {
+
+            //     const name = 'Water';
+            //     let mat = sprite.getMaterial(name);
+            //     if (!mat) {
+            //         const CustomMaterial = require("CustomMaterial");
+            //         mat = new CustomMaterial(name, [
+            //             { name: 'iResolution', type: renderer.PARAM_FLOAT3 },
+            //             { name: 'iTime', type: renderer.PARAM_FLOAT },
+            //         ]);
+            //         sprite.setMaterial(name, mat);
+            //     }
+            //     sprite.activateMaterial(name);
+            //     var iResolution = new cc.Vec3(sprite.node.width, sprite.node.height, 0);
+            //     mat.setParamValue("iResolution", iResolution);
+            // }
+
+            // {
+            //     const name = 'Outline';
+            //     let mat = sprite.getMaterial(name);
+            //     if (!mat) {
+            //         const CustomMaterial = require("CustomMaterial");
+            //         mat = new CustomMaterial(name, [
+            //             { name: 'iResolution', type: renderer.PARAM_FLOAT3 },
+            //         ]);
+            //         sprite.setMaterial(name, mat);
+            //     }
+            //     sprite.activateMaterial(name);
+            //     var iResolution = new cc.Vec3(sprite.node.width, sprite.node.height, 0);
+            //     mat.setParamValue("iResolution", iResolution);
+            // }
         }
 
 
