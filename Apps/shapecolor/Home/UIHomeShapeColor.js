@@ -35,7 +35,7 @@ cc.Class({
         this.UnifyButtonSprite(this.btnColor);
         this.UnifyButtonSprite(this.btnShapeColor);
         this.UnifyButtonSprite(this.btnBoard);
-
+        //var ev = this.node.addComponent(cc.UITouchEvent);
     },
 
     LayOut: function () {

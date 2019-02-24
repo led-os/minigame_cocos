@@ -1,5 +1,5 @@
-var UIViewController = require("UIViewController"); 
-var UIGameBase = require("UIGameBase"); 
+var UIViewController = require("UIViewController");
+var UIGameBase = require("UIGameBase");
 var GameShapeColor = require("GameShapeColor");
 var AppType = require("AppType");
 //var LoadItemInfo = require("LoadItemInfo");
@@ -34,8 +34,10 @@ var UIGameShapeColor = cc.Class({
     onLoad: function () {
         this._super();
         this.UnifyButtonSprite(this.btnBack);
+        // imageBg.node.active = false;
         this.LoadGamePrefab();
-
+        //var ev = this.node.addComponent(cc.UITouchEvent);
+        // ev.callBackTouch = this.OnUITouchEvent;
     },
     start: function () {
 
@@ -72,7 +74,7 @@ var UIGameShapeColor = cc.Class({
     UpdateGuankaLevel: function (level) {
         cc.log("UIGameShapeColor::UpdateGuankaLevel");
         this.game.listShape = this.listShape;
-        this.game.listColor = this.listColor; 
+        this.game.listColor = this.listColor;
 
         this.game.LoadGame(cc.GameManager.gameMode);
     },

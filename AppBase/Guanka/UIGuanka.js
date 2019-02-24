@@ -22,6 +22,8 @@ cc.Class({
         this.InitList();
         this.textTitle.string = cc.Language.main().GetString("STR_GUANKA");
         cc.GameManager.main().ParseGuanka();
+        //this.tableView.node.active = false;
+        var ev = this.node.addComponent(cc.UITouchEvent);
     },
 
     _getdata: function (num) {

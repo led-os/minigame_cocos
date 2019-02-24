@@ -53,6 +53,11 @@ var GameShapeColor = cc.Class({
     onLoad: function () {
         this._super();
         this.initShaders();
+        
+
+        // var ev = this.node.addComponent(cc.UITouchEvent);
+        // ev.callBackTouch = this.OnUITouchEvent;
+
     },
 
     initShaders() {
@@ -103,6 +108,33 @@ var GameShapeColor = cc.Class({
             cc.Common.LimitNodePos(node, rc);
         }
 
+    },
+
+
+    OnTouchDown: function () {
+        cc.log("OnTouchDown");
+    },
+    OnTouchMove: function () {
+        cc.log("OnTouchMove");
+    },
+    OnTouchUp: function () {
+        cc.log("OnTouchUp");
+    },
+
+    OnUITouchEvent: function (ev, status) {
+        switch (status) {
+            case cc.UITouchEvent.TOUCH_DOWN:
+                this.OnTouchDown();
+                break;
+
+            case cc.UITouchEvent.TOUCH_MOVE:
+                this.OnTouchMove();
+                break;
+
+            case cc.UITouchEvent.TOUCH_UP:
+                this.OnTouchUp();
+                break;
+        }
     },
 
     //ShapeColorItemInfo
@@ -565,12 +597,12 @@ var GameShapeColor = cc.Class({
 
         //添加物理特性
         if (isInner == true) {
-            // Rigidbody2D bd = obj.AddComponent<Rigidbody2D>();
-            // bd.gravityScale = 0;
+            var body = node.addComponent(cc.RigidBody);
+            body.gravityScale = 0;
             // // bd.useGravity = false;
-            // bd.freezeRotation = true;
+            body.fixedRotation = true;
             // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-            // PolygonCollider2D collider = obj.AddComponent<PolygonCollider2D>();
+            var collider = node.addComponent(cc.PolygonCollider);
         }
 
         //添加尾巴 ShapeTrail
