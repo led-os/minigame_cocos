@@ -212,7 +212,7 @@ public class UIHomeShapeColor : UIHomeBase, IPopViewControllerDelegate
     {
         AudioPlay.main.PlayFile(AppCommon.AUDIO_BTN_CLICK);
         GameManager.gameMode = mode;
-        GameManager.placeLevel = mode;
+        GameManager.ho = mode;
         if (this.controller != null)
         {
             NaviViewController navi = this.controller.naviController;

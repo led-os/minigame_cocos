@@ -19,11 +19,12 @@ cc.Class({
             type: cc.rect,
         },
         title: 'title',
-        objTag:cc.Object,
+        objTag: cc.Object,
     },
 
     onLoad: function () {
-       // this._super();
+        //this._super();
+        //this.node.setContentSize(this.node.parent.getContentSize());
     },
 
     //UIViewController

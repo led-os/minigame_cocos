@@ -7,7 +7,7 @@ var AppType = require("AppType");
 var UIGameShapeColor = cc.Class({
     extends: UIGameBase,
     properties: {
-        imageBg: cc.Sprite,
+    
         btnBack: {
             default: null,
             type: cc.Button
@@ -34,7 +34,7 @@ var UIGameShapeColor = cc.Class({
     onLoad: function () {
         this._super();
         this.UnifyButtonSprite(this.btnBack);
-        // imageBg.node.active = false;
+   
         this.LoadGamePrefab();
         //var ev = this.node.addComponent(cc.UITouchEvent);
         // ev.callBackTouch = this.OnUITouchEvent;
@@ -56,6 +56,11 @@ var UIGameShapeColor = cc.Class({
         var node = cc.instantiate(this.gamePrefab);
         this.game = node.getComponent(GameShapeColor);
         this.game.node.parent = this.node;
+
+        //zorder 让imageBg 显示在最底层，game显示在UI下面
+        this.imageBg.node.zIndex = -20;
+        this.game.node.zIndex = -10;
+
         //shape
         {
             this.StartParseShape();

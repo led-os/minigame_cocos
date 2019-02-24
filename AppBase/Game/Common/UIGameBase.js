@@ -1,4 +1,4 @@
-var UIViewController = require("UIViewController"); 
+var UIViewController = require("UIViewController");
 //var Common = require("Common");
 //var Config = require("Config");
 var UIView = require("UIView");
@@ -19,11 +19,15 @@ var UIGameBase = cc.Class({
             default: [],
             type: cc.LoadItemInfo
         },
+        imageBg: cc.Sprite,
 
     },
     Init: function () {
     },
-
+    onLoad: function () {
+        this._super();
+        this.node.setContentSize(this.node.parent.getContentSize());
+    },
     LoadGamePrefab: function () {
         var strPrefab = "App/Prefab/Game/Game" + cc.Config.main().appType;
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {

@@ -13,11 +13,14 @@ cc.Class({
             default: null,
             type: cc.Button
         },
-        textTitle:cc.Label,
+        textTitle: cc.Label,
         oneCellNum: 3,
     },
 
     onLoad: function () {
+        this._super();
+        
+
         this.UnifyButtonSprite(this.btnBack);
         this.InitList();
         this.textTitle.string = cc.Language.main().GetString("STR_GUANKA");

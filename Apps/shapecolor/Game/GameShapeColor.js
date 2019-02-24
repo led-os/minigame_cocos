@@ -52,11 +52,11 @@ var GameShapeColor = cc.Class({
     },
     onLoad: function () {
         this._super();
-        this.initShaders();
-        
+        this.node.setContentSize(this.node.parent.getContentSize());
 
-        // var ev = this.node.addComponent(cc.UITouchEvent);
-        // ev.callBackTouch = this.OnUITouchEvent;
+        this.initShaders();
+        var ev = this.node.addComponent(cc.UITouchEvent);
+        ev.callBackTouch = this.OnUITouchEvent.bind(this);
 
     },
 

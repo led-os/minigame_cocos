@@ -8,6 +8,7 @@ cc.Class({
 
     onLoad: function () {
         this._super();
+        this.node.setContentSize(this.node.parent.getContentSize());
     },
 
     OnClickBtnBack: function (event, customEventData) {

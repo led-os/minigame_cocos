@@ -9,7 +9,7 @@ var MainViewController = cc.Class({
   
     ViewDidLoad: function () {
         this._super();
-        this.Push(HomeViewController.main());
+        this.Push(HomeViewController.main());//HomeViewController
       //moon ui for test
         var str = cc.Language.main().GetString("APP_NAME");
         cc.log("Language GetString=" + str);
