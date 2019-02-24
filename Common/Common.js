@@ -151,7 +151,25 @@ var Common = cc.Class({
             }
             return rdm;
         },
+        //防止超出Rect范围
+        LimitNodePos: function (node, rc) {
+            var bd = node.getBoundingBox();
+            var pt = node.getPosition();
+            if ((pt.x + bd.width / 2) > (rc.x + rc.width)) {
+                pt.x = rc.x + rc.width - bd.width / 2;
+            }
+            if ((pt.x - bd.width / 2) < rc.x) {
+                pt.x = rc.x + bd.width / 2;
+            }
 
+            if ((pt.y + bd.height / 2) > (rc.y + rc.height)) {
+                pt.y = rc.y + rc.height - bd.height / 2;
+            }
+            if ((pt.y - bd.height / 2) < rc.y) {
+                pt.y = rc.y + bd.height / 2;
+            }
+            node.setPosition(pt);
+        },
 
         _appSceneBase: null,
         appSceneBase: {

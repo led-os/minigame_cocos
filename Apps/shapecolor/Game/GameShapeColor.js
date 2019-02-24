@@ -44,7 +44,8 @@ var GameShapeColor = cc.Class({
         totalRow: 0,
         totalCol: 0,
         itemPosZ: -20.0,
-
+        height_topbar_canvas: 160.0,
+        height_adbanner_canvas: 160.0,
 
     },
     onLoad: function () {
@@ -74,13 +75,16 @@ var GameShapeColor = cc.Class({
 
             var bd = node.getBoundingBox();
             var offsetx = bd.width / 2;
-            //offsetx =0;
+            offsetx = 0;
             var offsety = bd.height / 2;
-            //offsety=0;
+            offsety = 0;
             var pt = this.RandomPointOfRect(rc, offsetx, offsety);
             //cc.log("LayOut:i=" + info.i + " j=" + info.j + " rc=" + rc + " pt=" + pt + " bd=" + bd.size);
             var z = node.getPosition().z;
             node.setPosition(pt.x, pt.y, z);
+
+            var rc = this.GetRectDisplay();
+            cc.Common.LimitNodePos(node, rc);
         }
 
     },
@@ -115,26 +119,23 @@ var GameShapeColor = cc.Class({
         scale = Math.min(scalex, scaley);
         return scale;
     },
-
-    //c.Rect
-    GetRectItem: function (i, j, totalRow, totalCol) {
+    GetRectDisplay: function () {
         var x, y, w, h;
         var sizeCanvas = cc.Common.appSceneMain.sizeCanvas;
-        //var w_world = Common.GetCameraWorldSizeWidth(mainCam) * 2;
-        var height_topbar_canvas = 160.0;
-        var height_adbanner_canvas = 160.0;
-        //var height_topbar_world = Common.CanvasToWorldHeight(mainCam, sizeCanvas, height_topbar_canvas);
-        // if (!Device.isLandscape)
-        // {
-        //     height_topbar_world += Common.ScreenToWorldHeight(mainCam, Device.heightSystemTopBar);
-        // }
-        //var h_world = mainCam.orthographicSize * 2;
-        w = sizeCanvas.width / totalCol;
-        h = (sizeCanvas.height - height_topbar_canvas - height_adbanner_canvas) / totalRow;
-        var oftx = -sizeCanvas.width / 2;
-        var ofty = -sizeCanvas.height / 2 + height_adbanner_canvas;
-        x = oftx + w * i;
-        y = ofty + h * j;
+        var ratio = 0.9;
+        w = sizeCanvas.width * ratio;
+        h = (sizeCanvas.height - this.height_topbar_canvas - this.height_adbanner_canvas);
+        var rc = new cc.Rect(-w / 2, -sizeCanvas.height / 2 + this.height_adbanner_canvas, w, h);
+        return rc;
+    },
+    //c.Rect
+    GetRectItem: function (i, j, row, col) {
+        var x, y, w, h;
+        var rcDisplay = this.GetRectDisplay();
+        w = rcDisplay.width / col;
+        h = rcDisplay.height / row;
+        x = rcDisplay.x + w * i;
+        y = rcDisplay.y + h * j;
         var rc = new cc.Rect(x, y, w, h);
         return rc;
     },
