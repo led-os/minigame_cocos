@@ -50,7 +50,7 @@ var GameShapeColor = cc.Class({
         height_adbanner_canvas: 160.0,
         isItemHasSel: false,
         ptDown: new cc.Vec2(0, 0),
-        posItem: new cc.Vec2(0, 0),
+        posItemDown: new cc.Vec2(0, 0),
         itemInfoSel: cc.ShapeColorItemInfo,
 
     },
@@ -119,11 +119,13 @@ var GameShapeColor = cc.Class({
     },
 
     OnTouchDown: function (pos) {
-        this.isItemHasSel = false; 
-        this.ptDown = pos;
+        this.isItemHasSel = false;
+        var posnew = new cc.Vec2(pos.x - this.node.getContentSize().width / 2, pos.y - this.node.getContentSize().height / 2);
+        this.ptDown = posnew;
 
         //Vector3 posword = mainCam.ScreenToWorldPoint(pos);
-        cc.Log("onTouchDown: pos=" + pos);
+        cc.log("onTouchDown: postouch=" + pos);
+        var index = 0;
         for (let info of this.listItem) {
             var isLock = this.IsItemLock(info);
             if (isLock == true) {
@@ -131,11 +133,17 @@ var GameShapeColor = cc.Class({
             }
 
             var bd = info.node.getBoundingBox();//rect
+            cc.log("onTouchDown: posnew=" + posnew + " bd=" + bd + " index=" + index);
 
+            // var positem = info.node.getPosition();
+            // cc.log("positem x=" + positem.x + " y=" + positem.y);
+            // var rc = new cc.Rect(positem.x - bd.width / 2, positem.y - bd.height / 2, bd.width, bd.height);
+
+            //cc.log("onTouchDown: rc=" + rc);
             //posword.z = bd.center.z;
-            if (bd.contains(pos)) {
+            if (bd.contains(posnew)) {
 
-                this.posItem = info.node.getPosition();
+                this.posItemDown = info.node.getPosition();
                 this.itemInfoSel = info;
                 this.isItemHasSel = true;
 
@@ -148,35 +156,36 @@ var GameShapeColor = cc.Class({
                 //     }
                 // }
 
-                // Debug.Log("itemInfoSel:id:" + itemInfoSel.id + " color:" + itemInfoSel.color);
+                cc.log("itemInfoSel:id:" + this.itemInfoSel.id + " color:" + this.itemInfoSel.color);
                 break;
             }
+
+            index++;
         }
     },
     OnTouchMove: function (pos) {
-        cc.log("OnTouchMove");
+
         if (!this.isItemHasSel) {
             cc.log("onTouchMove ng 1");
             return;
         }
-        var isLock = IsItemLock(this.itemInfoSel);
+        var posnew = new cc.Vec2(pos.x - this.node.getContentSize().width / 2, pos.y - this.node.getContentSize().height / 2);
+        var isLock = this.IsItemLock(this.itemInfoSel);
         if (isLock) {
-            cc.log("onTouchMove ng 2");
+            // cc.log("onTouchMove ng 2");
             return;
         }
-        var x, y, w, h; 
+        var x, y, w, h;
 
-        var ptStep = pos - this.ptDown;
-        var ptStepWorld = Common.ScreenToWorldSize(mainCam, ptStep);
-        var posStepWorld = new Vector3(ptStepWorld.x, ptStepWorld.y, 0);
-        var posword = posItemWorld + posStepWorld;
-
+        var ptStep = new cc.Vec2(posnew.x - this.ptDown.x, posnew.y - this.ptDown.y);
+        var positemNew = new cc.Vec2(this.posItemDown.x + ptStep.x, this.posItemDown.y + ptStep.y);
+        this.itemInfoSel.node.setPosition(positemNew);
+        // cc.log("OnTouchMove positemNew=" + positemNew + " ptStep=" + ptStep);
         //将选中item暂时置顶
-        posword.z = this.itemPosZ - 2;
-        //itemInfoSel.obj.transform.position = posword;
-        var body = itemInfoSel.node.getComponent(cc.RigidBody);
+        //posword.z = this.itemPosZ - 2; 
+        var body = this.itemInfoSel.node.getComponent(cc.RigidBody);
         if (body != null) {
-            body.MovePosition(posword);
+            // body.MovePosition(posword);
         }
 
         //尾巴添加节点
@@ -193,7 +202,7 @@ var GameShapeColor = cc.Class({
 
 
         for (let info of this.listItem) {
-            isLock = IsItemLock(info);
+            isLock = this.IsItemLock(info);
             if (isLock) {
             }
             var bd = info.node.getBoundingBox();
@@ -227,14 +236,14 @@ var GameShapeColor = cc.Class({
                 continue;
             }
 
-            if ((rc.contains(posword)) && (this.itemInfoSel.id == info.id) && (this.itemInfoSel.color == info.color)) {
+            if ((rc.contains(positemNew)) && (this.itemInfoSel.id == info.id) && (this.itemInfoSel.color == info.color)) {
                 cc.log("合并正确");
 
                 //合并正确
                 this.SetItemLock(info, true);
                 this.SetItemLock(this.itemInfoSel, true);
 
-                this.itemInfoSel.setPosition(info.node.getPosition());
+                this.itemInfoSel.node.setPosition(info.node.getPosition());
                 //RunDisapperAnimation(this.itemInfoSel);
                 // PlayAudioItemFinish(itemInfoSel);
 
@@ -262,8 +271,6 @@ var GameShapeColor = cc.Class({
 
                 }
 
-
-
                 break;
             }
         }
@@ -280,12 +287,15 @@ var GameShapeColor = cc.Class({
             return;
         }
 
+        var rc = this.GetRectDisplay();
+        cc.Common.LimitNodePos(this.itemInfoSel.node, rc);
+
         //将选中item清除置顶
         // var pos = itemInfoSel.node.getPosition();
         // itemInfoSel.node.transform.position = pos;
     },
 
-    OnUITouchEvent: function (ev, status,pos) {
+    OnUITouchEvent: function (ev, status, pos) {
         switch (status) {
             case cc.UITouchEvent.TOUCH_DOWN:
                 this.OnTouchDown(pos);
@@ -685,8 +695,8 @@ var GameShapeColor = cc.Class({
         // }
 
         //加载图片
-        var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(info.pic);
-        cc.log("item_pic=" + info.pic);
+        var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(pic);
+        cc.log("item_pic=" + pic);
         cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {

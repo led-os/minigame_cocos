@@ -7,7 +7,7 @@ var AppType = require("AppType");
 var UIGameShapeColor = cc.Class({
     extends: UIGameBase,
     properties: {
-    
+
         btnBack: {
             default: null,
             type: cc.Button
@@ -34,7 +34,7 @@ var UIGameShapeColor = cc.Class({
     onLoad: function () {
         this._super();
         this.UnifyButtonSprite(this.btnBack);
-   
+
         this.LoadGamePrefab();
         //var ev = this.node.addComponent(cc.UITouchEvent);
         // ev.callBackTouch = this.OnUITouchEvent;
@@ -214,7 +214,7 @@ var UIGameShapeColor = cc.Class({
             var item = items[i];
             info.id = item.id;
             info.color = cc.Common.RGBString2Color(item.color);
-            cc.log("i="+i+" info.color="+info.color+" item.color="+item.color);
+            cc.log("i=" + i + " info.color=" + info.color + " item.color=" + item.color);
             this.listColor.push(info);
         }
         this.CheckAllLoad();

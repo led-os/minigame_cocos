@@ -22,13 +22,11 @@ var UITouchEvent = cc.Class({
     },
 
     Init: function () {
-        cc.log("UITouchEvent Init");
-
+       // cc.log("UITouchEvent Init");
         this.node.on(cc.Node.EventType.TOUCH_START, function (event) {
-            var pos = event.getLocation();//canvas坐标原点在屏幕左下角
-            var posnode = this.node.convertTouchToNodeSpace(event.touch);
-
-            cc.log("UITouchEvent OnTouchDown:pos=" + pos+ " posnode="+posnode);
+            var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
+            var posnode =this.node.convertToNodeSpace(pos);
+           // cc.log("UITouchEvent OnTouchDown:pos=" + pos+ " posnode="+posnode);
             if (this.callBackTouch != null) {
                 this.callBackTouch(this, UITouchEvent.TOUCH_DOWN,pos);
             }
@@ -36,6 +34,7 @@ var UITouchEvent = cc.Class({
 
         this.node.on(cc.Node.EventType.TOUCH_MOVE, function (event) {
             var pos = event.getLocation();
+            
             if (this.callBackTouch != null) {
                 this.callBackTouch(this, UITouchEvent.TOUCH_MOVE,pos);
             }
