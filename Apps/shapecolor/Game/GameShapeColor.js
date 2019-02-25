@@ -58,6 +58,9 @@ var GameShapeColor = cc.Class({
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
 
+        //物理系统默认是关闭的，手动开启物理系统
+        cc.director.getPhysicsManager().enabled = true;
+
         this.initShaders();
         var ev = this.node.addComponent(cc.UITouchEvent);
         ev.callBackTouch = this.OnUITouchEvent.bind(this);
@@ -694,6 +697,24 @@ var GameShapeColor = cc.Class({
         //     objSR.sprite.name = info.id;
         // }
 
+        //添加物理特性
+        if (isInner == true) {
+            var body = node.addComponent(cc.RigidBody);
+            body.gravityScale = 0;//关闭重力
+            // // bd.useGravity = false;
+            body.fixedRotation = true;
+
+            //防止刚体穿越
+            body.bullet = true;
+
+            // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            //var collider = node.addComponent(cc.PolygonCollider);
+            var collider = node.addComponent(cc.PhysicsBoxCollider);
+
+
+        }
+
+
         //加载图片
         var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(pic);
         cc.log("item_pic=" + pic);
@@ -704,6 +725,15 @@ var GameShapeColor = cc.Class({
                 return;
             }
             sprite.spriteFrame = new cc.SpriteFrame(tex);
+
+            var collider = sprite.node.getComponent(cc.PhysicsBoxCollider);
+            if (collider != null) {
+
+                collider.size = cc.size(tex.width, tex.height);
+                cc.log("collider=" + collider.size);
+            }
+
+
             this.LayOut();
             // }.bind(this).bind(sprite));
         }.bind(this));
@@ -769,15 +799,7 @@ var GameShapeColor = cc.Class({
         }
 
 
-        //添加物理特性
-        if (isInner == true) {
-            var body = node.addComponent(cc.RigidBody);
-            body.gravityScale = 0;
-            // // bd.useGravity = false;
-            body.fixedRotation = true;
-            // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-            var collider = node.addComponent(cc.PolygonCollider);
-        }
+
 
         //添加尾巴 ShapeTrail
         // if (isInner)
