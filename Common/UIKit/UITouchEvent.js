@@ -13,7 +13,7 @@ var UITouchEvent = cc.Class({
         // },
         // iDelegate: IPopViewControllerDelegate,
 
-        // (UITouchEvent ev,int status, resource: any) 
+        // (UITouchEvent ev,int status, pos) 
         callBackTouch: null,
     },
 
@@ -25,20 +25,25 @@ var UITouchEvent = cc.Class({
         cc.log("UITouchEvent Init");
 
         this.node.on(cc.Node.EventType.TOUCH_START, function (event) {
-            cc.log("UITouchEvent OnTouchDown");
+            var pos = event.getLocation();//canvas坐标原点在屏幕左下角
+            var posnode = this.node.convertTouchToNodeSpace(event.touch);
+
+            cc.log("UITouchEvent OnTouchDown:pos=" + pos+ " posnode="+posnode);
             if (this.callBackTouch != null) {
-                this.callBackTouch(this, UITouchEvent.TOUCH_DOWN);
+                this.callBackTouch(this, UITouchEvent.TOUCH_DOWN,pos);
             }
         }, this);
 
         this.node.on(cc.Node.EventType.TOUCH_MOVE, function (event) {
+            var pos = event.getLocation();
             if (this.callBackTouch != null) {
-                this.callBackTouch(this, UITouchEvent.TOUCH_MOVE);
+                this.callBackTouch(this, UITouchEvent.TOUCH_MOVE,pos);
             }
         }, this);
         this.node.on(cc.Node.EventType.TOUCH_END, function (event) {
+            var pos = event.getLocation();
             if (this.callBackTouch != null) {
-                this.callBackTouch(this, UITouchEvent.TOUCH_UP);
+                this.callBackTouch(this, UITouchEvent.TOUCH_UP,pos);
             }
         }, this);
     },

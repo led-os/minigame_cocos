@@ -48,6 +48,10 @@ var GameShapeColor = cc.Class({
         itemPosZ: -20.0,
         height_topbar_canvas: 160.0,
         height_adbanner_canvas: 160.0,
+        isItemHasSel: false,
+        ptDown: new cc.Vec2(0, 0),
+        posItem: new cc.Vec2(0, 0),
+        itemInfoSel: cc.ShapeColorItemInfo,
 
     },
     onLoad: function () {
@@ -94,7 +98,7 @@ var GameShapeColor = cc.Class({
             node.scaleY = scale;
 
 
-            var bd = node.getBoundingBox();
+            var bd = node.getBoundingBox();//rect
             var offsetx = bd.width / 2;
             offsetx = 0;
             var offsety = bd.height / 2;
@@ -111,28 +115,188 @@ var GameShapeColor = cc.Class({
     },
 
 
-    OnTouchDown: function () {
-        cc.log("OnTouchDown");
-    },
-    OnTouchMove: function () {
-        cc.log("OnTouchMove");
-    },
-    OnTouchUp: function () {
-        cc.log("OnTouchUp");
+    CheckGameWin: function () {
     },
 
-    OnUITouchEvent: function (ev, status) {
+    OnTouchDown: function (pos) {
+        this.isItemHasSel = false; 
+        this.ptDown = pos;
+
+        //Vector3 posword = mainCam.ScreenToWorldPoint(pos);
+        cc.Log("onTouchDown: pos=" + pos);
+        for (let info of this.listItem) {
+            var isLock = this.IsItemLock(info);
+            if (isLock == true) {
+                continue;
+            }
+
+            var bd = info.node.getBoundingBox();//rect
+
+            //posword.z = bd.center.z;
+            if (bd.contains(pos)) {
+
+                this.posItem = info.node.getPosition();
+                this.itemInfoSel = info;
+                this.isItemHasSel = true;
+
+
+                // if (info.objTrail != null) {
+                //     ShapeTrail trail = info.objTrail.GetComponent<ShapeTrail>();
+                //     if (trail != null) {
+                //         trail.setColor(Color.red);
+                //         trail.ClearDraw();
+                //     }
+                // }
+
+                // Debug.Log("itemInfoSel:id:" + itemInfoSel.id + " color:" + itemInfoSel.color);
+                break;
+            }
+        }
+    },
+    OnTouchMove: function (pos) {
+        cc.log("OnTouchMove");
+        if (!this.isItemHasSel) {
+            cc.log("onTouchMove ng 1");
+            return;
+        }
+        var isLock = IsItemLock(this.itemInfoSel);
+        if (isLock) {
+            cc.log("onTouchMove ng 2");
+            return;
+        }
+        var x, y, w, h; 
+
+        var ptStep = pos - this.ptDown;
+        var ptStepWorld = Common.ScreenToWorldSize(mainCam, ptStep);
+        var posStepWorld = new Vector3(ptStepWorld.x, ptStepWorld.y, 0);
+        var posword = posItemWorld + posStepWorld;
+
+        //将选中item暂时置顶
+        posword.z = this.itemPosZ - 2;
+        //itemInfoSel.obj.transform.position = posword;
+        var body = itemInfoSel.node.getComponent(cc.RigidBody);
+        if (body != null) {
+            body.MovePosition(posword);
+        }
+
+        //尾巴添加节点
+        // if (itemInfoSel.objTrail != null)
+        // {
+        //     Debug.Log("itemInfoSel.objTrail");
+        //     ShapeTrail trail = itemInfoSel.objTrail.GetComponent<ShapeTrail>();
+        //     if (trail != null)
+        //     {
+        //         // trail.AddPoint(posword);
+        //         trail.OnDraw();
+        //     }
+        // }
+
+
+        for (let info of this.listItem) {
+            isLock = IsItemLock(info);
+            if (isLock) {
+            }
+            var bd = info.node.getBoundingBox();
+            //posword.z = bd.center.z;
+            w = bd.width / 4;
+            h = bd.height / 4;
+            var rc = new cc.Rect(info.node.getPosition().x - w / 2, info.node.getPosition().y - h / 2, w, h);
+
+            // if (objBomb != null)
+            // {
+            //     Bounds bdBomb = objBomb.GetComponent<SpriteRenderer>().bounds;
+            //     w = bdBomb.size.x / 4;
+            //     h = bdBomb.size.y / 4;
+            //     Rect rcBomb = new Rect(objBomb.transform.position.x - w / 2, objBomb.transform.position.y - h / 2, w, h);
+
+            //     if (info.obj != objBomb)
+            //     {
+            //         if (rcBomb.Contains(info.obj.transform.position))
+            //         {
+            //             Debug.Log("炸弹被合并了。。。");
+            //             if (iDelegate != null)
+            //             {
+            //                 iDelegate.OnGameShapeColorDidBomb(this);
+            //             }
+            //             break;
+            //         }
+            //     }
+            // }
+
+            if (info == this.itemInfoSel) {
+                continue;
+            }
+
+            if ((rc.contains(posword)) && (this.itemInfoSel.id == info.id) && (this.itemInfoSel.color == info.color)) {
+                cc.log("合并正确");
+
+                //合并正确
+                this.SetItemLock(info, true);
+                this.SetItemLock(this.itemInfoSel, true);
+
+                this.itemInfoSel.setPosition(info.node.getPosition());
+                //RunDisapperAnimation(this.itemInfoSel);
+                // PlayAudioItemFinish(itemInfoSel);
+
+
+                //记录游戏开始进行中
+                var level = cc.GameManager.gameLevel;
+                var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
+                var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
+                if (idx_sub == 0) {
+                    var infoitem = null;
+                    var key = null;
+                    if (this.gameMode == GameShapeColor.GAME_MODE_SHAPE) {
+                        infoitem = this.GetItemInfoShapeColor(idx, this.listShape);
+                        key = GameShapeColor.STR_KEY_GAME_STATUS_SHAPE + infoitem.id;
+                        //PlayerPrefs.SetInt(key, GAME_STATUS_PLAY); 
+                    }
+                    if (this.gameMode == GameShapeColor.GAME_MODE_COLOR) {
+                        infoitem = this.GetItemInfoShapeColor(idx, this.listColor);
+                        key = GameShapeColor.STR_KEY_GAME_STATUS_COLOR + infoitem.id;
+
+                    }
+                    if (key != null) {
+                        cc.sys.localStorage.setItem(key, GameShapeColor.GAME_STATUS_PLAY);
+                    }
+
+                }
+
+
+
+                break;
+            }
+        }
+
+        this.CheckGameWin();
+    },
+    OnTouchUp: function (pos) {
+        cc.log("OnTouchUp");
+        if (!this.isItemHasSel) {
+            return;
+        }
+        var isLock = this.IsItemLock(this.itemInfoSel);
+        if (isLock) {
+            return;
+        }
+
+        //将选中item清除置顶
+        // var pos = itemInfoSel.node.getPosition();
+        // itemInfoSel.node.transform.position = pos;
+    },
+
+    OnUITouchEvent: function (ev, status,pos) {
         switch (status) {
             case cc.UITouchEvent.TOUCH_DOWN:
-                this.OnTouchDown();
+                this.OnTouchDown(pos);
                 break;
 
             case cc.UITouchEvent.TOUCH_MOVE:
-                this.OnTouchMove();
+                this.OnTouchMove(pos);
                 break;
 
             case cc.UITouchEvent.TOUCH_UP:
-                this.OnTouchUp();
+                this.OnTouchUp(pos);
                 break;
         }
     },
@@ -294,7 +458,6 @@ var GameShapeColor = cc.Class({
             var isInner = (k % 2 == 0) ? true : false;
 
             this.listColorShow.push(infocolor);
-            var infocolor1 = this.listColor[idx_color];
             var node = this.CreateItem(infoshape, isInner, infocolor.color);
             var rc = this.GetRectItem(i, j, this.totalRow, this.totalCol);
 
@@ -589,8 +752,9 @@ var GameShapeColor = cc.Class({
                 sprite.activateMaterial(name);
                 var iResolution = new cc.Vec3(sprite.node.width, sprite.node.height, 0);
                 mat.setParamValue("iResolution", iResolution);
-                var color = new cc.Vec3(1.0, 0, 0);
-                mat.setParamValue("colorShow", color);
+                var colorShow = new cc.Vec3(color.r / 255, color.g / 255, color.b / 255);
+                cc.log("colorShow=" + colorShow);
+                mat.setParamValue("colorShow", colorShow);
             }
         }
 

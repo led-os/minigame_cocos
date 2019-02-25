@@ -99,21 +99,24 @@ var Common = cc.Class({
 
         },
 
-        // 255,100,200 to color return cc.Color
+        // 255,100,200 to color return cc.Color 47,47,47
+
         RGBString2Color: function (strrgb) {
             var r, g, b;
             var strsplit = ",";
             var list = strrgb.split(strsplit);
             var index = 0;
+            //cc.log("RGBString2Color:list="+list.length);
+
             for (let value of list) {
                 if (index == 0) {
-                    r = new Number(value);
+                    r = parseInt(value);
                 }
                 if (index == 1) {
-                    g = new Number(value);
+                    g = parseInt(value);
                 }
                 if (index == 2) {
-                    b = new Number(value);
+                    b = parseInt(value);
                 }
                 index++;
             }
