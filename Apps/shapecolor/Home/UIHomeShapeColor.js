@@ -38,6 +38,8 @@ cc.Class({
         this.UnifyButtonSprite(this.btnShapeColor);
         this.UnifyButtonSprite(this.btnBoard);
         //var ev = this.node.addComponent(cc.UITouchEvent);
+
+        cc.AudioPlay.main().PlayFile("App/Audio/BtnClick");
     },
 
     LayOut: function () {

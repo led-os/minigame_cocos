@@ -17,6 +17,7 @@ var AudioCache = cc.Class({
         this.dicItem = new Dictionary();
     },
 
+    // * loadRes(url: string, completeCallback: (error: Error, resource: any) => void): void
     Load: function (filepath, completeCallback) {
         this.Init();
         var ret = null;
@@ -29,25 +30,27 @@ var AudioCache = cc.Class({
                 completeCallback(null, ret);
             }
         } else {
-            //加载图片： https://www.jianshu.com/p/8bd1eb0240d7
-            cc.loader.loadRes(filepath, function (err, audio)//cc.Texture2D,
-            {
+
+            cc.loader.loadRes(filepath, cc.AudioClip, function (err, audioClip) {
                 if (err) {
                     cc.log("AudioCache loadRes fail");
                     cc.log(err.message || err);
                     if (completeCallback) {
-                        completeCallback(err, audio);
+                        completeCallback(err, audioClip);
                     }
                     return ret;
                 }
+
                 cc.log("AudioCache loadRes ok");
-                if (audio != null) {
-                    this.dicItem.Add(key, audio);
+                if (audioClip != null) {
+                    this.dicItem.Add(key, audioClip);
                 }
                 if (completeCallback) {
-                    completeCallback(err, audio);
+                    completeCallback(err, audioClip);
                 }
+
             }.bind(this));
+
         }
         return ret;
 
