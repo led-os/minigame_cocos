@@ -30,6 +30,8 @@ cc.Class({
     onLoad: function () {
         this._super();
         var x, y, w, h;
+        //物理系统默认是关闭的，手动开启物理系统
+        //cc.director.getPhysicsManager().enabled = true;
 
         this.UnifyButtonSprite(this.btnShape);
         this.UnifyButtonSprite(this.btnColor);

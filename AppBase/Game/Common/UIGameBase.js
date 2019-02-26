@@ -53,9 +53,7 @@ var UIGameBase = cc.Class({
     },
 
 
-    //guanka
-    UpdateGuankaLevel: function (level) {
-    },
+    //guanka 
 
     GetGuankaTotal: function () {
         return 0;

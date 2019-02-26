@@ -1,5 +1,5 @@
 var UIViewController = require("UIViewController");
-var UIHomeBase = require("UIHomeBase"); 
+var UIHomeBase = require("UIHomeBase");
 //var Common = require("Common");
 //var Config = require("Config");
 var GameViewController = require("GameViewController");
@@ -13,9 +13,17 @@ var GameManager = cc.Class({
         placeTotal: 0,
         gameLevelFinish: 0,//streamingAssetsPath 下的游戏图片等资源
         gameMode: 0,
-        maxGuankaNum: 0,
         placeLevel: 0,
-
+        maxGuankaNum:
+        {
+            get: function () {
+                var ret = 0;
+                if (GameViewController.main().gameBase != null) {
+                    ret = GameViewController.main().gameBase.GetGuankaTotal();
+                }
+                return ret;
+            },
+        },
     },
     properties: {
         uiPrefab: {
@@ -47,7 +55,7 @@ var GameManager = cc.Class({
     },
 
     GotoPlayAgain: function () {
-        GameViewController.main.gameBase.UpdateGuankaLevel(GameManager.gameLevel);
+        GameViewController.main().gameBase.UpdateGuankaLevel(GameManager.gameLevel);
     },
 
     GotoPreLevel: function () {
@@ -59,7 +67,7 @@ var GameManager = cc.Class({
 
         }
         // GameManager.GotoGame();
-        GameViewController.main.gameBase.UpdateGuankaLevel(GameManager.gameLevel);
+        GameViewController.main().gameBase.UpdateGuankaLevel(GameManager.gameLevel);
 
     },
 
@@ -73,7 +81,7 @@ var GameManager = cc.Class({
             return;
 
         }
-        GameViewController.main.gameBase.UpdateGuankaLevel(GameManager.gameLevel);
+        GameViewController.main().gameBase.UpdateGuankaLevel(GameManager.gameLevel);
 
     },
 
@@ -90,7 +98,7 @@ var GameManager = cc.Class({
         GameManager.gameLevel = 0;
 
         this.ParseGuanka();
-        GameViewController.main.gameBase.UpdateGuankaLevel(GameManager.gameLevel);
+        GameViewController.main().gameBase.UpdateGuankaLevel(GameManager.gameLevel);
 
     },
 
@@ -105,7 +113,7 @@ var GameManager = cc.Class({
         GameManager.gameLevel = 0;
 
         this.ParseGuanka();
-        GameViewController.main.gameBase.UpdateGuankaLevel(GameManager.gameLevel);
+        GameViewController.main().gameBase.UpdateGuankaLevel(GameManager.gameLevel);
 
     },
     //关卡循环
@@ -117,7 +125,7 @@ var GameManager = cc.Class({
             GameManager.gameLevel = 0;
 
         }
-        GameViewController.main.gameBase.UpdateGuankaLevel(GameManager.gameLevel);
+        GameViewController.main().gameBase.UpdateGuankaLevel(GameManager.gameLevel);
 
     },
 

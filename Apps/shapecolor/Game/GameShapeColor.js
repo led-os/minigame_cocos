@@ -119,6 +119,54 @@ var GameShapeColor = cc.Class({
 
 
     CheckGameWin: function () {
+        var isAllItemLock = true;
+        for (let info of this.listItem) {
+            if (info.isMain == true) {
+                var isLock = this.IsItemLock(info);
+                if (!isLock) {
+                    isAllItemLock = false;
+                }
+            }
+
+        }
+
+        if (isAllItemLock) {
+            //show game win 
+            // Invoke("OnGameWin", 1f);
+            this.OnGameWin();
+
+        }
+    },
+
+    OnGameWin: function () {
+        //show game win
+        cc.GameManager.gameLevelFinish = cc.GameManager.gameLevel;
+        //gameEndParticle.Play();
+
+        //记录游戏完成
+        var level = cc.GameManager.gameLevel;
+        var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
+        var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
+        if ((idx_sub + 1) == GameShapeColor.GUANKA_NUM_PER_ITEM) {
+            var infoitem = null;
+            var key = null;
+            if (this.gameMode == GameShapeColor.GAME_MODE_SHAPE) {
+                infoitem = this.GetItemInfoShapeColor(idx, this.listShape);
+                key = GameShapeColor.STR_KEY_GAME_STATUS_SHAPE + infoitem.id;
+            }
+            if (this.gameMode == GameShapeColor.GAME_MODE_COLOR) {
+                infoitem = this.GetItemInfoShapeColor(idx, this.listColor);
+                key = GameShapeColor.STR_KEY_GAME_STATUS_COLOR + infoitem.id;
+            }
+            if (key != null) {
+                cc.sys.localStorage.setItem(key, GameShapeColor.GAME_STATUS_FINISH);
+            }
+        }
+
+        // if (iDelegate != null) {
+        //     iDelegate.OnGameShapeColorDidWin(this);
+        // }
+        cc.GameManager.main().GotoNextLevelWithoutPlace();
     },
 
     OnTouchDown: function (pos) {
@@ -402,13 +450,19 @@ var GameShapeColor = cc.Class({
         return idxTmp;
     },
 
-    LoadGame: function (mode) {
-
-        cc.log("LoadGame:mode=" + mode);
+    ClearGame: function () {
+        for (let info of this.listItem) {
+            info.node.removeFromParent();
+        }
         //清空
         this.listItem.length = 0;
         this.listColorShow.length = 0;
+    },
 
+    LoadGame: function (mode) {
+
+        cc.log("LoadGame:mode=" + mode);
+        this.ClearGame();
         switch (mode) {
             case GameShapeColor.GAME_MODE_SHAPE:
                 this.LoadGameByShape(mode);
@@ -469,7 +523,6 @@ var GameShapeColor = cc.Class({
 
             // GameObject obj = null;
             var isInner = (k % 2 == 0) ? true : false;
-
             this.listColorShow.push(infocolor);
             var node = this.CreateItem(infoshape, isInner, infocolor.color);
             var rc = this.GetRectItem(i, j, this.totalRow, this.totalCol);
@@ -691,40 +744,40 @@ var GameShapeColor = cc.Class({
         if (isInner == true) {
             pic = info.picInner;
         }
-        // {
-        //     TextureUtil.UpdateSpriteTexture(obj, pic);
-        //     info.textureHasLoad = true;
-        //     objSR.sprite.name = info.id;
-        // }
-
-        //添加物理特性
-        if (isInner == true) {
-            var body = node.addComponent(cc.RigidBody);
-            body.gravityScale = 0;//关闭重力
-            // // bd.useGravity = false;
-            body.fixedRotation = true;
-
-            //防止刚体穿越
-            body.bullet = true;
-
-            // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-            //var collider = node.addComponent(cc.PolygonCollider);
-            var collider = node.addComponent(cc.PhysicsBoxCollider);
 
 
-        }
+
 
 
         //加载图片
         var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(pic);
-        cc.log("item_pic=" + pic);
+        //cc.log("item_pic=" + pic);
         cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
+                cc.log("item_pic err");
                 cc.log(err.message || err);
                 return;
             }
             sprite.spriteFrame = new cc.SpriteFrame(tex);
+
+
+            //添加物理特性
+            if (isInner == true) {
+                var body = sprite.node.addComponent(cc.RigidBody);
+                body.gravityScale = 0;//关闭重力
+                // // bd.useGravity = false;
+                body.fixedRotation = true;
+
+                //防止刚体穿越
+                body.bullet = true;
+
+                // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+                //var collider = node.addComponent(cc.PolygonCollider);
+                var collider = sprite.node.addComponent(cc.PhysicsBoxCollider);
+                sprite.node.active = true;
+            }
+
 
             var collider = sprite.node.getComponent(cc.PhysicsBoxCollider);
             if (collider != null) {
@@ -732,7 +785,6 @@ var GameShapeColor = cc.Class({
                 collider.size = cc.size(tex.width, tex.height);
                 cc.log("collider=" + collider.size);
             }
-
 
             this.LayOut();
             // }.bind(this).bind(sprite));
@@ -755,29 +807,6 @@ var GameShapeColor = cc.Class({
             }
         }
         if (is_add_shader == true) {
-            //objSR.material = new Material(shaderColor);
-            //Material mat = objSR.material;
-            // mat.SetColor("_ColorShape", color);
-            //cc.ShaderUtil.main().setShader(sprite, "gray");
-
-            // onClickWater()
-            // {
-
-            //     const name = 'Water';
-            //     let mat = sprite.getMaterial(name);
-            //     if (!mat) {
-            //         const CustomMaterial = require("CustomMaterial");
-            //         mat = new CustomMaterial(name, [
-            //             { name: 'iResolution', type: renderer.PARAM_FLOAT3 },
-            //             { name: 'iTime', type: renderer.PARAM_FLOAT },
-            //         ]);
-            //         sprite.setMaterial(name, mat);
-            //     }
-            //     sprite.activateMaterial(name);
-            //     var iResolution = new cc.Vec3(sprite.node.width, sprite.node.height, 0);
-            //     mat.setParamValue("iResolution", iResolution);
-            // }
-
             {
                 const name = 'Outline';
                 let mat = sprite.getMaterial(name);

@@ -87,10 +87,18 @@ var UIGameShapeColor = cc.Class({
     CheckAllLoad: function () {
         cc.log("UIGameShapeColor::CheckAllLoad");
         if (cc.Common.CheckAllLoad(this.listProLoad) == true) {
-            this.UpdateGuankaLevel(cc.GameManager.gameLevel);
+            this.UpdateGuankaLevel(cc.GameManager.gameLevel); 
         }
     },
 
+    GetGuankaTotal: function () {
+        // var count = this.ParseGuanka();
+        var count = 0;
+        if (this.listShape != null) {
+            count = GameShapeColor.GUANKA_NUM_PER_ITEM * this.listShape.length;
+        }
+        return count;
+    },
 
     ParseGuanka: function () {
         cc.log("ParseGuanka UIGameShapeColor");
