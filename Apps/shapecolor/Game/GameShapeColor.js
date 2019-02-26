@@ -402,10 +402,14 @@ var GameShapeColor = cc.Class({
         var scale = 1.0;
         var sprite = node.getComponent(cc.Sprite);
         var size = node.getContentSize();
+        //var size =cc.size(sprite.spriteFrame.getRect().width,sprite.spriteFrame.getRect().height) ;//node.getContentSize();
         var ratio = 0.7;
-        var scalex = rc.width * ratio / size.width;
-        var scaley = rc.height * ratio / size.height;
-        scale = Math.min(scalex, scaley);
+        if ((size.width != 0) && (size.height != 0)) {
+            var scalex = rc.width * ratio / size.width;
+            var scaley = rc.height * ratio / size.height;
+            scale = Math.min(scalex, scaley);
+        }
+        cc.log("node scale = " + scale + " size=" + size + " rc=" + rc);
         return scale;
     },
     GetRectDisplay: function () {
@@ -791,7 +795,7 @@ var GameShapeColor = cc.Class({
                 // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
                 //var collider = node.addComponent(cc.PolygonCollider);
                 var collider = sprite.node.addComponent(cc.PhysicsBoxCollider);
-                sprite.node.active = true;
+
             }
 
 
