@@ -22,27 +22,32 @@ var UITouchEvent = cc.Class({
     },
 
     Init: function () {
-       // cc.log("UITouchEvent Init");
+        // cc.log("UITouchEvent Init");
         this.node.on(cc.Node.EventType.TOUCH_START, function (event) {
-            var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
-            var posnode =this.node.convertToNodeSpace(pos);
-           // cc.log("UITouchEvent OnTouchDown:pos=" + pos+ " posnode="+posnode);
+            // var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
+            // var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角
+            // var posnodeAR = this.node.convertToNodeSpaceAR(pos);//坐标原点在node的锚点
+
+            // cc.log("UITouchEvent OnTouchDown:pos=" + pos+ " posnode="+posnode);
             if (this.callBackTouch != null) {
-                this.callBackTouch(this, UITouchEvent.TOUCH_DOWN,pos);
+                this.callBackTouch(this, UITouchEvent.TOUCH_DOWN, event);
             }
         }, this);
 
         this.node.on(cc.Node.EventType.TOUCH_MOVE, function (event) {
-            var pos = event.getLocation();
-            
+            // var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
+            // var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角
+            // var posnodeAR = this.node.convertToNodeSpaceAR(pos);//坐标原点在node的锚点
             if (this.callBackTouch != null) {
-                this.callBackTouch(this, UITouchEvent.TOUCH_MOVE,pos);
+                this.callBackTouch(this, UITouchEvent.TOUCH_MOVE, event);
             }
         }, this);
         this.node.on(cc.Node.EventType.TOUCH_END, function (event) {
-            var pos = event.getLocation();
+            // var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
+            // var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角
+            // var posnodeAR = this.node.convertToNodeSpaceAR(pos);//坐标原点在node的锚点
             if (this.callBackTouch != null) {
-                this.callBackTouch(this, UITouchEvent.TOUCH_UP,pos);
+                this.callBackTouch(this, UITouchEvent.TOUCH_UP, event);
             }
         }, this);
     },

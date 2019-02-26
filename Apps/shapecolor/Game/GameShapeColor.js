@@ -60,6 +60,14 @@ var GameShapeColor = cc.Class({
 
         //物理系统默认是关闭的，手动开启物理系统
         cc.director.getPhysicsManager().enabled = true;
+        this.is_debug = true;
+        if (this.is_debug) { // 开启调试信息
+            var Bits = cc.PhysicsManager.DrawBits; // 这个是我们要显示的类型
+            cc.director.getPhysicsManager().debugDrawFlags = Bits.e_jointBit | Bits.e_shapeBit;
+        }
+        else { // 关闭调试信息
+            cc.director.getPhysicsManager().debugDrawFlags = 0;
+        }
 
         this.initShaders();
         var ev = this.node.addComponent(cc.UITouchEvent);
@@ -171,7 +179,8 @@ var GameShapeColor = cc.Class({
 
     OnTouchDown: function (pos) {
         this.isItemHasSel = false;
-        var posnew = new cc.Vec2(pos.x - this.node.getContentSize().width / 2, pos.y - this.node.getContentSize().height / 2);
+        //var posnew = new cc.Vec2(pos.x - this.node.getContentSize().width / 2, pos.y - this.node.getContentSize().height / 2);
+        var posnew = pos;
         this.ptDown = posnew;
 
         //Vector3 posword = mainCam.ScreenToWorldPoint(pos);
@@ -220,7 +229,8 @@ var GameShapeColor = cc.Class({
             cc.log("onTouchMove ng 1");
             return;
         }
-        var posnew = new cc.Vec2(pos.x - this.node.getContentSize().width / 2, pos.y - this.node.getContentSize().height / 2);
+        //var posnew = new cc.Vec2(pos.x - this.node.getContentSize().width / 2, pos.y - this.node.getContentSize().height / 2);
+        var posnew = pos;
         var isLock = this.IsItemLock(this.itemInfoSel);
         if (isLock) {
             // cc.log("onTouchMove ng 2");
@@ -237,6 +247,7 @@ var GameShapeColor = cc.Class({
         var body = this.itemInfoSel.node.getComponent(cc.RigidBody);
         if (body != null) {
             // body.MovePosition(posword);
+            body.syncPosition(false);
         }
 
         //尾巴添加节点
@@ -346,18 +357,23 @@ var GameShapeColor = cc.Class({
         // itemInfoSel.node.transform.position = pos;
     },
 
-    OnUITouchEvent: function (ev, status, pos) {
+    OnUITouchEvent: function (ev, status, event) {
+
+        var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
+        var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角
+        var posnodeAR = this.node.convertToNodeSpaceAR(pos);//坐标原点在node的锚点
+
         switch (status) {
             case cc.UITouchEvent.TOUCH_DOWN:
-                this.OnTouchDown(pos);
+                this.OnTouchDown(posnodeAR);
                 break;
 
             case cc.UITouchEvent.TOUCH_MOVE:
-                this.OnTouchMove(pos);
+                this.OnTouchMove(posnodeAR);
                 break;
 
             case cc.UITouchEvent.TOUCH_UP:
-                this.OnTouchUp(pos);
+                this.OnTouchUp(posnodeAR);
                 break;
         }
     },
@@ -785,6 +801,8 @@ var GameShapeColor = cc.Class({
                 collider.size = cc.size(tex.width, tex.height);
                 cc.log("collider=" + collider.size);
             }
+
+            // sprite.node.zIndex = 10;
 
             this.LayOut();
             // }.bind(this).bind(sprite));
