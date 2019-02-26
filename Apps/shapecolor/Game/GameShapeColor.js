@@ -60,7 +60,7 @@ var GameShapeColor = cc.Class({
 
         //物理系统默认是关闭的，手动开启物理系统
         cc.director.getPhysicsManager().enabled = true;
-        this.is_debug = true;
+        this.is_debug = false;
         if (this.is_debug) { // 开启调试信息
             var Bits = cc.PhysicsManager.DrawBits; // 这个是我们要显示的类型
             cc.director.getPhysicsManager().debugDrawFlags = Bits.e_jointBit | Bits.e_shapeBit;
@@ -240,14 +240,20 @@ var GameShapeColor = cc.Class({
 
         var ptStep = new cc.Vec2(posnew.x - this.ptDown.x, posnew.y - this.ptDown.y);
         var positemNew = new cc.Vec2(this.posItemDown.x + ptStep.x, this.posItemDown.y + ptStep.y);
-        this.itemInfoSel.node.setPosition(positemNew);
+        //this.itemInfoSel.node.setPosition(positemNew);
         // cc.log("OnTouchMove positemNew=" + positemNew + " ptStep=" + ptStep);
         //将选中item暂时置顶
         //posword.z = this.itemPosZ - 2; 
         var body = this.itemInfoSel.node.getComponent(cc.RigidBody);
         if (body != null) {
             // body.MovePosition(posword);
-            body.syncPosition(false);
+            // body.syncPosition(false);
+            //MouseJoint
+            //刚体的移动需要用鼠标关节,不能用node.setPosition
+            var mj = this.itemInfoSel.node.getComponent(cc.MouseJoint);
+            if (mj != null) {
+                mj.target = positemNew;
+            }
         }
 
         //尾巴添加节点
@@ -795,7 +801,7 @@ var GameShapeColor = cc.Class({
                 // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
                 //var collider = node.addComponent(cc.PolygonCollider);
                 var collider = sprite.node.addComponent(cc.PhysicsBoxCollider);
-
+                var mj = sprite.node.addComponent(cc.MouseJoint);
             }
 
 
