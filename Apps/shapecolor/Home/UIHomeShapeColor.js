@@ -40,6 +40,18 @@ cc.Class({
         //var ev = this.node.addComponent(cc.UITouchEvent);
 
         cc.AudioPlay.main().PlayFile("App/Audio/BtnClick");
+
+        cc.loader.load({ url: 'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=你要转换的文字 ', type: 'mp3' }, function (err, data) {
+            // cc.log('Should load a texture from RESTful API by specify the type: ' + (tex instanceof cc.Texture2D));
+            cc.log("cc.loader.load");
+            //cc.AudioPlay.main().PlayAudioClip(audio);
+            var no = new cc.Node();
+            var component = no.addComponent(cc.AudioSource);
+            component.clip = data;
+            component.play();
+            // self.node.addChild(no);
+
+        }.bind(this));
     },
 
     LayOut: function () {

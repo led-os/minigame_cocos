@@ -54,6 +54,7 @@ var GameShapeColor = cc.Class({
         itemInfoSel: cc.ShapeColorItemInfo,
 
     },
+    //百度tts:  http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=你要转换的文字 
     onLoad: function () {
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
