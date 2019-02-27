@@ -5,7 +5,8 @@ var UIBoard = require("UIBoard");
 var UIView = require("UIView");
 const renderEngine = cc.renderer.renderEngine;
 const renderer = renderEngine.renderer;
-
+//weixin小程序appid: wxc6734d6401f5a3db
+//cocos: wx6ac3f5090a6b99c5
 var GameShapeColor = cc.Class({
     extends: UIView,
     statics: {
