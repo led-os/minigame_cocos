@@ -174,6 +174,19 @@ var Common = cc.Class({
             node.setPosition(pt);
         },
 
+        //物理系统默认是关闭的，手动开启物理系统
+        EnablePhysic: function (isEnable, isDebug) {
+            cc.director.getPhysicsManager().enabled = isEnable;
+            //this.is_debug = true;
+            if (isDebug == true) { // 开启调试信息
+                var Bits = cc.PhysicsManager.DrawBits; // 这个是我们要显示的类型
+                cc.director.getPhysicsManager().debugDrawFlags = Bits.e_jointBit | Bits.e_shapeBit;
+            }
+            else { // 关闭调试信息
+                cc.director.getPhysicsManager().debugDrawFlags = 0;
+            }
+        },
+
         _appSceneBase: null,
         appSceneBase: {
             get: function () {

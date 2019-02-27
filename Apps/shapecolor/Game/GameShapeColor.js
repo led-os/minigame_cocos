@@ -1,6 +1,6 @@
 var UIViewController = require("UIViewController");
 // var Common = require("Common");
-//var Config = require("Config"); 
+var UIBoard = require("UIBoard"); 
 //var ShapeColorItemInfo = require("ShapeColorItemInfo");
 var UIView = require("UIView");
 const renderEngine = cc.renderer.renderEngine;
@@ -58,17 +58,6 @@ var GameShapeColor = cc.Class({
     onLoad: function () {
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
-
-        //物理系统默认是关闭的，手动开启物理系统
-        cc.director.getPhysicsManager().enabled = true;
-        this.is_debug = true;
-        if (this.is_debug) { // 开启调试信息
-            var Bits = cc.PhysicsManager.DrawBits; // 这个是我们要显示的类型
-            cc.director.getPhysicsManager().debugDrawFlags = Bits.e_jointBit | Bits.e_shapeBit;
-        }
-        else { // 关闭调试信息
-            cc.director.getPhysicsManager().debugDrawFlags = 0;
-        }
 
         this.initShaders();
         var ev = this.node.addComponent(cc.UITouchEvent);
@@ -423,7 +412,7 @@ var GameShapeColor = cc.Class({
         var x, y, w, h;
         var sizeCanvas = cc.Common.appSceneMain.sizeCanvas;
         var ratio = 0.9;
-        w = sizeCanvas.width * ratio;
+        w = (sizeCanvas.width-UIBoard.LINE_WIDTH*2) * ratio;
         h = (sizeCanvas.height - this.height_topbar_canvas - this.height_adbanner_canvas);
         var rc = new cc.Rect(-w / 2, -sizeCanvas.height / 2 + this.height_adbanner_canvas, w, h);
         return rc;
