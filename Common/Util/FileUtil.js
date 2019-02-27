@@ -80,6 +80,32 @@ strVariable.substring(start，end )：返回位于String对象中指定位置的
             //     Directory.CreateDirectory(dir);
             // }
         },
+
+
+        SaveFile: function (data, filepath) {
+            if (cc.sys.isNative) {
+                if (jsb.fileUtils.writeDataToFile(new Uint8Array(data), filepath)) {
+                    cc.log(' write file succeed.');
+
+                } else {
+                    cc.log(' write file failed.');
+                }
+            }
+
+        },
+
+
+        isFileExist: function (filepath) {
+            var ret = false;
+            if (cc.sys.isNative) {
+                ret = jsb.fileUtils.isFileExist(filepath);
+            }
+            return ret;
+        },
+
+
+
+
     },
 });
 

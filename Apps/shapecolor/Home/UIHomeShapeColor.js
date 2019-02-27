@@ -39,20 +39,69 @@ cc.Class({
         this.UnifyButtonSprite(this.btnBoard);
         //var ev = this.node.addComponent(cc.UITouchEvent);
 
-        cc.AudioPlay.main().PlayFile("App/Audio/BtnClick");
+        // cc.AudioPlay.main().PlayFile("App/Audio/BtnClick");
+        // cc.loader.load(cc.url.raw('resources/App/Audio/BtnClick.mp3'), function (err, audio) {
+        //     cc.AudioPlay.main().PlayAudioClip(audio);
+        // }.bind(this));
 
-        cc.loader.load({ url: 'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=你要转换的文字 ', type: 'mp3' }, function (err, data) {
-            // cc.log('Should load a texture from RESTful API by specify the type: ' + (tex instanceof cc.Texture2D));
-            cc.log("cc.loader.load");
-            //cc.AudioPlay.main().PlayAudioClip(audio);
-            var no = new cc.Node();
-            var component = no.addComponent(cc.AudioSource);
-            component.clip = data;
-            component.play();
-            // self.node.addChild(no);
+        // cc.loader.load({ url: 'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=你要转换的文字 ', type: 'mp3' }, function (err, data) {
+        //     // cc.log('Should load a texture from RESTful API by specify the type: ' + (tex instanceof cc.Texture2D));
 
-        }.bind(this));
+        //     if (err) {
+        //         cc.log("cc.loader.load err start");
+        //         cc.log(err.message || err);
+        //         cc.log("cc.loader.load err end");
+        //     } else {
+        //         cc.log("cc.loader.load");
+        //         //cc.AudioPlay.main().PlayAudioClip(audio);
+        //         var no = new cc.Node();
+        //         var component = no.addComponent(cc.AudioSource);
+        //         component.clip = data;
+        //         component.play();
+        //         // self.node.addChild(no);
+        //     }
+
+
+
+        // }.bind(this));
+
+        if (cc.sys.isNative) {
+            var path = jsb.fileUtils.getWritablePath() + "1.mp3";
+            if (!cc.FileUtil.isFileExist(path)) {
+                var url = "http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=你要转换的文字";
+                cc.AudioPlay.main().PlayUrl(url);
+            } else {
+                cc.AudioPlay.main().PlayRawFile(path);
+            }
+        }
+
+
+        // {
+
+
+        //     var xhr = new XMLHttpRequest();
+        //     xhr.onreadystatechange = function () {
+        //         cc.log("xhr.readyState  " + xhr.readyState);
+        //         cc.log("xhr.status  " + xhr.status);
+        //         if (xhr.readyState === 4) {
+        //             if (xhr.status === 200) {
+        //                 //responseType一定要在外面设置
+        //                 // xhr.responseType = 'arraybuffer'; 
+        //                 this.saveFile(xhr.response, path);
+        //             } else {
+
+        //             }
+        //         }
+        //     }.bind(this);
+        //     //responseType一定要在外面设置
+        //     xhr.responseType = 'arraybuffer';
+        //     xhr.open("GET", url, true);
+        //     xhr.send();
+        // }
     },
+
+
+
 
     LayOut: function () {
     },
