@@ -1,4 +1,4 @@
-﻿var http = require("http.js")
+﻿//var http = require("http.js")
 var AudioPlay = cc.Class({
     extends: cc.Object,
     statics: {
@@ -38,7 +38,10 @@ var AudioPlay = cc.Class({
 
     //网络文件
     PlayUrl: function (url) {
-        http.get(url, function (err, data) {
+        var httpReq = new cc.HttpRequest();
+        httpReq.get(url, function (err, data)
+        // http.get(url, function (err, data)
+        {
             if (err) {
                 console.log(err);
                 return;

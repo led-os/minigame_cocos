@@ -36,7 +36,7 @@ cc.Class({
         var name = cc.Language.main().GetString("APP_NAME");
         this.textName.string = name;
         if (cc.sys.isNative) {
-            // cc.AudioPlay.main().PlayUrl(cc.TtsUtil.GetTextUrl(name));
+            cc.AudioPlay.main().PlayUrl(cc.TtsUtil.GetTextUrl(name));
         }
         var strImage = AppRes.IMAGE_HOME_BG;
         cc.TextureCache.main.Load(strImage, function (err, tex) {
