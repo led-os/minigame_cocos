@@ -61,7 +61,7 @@ var GameShapeColor = cc.Class({
 
         //物理系统默认是关闭的，手动开启物理系统
         cc.director.getPhysicsManager().enabled = true;
-        this.is_debug = false;
+        this.is_debug = true;
         if (this.is_debug) { // 开启调试信息
             var Bits = cc.PhysicsManager.DrawBits; // 这个是我们要显示的类型
             cc.director.getPhysicsManager().debugDrawFlags = Bits.e_jointBit | Bits.e_shapeBit;

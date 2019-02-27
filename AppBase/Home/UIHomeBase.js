@@ -29,12 +29,15 @@ cc.Class({
 
     onLoad: function () {
         this._super();
-       // this.node.setContentSize(Common.appSceneMain.sizeCanvas); 
-       this.node.setContentSize(this.node.parent.getContentSize());
+        // this.node.setContentSize(Common.appSceneMain.sizeCanvas); 
+        this.node.setContentSize(this.node.parent.getContentSize());
 
-        var x, y, w, h;  
-        this.textName.string = cc.Language.main().GetString("APP_NAME");
-
+        var x, y, w, h;
+        var name = cc.Language.main().GetString("APP_NAME");
+        this.textName.string = name;
+        if (cc.sys.isNative) {
+            cc.AudioPlay.main().PlayUrl(cc.TtsUtil.GetTextUrl(name));
+        }
         var strImage = AppRes.IMAGE_HOME_BG;
         cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
@@ -57,13 +60,13 @@ cc.Class({
             this.imageNameBg.spriteFrame = new cc.SpriteFrame(tex);
             this.LayOut();
         }.bind(this));
- 
-         
-     
+
+
+
     },
 
     LayOut: function () {
-      //  LayoutScale.ScaleImage(this.imageBg,true);
+        //  LayoutScale.ScaleImage(this.imageBg,true);
     },
 
 });

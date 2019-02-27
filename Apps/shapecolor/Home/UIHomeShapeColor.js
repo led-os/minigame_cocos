@@ -65,15 +65,7 @@ cc.Class({
 
         // }.bind(this));
 
-        if (cc.sys.isNative) {
-            var path = jsb.fileUtils.getWritablePath() + "1.mp3";
-            if (!cc.FileUtil.isFileExist(path)) {
-                var url = "http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=你要转换的文字";
-                cc.AudioPlay.main().PlayUrl(url);
-            } else {
-                cc.AudioPlay.main().PlayRawFile(path);
-            }
-        }
+     
 
 
         // {

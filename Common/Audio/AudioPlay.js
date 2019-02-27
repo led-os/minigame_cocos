@@ -45,10 +45,12 @@ var AudioPlay = cc.Class({
             }
             //console.log(data);
             if (cc.sys.isNative) {
-
+                //https://cocos2d-x.org/reference/html5-js/V3.0/symbols/jsb.fileUtils.html
+                var path = jsb.fileUtils.getWritablePath() + "tmp_audio.mp3";
                 cc.log('PATH: ' + path);
                 cc.FileUtil.SaveFile(data, path);
                 this.PlayRawFile(path);
+                //jsb.fileUtils.removeFile(path);
             }
         }.bind(this));
     },
