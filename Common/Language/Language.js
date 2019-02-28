@@ -11,6 +11,7 @@ var Language = cc.Class({
         // 声明静态变量
         LANGUAGE_COMMON: "language_common",
         LANGUAGE_MAIN: "language_main",
+        LANGUAGE_GAME: "language_game",
         callbackFinish: null,
         listLoad: [],
         loadInfo: cc.LoadItemInfo,
@@ -38,6 +39,13 @@ var Language = cc.Class({
             info.isLoad = false;
             Language.listLoad.push(info);
         }
+
+        {
+            var info = new cc.LoadItemInfo();
+            info.id = Language.LANGUAGE_GAME;
+            info.isLoad = false;
+            Language.listLoad.push(info);
+        }
     },
 
     // * completeCallback: (Error, Language) => void)
@@ -59,6 +67,10 @@ var Language = cc.Class({
             if (this == Language._main) {
                 id = Language.LANGUAGE_MAIN;
             }
+            if (this == Language._game) {
+                id = Language.LANGUAGE_GAME;
+            }
+
             // cc.log("id=" + id);
             var info = this.GetLoadInfoById(id);
             if (info != null) {
@@ -167,6 +179,11 @@ Language.main = function () {
         Language._common = new Language();
         Language._common.Init(fileName);
 
+        //game
+        fileName = cc.Common.GAME_RES_DIR + "/language/language.csv";
+        Language._game = new Language();
+        Language._game.Init(fileName);
+        Language._game.SetLanguage(cc.sys.LANGUAGE_CHINESE);
 
     } else {
         cc.log("Language _main is not null");
@@ -177,16 +194,9 @@ Language.main = function () {
 
 
 Language._game = null;
-Language.game = function () {
-    if (!Language._game) {
-        cc.log("Language _game is null");
-        Language._game = new Language();
-        // Language._game.Init();
-    } else {
-        cc.log("Language _game is not null");
-    }
+Language.game = function () { 
     return Language._game;
 }
 
-cc.Language = module.export = Language; 
+cc.Language = module.export = Language;
 

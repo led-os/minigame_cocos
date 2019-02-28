@@ -35,9 +35,8 @@ cc.Class({
         var x, y, w, h;
         var name = cc.Language.main().GetString("APP_NAME");
         this.textName.string = name;
-        if (cc.sys.isNative) {
-            cc.AudioPlay.main().PlayUrl(cc.TtsUtil.GetTextUrl(name));
-        }
+        cc.Tts.Speak(name,true);
+
         var strImage = AppRes.IMAGE_HOME_BG;
         cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')

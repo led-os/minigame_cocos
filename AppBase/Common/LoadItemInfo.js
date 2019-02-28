@@ -9,6 +9,7 @@ var LoadItemInfo =cc.Class({
         // 声明静态变量
         CONFIG: "config",
         LANGUAGE: "language",
+        LANGUAGE_GAME: "language_game",
         GAME: "game",
     },
 }); 

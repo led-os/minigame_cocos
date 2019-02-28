@@ -33,13 +33,14 @@ var AudioPlay = cc.Class({
 
     //播放resource资源以外的本地文件
     PlayRawFile: function (file) {
+        cc.audioEngine.uncacheAll();
         cc.audioEngine.playEffect(file, false);
     },
 
     //网络文件
     PlayUrl: function (url) {
         var httpReq = new cc.HttpRequest();
-        httpReq.get(url, function (err, data)
+        httpReq.Get(url, function (err, data)
         // http.get(url, function (err, data)
         {
             if (err) {

@@ -71,7 +71,7 @@ var AppSceneBase = cc.Class({
         // }else{
         //     cc.log(" AppSceneBase.main onLoad size is not null");
         // }
-        
+
         cc.Common.appSceneMain = this;
         this.isHasRunApp = false;
         this.InitValue();
@@ -144,7 +144,6 @@ var AppSceneBase = cc.Class({
             var lan = cc.Language.main();
             lan.SetLoadFinishCallBack(this.AppPreLoadDidFinish.bind(this), info);
         }
-
 
     },
     CheckAllLoad: function () {

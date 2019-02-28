@@ -33,8 +33,7 @@ var UIGameShapeColor = cc.Class({
     },
     onLoad: function () {
         this._super();
-        this.UnifyButtonSprite(this.btnBack);
-
+        this.UnifyButtonSprite(this.btnBack); 
         this.LoadGamePrefab();
         //var ev = this.node.addComponent(cc.UITouchEvent);
         // ev.callBackTouch = this.OnUITouchEvent;
@@ -51,6 +50,7 @@ var UIGameShapeColor = cc.Class({
 
     // Init: function () {
     // },
+
 
     CreateGame: function () {
         var node = cc.instantiate(this.gamePrefab);
@@ -87,7 +87,7 @@ var UIGameShapeColor = cc.Class({
     CheckAllLoad: function () {
         cc.log("UIGameShapeColor::CheckAllLoad");
         if (cc.Common.CheckAllLoad(this.listProLoad) == true) {
-            this.UpdateGuankaLevel(cc.GameManager.gameLevel); 
+            this.UpdateGuankaLevel(cc.GameManager.gameLevel);
         }
     },
 

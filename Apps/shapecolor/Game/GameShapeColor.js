@@ -1,6 +1,6 @@
 var UIViewController = require("UIViewController");
 // var Common = require("Common");
-var UIBoard = require("UIBoard"); 
+var UIBoard = require("UIBoard");
 //var ShapeColorItemInfo = require("ShapeColorItemInfo");
 var UIView = require("UIView");
 const renderEngine = cc.renderer.renderEngine;
@@ -304,7 +304,7 @@ var GameShapeColor = cc.Class({
 
                 this.itemInfoSel.node.setPosition(info.node.getPosition());
                 //RunDisapperAnimation(this.itemInfoSel);
-                // PlayAudioItemFinish(itemInfoSel);
+                this.PlayAudioItemFinish(this.itemInfoSel);
 
 
                 //记录游戏开始进行中
@@ -376,6 +376,38 @@ var GameShapeColor = cc.Class({
     },
 
     //ShapeColorItemInfo
+    PlayAudioItemFinish: function (info) { 
+        // GameObject audioPlayer = GameObject.Find("AudioPlayer");
+        // if (audioPlayer != null) {
+        //     AudioSource audioSource = audioPlayer.GetComponent<AudioSource>();
+        //     audioSource.PlayOneShot(audioClipItemFinish);
+        // }
+
+        //speak
+        var str = this.StringOfItem(info);
+        cc.Tts.Speak(str, true);
+
+    },
+
+      LanguageKeyOfShape: function( info)
+    {
+        var key = info.id;
+        if (cc.Config.main().appKeyName == cc.AppType.SHAPECOLOR)
+        {
+            key = "SHAPE_TITLE_" + info.id;
+        }
+        return key;
+    },
+
+    StringOfItem: function (info) {
+        var str = "";
+        var strColor = cc.Language.game().GetString("COLOR_TITLE_" + info.colorid);
+        var strShape =  cc.Language.game().GetString(this.LanguageKeyOfShape(info));
+        var str = strColor + strShape; 
+        return str;
+    },
+
+    //ShapeColorItemInfo
     GetItemInfoShapeColor: function (idx, list) {
         if (list == null) {
             return null;
@@ -413,7 +445,7 @@ var GameShapeColor = cc.Class({
         var x, y, w, h;
         var sizeCanvas = cc.Common.appSceneMain.sizeCanvas;
         var ratio = 0.9;
-        w = (sizeCanvas.width-UIBoard.LINE_WIDTH*2) * ratio;
+        w = (sizeCanvas.width - UIBoard.LINE_WIDTH * 2) * ratio;
         h = (sizeCanvas.height - this.height_topbar_canvas - this.height_adbanner_canvas);
         var rc = new cc.Rect(-w / 2, -sizeCanvas.height / 2 + this.height_adbanner_canvas, w, h);
         return rc;

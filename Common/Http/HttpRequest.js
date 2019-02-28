@@ -10,11 +10,7 @@ var HttpRequest = cc.Class({
 
     },
 
-    onLoad: function () {
-
-    },
-
-    get: function (url, cb) {
+    Get: function (url, cb) {
         //var xhr = cc.loader.getXMLHttpRequest();
         var xhr = new XMLHttpRequest();
         xhr.timeout = 5000;
