@@ -42,6 +42,7 @@ cc.Class({
         // this.transform.parent = obj.transform;
         // this.transform.localScale = new Vector3(1f, 1f, 1f);
         // this.transform.localPosition = new Vector3(0f, 0f, 0f);
+        this.node.parent = node;
     },
 
     LayOut: function () {

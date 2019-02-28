@@ -145,6 +145,8 @@ var AppSceneBase = cc.Class({
             lan.SetLoadFinishCallBack(this.AppPreLoadDidFinish.bind(this), info);
         }
 
+        //UIViewAlert
+        var vm = cc.ViewAlertManager.main();
     },
     CheckAllLoad: function () {
         var isLoadAll = true;

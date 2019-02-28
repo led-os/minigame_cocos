@@ -23,6 +23,9 @@ var GameShapeColor = cc.Class({
 
         TAG_ITEM_LOCK: -1,
         TAG_ITEM_UNLOCK: 0,
+
+        isShaderInited: false,
+
     },
 
     properties: {
@@ -67,17 +70,13 @@ var GameShapeColor = cc.Class({
     },
 
     initShaders() {
+        if (GameShapeColor.isShaderInited) {
+            return;
+        }
         require("SpriteHook").init();
         var ShaderLib = require("ShaderLib");
-        ShaderLib.addShader(require("OverlayShader"));
-        ShaderLib.addShader(require("RainShader"));
-        ShaderLib.addShader(require("WaveShader"));
-        ShaderLib.addShader(require("GaussBlurs"));
-        ShaderLib.addShader(require("Outline"));
-        ShaderLib.addShader(require("Glowing"));
-        ShaderLib.addShader(require("Water"));
-        ShaderLib.addShader(require("Mosaic"));
-        ShaderLib.addShader(require("RadialBlur"));
+        ShaderLib.addShader(require("ShaderShapeColor"));
+        GameShapeColor.isShaderInited = true;
         // TODO: 加更多Shader
     },
     Init: function () {
@@ -306,6 +305,20 @@ var GameShapeColor = cc.Class({
                 //RunDisapperAnimation(this.itemInfoSel);
                 this.PlayAudioItemFinish(this.itemInfoSel);
 
+                var title = cc.Language.main().GetString("STR_UIVIEWALERT_TITLE_GAME_FINISH");
+                var msg = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_GAME_FINISH");
+                var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_GAME_FINISH");
+                var no = cc.Language.main().GetString("STR_UIVIEWALERT_NO_GAME_FINISH");
+
+                cc.ViewAlertManager.main().ShowFull(title, msg, yes, no, true, "STR_KEYNAME_VIEWALERT_GAME_FINISH",
+                    function (alert, isYes) {
+                        if (isYes) {
+
+                        } else {
+
+                        }
+                    }.bind(this)
+                );
 
                 //记录游戏开始进行中
                 var level = cc.GameManager.gameLevel;
@@ -376,7 +389,7 @@ var GameShapeColor = cc.Class({
     },
 
     //ShapeColorItemInfo
-    PlayAudioItemFinish: function (info) { 
+    PlayAudioItemFinish: function (info) {
         // GameObject audioPlayer = GameObject.Find("AudioPlayer");
         // if (audioPlayer != null) {
         //     AudioSource audioSource = audioPlayer.GetComponent<AudioSource>();
@@ -389,11 +402,9 @@ var GameShapeColor = cc.Class({
 
     },
 
-      LanguageKeyOfShape: function( info)
-    {
+    LanguageKeyOfShape: function (info) {
         var key = info.id;
-        if (cc.Config.main().appKeyName == cc.AppType.SHAPECOLOR)
-        {
+        if (cc.Config.main().appKeyName == cc.AppType.SHAPECOLOR) {
             key = "SHAPE_TITLE_" + info.id;
         }
         return key;
@@ -402,8 +413,8 @@ var GameShapeColor = cc.Class({
     StringOfItem: function (info) {
         var str = "";
         var strColor = cc.Language.game().GetString("COLOR_TITLE_" + info.colorid);
-        var strShape =  cc.Language.game().GetString(this.LanguageKeyOfShape(info));
-        var str = strColor + strShape; 
+        var strShape = cc.Language.game().GetString(this.LanguageKeyOfShape(info));
+        var str = strColor + strShape;
         return str;
     },
 
@@ -859,7 +870,7 @@ var GameShapeColor = cc.Class({
         }
         if (is_add_shader == true) {
             {
-                const name = 'Outline';
+                const name = 'ShaderShapeColor';
                 let mat = sprite.getMaterial(name);
                 if (!mat) {
                     const CustomMaterial = require("CustomMaterial");
