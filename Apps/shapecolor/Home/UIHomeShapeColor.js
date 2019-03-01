@@ -39,6 +39,11 @@ cc.Class({
         this.UnifyButtonSprite(this.btnColor);
         this.UnifyButtonSprite(this.btnShapeColor);
         this.UnifyButtonSprite(this.btnBoard);
+
+        if (cc.Common.isAndroid) {
+
+        }
+
         //var ev = this.node.addComponent(cc.UITouchEvent);
 
         // cc.AudioPlay.main().PlayFile("App/Audio/BtnClick");

@@ -54,17 +54,13 @@ var UILearnProgress = cc.Class({
         return array;
     },
     InitList: function () {
-        //     var rctran = this.tableView.node.getComponent(RectTransform);
-        //     var sizeParent = cc.size(rctran.width,rctran.height);
-        //     this.tableView.node.setContentSize(sizeParent);
-        //    // this.tableView.content.node.setContentSize(sizeParent);
 
-
-        //    this.tableView.UpdateSize(sizeParent);
-        cc.log('UIPlace:InitList');
-
+        this.oneCellNum = 2;
+        if (!cc.Device.main.isLandscape) {
+            this.oneCellNum = this.oneCellNum / 2;
+        }
         this.tableView.oneCellNum = this.oneCellNum;
-        this.tableView.cellHeight = 512;
+        this.tableView.cellHeight = 256;
         this.tableView.uiViewParent = this;
         var data = this._getdata(100);
         this.tableView.initTableView(data.length, { array: data, target: this });

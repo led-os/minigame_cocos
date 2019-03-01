@@ -23,6 +23,7 @@ var Common = cc.Class({
 
         isAndroid: {
             get: function () {
+                cc.log("isAndroid");
                 return (cc.sys.platform == cc.sys.OS_ANDROID) ? true : false;
             },
             // set: function (value) {
