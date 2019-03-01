@@ -1,8 +1,8 @@
 var UIView = require("UIView");
 var UIPlaceBase = require("UIPlaceBase");
-// var Common = require("Common");
-//var RectTransform = require("RectTransform");
-//var Language = require("Language");
+var UILearnProgressCellItem = require("UILearnProgressCellItem");
+var UIGameShapeColor = require("UIGameShapeColor");
+var GameViewController = require("GameViewController");
 //var GameManager = require("GameManager");
 
 var UILearnProgress = cc.Class({
@@ -38,34 +38,42 @@ var UILearnProgress = cc.Class({
         this._super();
         this.UnifyButtonSprite(this.btnBack);
         this.textTitle.string = cc.Language.main().GetString("STR_TITLE_LEARN_PROGRESS");
-        this.InitList();
+        this.OnBtnClickShape();
     },
 
     start: function () {
 
     },
-    _getdata: function (num) {
-        var array = [];
-        for (var i = 0; i < num; ++i) {
-            var obj = {};
-            obj.name = 'a' + i;
-            array.push(obj);
-        }
-        return array;
-    },
-    InitList: function () {
 
+    UpdateList: function (type) {
+        this.itemType = type;
+        var game = GameViewController.main().gameBase;
+        if (type == UILearnProgressCellItem.ITEM_TYPE_SHAPE) {
+            this.listItem = game.listShape;
+        }
+        if (type == UILearnProgressCellItem.ITEM_TYPE_COLOR) {
+            this.listItem = game.listColor;
+        }
+        // this.listItem = game.listShape;
+
+        // totalItem = listItem.Count;
+        // numRows = totalItem / oneCellNum;
+        // if (totalItem % oneCellNum != 0) {
+        //     numRows++;
+        // }
+
+        // tableView.ReloadData();
         this.oneCellNum = 2;
         if (!cc.Device.main.isLandscape) {
             //  this.oneCellNum = this.oneCellNum / 2;
         }
+
+        cc.log("this.listShape=" + game.listGuanka.length);
+
         this.tableView.oneCellNum = this.oneCellNum;
         this.tableView.cellHeight = 256;
         this.tableView.uiViewParent = this;
-        var data = this._getdata(100);
-        this.tableView.initTableView(data.length, { array: data, target: this });
-        // this.tableView.getComponent(cc.tableView).initTableView(data.length, { array: data, target: this });
-
+        this.tableView.initTableView(this.listItem.length, { array: this.listItem, target: this });
 
     },
 
@@ -77,6 +85,39 @@ var UILearnProgress = cc.Class({
             }
         }
     },
+
+    OnBtnClickShape: function () {
+        // {
+        //     Transform tr = btnShape.transform.Find("Text");
+        //     Text btnText = tr.GetComponent<Text>();
+        //     btnText.color = colorSel;
+        // }
+        // {
+        //     Transform tr = btnColor.transform.Find("Text");
+        //     Text btnText = tr.GetComponent<Text>();
+        //     btnText.color = colorUnSel;
+        // }
+
+
+        this.UpdateList(UILearnProgressCellItem.ITEM_TYPE_SHAPE);
+    },
+
+
+
+    OnBtnClickColor: function () {
+        // {
+        //     Transform tr = btnColor.transform.Find("Text");
+        //     Text btnText = tr.GetComponent<Text>();
+        //     btnText.color = colorSel;
+        // }
+        // {
+        //     Transform tr = btnShape.transform.Find("Text");
+        //     Text btnText = tr.GetComponent<Text>();
+        //     btnText.color = colorUnSel;
+        // }
+        this.UpdateList(UILearnProgressCellItem.ITEM_TYPE_COLOR);
+    }
+
 
 });
 

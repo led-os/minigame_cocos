@@ -39,7 +39,8 @@ cc.Class({
         this.UnifyButtonSprite(this.btnColor);
         this.UnifyButtonSprite(this.btnShapeColor);
         this.UnifyButtonSprite(this.btnBoard);
-
+        cc.GameManager.main().ParseGuanka();
+        
         if (cc.Common.isAndroid) {
 
         }

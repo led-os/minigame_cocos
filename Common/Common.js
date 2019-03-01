@@ -188,6 +188,18 @@ var Common = cc.Class({
             }
         },
 
+        GetIntOfKey: function (key, default_value) {
+            var v = cc.sys.localStorage.getItem(key);
+            if (v == null) {
+                return default_value;
+            }
+            var v_int = parseInt(v);
+            return v_int;
+        },
+        SetIntOfKey: function (key, value) {
+            var str = value.toString();
+            cc.sys.localStorage.setItem(key, str);
+        },
         appSceneMain: null,
 
         // _appSceneBase: null,

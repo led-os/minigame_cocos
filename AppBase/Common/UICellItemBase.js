@@ -5,8 +5,7 @@ var UICellItemBase = cc.Class({
     extends: require('viewCell'),
     properties: {
         index: 0,
-        onClickCallBack: null,
-        listItem: null,
+        onClickCallBack: null, 
     },
 
     onLoad: function () {

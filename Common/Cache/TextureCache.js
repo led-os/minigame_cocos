@@ -42,7 +42,7 @@ var TextureCache = cc.Class({
                     }
                     return ret;
                 }
-                cc.log("TextureCache loadRes ok");
+                // cc.log("TextureCache loadRes ok");
                 if (tex != null) {
                     this.dicItem.Add(key, tex);
                 }
@@ -62,5 +62,5 @@ var TextureCache = cc.Class({
 TextureCache.main = new TextureCache();
 
 
-cc.TextureCache = module.export = TextureCache; 
+cc.TextureCache = module.export = TextureCache;
 

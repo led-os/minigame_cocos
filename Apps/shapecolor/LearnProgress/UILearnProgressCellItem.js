@@ -43,8 +43,9 @@ var UILearnProgressCellItem = cc.Class({
             return;
         }
         this.textTitle.string = index;
-        if (this.listItem != null) {
-            var info = this.listItem[index];
+        var uiViewParent = this.GetUIViewParent();// 
+        if (uiViewParent.listItem != null) {
+            var info = uiViewParent.listItem[index];
             this.UpdateItem(info);
         }
 
@@ -76,8 +77,9 @@ var UILearnProgressCellItem = cc.Class({
                     }.bind(this));
 
                     var str = game.ShapeTitleOfItem(info);
-                    textTitle.string = str;
-                    textDetail.string = game.GameStatusOfShape(info);
+                    this.textTitle.string = str;
+                    this.textDetail.string = game.GameStatusOfShape(info);
+                    cc.log("textDetail="+this.textDetail.string);
                 }
 
                 break;
@@ -97,8 +99,8 @@ var UILearnProgressCellItem = cc.Class({
                     }.bind(this));
 
                     var str = game.ColorTitleOfItem(info);
-                    textTitle.string = str;
-                    textDetail.string = game.GameStatusOfColor(info);
+                    this.textTitle.string = str;
+                    this.textDetail.string = game.GameStatusOfColor(info);
 
                 }
                 break;

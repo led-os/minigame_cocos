@@ -29,7 +29,7 @@ var UIGameShapeColor = cc.Class({
             default: [],
             type: cc.Object
         },
-
+        isShowGame: false,
     },
     onLoad: function () {
         this._super();
@@ -52,20 +52,16 @@ var UIGameShapeColor = cc.Class({
         //zorder 让imageBg 显示在最底层，game显示在UI下面
         this.imageBg.node.zIndex = -20;
         this.game.node.zIndex = -10;
+        this.isShowGame = true;
+        this.ParseGuankaInternal();
+    },
 
-        //shape
-        {
-            this.StartParseShape();
+    LanguageKeyOfShape: function (info) {
+        var key = info.id;
+        if (cc.Config.main().appKeyName == cc.AppType.SHAPECOLOR) {
+            key = "SHAPE_TITLE_" + info.id;
         }
-        //color
-        {
-            this.StartParseColor();
-        }
-        //bglist
-        {
-            this.StartParseBgList();
-        }
-
+        return key;
     },
 
     StringOfGameStatus: function (status) {
@@ -85,17 +81,20 @@ var UIGameShapeColor = cc.Class({
         return str;
     },
     GameStatusOfShape: function (info) {
-        var status = cc.sys.localStorage.getItem(GameShapeColor.STR_KEY_GAME_STATUS_SHAPE + info.id);
+        var key = GameShapeColor.STR_KEY_GAME_STATUS_SHAPE + info.id; 
+        var status = cc.Common.GetIntOfKey(key,GameShapeColor.GAME_STATUS_UN_START);
+        //cc.log("status=" + status);
         var str = this.StringOfGameStatus(status);
         return str;
     },
-    GameStatusOfColor: function (info) {
-        var status = cc.sys.localStorage.getItem(GameShapeColor.STR_KEY_GAME_STATUS_COLOR + info.id);
+    GameStatusOfColor: function (info) { 
+        var key = GameShapeColor.STR_KEY_GAME_STATUS_COLOR + info.id; 
+        var status = cc.Common.GetIntOfKey(key,GameShapeColor.GAME_STATUS_UN_START);
         var str = this.StringOfGameStatus(status);
         return str;
     },
     ShapeTitleOfItem: function (info) {
-        var key = this.game.LanguageKeyOfShape(info);
+        var key = this.LanguageKeyOfShape(info);
         var str = cc.Language.game().GetString(key);
         return str;
     },
@@ -115,7 +114,10 @@ var UIGameShapeColor = cc.Class({
     },
 
     CheckAllLoad: function () {
-        cc.log("UIGameShapeColor::CheckAllLoad");
+        cc.log("UIGameShapeColor::CheckAllLoad this.isShowGame=" + this.isShowGame);
+        if (!this.isShowGame) {
+            return;
+        }
         if (cc.Common.CheckAllLoad(this.listProLoad) == true) {
             this.UpdateGuankaLevel(cc.GameManager.gameLevel);
         }
@@ -131,7 +133,26 @@ var UIGameShapeColor = cc.Class({
     },
 
     ParseGuanka: function () {
+        this.isShowGame = false;
+        this.ParseGuankaInternal();
+    },
+
+    ParseGuankaInternal: function () {
         cc.log("ParseGuanka UIGameShapeColor");
+        //清空
+        this.listProLoad.length = 0;
+        //shape
+        {
+            this.StartParseShape();
+        }
+        //color
+        {
+            this.StartParseColor();
+        }
+        //bglist
+        {
+            this.StartParseBgList();
+        }
         return 0;
     },
 
@@ -210,6 +231,7 @@ var UIGameShapeColor = cc.Class({
     },
     ParseShape: function (json) {
         if ((this.listShape != null) && (this.listShape.length != 0)) {
+            this.CheckAllLoad();
             return;
         }
         var idx = cc.GameManager.placeLevel;
@@ -238,11 +260,12 @@ var UIGameShapeColor = cc.Class({
             this.listShape.push(info);
             this.listGuanka.push(info);
         }
-
+        cc.log("config:this.listShape=" + this.listShape.length);
         this.CheckAllLoad();
     },
     ParseColor: function (json) {
         if ((this.listColor != null) && (this.listColor.length != 0)) {
+            this.CheckAllLoad();
             return;
         }
         var idx = cc.GameManager.placeLevel;
@@ -259,6 +282,7 @@ var UIGameShapeColor = cc.Class({
     },
     ParseBgList: function (json) {
         if ((this.listBg != null) && (this.listBg.length != 0)) {
+            this.CheckAllLoad();
             return;
         }
         var items = json.list;
