@@ -37,7 +37,7 @@ var UILearnProgress = cc.Class({
     onLoad: function () {
         this._super();
         this.UnifyButtonSprite(this.btnBack);
-        this.textTitle.string = cc.Language.main().GetString("STR_PLACE");
+        this.textTitle.string = cc.Language.main().GetString("STR_TITLE_LEARN_PROGRESS");
         this.InitList();
     },
 
