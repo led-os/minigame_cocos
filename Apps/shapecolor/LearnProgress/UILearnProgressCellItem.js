@@ -1,7 +1,7 @@
 var UIView = require("UIView");
 var UICellItemBase = require("UICellItemBase");
 
-cc.Class({
+var UILearnProgressCellItem = cc.Class({
     extends: UICellItemBase,
     //extends: require('viewCell'),
     statics: {
@@ -21,7 +21,7 @@ cc.Class({
         indexShape: 0,
         nodeIconContent: cc.Node,
         //public GameObject objIconContent;   
-        shaderColor: null;
+        shaderColor: null,
         colorSel: cc.Color,
         colorUnSel: cc.Color,
 
@@ -42,8 +42,6 @@ cc.Class({
             this.node.active = false;
             return;
         }
-        //this._target = data.target;
-        //this._data = data.array[index];
         this.textTitle.string = index;
     },
     clicked: function clicked() {

@@ -6,6 +6,7 @@ var PlaceViewController = require("PlaceViewController");
 var GuankaViewController = require("GuankaViewController");
 //var NaviViewController = require("NaviViewController"); 
 var GameShapeColor = require("GameShapeColor");
+var LearnProgressViewController = require("LearnProgressViewController");
 
 cc.Class({
     extends: UIHomeBase,
@@ -130,6 +131,12 @@ cc.Class({
         this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE_COLOR);
     },
     OnClickBtnBoard: function (event, customEventData) {
+
+        if (this.controller != null) {
+            var navi = this.controller.naviController;
+            navi.Push(LearnProgressViewController.main());
+        }
+
     },
 });
 

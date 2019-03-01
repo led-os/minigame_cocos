@@ -5,7 +5,7 @@ var UIPlaceBase = require("UIPlaceBase");
 //var Language = require("Language");
 //var GameManager = require("GameManager");
 
-cc.Class({
+var UILearnProgress = cc.Class({
     extends: UIView,
     properties: {
         imageBg: cc.Sprite,
@@ -37,9 +37,8 @@ cc.Class({
     onLoad: function () {
         this._super();
         this.UnifyButtonSprite(this.btnBack);
-        this.InitList();
         this.textTitle.string = cc.Language.main().GetString("STR_PLACE");
-        cc.GameManager.main().ParseGuanka();
+        this.InitList();
     },
 
     start: function () {
@@ -73,5 +72,15 @@ cc.Class({
 
 
     },
+
+    OnClickBtnBack: function () {
+        if (this.controller != null) {
+            var navi = this.controller.naviController;
+            if (navi != null) {
+                navi.Pop();
+            }
+        }
+    },
+
 });
 
