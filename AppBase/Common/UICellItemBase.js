@@ -4,15 +4,15 @@ var UICellItemBase = cc.Class({
     //extends: UIView,
     extends: require('viewCell'),
     properties: {
-        index:0,
+        index: 0,
         onClickCallBack: null,
+        listItem: null,
     },
 
     onLoad: function () {
         this._super();
     },
-    GetUIViewParent:function()
-    { 
+    GetUIViewParent: function () {
         return this.node.parent.uiViewParent;
     }
 });

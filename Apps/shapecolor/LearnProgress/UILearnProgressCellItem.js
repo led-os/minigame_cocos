@@ -1,5 +1,6 @@
 var UIView = require("UIView");
 var UICellItemBase = require("UICellItemBase");
+var GameViewController = require("GameViewController");
 
 var UILearnProgressCellItem = cc.Class({
     extends: UICellItemBase,
@@ -20,7 +21,6 @@ var UILearnProgressCellItem = cc.Class({
         itemType: 0,
         indexShape: 0,
         nodeIconContent: cc.Node,
-        //public GameObject objIconContent;   
         shaderColor: null,
         colorSel: cc.Color,
         colorUnSel: cc.Color,
@@ -43,10 +43,70 @@ var UILearnProgressCellItem = cc.Class({
             return;
         }
         this.textTitle.string = index;
+        if (this.listItem != null) {
+            var info = this.listItem[index];
+            this.UpdateItem(info);
+        }
+
     },
     clicked: function clicked() {
         var uiViewParent = this.GetUIViewParent();// 
 
-    }
+    },
+    UpdateIcon: function (tex, color) {
+        // Texture2D texNew = GetIconFillColor(tex, color);
+        //imageIcon.sprite = LoadTexture.CreateSprieFromTex(texNew);
+        this.imageIcon.spriteFrame = new cc.SpriteFrame(tex);
+        //RectTransform rctan = imageIcon.GetComponent<RectTransform>();
+        //rctan.sizeDelta = new Vector2(texNew.width, texNew.height);
+    },
+    UpdateItem: function (info) {
+
+        var game = GameViewController.main().gameBase;
+        switch (this.itemType) {
+            case UILearnProgressCellItem.ITEM_TYPE_SHAPE:
+                {
+                    cc.TextureCache.main.Load(info.pic, function (err, tex) {
+                        if (err) {
+                            cc.log(err.message || err);
+                        }
+                        //this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+                        this.UpdateIcon(tex, this.colorSel);
+                        this.LayOut();
+                    }.bind(this));
+
+                    var str = game.ShapeTitleOfItem(info);
+                    textTitle.string = str;
+                    textDetail.string = game.GameStatusOfShape(info);
+                }
+
+                break;
+            case UILearnProgressCellItem.ITEM_TYPE_COLOR:
+                {
+
+                    this.indexShape = Math.floor(game.listShape.length / 2);
+                    var infoshape = game.listShape[this.indexShape];
+                    cc.TextureCache.main.Load(info.pic, function (err, tex) {
+                        if (err) {
+                            cc.log(err.message || err);
+                            return;
+                        }
+                        //this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+                        this.UpdateIcon(tex, info.color);
+                        this.LayOut();
+                    }.bind(this));
+
+                    var str = game.ColorTitleOfItem(info);
+                    textTitle.string = str;
+                    textDetail.string = game.GameStatusOfColor(info);
+
+                }
+                break;
+        }
+        this.LayOut();
+    },
+    LayOut: function () {
+    },
+
 });
 

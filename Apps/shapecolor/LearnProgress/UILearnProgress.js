@@ -57,7 +57,7 @@ var UILearnProgress = cc.Class({
 
         this.oneCellNum = 2;
         if (!cc.Device.main.isLandscape) {
-            this.oneCellNum = this.oneCellNum / 2;
+            //  this.oneCellNum = this.oneCellNum / 2;
         }
         this.tableView.oneCellNum = this.oneCellNum;
         this.tableView.cellHeight = 256;

@@ -33,7 +33,7 @@ var UIGameShapeColor = cc.Class({
     },
     onLoad: function () {
         this._super();
-        this.UnifyButtonSprite(this.btnBack); 
+        this.UnifyButtonSprite(this.btnBack);
         this.LoadGamePrefab();
         //var ev = this.node.addComponent(cc.UITouchEvent);
         // ev.callBackTouch = this.OnUITouchEvent;
@@ -42,14 +42,6 @@ var UIGameShapeColor = cc.Class({
 
     },
 
-    // void Start()
-    // {
-    //     UpdateGuankaLevel(GameManager.gameLevel);
-    //     LayOut();
-    // }
-
-    // Init: function () {
-    // },
 
 
     CreateGame: function () {
@@ -75,6 +67,44 @@ var UIGameShapeColor = cc.Class({
         }
 
     },
+
+    StringOfGameStatus: function (status) {
+        var str = "";
+        switch (status) {
+            case GameShapeColor.GAME_STATUS_UN_START:
+                str = cc.Language.main().GetString("STR_GAME_STATUS_UN_START");
+                break;
+            case GameShapeColor.GAME_STATUS_PLAY:
+                str = cc.Language.main().GetString("STR_GAME_STATUS_PLAY");
+                break;
+            case GameShapeColor.GAME_STATUS_FINISH:
+                str = cc.Language.main().GetString("STR_GAME_STATUS_FINISH");
+                break;
+        }
+
+        return str;
+    },
+    GameStatusOfShape: function (info) {
+        var status = cc.sys.localStorage.getItem(GameShapeColor.STR_KEY_GAME_STATUS_SHAPE + info.id);
+        var str = this.StringOfGameStatus(status);
+        return str;
+    },
+    GameStatusOfColor: function (info) {
+        var status = cc.sys.localStorage.getItem(GameShapeColor.STR_KEY_GAME_STATUS_COLOR + info.id);
+        var str = this.StringOfGameStatus(status);
+        return str;
+    },
+    ShapeTitleOfItem: function (info) {
+        var key = this.game.LanguageKeyOfShape(info);
+        var str = cc.Language.game().GetString(key);
+        return str;
+    },
+    ColorTitleOfItem: function (info) {
+        var str = cc.Language.game().GetString("COLOR_TITLE_" + info.id);
+        return str;
+    },
+
+
 
     UpdateGuankaLevel: function (level) {
         cc.log("UIGameShapeColor::UpdateGuankaLevel");
