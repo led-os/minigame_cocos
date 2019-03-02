@@ -29,7 +29,8 @@ var GameManager = cc.Class({
         uiPrefab: {
             default: null,
             type: cc.Prefab
-        }
+        },
+        callbackGuankaFinish: null,
 
 
     },
@@ -49,9 +50,10 @@ var GameManager = cc.Class({
     CleanGuankaList: function () {
         GameViewController.main().gameBase.CleanGuankaList();
     },
-    ParseGuanka: function () {
+    ParseGuanka: function (callback) {
         this.CleanGuankaList();
-        GameViewController.main().gameBase.ParseGuanka();
+        this.callbackGuankaFinish = callback;
+        GameViewController.main().gameBase.ParseGuanka(callback);
     },
 
     GotoPlayAgain: function () {
@@ -97,7 +99,7 @@ var GameManager = cc.Class({
         //必须在placeLevel设置之后再设置gameLevel
         GameManager.gameLevel = 0;
 
-        this.ParseGuanka();
+        this.ParseGuanka(this.callbackGuankaFinish);
         GameViewController.main().gameBase.UpdateGuankaLevel(GameManager.gameLevel);
 
     },
@@ -112,7 +114,7 @@ var GameManager = cc.Class({
         //必须在placeLevel设置之后再设置gameLevel
         GameManager.gameLevel = 0;
 
-        this.ParseGuanka();
+        this.ParseGuanka(this.callbackGuankaFinish);
         GameViewController.main().gameBase.UpdateGuankaLevel(GameManager.gameLevel);
 
     },
@@ -137,7 +139,7 @@ var GameManager = cc.Class({
             GameManager.placeLevel = i;
             //必须在placeLevel设置之后再设置gameLevel
             GameManager.gameLevel = 0;
-            this.ParseGuanka();
+            this.ParseGuanka(this.callbackGuankaFinish);
             // if (UIGameBase.listGuanka == null) {
             //     Debug.Log("listGuanka is null");
             // }

@@ -25,13 +25,17 @@ cc.Class({
         this.UnifyButtonSprite(this.btnBack);
 
         this.textTitle.string = cc.Language.main().GetString("STR_GUANKA");
-        //cc.GameManager.main().ParseGuanka();
+        cc.GameManager.main().ParseGuanka(function () {
+            cc.log("UIGameShapeColor::UpdateItem");
+            this.UpdateItem();
+        }.bind(this)
+        );
 
 
         //this.tableView.node.active = false;
         var ev = this.node.addComponent(cc.UITouchEvent);
 
-        this.UpdateItem();
+
     },
 
 
@@ -45,6 +49,7 @@ cc.Class({
     UpdateItem: function () {
         var game = GameViewController.main().gameBase;
         this.listItem = game.listGuanka;
+        cc.log("UIGameShapeColor::this.listItem=" + this.listItem.length);
         this.InitList();
     },
 

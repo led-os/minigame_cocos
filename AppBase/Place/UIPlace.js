@@ -26,16 +26,7 @@ cc.Class({
 
     start: function () {
      
-    },
-    _getdata: function (num) {
-        var array = [];
-        for (var i = 0; i < num; ++i) {
-            var obj = {};
-            obj.name = 'a' + i;
-            array.push(obj);
-        }
-        return array;
-    },
+    }, 
 
     InitList: function () {
         this.tableView.uiViewParent = this;

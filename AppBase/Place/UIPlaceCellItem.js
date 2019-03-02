@@ -38,7 +38,6 @@ cc.Class({
         //     this.onClickCallBack(this);
         // }
         cc.GameManager.placeLevel = this.index;
-        var uiViewParent = this.GetUIViewParent();//UIPlace
 
         if (this.target.controller != null) {
             var navi = this.target.controller.naviController;

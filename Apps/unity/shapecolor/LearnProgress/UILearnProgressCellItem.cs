@@ -35,7 +35,7 @@ public class UILearnProgressCellItem : UICellItemBase
         string strshader = "Custom/ShapeColor";
         shaderColor = Shader.Find(strshader);
         UIGameShapeColor game = GameViewController.main.gameBase as UIGameShapeColor;
-        game.ParseGuanka();
+        game.ParseGuanka(null);
         indexShape = Random.Range(0, UIGameShapeColor.listShape.Count);
     }
 

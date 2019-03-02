@@ -53,6 +53,7 @@ var UIGameShapeColor = cc.Class({
         this.imageBg.node.zIndex = -20;
         this.game.node.zIndex = -10;
         this.isShowGame = true;
+        this.callbackGuankaFinish = null;
         this.ParseGuankaInternal();
     },
 
@@ -114,15 +115,35 @@ var UIGameShapeColor = cc.Class({
     },
 
     CheckAllLoad: function () {
-        cc.log("UIGameShapeColor::CheckAllLoad this.isShowGame=" + this.isShowGame);
-        if (!this.isShowGame) {
-            return;
-        }
+        cc.log("UIGameShapeColor::CheckAllLoad this.isShowGame=" + this.isShowGame + " this.listGuanka=" + this.listGuanka.length);
         if (cc.Common.CheckAllLoad(this.listProLoad) == true) {
-            this.UpdateGuankaLevel(cc.GameManager.gameLevel);
-        }
-    },
+            if (this.callbackGuankaFinish != null) {
+                cc.log("UIGameShapeColor::CheckAllLoad callbackGuankaFinish this.listGuanka=" + this.listGuanka.length);
+                this.callbackGuankaFinish();
+            }
 
+            if (this.isShowGame) {
+                this.UpdateGuankaLevel(cc.GameManager.gameLevel);
+            }
+        }
+
+
+    },
+    CleanGuankaList: function () {
+        if (this.listGuanka != null) {
+            this.listGuanka.splice(0, this.listGuanka.length);
+        }
+        if (this.listColor != null) {
+            this.listColor.splice(0, this.listColor.length);
+        }
+        if (this.listShape != null) {
+            this.listShape.splice(0, this.listShape.length);
+        }
+        if (this.listBg != null) {
+            this.listBg.splice(0, this.listBg.length);
+        }
+        
+    },
     GetGuankaTotal: function () {
         // var count = this.ParseGuanka();
         var count = 0;
@@ -132,7 +153,8 @@ var UIGameShapeColor = cc.Class({
         return count;
     },
 
-    ParseGuanka: function () {
+    ParseGuanka: function (callback) {
+        this.callbackGuankaFinish = callback;
         this.isShowGame = false;
         this.ParseGuankaInternal();
     },
@@ -260,7 +282,7 @@ var UIGameShapeColor = cc.Class({
             this.listShape.push(info);
             this.listGuanka.push(info);
         }
-        cc.log("config:this.listShape=" + this.listShape.length);
+        cc.log("config:this.listGuanka=" + this.listGuanka.length);
         this.CheckAllLoad();
     },
     ParseColor: function (json) {

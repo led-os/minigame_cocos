@@ -28,13 +28,8 @@ cc.Class({
         this.info = data.array[index];
         this.textTitle.string = index;
     },
-    clicked: function clicked() {
-        var uiViewParent = this.GetUIViewParent();// 
-        this.target.GotoGame(this.index);
-        // if (uiViewParent.controller != null) {
-        //     var navi = uiViewParent.controller.naviController; 
-        //     navi.Push(GameViewController.main());
-        // }
+    clicked: function clicked() { 
+        this.target.GotoGame(this.index); 
     }
 });
 

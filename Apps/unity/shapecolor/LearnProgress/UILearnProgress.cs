@@ -46,7 +46,7 @@ public class UILearnProgress : UIView, ITableViewDataSource
         }
         heightCell = 256;
         UIGameShapeColor game = GameViewController.main.gameBase as UIGameShapeColor;
-        game.ParseGuanka();
+        game.ParseGuanka(null);
         tableView.dataSource = this;
     }
 

@@ -20,6 +20,7 @@ var UIGameBase = cc.Class({
             type: cc.LoadItemInfo
         },
         imageBg: cc.Sprite,
+        callbackGuankaFinish:null,
 
     },
     Init: function () {
@@ -64,7 +65,8 @@ var UIGameBase = cc.Class({
             this.listGuanka.splice(0, this.listGuanka.length);
         }
     },
-    ParseGuanka: function () {
+    ParseGuanka: function (callback) {
+        this.callbackGuankaFinish = callback;
         cc.log("ParseGuanka UIGameBase");
         return 0;
     },
