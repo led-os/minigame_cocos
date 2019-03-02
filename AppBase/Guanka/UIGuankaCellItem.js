@@ -24,13 +24,13 @@ cc.Class({
             this.node.active = false;
             return;
         }
-        //this._target = data.target;
-        //this._data = data.array[index];
+        this.target = data.target;
+        this.info = data.array[index];
         this.textTitle.string = index;
     },
     clicked: function clicked() {
         var uiViewParent = this.GetUIViewParent();// 
-        uiViewParent.GotoGame(this.index);
+        this.target.GotoGame(this.index);
         // if (uiViewParent.controller != null) {
         //     var navi = uiViewParent.controller.naviController; 
         //     navi.Push(GameViewController.main());

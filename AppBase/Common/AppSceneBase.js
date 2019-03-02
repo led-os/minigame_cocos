@@ -157,8 +157,13 @@ var AppSceneBase = cc.Class({
         }
         cc.log("appscenebase isLoadAll=" + isLoadAll);
         if (isLoadAll == true) {
-
+            //启动app
             this.isHasRunApp = true;
+
+            var lan = cc.Language.main();
+            var lanid = cc.Common.GetItemOfKey(cc.AppRes.KEY_LANGUAGE, cc.sys.LANGUAGE_CHINESE); 
+            lan.SetLanguage(lanid);
+
             this.RunApp();
         }
     },

@@ -1,6 +1,5 @@
 var UIView = require("UIView");
 // var Common = require("Common"); 
-var AppRes = require("AppRes");
 //var LayoutScale = require("LayoutScale");
 //var Language = require("Language");
 var GameViewController = require("GameViewController");
@@ -37,7 +36,7 @@ cc.Class({
         this.textName.string = name;
         cc.Tts.Speak(name,true);
 
-        var strImage = AppRes.IMAGE_HOME_BG;
+        var strImage = cc.AppRes.IMAGE_HOME_BG;
         cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {

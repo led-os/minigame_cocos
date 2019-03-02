@@ -1,9 +1,6 @@
 var UIView = require("UIView");
 var UIPlaceBase = require("UIPlaceBase");
-// var Common = require("Common");
-//var RectTransform = require("RectTransform");
-//var Language = require("Language");
-//var GameManager = require("GameManager");
+var GameViewController = require("GameViewController");
 
 cc.Class({
     extends: UIPlaceBase,
@@ -16,15 +13,15 @@ cc.Class({
         },
         textTitle:cc.Label,
         oneCellNum: 4,
-
+        listItem: null,
     },
 
     onLoad: function () {
         this._super();
         this.UnifyButtonSprite(this.btnBack);
-        this.InitList();
+        this.UpdateItem();
         this.textTitle.string = cc.Language.main().GetString("STR_PLACE");
-        cc.GameManager.main().ParseGuanka();
+       // cc.GameManager.main().ParseGuanka();
     },
 
     start: function () {
@@ -39,24 +36,18 @@ cc.Class({
         }
         return array;
     },
+
     InitList: function () {
-        //     var rctran = this.tableView.node.getComponent(RectTransform);
-        //     var sizeParent = cc.size(rctran.width,rctran.height);
-        //     this.tableView.node.setContentSize(sizeParent);
-        //    // this.tableView.content.node.setContentSize(sizeParent);
-
-
-        //    this.tableView.UpdateSize(sizeParent);
-        cc.log('UIPlace:InitList');
-
+        this.tableView.uiViewParent = this;
         this.tableView.oneCellNum = this.oneCellNum;
         this.tableView.cellHeight = 512;
-        this.tableView.uiViewParent = this;
-        var data = this._getdata(100);
-        this.tableView.initTableView(data.length, { array: data, target: this });
-        // this.tableView.getComponent(cc.tableView).initTableView(data.length, { array: data, target: this });
+        this.tableView.initTableView(this.listItem.length, { array: this.listItem, target: this });
+    },
 
-
+    UpdateItem: function () {
+        var game = GameViewController.main().gameBase;
+        this.listItem = game.listGuanka;
+        this.InitList();
     },
 });
 

@@ -6,11 +6,15 @@ var AppRes = cc.Class({
     statics: {
 
         //image
-        IMAGE_HOME_BG: "App/UI/Home/LearnProgressBg",  
+        IMAGE_HOME_BG: "App/UI/Home/LearnProgressBg",
+
+        //string
+        KEY_LANGUAGE: "KEY_LANGUAGE",
     },
 
 
 
 });
 
+cc.AppRes = module.export = AppRes;
 

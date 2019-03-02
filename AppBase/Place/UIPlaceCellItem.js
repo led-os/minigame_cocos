@@ -25,8 +25,8 @@ cc.Class({
             this.node.active = false;
             return;
         }
-        //this._target = data.target;
-        //this._data = data.array[index];
+        this.target = data.target;
+        this.info = data.array[index];
         this.textTitle.string = index;
 
         //  this.node.clicked = this.OnItemclicked.bind(this);
@@ -40,8 +40,8 @@ cc.Class({
         cc.GameManager.placeLevel = this.index;
         var uiViewParent = this.GetUIViewParent();//UIPlace
 
-        if (uiViewParent.controller != null) {
-            var navi = uiViewParent.controller.naviController;
+        if (this.target.controller != null) {
+            var navi = this.target.controller.naviController;
             cc.log('goto GuankaViewController');
             navi.Push(GuankaViewController.main());
         }

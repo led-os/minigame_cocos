@@ -56,16 +56,17 @@ cc.Class({
 
         {
             var info = new cc.ItemInfo();
-            info.title = cc.Language.main().GetString("STR_BTN_NOAD");
-            // info.tag = UISetting.TAG_SETTING_NOAD;
+            info.title = "中文";
+            info.id = cc.sys.LANGUAGE_CHINESE;
             this.listItem.push(info);
         }
         {
             var info = new cc.ItemInfo();
-            info.title = cc.Language.main().GetString("STR_BTN_RESTORE_NOAD");
-            //   info.tag = UISetting.TAG_SETTING_RESTORE_IAP;
+            info.title = "English";
+            info.id = cc.sys.LANGUAGE_ENGLISH;
             this.listItem.push(info);
         }
+
         this.InitList();
     },
     InitList: function () {

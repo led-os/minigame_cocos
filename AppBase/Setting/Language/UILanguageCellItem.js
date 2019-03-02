@@ -23,13 +23,20 @@ cc.Class({
             this.node.active = false;
             return;
         }
-        //this._target = data.target;
-        //this._data = data.array[index];
-        this.textTitle.string = index;
+        this.target = data.target;
+        this.info = data.array[index];
+        this.UpdateItem(this.info);
     },
-    clicked: function clicked() {
+    clicked: function () {
         var uiViewParent = this.GetUIViewParent();// 
-
-    }
+        var lan = cc.Language.main();
+        cc.log("language id= "+this.info.id);
+        lan.SetLanguage(this.info.id);
+        cc.Common.SetItemOfKey(cc.AppRes.KEY_LANGUAGE,this.info.id);
+        this.target.OnClickBtnBack();
+    },
+    UpdateItem: function (info) {
+        this.textTitle.string = info.title;
+    },
 });
 
