@@ -1,6 +1,9 @@
 var UIView = require("UIView");
 var UICellItemBase = require("UICellItemBase");
 var GameViewController = require("GameViewController");
+var GameShapeColor = require("GameShapeColor");
+const renderEngine = cc.renderer.renderEngine;
+const renderer = renderEngine.renderer;
 
 var UILearnProgressCellItem = cc.Class({
     extends: UICellItemBase,
@@ -30,7 +33,8 @@ var UILearnProgressCellItem = cc.Class({
 
     onLoad: function () {
         this._super();
-
+        this.initShaders();
+        this.colorSel = cc.Color.RED;
     },
 
     init: function init(index, data, reload, group) {
@@ -54,12 +58,42 @@ var UILearnProgressCellItem = cc.Class({
         var uiViewParent = this.GetUIViewParent();// 
 
     },
+
+    initShaders() {
+        if (GameShapeColor.isShaderInited) {
+            return;
+        }
+        require("SpriteHook").init();
+        var ShaderLib = require("ShaderLib");
+        ShaderLib.addShader(require("ShaderShapeColor"));
+        GameShapeColor.isShaderInited = true;
+        // TODO: 加更多Shader
+    },
     UpdateIcon: function (tex, color) {
         // Texture2D texNew = GetIconFillColor(tex, color);
         //imageIcon.sprite = LoadTexture.CreateSprieFromTex(texNew);
         this.imageIcon.spriteFrame = new cc.SpriteFrame(tex);
         //RectTransform rctan = imageIcon.GetComponent<RectTransform>();
         //rctan.sizeDelta = new Vector2(texNew.width, texNew.height);
+
+        {
+
+            const name = 'ShaderShapeColor';
+            let mat = this.imageIcon.getMaterial(name);
+            if (!mat) {
+                const CustomMaterial = require("CustomMaterial");
+                mat = new CustomMaterial(name, [
+                    { name: 'iResolution', type: renderer.PARAM_FLOAT3 },
+                    { name: 'colorShow', type: renderer.PARAM_FLOAT3 },
+                ]);
+                this.imageIcon.setMaterial(name, mat);
+            }
+            this.imageIcon.activateMaterial(name);
+
+            var colorShow = new cc.Vec3(color.r / 255, color.g / 255, color.b / 255);
+            cc.log("colorShow=" + colorShow);
+            mat.setParamValue("colorShow", colorShow);
+        }
     },
     UpdateItem: function (info) {
 
@@ -79,7 +113,7 @@ var UILearnProgressCellItem = cc.Class({
                     var str = game.ShapeTitleOfItem(info);
                     this.textTitle.string = str;
                     this.textDetail.string = game.GameStatusOfShape(info);
-                    cc.log("textDetail="+this.textDetail.string);
+                    cc.log("textDetail=" + this.textDetail.string);
                 }
 
                 break;

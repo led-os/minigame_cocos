@@ -248,11 +248,17 @@ var tableView = cc.Class({
             var node = new cc.Node();
             node.anchorX = 0.5;
             node.anchorY = 0.5;
-            //@moon 
-            var layout = node.addComponent(cc.Layout);
-            layout.type = cc.Layout.Type.HORIZONTAL;
-            //CHILDREN 等距离均分排列 CONTAINER 居中排列
-            layout.resizeMode = cc.Layout.ResizeMode.CHILDREN;
+            //@moon  
+            // var layout = node.addComponent(cc.Layout);
+
+            // if (this.ScrollModel === ScrollModel.Horizontal) {
+            //     layout.type = cc.Layout.Type.VERTICAL;
+            // } else {
+            //     layout.type = cc.Layout.Type.HORIZONTAL;
+            // }
+            // //CHILDREN 均分排列 CONTAINER 居中排列
+            // layout.resizeMode = cc.Layout.ResizeMode.CHILDREN;
+            // layout.horizontalDirection = cc.Layout.HorizontalDirection.LEFT_TO_RIGHT;
             //@moon
             var length = 0;
             if (this.ScrollModel === ScrollModel.Horizontal) {
@@ -272,16 +278,32 @@ var tableView = cc.Class({
                 //@moon
 
 
-
-
                 for (var index = 0; index < childrenCount; ++index) {
                     if (!cell) {
                         cell = cc.instantiate(this.cell);
                     }
+
+                    cell.parent = node;
+
+
+                    //@moon
+                    var w_item, h_item;
+                    w_item = node.width;
+                    h_item = Math.floor(this.content.height / childrenCount);
+                    cell.setContentSize(w_item, h_item);
+                    cc.log("w_item=" + w_item + " h_item" + h_item);
+                    var rctran = cell.getComponent(cc.RectTransform);
+                    if (rctran != null) {
+                        rctran.OnResize();
+                    }
+                    //@moon
+
+
                     cell.x = (cell.anchorX - 0.5) * cell.width;
                     cell.y = node.height / 2 - cell.height * (1 - cell.anchorY) - length;
                     length += cell.height;
-                    cell.parent = node;
+
+
                     cell = null;
                 }
             } else {
@@ -295,17 +317,38 @@ var tableView = cc.Class({
                     node.height = this.cellHeight;
                 }
                 //@moon
+
+
                 node.width = this.content.width;
+
 
                 for (var index = 0; index < childrenCount; ++index) {
                     if (!cell) {
                         cell = cc.instantiate(this.cell);
                     }
+
+                    cell.parent = node;
+
+                    //@moon
+                    var w_item, h_item;
+                    w_item = Math.floor(this.content.width / childrenCount);
+                    h_item = node.height;
+                    cell.setContentSize(w_item, h_item);
+                    cc.log("w_item=" + w_item + " h_item" + h_item);
+                    var rctran = cell.getComponent(cc.RectTransform);
+                    if (rctran != null) {
+                        rctran.OnResize();
+                    }
+
                     cell.y = (cell.anchorY - 0.5) * cell.height;
                     cell.x = -node.width / 2 + cell.width * cell.anchorX + length;
                     length += cell.width;
-                    cell.parent = node;
+
+                    //@moon
+
                     cell = null;
+
+
                 }
             }
             this._cellPool.put(node);

@@ -65,7 +65,7 @@ var UILearnProgress = cc.Class({
         // tableView.ReloadData();
         this.oneCellNum = 2;
         if (!cc.Device.main.isLandscape) {
-            //  this.oneCellNum = this.oneCellNum / 2;
+            this.oneCellNum = this.oneCellNum / 2;
         }
 
         cc.log("this.listShape=" + game.listGuanka.length);

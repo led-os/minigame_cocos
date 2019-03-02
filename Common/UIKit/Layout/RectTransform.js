@@ -185,7 +185,7 @@ var RectTransform = cc.Class({
             var child = children[i];
             var rctran = child.getComponent(RectTransform);
             if (rctran != null) {
-                cc.log("OnResize child");
+               // cc.log("OnResize child");
                 rctran.OnResize();
             }
 
@@ -310,14 +310,14 @@ var RectTransform = cc.Class({
                 break;
             case LayoutAlign.AlignType.LEFT:
                 {
-                    x = -w_parent / 2 + w / 2;
+                    x = -w_parent / 2 + w / 2+ this.offsetMin.x;
                     y = this.node.getPosition().y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case LayoutAlign.AlignType.RIGHT:
                 {
-                    x = w_parent / 2 - w / 2;
+                    x = w_parent / 2 - w / 2- this.offsetMax.x;
                     y = this.node.getPosition().y;
                     this.node.setPosition(x, y, 0);
                 }
