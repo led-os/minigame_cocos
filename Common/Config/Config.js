@@ -49,8 +49,26 @@ var Config = cc.Class({
                 // }
                 return ret;
             },
-        }
+        },
+        isHaveRemoveAd:
+        {
+            get: function () {
+                var ret = true;
+                if (cc.Common.main().isAndroid) {
+                    ret = false;
+                    if (cc.Config.main().channel == cc.Source.GP) {
+                        //GP市场内购
+                        ret = true;
+                    }
+                }
+                if (cc.Common.main().isWin) {
+                    ret = false;
+                }
+                return ret;
+            },
+        },
     },
+},
 
     SetLoadFinishCallBack: function (callback, info) {
         Config.callbackFinish = callback;

@@ -226,6 +226,10 @@ var Common = cc.Class({
         // return (json.key == null ? false : true);
     },
 
+    GetAppVersion: function () {
+        return "ver 1.0.0";
+    },
+    
 
 });
 

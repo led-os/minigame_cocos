@@ -23,7 +23,7 @@ cc.Class({
         listItem: {
             default: [],
             type: cc.Object
-        }, 
+        },
     },
 
     onLoad: function () {
@@ -32,19 +32,18 @@ cc.Class({
 
         this.UnifyButtonSprite(this.btnBack);
 
-        //var layoutAlign = this.topBar.addComponent(LayoutAlign)
-        var layoutAlign = this.topBar.getComponent(cc.LayoutAlign);
-        if (layoutAlign != null) {
-            // layoutAlign.alignType = LayoutAlign.AlignType.UP;
-        }
-
-        this.InitList();
+        this.UpdateItem();
 
     },
 
     OnClickBtnBack: function (event, customEventData) {
         cc.log("UISetting OnClickBtnBack");
-        this.controller.Close();
+        if (this.controller != null) {
+            var navi = this.controller.naviController;
+            if (navi != null) {
+                navi.Pop();
+            }
+        }
     },
 
 
@@ -52,21 +51,28 @@ cc.Class({
         //LayoutScale.ScaleImage(this.imageBg, true);
     },
 
-    _getdata: function (num) {
-        var array = [];
-        for (var i = 0; i < num; ++i) {
-            var obj = {};
-            obj.name = 'a' + i;
-            array.push(obj);
+    UpdateItem: function () {
+        this.listItem.length = 0;
+
+        {
+            var info = new cc.ItemInfo();
+            info.title = cc.Language.main().GetString("STR_BTN_NOAD");
+            // info.tag = UISetting.TAG_SETTING_NOAD;
+            this.listItem.push(info);
         }
-        return array;
+        {
+            var info = new cc.ItemInfo();
+            info.title = cc.Language.main().GetString("STR_BTN_RESTORE_NOAD");
+            //   info.tag = UISetting.TAG_SETTING_RESTORE_IAP;
+            this.listItem.push(info);
+        }
+        this.InitList();
     },
     InitList: function () {
         this.tableView.oneCellNum = this.oneCellNum;
         this.tableView.cellHeight = 256;
         this.tableView.uiViewParent = this;
-        var data = this._getdata(100);
-        this.tableView.initTableView(data.length, { array: data, target: this });
+        this.tableView.initTableView(this.listItem.length, { array: this.listItem, target: this });
     },
     //下一页(pageview下有效)
     nextPage: function () {

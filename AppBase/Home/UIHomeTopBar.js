@@ -1,5 +1,6 @@
 var UIView = require("UIView");
-var SettingViewController = require("SettingViewController"); 
+var SettingViewController = require("SettingViewController");
+var HomeViewController = require("HomeViewController");
 
 cc.Class({
     extends: UIView,
@@ -36,9 +37,8 @@ cc.Class({
         },
     },
 
-    onLoad:function()
-    {
-       
+    onLoad: function () {
+
         this.UnifyButtonSprite(this.btnNoAd);
         this.UnifyButtonSprite(this.btnRestoreIAP);
         this.UnifyButtonSprite(this.btnMore);
@@ -47,8 +47,8 @@ cc.Class({
         this.UnifyButtonSprite(this.btnAdVideo);
     },
 
-    LayOut: function () { 
-       
+    LayOut: function () {
+
     },
 
 
@@ -59,7 +59,12 @@ cc.Class({
     OnClickBtnShare: function (event, customEventData) {
     },
     OnClickBtnSetting: function (event, customEventData) {
-        SettingViewController.main().Show(null,null);
+        // SettingViewController.main().Show(null,null);
+        var controller = HomeViewController.main();
+        if (controller != null) {
+            var navi = controller.naviController;
+            navi.Push(SettingViewController.main());
+        }
     },
     OnClickBtnAdVideo: function (event, customEventData) {
     },

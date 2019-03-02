@@ -1,5 +1,7 @@
 var UIView = require("UIView");
 var UICellItemBase = require("UICellItemBase");
+var UISetting = require("UISetting");
+var LanguageViewController = require("LanguageViewController");
 
 cc.Class({
     extends: UICellItemBase,
@@ -23,13 +25,53 @@ cc.Class({
             this.node.active = false;
             return;
         }
-        //this._target = data.target;
-        //this._data = data.array[index];
-        this.textTitle.string = index;
+        this.target = data.target;
+        this.info = data.array[index];
+        this.UpdateItem(this.info);
     },
-    clicked: function clicked() {
-        var uiViewParent = this.GetUIViewParent();// 
-     
-    }
+
+    clicked: function () {
+        var uiViewParent = this.GetUIViewParent();//  
+        cc.log("tag = " + this.info.tag);
+        switch (this.info.tag) {
+            case UISetting.TAG_SETTING_COMMENT:
+                {
+
+                }
+                break;
+            case UISetting.TAG_SETTING_VERSION:
+                {
+
+                }
+                break;
+            case UISetting.TAG_SETTING_LANGUAGE:
+                {
+                    this.GotoController(LanguageViewController.main());
+                }
+                break;
+            case UISetting.TAG_SETTING_BACKGROUND_MUSIC:
+                {
+
+                }
+                break;
+            case UISetting.TAG_SETTING_NOAD:
+                {
+
+                }
+                break;
+            case UISetting.TAG_SETTING_RESTORE_IAP:
+                {
+
+                }
+                break;
+
+        }
+    },
+
+
+    UpdateItem: function (info) {
+        this.textTitle.string = info.title;
+    },
+
 });
 

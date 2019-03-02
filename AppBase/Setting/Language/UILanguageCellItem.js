@@ -1,13 +1,12 @@
 var UIView = require("UIView");
 var UICellItemBase = require("UICellItemBase");
-
 cc.Class({
     extends: UICellItemBase,
     //extends: require('viewCell'),
     properties: {
         imageBg: cc.Sprite,
         textTitle: cc.Label,
-    }, 
+    },
     //string[] strImageBg = { AppRes.IMAGE_CELL_BG_BLUE, AppRes.IMAGE_CELL_BG_ORINGE, AppRes.IMAGE_CELL_BG_YELLOW };
 
     onLoad: function () {
@@ -30,7 +29,7 @@ cc.Class({
     },
     clicked: function clicked() {
         var uiViewParent = this.GetUIViewParent();// 
-     
+
     }
 });
 
