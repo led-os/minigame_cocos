@@ -17,6 +17,8 @@ var UIViewAlert = cc.Class({
     },
     onLoad: function () {
         this._super();
+        this.UnifyButtonSprite(this.btnYes);
+        this.UnifyButtonSprite(this.btnNo);
     },
 
     SetText: function (title, msg, yes, no) {

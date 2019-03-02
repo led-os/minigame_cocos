@@ -2,15 +2,15 @@
 
 var AlignType = cc.Enum({
     //区分大小写
-    NONE: -1,
-    UP: 0,
-    DOWN: 1,
-    LEFT: 2,
-    RIGHT: 3,
-    UP_LEFT: 4,
-    UP_RIGHT: 5,
-    DOWN_LEFT: 6,
-    DOWN_RIGHT: 7,
+    NONE: 0,
+    UP: 1,
+    DOWN: 2,
+    LEFT: 3,
+    RIGHT: 4,
+    UP_LEFT: 5,
+    UP_RIGHT: 6,
+    DOWN_LEFT: 7,
+    DOWN_RIGHT: 8,
 
 });
 
