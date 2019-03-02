@@ -166,7 +166,7 @@ var AdConfig = cc.Class({
         }
 
 
-        if (cc.Common.isAndroid) {
+        if (cc.Common.main().isAndroid) {
             fileName = "config_android";
         }
         if (cc.Common.isWin) {

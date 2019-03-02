@@ -34,6 +34,22 @@ var Config = cc.Class({
                 return this.rootJsonCommon.APP_TYPE;
             },
         },
+        channel:
+        {
+            get: function () {
+                var ret = cc.Source.XIAOMI;
+                if (cc.Common.main().isiOS) {
+                    ret = cc.Source.APPSTORE;
+                }
+                if (cc.Common.main().isAndroid) {
+                    //ret = GetStringJson(rootJsonChannel, "channel_android", Source.XIAOMI);
+                }
+                // if (Common.isWeb) {
+                //     ret = cc.Source.FACEBOOK;
+                // }
+                return ret;
+            },
+        }
     },
 
     SetLoadFinishCallBack: function (callback, info) {
@@ -79,7 +95,7 @@ var Config = cc.Class({
             if (this.osDefault == cc.Source.WIN) {
 
             }
-            if (cc.Common.isAndroid) {
+            if (cc.Common.main().isAndroid) {
                 fileName = "config_android";
             }
             if (cc.Common.isWin) {
@@ -252,5 +268,5 @@ Config.main = function () {
     return Config._main;
 }
 
-cc.Config = module.export = Config; 
+cc.Config = module.export = Config;
 

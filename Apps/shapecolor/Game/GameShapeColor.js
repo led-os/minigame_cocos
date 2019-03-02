@@ -161,10 +161,22 @@ var GameShapeColor = cc.Class({
             }
         }
 
-        // if (iDelegate != null) {
-        //     iDelegate.OnGameShapeColorDidWin(this);
-        // }
-        cc.GameManager.main().GotoNextLevelWithoutPlace();
+        var title = cc.Language.main().GetString("STR_UIVIEWALERT_TITLE_GAME_FINISH");
+        var msg = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_GAME_FINISH");
+        var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_GAME_FINISH");
+        var no = cc.Language.main().GetString("STR_UIVIEWALERT_NO_GAME_FINISH");
+
+        cc.ViewAlertManager.main().ShowFull(title, msg, yes, no, true, "STR_KEYNAME_VIEWALERT_GAME_FINISH",
+            function (alert, isYes) {
+                if (isYes) {
+                    cc.GameManager.main().GotoNextLevelWithoutPlace();
+                } else {
+
+                }
+            }.bind(this)
+        );
+
+
     },
 
     OnTouchDown: function (pos) {
@@ -302,23 +314,10 @@ var GameShapeColor = cc.Class({
                 this.SetItemLock(this.itemInfoSel, true);
 
                 this.itemInfoSel.node.setPosition(info.node.getPosition());
-                //RunDisapperAnimation(this.itemInfoSel);
+                this.RunDisapperAnimation(this.itemInfoSel);
                 this.PlayAudioItemFinish(this.itemInfoSel);
 
-                var title = cc.Language.main().GetString("STR_UIVIEWALERT_TITLE_GAME_FINISH");
-                var msg = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_GAME_FINISH");
-                var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_GAME_FINISH");
-                var no = cc.Language.main().GetString("STR_UIVIEWALERT_NO_GAME_FINISH");
 
-                cc.ViewAlertManager.main().ShowFull(title, msg, yes, no, true, "STR_KEYNAME_VIEWALERT_GAME_FINISH",
-                    function (alert, isYes) {
-                        if (isYes) {
-
-                        } else {
-
-                        }
-                    }.bind(this)
-                );
 
                 //记录游戏开始进行中
                 var level = cc.GameManager.gameLevel;
@@ -347,7 +346,7 @@ var GameShapeColor = cc.Class({
             }
         }
 
-        this.CheckGameWin();
+        //this.CheckGameWin();
     },
     OnTouchUp: function (pos) {
         cc.log("OnTouchUp");
@@ -388,6 +387,19 @@ var GameShapeColor = cc.Class({
         }
     },
 
+    RunDisapperAnimation(info) {
+        //动画：https://blog.csdn.net/agsgh/article/details/79447090
+        //iTween.ScaleTo(info.obj, new Vector3(0f, 0f, 0f), 1.5f);
+        var duration = 1.0;
+        var action = cc.scaleTo(duration, 0, 0);
+        //delay延时
+        // var time = cc.delayTime(2);
+        var fun = cc.callFunc(function () {
+            this.CheckGameWin();
+        }.bind(this));
+        var seq = cc.sequence([action, fun]);
+        info.node.runAction(seq);
+    },
     //ShapeColorItemInfo
     PlayAudioItemFinish: function (info) {
         // GameObject audioPlayer = GameObject.Find("AudioPlayer");

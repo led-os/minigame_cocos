@@ -1,9 +1,9 @@
 var UIViewController = require("UIViewController");
-var UIHomeBase = require("UIHomeBase"); 
+var UILanguage = require("UILanguage"); 
 // var Common = require("Common");
 //var Config = require("Config");
 
-var GuankaViewController = cc.Class({
+var LanguageViewController = cc.Class({
     extends: UIViewController,
     properties: {
         uiPrefab: {
@@ -12,57 +12,47 @@ var GuankaViewController = cc.Class({
         },
         ui: {
             default: null,
-            type: UIHomeBase
+            type: UILanguage
         },
 
 
     },
     Init: function () { 
     },
-    CreateUI: function () { 
-        // if (this.naviController != null) {
-        //     this.naviController.HideNavibar(true);
-        // }
-        // uiHome = (UIHomeBase)GameObject.Instantiate(uiHomePrefab);
-        // uiHome.SetController(this);
-        // ViewControllerManager.ClonePrefabRectTransform(uiHomePrefab.gameObject, uiHome.gameObject);
-        // uiHome.Init();
+    CreateUI: function () {
+        var node = cc.instantiate(this.uiPrefab);
+        if (node != null) {
+            this.ui = node.getComponent(UILanguage);
+            this.ui.SetController(this);
+        }
+
+
     },
 
     LoadPrefab: function () {
-        // var ishave = Common.main().JsonDataContainsKey(null, "key"); 
-        // var strPrefab = "App/Prefab/Home/UIHome" + Common.main().appType;
-        var strPrefab = "App/Prefab/Home/UIHome" + cc.Config.main().appType;
-
-        var strPrefabDefault = "Common/Prefab/Home/UIHomeDefault";
-        // GameObject obj =cc.PrefabCache.main.Load(strPrefab);
-        // if (obj == null) {
-        //     obj =cc.PrefabCache.main.Load(strPrefabDefault);
-        // }
-
-        // uiHomePrefab = obj.GetComponent<UIHomeBase>();
-        cc.log("GuankaViewController LoadPrefab=" + strPrefab);
+        var strPrefab = "Common/Prefab/Setting/UILanguage";
        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
+            if (err) {
+                cc.log(err.message || err);
+            }
             this.uiPrefab = prefab;
-            var node = cc.instantiate(prefab);
-            this.ui= node.getComponent(UIHomeBase);
-            this.ui.SetController(this);
+            this.CreateUI();
         }.bind(this)
         );
     },
 
     ViewDidLoad: function () {
-        cc.log("GuankaViewController ViewDidLoad");
+        cc.log("LanguageViewController ViewDidLoad");
         this._super();
         this.LoadPrefab();
     },
     ViewDidUnLoad: function () {
-        cc.log("GuankaViewController ViewDidUnLoad");
+        cc.log("LanguageViewController ViewDidUnLoad");
         this._super();
 
     },
     LayOutView: function () {
-        cc.log("HomeViewController LayOutView");
+        cc.log("LanguageViewController LayOutView");
         //  base.LayOutView();
 
     },
@@ -73,16 +63,14 @@ var GuankaViewController = cc.Class({
 //GuankaViewController.main = new GuankaViewController(); 
 
 //单例对象 方法二
-GuankaViewController._main = null;
-GuankaViewController.main = function () {
+LanguageViewController._main = null;
+LanguageViewController.main = function () {
     // 
-    if (!HomeViewController._main) {
-        cc.log("_main is null");
-        GuankaViewController._main = new GuankaViewController();
-        GuankaViewController._main.Init();
-    } else {
-        cc.log("_main is not null");
+    if (!LanguageViewController._main) { 
+        LanguageViewController._main = new LanguageViewController();
+        LanguageViewController._main.Init();
+    } else { 
     }
 
-    return GuankaViewController._main;
+    return LanguageViewController._main;
 }

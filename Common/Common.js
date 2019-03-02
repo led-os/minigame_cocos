@@ -20,31 +20,6 @@ var Common = cc.Class({
         WIDTH_DESIGN_DEFAULT: 2048,
         HEIGHT_DESIGN_DEFAULT: 1536,
 
-
-        isAndroid: {
-            get: function () {
-                cc.log("isAndroid");
-                return (cc.sys.platform == cc.sys.OS_ANDROID) ? true : false;
-            },
-            // set: function (value) {
-            //     this._width = value;
-            // },
-        },
-
-        isiOS: {
-            get: function () {
-                return (cc.sys.platform == cc.sys.OS_IOS) ? true : false;
-            },
-        },
-
-
-        isWin: {
-            get: function () {
-                return (cc.sys.platform == cc.sys.OS_WINDOWS) ? true : false;
-            },
-
-        },
-
         //cocos2d-js中Math对象的常用方法总结
         //https://blog.csdn.net/lianghui0811/article/details/76525065?utm_source=blogxgwz4
         GetBestFitScale: function (w_content, h_content, w_rect, h_rect) {
@@ -188,15 +163,15 @@ var Common = cc.Class({
             }
         },
 
-        GetIntOfKey: function (key, default_value) {
+        GetItemOfKey: function (key, default_value) {
             var v = cc.sys.localStorage.getItem(key);
             if (v == null) {
                 return default_value;
             }
-            var v_int = parseInt(v);
-            return v_int;
+            // var v_int = parseInt(v);
+            return v;
         },
-        SetIntOfKey: function (key, value) {
+        SetItemOfKey: function (key, value) {
             var str = value.toString();
             cc.sys.localStorage.setItem(key, str);
         },
@@ -216,7 +191,29 @@ var Common = cc.Class({
     },
 
     properties: {
+        isAndroid: {
+            get: function () {
+                cc.log("isAndroid");
+                return (cc.sys.platform == cc.sys.OS_ANDROID) ? true : false;
+            },
+            // set: function (value) {
+            //     this._width = value;
+            // },
+        },
 
+        isiOS: {
+            get: function () {
+                return (cc.sys.platform == cc.sys.OS_IOS) ? true : false;
+            },
+        },
+
+
+        isWin: {
+            get: function () {
+                return (cc.sys.platform == cc.sys.OS_WINDOWS) ? true : false;
+            },
+
+        },
 
     },
 

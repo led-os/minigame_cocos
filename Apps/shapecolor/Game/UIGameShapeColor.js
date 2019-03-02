@@ -81,15 +81,15 @@ var UIGameShapeColor = cc.Class({
         return str;
     },
     GameStatusOfShape: function (info) {
-        var key = GameShapeColor.STR_KEY_GAME_STATUS_SHAPE + info.id; 
-        var status = cc.Common.GetIntOfKey(key,GameShapeColor.GAME_STATUS_UN_START);
+        var key = GameShapeColor.STR_KEY_GAME_STATUS_SHAPE + info.id;
+        var status = cc.Common.GetItemOfKey(key, GameShapeColor.GAME_STATUS_UN_START);
         //cc.log("status=" + status);
         var str = this.StringOfGameStatus(status);
         return str;
     },
-    GameStatusOfColor: function (info) { 
-        var key = GameShapeColor.STR_KEY_GAME_STATUS_COLOR + info.id; 
-        var status = cc.Common.GetIntOfKey(key,GameShapeColor.GAME_STATUS_UN_START);
+    GameStatusOfColor: function (info) {
+        var key = GameShapeColor.STR_KEY_GAME_STATUS_COLOR + info.id;
+        var status = cc.Common.GetItemOfKey(key, GameShapeColor.GAME_STATUS_UN_START);
         var str = this.StringOfGameStatus(status);
         return str;
     },
