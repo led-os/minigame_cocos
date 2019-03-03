@@ -180,6 +180,82 @@ var Common = cc.Class({
             return btn.node.getChildByName("Label").getComponent(cc.Label);
         },
 
+        //字符串显示大小
+        GetTextSize: function (text, fontsize) {
+            var node = new cc.Node("GetTextSize");
+            var labelTmp = node.addComponent(cc.Label);
+            labelTmp.fontSize = fontsize;
+            labelTmp.string = text;
+            //labelTmp.overflow = cc.Label.Overflow.NONE; 
+            cc.director.getScene().addChild(node);
+            node.active = false;
+
+            var size = labelTmp.node.getContentSize();
+
+
+            cc.log("labelTmp size= " + size + " bd=" + labelTmp.node.getBoundingBox());
+
+
+
+            //labelTmp.string = "A我";
+            // labelTmp.overflow = cc.Label.Overflow.RESIZE_HEIGHT;
+
+            //active 从false变成true 会重新刷新
+            node.active = true;
+
+            size = labelTmp.node.getContentSize();
+            cc.log("labelTmp2 size= " + size + " bd=" + labelTmp.node.getBoundingBox());
+
+            node.removeFromParent(true);
+            //Common.GetTextHeight(text, fontsize);
+            return size;
+        },
+
+        GetTextWidth: function (text, fontsize) {
+            var node = new cc.Node("GetTextWidth");
+            var labelTmp = node.addComponent(cc.Label);
+            labelTmp.fontSize = fontsize;
+            labelTmp.string = text;
+            //labelTmp.overflow = cc.Label.Overflow.NONE; 
+            cc.director.getScene().addChild(node);
+            node.active = false;
+
+            var size = labelTmp.node.getContentSize();
+
+
+            //active 从false变成true 会重新刷新
+            node.active = true;
+
+            size = labelTmp.node.getContentSize();
+
+
+            cc.log("labelTmp size= " + size + " bd=" + labelTmp.node.getBoundingBox());
+
+
+            node.removeFromParent(true);
+            return size.width;
+        },
+        GetTextHeight: function (text, fontsize) {
+            var node = new cc.Node("GetTextHeight");
+            var labelTmp = node.addComponent(cc.Label);
+
+            labelTmp.fontSize = fontsize;
+            labelTmp.string = text;
+            //labelTmp.string = "A我";
+
+            labelTmp.overflow = cc.Label.Overflow.RESIZE_HEIGHT;
+            cc.director.getScene().addChild(node);
+            // node.active = false; 
+
+            var size = labelTmp.node.getContentSize();
+            var h = size.height;
+            // h = node.width;
+            cc.log("labelTmp GetTextHeight h= " + h + " size=" + size + " fontsize=" + fontsize);
+
+
+            node.removeFromParent(true);
+            return h;
+        },
 
         appSceneMain: null,
 

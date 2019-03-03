@@ -51,16 +51,16 @@ cc.Class({
 
 
         var x, y, w, h;
-        w = 1024;
-        var node = new cc.Node("hpText");
-        this.labelTmp = node.addComponent(cc.Label); 
-        this.labelTmp.fontSize = 100;
-        this.labelTmp.string = name;
-        this.labelTmp.overflow = cc.Label.Overflow.CLAMP;
-        this.node.addChild(node);
-        cc.log("labelTmp = " + this.labelTmp.node.getContentSize());
+        //w = 1024;
+        var fontsize = this.textName.fontSize;
+        w = cc.Common.GetTextWidth(name, this.textName.fontSize) + fontsize;
+        //  var hteXT = cc.Common.GetTextHeight(name,this.textName.fontSize); 
         h = this.imageNameBg.node.getContentSize().height;
         this.imageNameBg.node.setContentSize(w, h);
+    },
+
+    start() {
+        var hteXT = cc.Common.GetTextHeight(this.textName.string, this.textName.fontSize);
     },
 
     LayOut: function () {
@@ -78,7 +78,7 @@ cc.Class({
         size = this.textName.node.getContentSize();
         cc.log("size TextName= " + size);
 
-        cc.log("labelTmp2 = " + this.labelTmp.node.getContentSize());
+
     },
 
 });
