@@ -27,6 +27,7 @@ cc.Class({
             default: null,
             type: cc.Button
         },
+
     },
     onLoad: function () {
         this._super();
@@ -40,7 +41,7 @@ cc.Class({
         this.UnifyButtonSprite(this.btnShapeColor);
         this.UnifyButtonSprite(this.btnBoard);
         cc.GameManager.main().ParseGuanka(null);
-        
+
         if (cc.Common.main().isAndroid) {
 
         }
@@ -76,37 +77,23 @@ cc.Class({
 
         // }.bind(this));
 
-
-
-
-        // {
-
-
-        //     var xhr = new XMLHttpRequest();
-        //     xhr.onreadystatechange = function () {
-        //         cc.log("xhr.readyState  " + xhr.readyState);
-        //         cc.log("xhr.status  " + xhr.status);
-        //         if (xhr.readyState === 4) {
-        //             if (xhr.status === 200) {
-        //                 //responseType一定要在外面设置
-        //                 // xhr.responseType = 'arraybuffer'; 
-        //                 this.saveFile(xhr.response, path);
-        //             } else {
-
-        //             }
-        //         }
-        //     }.bind(this);
-        //     //responseType一定要在外面设置
-        //     xhr.responseType = 'arraybuffer';
-        //     xhr.open("GET", url, true);
-        //     xhr.send();
-        // }
+        this.LayOut();
     },
 
 
 
 
     LayOut: function () {
+        this._super();
+        var size = this.node.getContentSize();
+        var x, y, w, h;
+        //layoutbtn:
+        x = 0;
+        y = -size.height / 4;
+        this.layoutBtn.setPosition(x, y);
+
+       
+
     },
     GotoGameByMode: function (mode) {
         //AudioPlay.main.PlayFile(AppCommon.AUDIO_BTN_CLICK);

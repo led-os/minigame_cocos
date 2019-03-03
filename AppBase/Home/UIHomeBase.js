@@ -11,11 +11,11 @@ cc.Class({
             default: null,
             type: cc.Button
         },
-        objTopBar: {
+        topBar: {
             default: null,
             type: cc.Node
         },
-        objLayoutBtn: {
+        layoutBtn: {
             default: null,
             type: cc.Node
         },
@@ -34,7 +34,7 @@ cc.Class({
         var x, y, w, h;
         var name = cc.Language.main().GetString("APP_NAME");
         this.textName.string = name;
-        cc.Tts.Speak(name,true);
+        cc.Tts.Speak(name, true);
 
         var strImage = cc.AppRes.IMAGE_HOME_BG;
         cc.TextureCache.main.Load(strImage, function (err, tex) {
@@ -44,27 +44,41 @@ cc.Class({
                 return;
             }
             this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+
+
             this.LayOut();
         }.bind(this));
 
 
-        strImage = "Common/UI/UIKit/barbg";
-        cc.TextureCache.main.Load(strImage, function (err, tex) {
-            //cc.url.raw('res/textures/content.png')
-            if (err) {
-                cc.log(err.message || err);
-                return;
-            }
-            this.imageNameBg.spriteFrame = new cc.SpriteFrame(tex);
-            this.LayOut();
-        }.bind(this));
-
-
-
+        var x, y, w, h;
+        w = 1024;
+        var node = new cc.Node("hpText");
+        this.labelTmp = node.addComponent(cc.Label); 
+        this.labelTmp.fontSize = 100;
+        this.labelTmp.string = name;
+        this.labelTmp.overflow = cc.Label.Overflow.CLAMP;
+        this.node.addChild(node);
+        cc.log("labelTmp = " + this.labelTmp.node.getContentSize());
+        h = this.imageNameBg.node.getContentSize().height;
+        this.imageNameBg.node.setContentSize(w, h);
     },
 
     LayOut: function () {
         //  LayoutScale.ScaleImage(this.imageBg,true);
+
+        var size = this.node.getContentSize();
+        var x, y, w, h;
+        //layoutbtn:
+        x = 0;
+        y = size.height / 4;
+
+        this.imageNameBg.node.setPosition(x, y);
+
+        //TextName
+        size = this.textName.node.getContentSize();
+        cc.log("size TextName= " + size);
+
+        cc.log("labelTmp2 = " + this.labelTmp.node.getContentSize());
     },
 
 });

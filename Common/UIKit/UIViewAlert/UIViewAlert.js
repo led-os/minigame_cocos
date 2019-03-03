@@ -34,12 +34,7 @@ var UIViewAlert = cc.Class({
 
             textBtn = cc.Common.GetButtonText(this.btnNo);
             textBtn.string = no;
-
-            // var btnText = this.btnYes.getComponent(cc.Label);//Common.GetButtonText(btnYes);
-            //btnText.string = yes;
-
-            // btnText = this.btnNo.getComponent(cc.Label);//Common.GetButtonText(btnYes);
-            //btnText.string = no;
+ 
 
             // var strWYes = Common.GetButtonTextWidth(btnYes, strYes);
             // var strWNo = Common.GetButtonTextWidth(btnNo, strNo);
