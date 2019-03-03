@@ -3,8 +3,8 @@ var UIViewController = require("UIViewController");
 var UIBoard = require("UIBoard");
 //var ShapeColorItemInfo = require("ShapeColorItemInfo");
 var UIView = require("UIView");
-const renderEngine = cc.renderer.renderEngine;
-const renderer = renderEngine.renderer;
+
+
 //weixin小程序appid: wxc6734d6401f5a3db
 //cocos: wx6ac3f5090a6b99c5
 var GameShapeColor = cc.Class({
@@ -63,22 +63,11 @@ var GameShapeColor = cc.Class({
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
 
-        this.initShaders();
         var ev = this.node.addComponent(cc.UITouchEvent);
         ev.callBackTouch = this.OnUITouchEvent.bind(this);
 
     },
 
-    initShaders() {
-        if (GameShapeColor.isShaderInited) {
-            return;
-        }
-        require("SpriteHook").init();
-        var ShaderLib = require("ShaderLib");
-        ShaderLib.addShader(require("ShaderShapeColor"));
-        GameShapeColor.isShaderInited = true;
-        // TODO: 加更多Shader
-    },
     Init: function () {
     },
 
@@ -882,6 +871,8 @@ var GameShapeColor = cc.Class({
         }
         if (is_add_shader == true) {
             {
+                const renderEngine = cc.renderer.renderEngine;
+                const renderer = renderEngine.renderer;
                 const name = 'ShaderShapeColor';
                 let mat = sprite.getMaterial(name);
                 if (!mat) {

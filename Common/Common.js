@@ -175,6 +175,12 @@ var Common = cc.Class({
             var str = value.toString();
             cc.sys.localStorage.setItem(key, str);
         },
+
+        GetButtonText: function (btn) {
+            return btn.node.getChildByName("Label").getComponent(cc.Label);
+        },
+
+
         appSceneMain: null,
 
         // _appSceneBase: null,
@@ -229,7 +235,7 @@ var Common = cc.Class({
     GetAppVersion: function () {
         return "ver 1.0.0";
     },
-    
+
 
 });
 

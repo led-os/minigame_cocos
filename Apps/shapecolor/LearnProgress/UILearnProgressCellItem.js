@@ -2,8 +2,7 @@ var UIView = require("UIView");
 var UICellItemBase = require("UICellItemBase");
 var GameViewController = require("GameViewController");
 var GameShapeColor = require("GameShapeColor");
-const renderEngine = cc.renderer.renderEngine;
-const renderer = renderEngine.renderer;
+
 
 var UILearnProgressCellItem = cc.Class({
     extends: UICellItemBase,
@@ -33,8 +32,20 @@ var UILearnProgressCellItem = cc.Class({
 
     onLoad: function () {
         this._super();
-        this.initShaders();
         this.colorSel = cc.Color.RED;
+    },
+
+    update() {
+        const mat = this.imageIcon.getCurrMaterial();
+        if (!mat) {
+            return;
+        }
+
+        // if (["rainheart", "wave", "Glowing", "Water"].includes(mat.name)) {
+        //     const now = Date.now();
+        //     const time = (now - this._start) / 1000;
+        //     mat.setParamValue('iTime', time);
+        // }
     },
 
     init: function init(index, data, reload, group) {
@@ -54,21 +65,11 @@ var UILearnProgressCellItem = cc.Class({
         }
 
     },
-    clicked: function clicked() {
+    clicked: function () {
         var uiViewParent = this.GetUIViewParent();// 
 
     },
 
-    initShaders() {
-        if (GameShapeColor.isShaderInited) {
-            return;
-        }
-        require("SpriteHook").init();
-        var ShaderLib = require("ShaderLib");
-        ShaderLib.addShader(require("ShaderShapeColor"));
-        GameShapeColor.isShaderInited = true;
-        // TODO: 加更多Shader
-    },
     UpdateIcon: function (tex, color) {
         // Texture2D texNew = GetIconFillColor(tex, color);
         //imageIcon.sprite = LoadTexture.CreateSprieFromTex(texNew);
@@ -77,7 +78,8 @@ var UILearnProgressCellItem = cc.Class({
         //rctan.sizeDelta = new Vector2(texNew.width, texNew.height);
 
         {
-
+            const renderEngine = cc.renderer.renderEngine;
+            const renderer = renderEngine.renderer;
             const name = 'ShaderShapeColor';
             let mat = this.imageIcon.getMaterial(name);
             if (!mat) {
@@ -94,7 +96,31 @@ var UILearnProgressCellItem = cc.Class({
             cc.log("colorShow=" + colorShow);
             mat.setParamValue("colorShow", colorShow);
         }
+
+        //this.onClickGrowing();
     },
+
+
+    onClickGrowing: function () {
+        const renderEngine = cc.renderer.renderEngine;
+        const renderer = renderEngine.renderer;
+        const name = 'Glowing';
+        this._start = Date.now();
+        let mat = this.imageIcon.getMaterial(name);
+        if (!mat) {
+            const CustomMaterial = require("CustomMaterial");
+            mat = new CustomMaterial(name, [
+                { name: 'iResolution', type: renderer.PARAM_FLOAT3 },
+                { name: 'iTime', type: renderer.PARAM_FLOAT },
+            ]);
+            this.imageIcon.setMaterial(name, mat);
+        }
+        this.imageIcon.node.color = new cc.Color().fromHEX("#1A7ADC")
+        this.imageIcon.activateMaterial(name);
+        var iResolution = new cc.Vec3(this.imageIcon.node.width, this.imageIcon.node.height, 0);
+        mat.setParamValue("iResolution", iResolution);
+    },
+
     UpdateItem: function (info) {
 
         var game = GameViewController.main().gameBase;

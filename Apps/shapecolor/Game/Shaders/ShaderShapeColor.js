@@ -1,4 +1,4 @@
-// Shader: 描边
+
 
 var shader = {
     name: "ShaderShapeColor",

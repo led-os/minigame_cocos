@@ -45,6 +45,9 @@ cc.Class({
 
         }
 
+        cc.ShaderManager.main().Add(require("ShaderShapeColor"));
+        cc.ShaderManager.main().Add(require("Glowing"));
+
         //var ev = this.node.addComponent(cc.UITouchEvent);
 
         // cc.AudioPlay.main().PlayFile("App/Audio/BtnClick");

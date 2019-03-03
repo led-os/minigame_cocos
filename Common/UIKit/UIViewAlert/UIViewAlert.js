@@ -29,10 +29,16 @@ var UIViewAlert = cc.Class({
             var strYes = yes;
             var strNo = no;
 
-           // var btnText = this.btnYes.getComponent(cc.Label);//Common.GetButtonText(btnYes);
+            var textBtn = cc.Common.GetButtonText(this.btnYes);
+            textBtn.string = yes;
+
+            textBtn = cc.Common.GetButtonText(this.btnNo);
+            textBtn.string = no;
+
+            // var btnText = this.btnYes.getComponent(cc.Label);//Common.GetButtonText(btnYes);
             //btnText.string = yes;
 
-           // btnText = this.btnNo.getComponent(cc.Label);//Common.GetButtonText(btnYes);
+            // btnText = this.btnNo.getComponent(cc.Label);//Common.GetButtonText(btnYes);
             //btnText.string = no;
 
             // var strWYes = Common.GetButtonTextWidth(btnYes, strYes);
