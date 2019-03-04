@@ -33,7 +33,8 @@ cc.Class({
             default: [],
             type: cc.Button
         },
-        timeAction: 0.5,
+        timeAction: 0.3,
+        isActionFinish: false,
     },
     onLoad: function () {
         this._super();
@@ -52,6 +53,7 @@ cc.Class({
         this.listBtns.push(this.btnColor);
         this.listBtns.push(this.btnShapeColor);
 
+        this.isActionFinish = false;
         cc.GameManager.main().ParseGuanka(null);
 
         if (cc.Common.main().isAndroid) {
@@ -167,16 +169,44 @@ cc.Class({
 
         cc.log("RunActionBtn:pt=" + pt + " idx=" + this.indexAction);
 
-        var action = cc.moveTo(duration, x_end, y_end);
+        var action = cc.moveTo(duration, x_end, y_end).easing(cc.easeOut(3.0));
 
         var fun = cc.callFunc(function () {
             if (this.indexAction < this.listBtns.length) {
                 this.RunActionBtn();
                 this.indexAction++;
+            } else {
+                this.isActionFinish = true;
+                this.RunActionUpDown();
             }
         }.bind(this));
         var seq = cc.sequence([action, fun]);
         btn.node.runAction(seq);
+    },
+
+    //上下晃动动画
+    RunActionUpDown() {
+        //动画：https://blog.csdn.net/agsgh/article/details/79447090
+        //iTween.ScaleTo(info.obj, new Vector3(0f, 0f, 0f), 1.5f);
+        var duration = this.timeAction * 4;
+        var size = this.node.getContentSize();
+        var w, h;
+        // var btn = this.listBtns[this.indexAction];
+
+        // var pt = this.GetPosOfBtn(btn, this.indexAction);
+        // x_end = pt.x;
+        // y_end = pt.y;
+
+        for (var i = 0; i < this.listBtns.length; i++) {
+            var btn = this.listBtns[i];
+            h = btn.node.getBoundingBox().height;
+            var y_step = h / 10;
+            var actionUp = cc.moveBy(duration, 0, y_step);
+            var actionDown = cc.moveBy(duration, 0, -y_step);
+            var time = cc.delayTime(0.5 * i);
+            var seq = cc.sequence([time, actionUp, actionUp.reverse(), actionDown, actionDown.reverse()]);
+            btn.node.runAction(seq.repeatForever());
+        }
     },
 
     GotoGameByMode: function (mode) {
@@ -202,13 +232,21 @@ cc.Class({
     },
 
     OnClickBtnShape: function (event, customEventData) {
-        //  this.RunActionImageName(1.0, null);
-        //  this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE);
+        if (!this.isActionFinish) {
+            return;
+        }
+        this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE);
     },
     OnClickBtnColor: function (event, customEventData) {
+        if (!this.isActionFinish) {
+            return;
+        }
         this.GotoGameByMode(GameShapeColor.GAME_MODE_COLOR);
     },
     OnClickBtnShapeColor: function (event, customEventData) {
+        if (!this.isActionFinish) {
+            return;
+        }
         this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE_COLOR);
     },
     OnClickBtnBoard: function (event, customEventData) {

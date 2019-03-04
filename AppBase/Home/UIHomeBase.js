@@ -116,7 +116,7 @@ cc.Class({
         this.imageNameBg.node.setPosition(x_start, y_start);
         cc.log("RunActionImageName:x_start=" + x_start + " y_start=" + y_start + " x_end=" + x_end + " y_end=" + y_end + " size=" + size);
 
-        var action = cc.moveTo(duration, x_end, y_end);
+        var action = cc.moveTo(duration, x_end, y_end).easing(cc.easeOut(3.0));
         //delay延时
         var time = cc.delayTime(0.1);
 
