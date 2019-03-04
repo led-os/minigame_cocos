@@ -4,7 +4,7 @@ var AppType = cc.Class({
     statics: {
         // 声明静态变量 
         PINTU: "pintu",
-        SHAPECOLOR: "shapecolor",
+        SHAPECOLOR: "ShapeColor",
         STICKER: "sticker",
         NONGCHANG: "nongchang",
     },

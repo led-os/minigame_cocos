@@ -87,12 +87,15 @@ cc.Class({
         this._super();
         var size = this.node.getContentSize();
         var x, y, w, h;
+
+        var pt = this.imageNameBg.node.getPosition();
+        var y_top = pt.y - this.imageNameBg.node.getContentSize().height / 2;
+        var y_bottom = -size.height / 2;
+
         //layoutbtn:
         x = 0;
-        y = -size.height / 4;
+        y = (y_top + y_bottom) / 2;
         this.layoutBtn.setPosition(x, y);
-
-       
 
     },
     GotoGameByMode: function (mode) {

@@ -19,29 +19,34 @@ var UIViewAlert = cc.Class({
         this._super();
         this.UnifyButtonSprite(this.btnYes);
         this.UnifyButtonSprite(this.btnNo);
+        //this.imageBg.node.addComponent(cc.UITouchEvent);
     },
 
     SetText: function (title, msg, yes, no) {
         this.textTitle.string = title;
         this.textMsg.string = msg;
-
+        var w = 0, h = 0, fontsize = 0;
         {
             var strYes = yes;
             var strNo = no;
 
             var textBtn = cc.Common.GetButtonText(this.btnYes);
+
+            fontsize = textBtn.fontSize;
+            var w_yes = cc.Common.GetTextWidth(yes, fontsize) + fontsize/2;
+            var w_no = cc.Common.GetTextWidth(no, fontsize) + fontsize/2;
+
+            w = Math.max(w_yes, w_no);
+
             textBtn.string = yes;
+            h = this.btnYes.node.getContentSize().height;
+            this.btnYes.node.setContentSize(w, h);
 
             textBtn = cc.Common.GetButtonText(this.btnNo);
-            textBtn.string = no;
- 
+            textBtn.string = no; 
+            h = this.btnNo.node.getContentSize().height;
+            this.btnNo.node.setContentSize(w, h);
 
-            // var strWYes = Common.GetButtonTextWidth(btnYes, strYes);
-            // var strWNo = Common.GetButtonTextWidth(btnNo, strNo);
-            // var oft = btnText.fontSize;
-            //var strW = Mathf.Max(strWYes, strWNo) + oft;
-            //Common.SetButtonTextWidth(btnYes, strYes, strW);
-            //Common.SetButtonTextWidth(btnNo, strNo, strW);
         }
 
     },

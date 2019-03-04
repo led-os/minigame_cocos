@@ -65,13 +65,13 @@ cc.Class({
 
     LayOut: function () {
         //  LayoutScale.ScaleImage(this.imageBg,true);
+        var topbar_h = this.topBar.getContentSize().height;
 
         var size = this.node.getContentSize();
         var x, y, w, h;
         //layoutbtn:
         x = 0;
-        y = size.height / 4;
-
+        y = (size.height / 2 - topbar_h) / 2;
         this.imageNameBg.node.setPosition(x, y);
 
         //TextName
