@@ -100,7 +100,7 @@ cc.Class({
     },
 
 
-    RunActionImageName(duration, callback) {
+    RunActionImageName: function (duration, callback) {
         //动画：https://blog.csdn.net/agsgh/article/details/79447090
         //iTween.ScaleTo(info.obj, new Vector3(0f, 0f, 0f), 1.5f);
         // var dur = 1.0;
@@ -119,6 +119,7 @@ cc.Class({
         var action = cc.moveTo(duration, x_end, y_end);
         //delay延时
         var time = cc.delayTime(0.1);
+
         var fun = cc.callFunc(function () {
             if (callback != null) {
                 callback();
