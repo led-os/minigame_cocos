@@ -78,10 +78,13 @@ cc.Class({
         // }.bind(this));
 
         this.LayOut();
+
+        this.RunActionImageName(1.0, null);
     },
 
-
-
+    start: function () {
+        // this.RunActionImageName(1.0, null);
+    },
 
     LayOut: function () {
         this._super();
@@ -98,6 +101,8 @@ cc.Class({
         this.layoutBtn.setPosition(x, y);
 
     },
+
+
     GotoGameByMode: function (mode) {
         //AudioPlay.main.PlayFile(AppCommon.AUDIO_BTN_CLICK);
         cc.GameManager.gameMode = mode;
@@ -121,7 +126,8 @@ cc.Class({
     },
 
     OnClickBtnShape: function (event, customEventData) {
-        this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE);
+        this.RunActionImageName(1.0, null);
+        //  this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE);
     },
     OnClickBtnColor: function (event, customEventData) {
         this.GotoGameByMode(GameShapeColor.GAME_MODE_COLOR);
