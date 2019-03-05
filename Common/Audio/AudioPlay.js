@@ -24,7 +24,7 @@ var AudioPlay = cc.Class({
     PlayFile: function (file) {
         cc.AudioCache.main.Load(file, function (err, audioClip) {
             if (err) {
-                cc.log(err.message || err);
+                cc.Debug.Log(err.message || err);
                 return ret;
             }
             this.PlayAudioClip(audioClip);
@@ -51,7 +51,7 @@ var AudioPlay = cc.Class({
             if (cc.sys.isNative) {
                 //https://cocos2d-x.org/reference/html5-js/V3.0/symbols/jsb.fileUtils.html
                 var path = jsb.fileUtils.getWritablePath() + "tmp_audio.mp3";
-                cc.log('PATH: ' + path);
+                cc.Debug.Log('PATH: ' + path);
                 cc.FileUtil.SaveFile(data, path);
                 this.PlayRawFile(path);
                 //jsb.fileUtils.removeFile(path);
@@ -65,7 +65,7 @@ var AudioPlay = cc.Class({
         if (ret) {
             cc.AudioCache.main.Load("App/Audio/Bg", function (err, audioClip) {
                 if (err) {
-                    cc.log(err.message || err);
+                    cc.Debug.Log(err.message || err);
                     return ret;
                 }
                 this.PlayMusic(audioClip);

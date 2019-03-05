@@ -96,7 +96,7 @@ var UILearnProgress = cc.Class({
             this.oneCellNum = this.oneCellNum / 2;
         }
 
-        cc.log("this.listShape=" + game.listGuanka.length);
+        cc.Debug.Log("this.listShape=" + game.listGuanka.length);
 
         this.tableView.oneCellNum = this.oneCellNum;
         this.tableView.cellHeight = 256;

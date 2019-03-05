@@ -71,14 +71,14 @@ cc.Class({
         // }.bind(this));
 
         // cc.loader.load({ url: 'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=你要转换的文字 ', type: 'mp3' }, function (err, data) {
-        //     // cc.log('Should load a texture from RESTful API by specify the type: ' + (tex instanceof cc.Texture2D));
+        //     // cc.Debug.Log('Should load a texture from RESTful API by specify the type: ' + (tex instanceof cc.Texture2D));
 
         //     if (err) {
-        //         cc.log("cc.loader.load err start");
-        //         cc.log(err.message || err);
-        //         cc.log("cc.loader.load err end");
+        //         cc.Debug.Log("cc.loader.load err start");
+        //         cc.Debug.Log(err.message || err);
+        //         cc.Debug.Log("cc.loader.load err end");
         //     } else {
-        //         cc.log("cc.loader.load");
+        //         cc.Debug.Log("cc.loader.load");
         //         //cc.AudioPlay.main().PlayAudioClip(audio);
         //         var no = new cc.Node();
         //         var component = no.addComponent(cc.AudioSource);
@@ -99,6 +99,13 @@ cc.Class({
             this.RunActionBtn();
         }.bind(this)
         );
+
+        var key = "keyddd2";
+        var v = cc.sys.localStorage.getItem(key);
+        cc.Debug.Log("testkey=" + key + " v=" + v);
+        cc.sys.localStorage.setItem(key, true);
+        var v1 = cc.sys.localStorage.getItem(key);
+        cc.Debug.Log("testkey2=" + key + " v=" + v1);
     },
 
     start: function () {
@@ -167,7 +174,7 @@ cc.Class({
         y_end = pt.y;
 
 
-        cc.log("RunActionBtn:pt=" + pt + " idx=" + this.indexAction);
+        cc.Debug.Log("RunActionBtn:pt=" + pt + " idx=" + this.indexAction);
 
         var action = cc.moveTo(duration, x_end, y_end).easing(cc.easeOut(3.0));
 

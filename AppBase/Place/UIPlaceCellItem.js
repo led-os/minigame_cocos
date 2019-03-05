@@ -32,7 +32,7 @@ cc.Class({
         //  this.node.clicked = this.OnItemclicked.bind(this);
     },
     clicked: function () {
-        cc.log('下标:' + this.textTitle.string);
+        cc.Debug.Log('下标:' + this.textTitle.string);
         // if(this.onClickCallBack!=null)
         // {
         //     this.onClickCallBack(this);
@@ -41,7 +41,7 @@ cc.Class({
 
         if (this.target.controller != null) {
             var navi = this.target.controller.naviController;
-            cc.log('goto GuankaViewController');
+            cc.Debug.Log('goto GuankaViewController');
             navi.Push(GuankaViewController.main());
         }
     }

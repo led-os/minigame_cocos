@@ -46,7 +46,7 @@ cc.Class({
     CreateBar: function () {
 
         //this.listItem = new Array();
-        cc.log("NaviViewController CreateBar");
+        cc.Debug.Log("NaviViewController CreateBar");
         var node = cc.instantiate(this.uiNaviBarPrefab);
         this.uiNaviBar = node.getComponent(UINaviBar);
         this.uiNaviBar.SetController(this);
@@ -98,9 +98,9 @@ cc.Class({
         this.DestroyController();
 
         this.rootController = this.listController[this.listController.length - 1];
-        cc.log("UpdateController this.listController.length=" + this.listController.length);
+        cc.Debug.Log("UpdateController this.listController.length=" + this.listController.length);
         if (this.objContent != null) {
-            cc.log("UpdateController SetViewParent");
+            cc.Debug.Log("UpdateController SetViewParent");
             //this.rootController = controller;
             this.rootController.SetViewParent(this.objContent);
             //controller.LayOutView();

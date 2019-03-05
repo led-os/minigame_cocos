@@ -53,7 +53,7 @@ var PopViewController = cc.Class({
         //     iDelegate.OnPopViewControllerDidClose(this);
         // }
 
-        cc.log("PopViewController Close");
+        cc.Debug.Log("PopViewController Close");
 
         if (this._closeCallback) {
             this._closeCallback(this);

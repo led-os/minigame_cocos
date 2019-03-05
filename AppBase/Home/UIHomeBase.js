@@ -43,7 +43,7 @@ cc.Class({
         cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
-                cc.log(err.message || err);
+                cc.Debug.Log(err.message || err);
                 return;
             }
             this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
@@ -96,7 +96,7 @@ cc.Class({
 
         //TextName
         size = this.textName.node.getContentSize();
-        cc.log("size TextName= " + size);
+        cc.Debug.Log("size TextName= " + size);
 
 
     },
@@ -116,7 +116,7 @@ cc.Class({
         x_start = 0;
         y_start = size.height / 2 + h;
         this.imageNameBg.node.setPosition(x_start, y_start);
-        cc.log("RunActionImageName:x_start=" + x_start + " y_start=" + y_start + " x_end=" + x_end + " y_end=" + y_end + " size=" + size);
+        cc.Debug.Log("RunActionImageName:x_start=" + x_start + " y_start=" + y_start + " x_end=" + x_end + " y_end=" + y_end + " size=" + size);
 
         var action = cc.moveTo(duration, x_end, y_end).easing(cc.easeOut(3.0));
         //delay延时

@@ -55,11 +55,11 @@ var Language = cc.Class({
     },
     Init: function (file) {
         this.ltLocalization = new LTLocalization();
-        //cc.log("isLoadAll=loadRes start");
+        //cc.Debug.Log("isLoadAll=loadRes start");
         cc.loader.loadRes(file, function (err, file) {
-            //cc.log(file.text);
+            //cc.Debug.Log(file.text);
             this.ltLocalization.ReadData(file.text);
-            // cc.log("isLoadAll=loadRes finish callback");
+            // cc.Debug.Log("isLoadAll=loadRes finish callback");
             var id = "";
             if (this == Language._common) {
                 id = Language.LANGUAGE_COMMON;
@@ -71,16 +71,16 @@ var Language = cc.Class({
                 id = Language.LANGUAGE_GAME;
             }
 
-            // cc.log("id=" + id);
+            // cc.Debug.Log("id=" + id);
             var info = this.GetLoadInfoById(id);
             if (info != null) {
                 info.isLoad = true;
-                // cc.log("id= info.isLoad=" + info.isLoad);
+                // cc.Debug.Log("id= info.isLoad=" + info.isLoad);
             }
             this.CheckAllLoad();
         }.bind(this));
 
-        //cc.log("isLoadAll=loadRes end");
+        //cc.Debug.Log("isLoadAll=loadRes end");
     },
     CheckAllLoad: function () {
         var isLoadAll = true;
@@ -89,15 +89,15 @@ var Language = cc.Class({
                 isLoadAll = false;
             }
         }
-        // cc.log("isLoadAll=" + isLoadAll);
+        // cc.Debug.Log("isLoadAll=" + isLoadAll);
         if (isLoadAll == true) {
-            // cc.log("isLoadAll= 1 " + isLoadAll);
+            // cc.Debug.Log("isLoadAll= 1 " + isLoadAll);
             if (Language.callbackFinish != null) {
                 Language.loadInfo.isLoad = true;
-                // cc.log("isLoadAll= 2 " + isLoadAll);
+                // cc.Debug.Log("isLoadAll= 2 " + isLoadAll);
                 Language.callbackFinish(this);
             } else {
-                cc.log("isLoadAll= callbackFinish is null ");
+                cc.Debug.Log("isLoadAll= callbackFinish is null ");
             }
         }
     },
@@ -129,11 +129,11 @@ var Language = cc.Class({
 
         var str = "0";
         if (this.IsContainsKey(key)) {
-            // cc.log("GetString: IsContainsKey key=" + key);
+            // cc.Debug.Log("GetString: IsContainsKey key=" + key);
             str = this.ltLocalization.GetText(key);
         }
         else {
-            // cc.log("GetString: IsContainsKey not key=" + key);
+            // cc.Debug.Log("GetString: IsContainsKey not key=" + key);
             if (Language._common != null) {
                 str = Language._common.ltLocalization.GetText(key);
             }
@@ -164,7 +164,7 @@ Language._common = null;
 Language._main = null;
 Language.main = function () {
     if (!Language._main) {
-        cc.log("Language _main is null");
+        cc.Debug.Log("Language _main is null");
         var fileName = "";
 
         Language._main = new Language();
@@ -186,7 +186,7 @@ Language.main = function () {
         Language._game.SetLanguage(cc.sys.LANGUAGE_CHINESE);
 
     } else {
-        cc.log("Language _main is not null");
+        cc.Debug.Log("Language _main is not null");
     }
     return Language._main;
 }

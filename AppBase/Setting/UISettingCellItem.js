@@ -15,6 +15,8 @@ cc.Class({
     onLoad: function () {
         this._super();
         this.UnifyButtonSprite(this.btnSwitch);
+        this.btnSwitch.pressedSprite = null;
+        this.btnSwitch.hoverSprite = null;
     },
 
     init: function init(index, data, reload, group) {
@@ -34,7 +36,7 @@ cc.Class({
 
     clicked: function () {
         var uiViewParent = this.GetUIViewParent();//  
-        cc.log("tag = " + this.info.tag);
+        cc.Debug.Log("tag = " + this.info.tag);
         switch (this.info.tag) {
             case UISetting.TAG_SETTING_COMMENT:
                 {
@@ -85,16 +87,16 @@ cc.Class({
         if (isSel) {
             strImage = cc.AppRes.IMAGE_BTN_SWITCH_SEL;
         }
-        cc.log("UpdateBtnSwitch issel=" + isSel + " strImage=" + strImage);
+        // cc.Debug.Log("UpdateBtnSwitch issel=" + isSel + " strImage=" + strImage);
         cc.TextureCache.main.Load2(strImage, false, function (err, tex) {
             if (err) {
-                cc.log("UpdateBtnSwitch err");
-                cc.log(err.message || err);
+                cc.Debug.Log("UpdateBtnSwitch err");
+                cc.Debug.Log(err.message || err);
                 return;
             }
-            cc.log("UpdateBtnSwitch spriteFrame");
+            //cc.Debug.Log("UpdateBtnSwitch spriteFrame");
             if (tex == null) {
-                cc.log("UpdateBtnSwitch spriteFrame=null");
+                cc.Debug.Log("UpdateBtnSwitch spriteFrame=null");
             }
             this.btnSwitch.node.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(tex);
         }.bind(this));
@@ -104,17 +106,19 @@ cc.Class({
     OnClickBtnSwitch: function (event, customEventData) {
         if (this.info.tag == UISetting.TAG_SETTING_BACKGROUND_MUSIC) {
             var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
-            cc.log("UpdateBtnSwitch read ret=" + ret);
+            cc.Debug.Log("UpdateBtnSwitch read ret=" + ret);
             var v = !ret;
-            // if (ret == "true") {
-            //     v = false;
-            //     cc.log("UpdateBtnSwitch 1 value=" + v);
-            // } else {
+            // var v = true;
+            // if (ret == false) {
             //     v = true;
-            //     cc.log("UpdateBtnSwitch 2 value=" + v);
+            // } else {
+            //     v = false;
             // }
-            cc.Common.SetItemOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, v);
-            cc.log("UpdateBtnSwitch value=" + v);
+
+            cc.Debug.Log("UpdateBtnSwitch value=" + v);
+
+            cc.Common.SetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, v);
+
             this.UpdateBtnSwitch(v);
             if (v) {
                 cc.AudioPlay.main().PlayBgMusic();

@@ -26,7 +26,7 @@ var PrefabCache = cc.Class({
 
         if (this.dicItem.Contains(key) == true) {
             ret = this.dicItem.Get(key);
-            cc.log("PrefabCache  load  from cache");
+            cc.Debug.Log("PrefabCache  load  from cache");
             if (completeCallback) {
                 completeCallback(null, ret);
             }
@@ -35,14 +35,14 @@ var PrefabCache = cc.Class({
             cc.loader.loadRes(filepath, function (err, prefab) {
                 //cc.url.raw('res/textures/content.png')
                 if (err) {
-                    cc.log("PrefabCache loadRes fail");
-                    cc.log(err.message || err);
+                    cc.Debug.Log("PrefabCache loadRes fail");
+                    cc.Debug.Log(err.message || err);
                     if (completeCallback) {
                         completeCallback(err, prefab);
                     }
                     return ret;
                 }
-                cc.log("PrefabCache loadRes ok");
+                cc.Debug.Log("PrefabCache loadRes ok");
                 if (prefab != null) {
                     this.dicItem.Add(key, prefab);
                 }

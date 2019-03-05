@@ -85,10 +85,10 @@ strVariable.substring(start，end )：返回位于String对象中指定位置的
         SaveFile: function (data, filepath) {
             if (cc.sys.isNative) {
                 if (jsb.fileUtils.writeDataToFile(new Uint8Array(data), filepath)) {
-                    cc.log(' write file succeed.');
+                    cc.Debug.Log(' write file succeed.');
 
                 } else {
-                    cc.log(' write file failed.');
+                    cc.Debug.Log(' write file failed.');
                 }
             }
 

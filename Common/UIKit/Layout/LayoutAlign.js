@@ -43,7 +43,7 @@ var LayoutAlign = cc.Class({
 
 
     onLoad: function () {
-        cc.log("onLoad this.alignType=" + this.alignType);
+        cc.Debug.Log("onLoad this.alignType=" + this.alignType);
         this.UpdateType(this.alignType);
 
     },
@@ -74,7 +74,7 @@ var LayoutAlign = cc.Class({
         h = size.height;
         x = this.node.getPosition().x;
         y = this.node.getPosition().y;
-        cc.log("UpdateType this.alignType=" + this._alignType + " w=" + w + " h=" + h + " x=" + x + " y=" + y + " w_parent=" + w_parent + " h_parent=" + h_parent);
+        cc.Debug.Log("UpdateType this.alignType=" + this._alignType + " w=" + w + " h=" + h + " x=" + x + " y=" + y + " w_parent=" + w_parent + " h_parent=" + h_parent);
         //Common.appSceneMain.sizeCanvas.height 
         switch (this._alignType) {
             case AlignType.UP:

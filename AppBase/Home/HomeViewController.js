@@ -22,11 +22,11 @@ var HomeViewController = cc.Class({
 
     },
     Init: function () {
-        cc.log("HomeViewController Init");
+        cc.Debug.Log("HomeViewController Init");
         //  this.LoadPrefab();
     },
     CreateUI: function () {
-        cc.log("HomeViewController CreateUI");
+        cc.Debug.Log("HomeViewController CreateUI");
         var node = cc.instantiate(this.uiPrefab);
         this.ui = node.getComponent(UIHomeBase);
         this.ui.SetController(this);
@@ -36,7 +36,7 @@ var HomeViewController = cc.Class({
         var strPrefabDefault = "Common/Prefab/Home/UIHomeDefault";
        cc.PrefabCache.main.Load(strPrefabDefault, function (err, prefab) {
             if (err) {
-                cc.log(err.message || err);
+                cc.Debug.Log(err.message || err);
                 this.LoadPrefab();
                 return;
             }
@@ -49,10 +49,10 @@ var HomeViewController = cc.Class({
     LoadPrefab: function () {
         var strPrefab = "App/Prefab/Home/UIHome" + cc.Config.main().appType;
 
-        cc.log("HomeViewController LoadPrefab=" + strPrefab);
+        cc.Debug.Log("HomeViewController LoadPrefab=" + strPrefab);
        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.log(err.message || err);
+                cc.Debug.Log(err.message || err);
                 return;
             }
             this.uiPrefab = prefab;
@@ -62,13 +62,13 @@ var HomeViewController = cc.Class({
     },
 
     AppPreLoadDidFinish: function (p) {
-        cc.log("HomeViewController AppPreLoadDidFinish ");
+        cc.Debug.Log("HomeViewController AppPreLoadDidFinish ");
         HomeViewController.isGameHasInit = true;
         this.LoadPrefabDefault();
     },
 
     ViewDidLoad: function () {
-        cc.log("HomeViewController ViewDidLoad");
+        cc.Debug.Log("HomeViewController ViewDidLoad");
         this._super();
 
         //提前加载game prefab
@@ -81,12 +81,12 @@ var HomeViewController = cc.Class({
         } 
     },
     ViewDidUnLoad: function () {
-        cc.log("HomeViewController ViewDidUnLoad");
+        cc.Debug.Log("HomeViewController ViewDidUnLoad");
         this._super();
 
     },
     LayOutView: function () {
-        cc.log("HomeViewController LayOutView");
+        cc.Debug.Log("HomeViewController LayOutView");
         //  base.LayOutView();
 
     },
@@ -101,11 +101,11 @@ HomeViewController._main = null;
 HomeViewController.main = function () {
     // 
     if (!HomeViewController._main) {
-        cc.log("_main is null");
+        cc.Debug.Log("_main is null");
         HomeViewController._main = new HomeViewController();
         HomeViewController._main.Init();
     } else {
-        cc.log("_main is not null");
+        cc.Debug.Log("_main is not null");
     }
 
     return HomeViewController._main;

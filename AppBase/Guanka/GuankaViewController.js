@@ -29,7 +29,7 @@ var GuankaViewController = cc.Class({
         var strPrefabDefault = "Common/Prefab/Guanka/UIGuanka";
        cc.PrefabCache.main.Load(strPrefabDefault, function (err, prefab) {
             if (err) {
-                cc.log(err.message || err);
+                cc.Debug.Log(err.message || err);
                 this.LoadPrefab();
                 return;
             }
@@ -43,7 +43,7 @@ var GuankaViewController = cc.Class({
         var strPrefab = "App/Prefab/Guanka/UIGuanka" + cc.Config.main().appType;
        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.log(err.message || err); 
+                cc.Debug.Log(err.message || err); 
                 return;
             }
             this.uiPrefab = prefab;
@@ -53,17 +53,17 @@ var GuankaViewController = cc.Class({
     },
  
     ViewDidLoad: function () {
-        cc.log("GuankaViewController ViewDidLoad");
+        cc.Debug.Log("GuankaViewController ViewDidLoad");
         this._super();
         this.LoadPrefabDefault();
     },
     ViewDidUnLoad: function () {
-        cc.log("GuankaViewController ViewDidUnLoad");
+        cc.Debug.Log("GuankaViewController ViewDidUnLoad");
         this._super();
 
     },
     LayOutView: function () {
-        cc.log("GuankaViewController LayOutView");
+        cc.Debug.Log("GuankaViewController LayOutView");
         //  base.LayOutView();
 
     },
@@ -86,11 +86,11 @@ GuankaViewController._main = null;
 GuankaViewController.main = function () {
     // 
     if (!GuankaViewController._main) {
-        cc.log("_main is null");
+        cc.Debug.Log("_main is null");
         GuankaViewController._main = new GuankaViewController();
         GuankaViewController._main.Init();
     } else {
-        cc.log("_main is not null");
+        cc.Debug.Log("_main is not null");
     }
 
     return GuankaViewController._main;

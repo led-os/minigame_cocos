@@ -132,26 +132,26 @@ var Config = cc.Class({
 
         //fileName += ".json";
         var filepath = strDir + "/" + fileName;
-        cc.log("config:filepath=" + filepath + " loadInfoId=" + loadInfoId);
+        cc.Debug.Log("config:filepath=" + filepath + " loadInfoId=" + loadInfoId);
 
         //cc.JsonAsset
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {
-                cc.log("config:err=" + err);
+                cc.Debug.Log("config:err=" + err);
                 // return;
             }
 
-            // cc.log("config:rootJson.text=" + rootJson.text);
+            // cc.Debug.Log("config:rootJson.text=" + rootJson.text);
             if (err == null) {
                 this.ParseData(rootJson.json);
             }
 
-            cc.log("config:loadInfoId=" + loadInfoId);
+            cc.Debug.Log("config:loadInfoId=" + loadInfoId);
             var info = this.GetLoadInfoById(loadInfoId);
             if (info != null) {
                 info.isLoad = true;
-                // cc.log("id= info.isLoad=" + info.isLoad);
+                // cc.Debug.Log("id= info.isLoad=" + info.isLoad);
             }
             this.CheckAllLoad();
         }.bind(this));
@@ -159,45 +159,45 @@ var Config = cc.Class({
         /*
                 cc.loader.load(cc.url.raw('resources/config_android.json'), function (err, res) {
                     if (err) {
-                        cc.log("config:" + err);
+                        cc.Debug.Log("config:" + err);
                     } else {
                         var list = res;
         
-                        cc.log("config:load.text=" + res.text);
+                        cc.Debug.Log("config:load.text=" + res.text);
                         this.ParseData(res);
                     }
         
         
-                    // cc.log("id=" + id);
+                    // cc.Debug.Log("id=" + id);
                     var info = this.GetLoadInfoById(id);
                     if (info != null) {
                         info.isLoad = true;
-                        // cc.log("id= info.isLoad=" + info.isLoad);
+                        // cc.Debug.Log("id= info.isLoad=" + info.isLoad);
                     }
                     this.CheckAllLoad();
         
                 }.bind(this));
                 */
 
-        //cc.log("isLoadAll=loadRes end");
+        //cc.Debug.Log("isLoadAll=loadRes end");
     },
 
     GetStringJson: function (json, key, def) {
-        cc.log("GetStringJson key=" + key);
+        cc.Debug.Log("GetStringJson key=" + key);
         if (json == null) {
-            cc.log("GetStringJson json=null");
+            cc.Debug.Log("GetStringJson json=null");
         }
         var str = def;
         var ishave = cc.Common.main().JsonDataContainsKey(json, key);
         if (ishave == true) {
             // str = json.APP_TYPE;
-            cc.log("GetStringJson  JsonDataContainsKey=" + str);
+            cc.Debug.Log("GetStringJson  JsonDataContainsKey=" + str);
         }
         return str;
     },
 
     GetStringCommon: function (key, def) {
-        cc.log("GetStringJson GetStringCommon key=" + key);
+        cc.Debug.Log("GetStringJson GetStringCommon key=" + key);
         return this.GetStringJson(this.rootJsonCommon, key, def);
     },
     GetString: function (key, def) {
@@ -223,27 +223,27 @@ var Config = cc.Class({
                 isLoadAll = false;
             }
         }
-        cc.log("config:isLoadAll=" + isLoadAll);
+        cc.Debug.Log("config:isLoadAll=" + isLoadAll);
         if (isLoadAll == true) {
-            // cc.log("isLoadAll= 1 " + isLoadAll);
+            // cc.Debug.Log("isLoadAll= 1 " + isLoadAll);
             if (Config.callbackFinish != null) {
                 Config.loadInfo.isLoad = true;
-                // cc.log("isLoadAll= 2 " + isLoadAll);
+                // cc.Debug.Log("isLoadAll= 2 " + isLoadAll);
                 Config.callbackFinish(this);
             } else {
-                cc.log("Config isLoadAll= callbackFinish is null ");
+                cc.Debug.Log("Config isLoadAll= callbackFinish is null ");
             }
         }
     },
     ParseData: function (json) {
         if (json == null) {
-            cc.log("config:ParseData=null");
+            cc.Debug.Log("config:ParseData=null");
         }
 
         if (this == Config._main) {
             this.rootJson = json;
             var appid = json.APPID.huawei;
-            cc.log("config:appid=" + appid);
+            cc.Debug.Log("config:appid=" + appid);
         }
 
         if (this == Config._common) {
@@ -251,7 +251,7 @@ var Config = cc.Class({
             Config._main.rootJsonCommon = json;
             var app_name_keyword = json.APP_NAME_KEYWORD;
             var app_type = json.APP_TYPE;
-            cc.log("config:app_name_keyword=" + app_name_keyword + " app_type=" + app_type);
+            cc.Debug.Log("config:app_name_keyword=" + app_name_keyword + " app_type=" + app_type);
         }
 
 
@@ -269,7 +269,7 @@ Config._main = null;
 Config._common = null;
 Config.main = function () {
     if (!Config._main) {
-        cc.log("_main is null");
+        cc.Debug.Log("_main is null");
         Config._main = new Config();
         Config._main.InitValue();
 
@@ -280,7 +280,7 @@ Config.main = function () {
         Config._common.Load();
 
     } else {
-        cc.log("_main is not null");
+        cc.Debug.Log("_main is not null");
     }
     return Config._main;
 }

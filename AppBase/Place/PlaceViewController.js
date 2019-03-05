@@ -32,7 +32,7 @@ var PlaceViewController = cc.Class({
         var strPrefabDefault = "Common/Prefab/Place/UIPlace";
        cc.PrefabCache.main.Load(strPrefabDefault, function (err, prefab) { 
             if (err) {
-                cc.log(err.message || err);
+                cc.Debug.Log(err.message || err);
                 this.LoadPrefab();
                 return;
             }
@@ -46,7 +46,7 @@ var PlaceViewController = cc.Class({
         var strPrefab = "App/Prefab/Place/UIPlace" + cc.Config.main().appType;
        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) { 
             if (err) {
-                cc.log(err.message || err);
+                cc.Debug.Log(err.message || err);
                 return;
             }
             this.uiPrefab = prefab;
@@ -56,17 +56,17 @@ var PlaceViewController = cc.Class({
     },
 
     ViewDidLoad: function () {
-        cc.log("PlaceViewController ViewDidLoad");
+        cc.Debug.Log("PlaceViewController ViewDidLoad");
         this._super();
         this.LoadPrefabDefault();
     },
     ViewDidUnLoad: function () {
-        cc.log("PlaceViewController ViewDidUnLoad");
+        cc.Debug.Log("PlaceViewController ViewDidUnLoad");
         this._super();
 
     },
     LayOutView: function () {
-        cc.log("PlaceViewController LayOutView");
+        cc.Debug.Log("PlaceViewController LayOutView");
         //  base.LayOutView();
 
     },
@@ -83,11 +83,11 @@ PlaceViewController._main = null;
 PlaceViewController.main = function () {
     // 
     if (!PlaceViewController._main) {
-        cc.log("_main is null");
+        cc.Debug.Log("_main is null");
         PlaceViewController._main = new PlaceViewController();
         PlaceViewController._main.Init();
     } else {
-        cc.log("_main is not null");
+        cc.Debug.Log("_main is not null");
     }
 
     return PlaceViewController._main;

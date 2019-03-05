@@ -26,7 +26,7 @@ var TextureCache = cc.Class({
 
         if (this.dicItem.Contains(key) == true) {
             ret = this.dicItem.Get(key);
-            cc.log("TextureCache  load  from cache");
+            cc.Debug.Log("TextureCache  load  from cache");
             if (completeCallback) {
                 completeCallback(null, ret);
             }
@@ -35,14 +35,14 @@ var TextureCache = cc.Class({
             // cc.loader.loadRes(filepath, cc.Texture2D, function (err, tex) {
             //     //cc.url.raw('res/textures/content.png')
             //     if (err) {
-            //         cc.log("TextureCache loadRes fail");
-            //         cc.log(err.message || err);
+            //         cc.Debug.Log("TextureCache loadRes fail");
+            //         cc.Debug.Log(err.message || err);
             //         if (completeCallback) {
             //             completeCallback(err, tex);
             //         }
             //         return ret;
             //     }
-            //     // cc.log("TextureCache loadRes ok");
+            //     // cc.Debug.Log("TextureCache loadRes ok");
             //     if (tex != null) {
             //         this.dicItem.Add(key, tex);
             //     }
@@ -73,7 +73,7 @@ var TextureCache = cc.Class({
 
         if (this.dicItem.Contains(key) == true) {
             ret = this.dicItem.Get(key);
-            cc.log("TextureCache  load  from cache");
+            cc.Debug.Log("TextureCache  load  from cache");
             if (completeCallback) {
                 completeCallback(null, ret);
             }
@@ -82,14 +82,14 @@ var TextureCache = cc.Class({
             // cc.loader.loadRes(filepath, cc.Texture2D, function (err, tex) {
             //     //cc.url.raw('res/textures/content.png')
             //     if (err) {
-            //         cc.log("TextureCache loadRes fail");
-            //         cc.log(err.message || err);
+            //         cc.Debug.Log("TextureCache loadRes fail");
+            //         cc.Debug.Log(err.message || err);
             //         if (completeCallback) {
             //             completeCallback(err, tex);
             //         }
             //         return ret;
             //     }
-            //     // cc.log("TextureCache loadRes ok");
+            //     // cc.Debug.Log("TextureCache loadRes ok");
             //     if (tex != null) {
             //         this.dicItem.Add(key, tex);
             //     }
@@ -114,14 +114,14 @@ var TextureCache = cc.Class({
             cc.loader.loadRes(filepath, cc.Texture2D, function (err, tex) {
                 //cc.url.raw('res/textures/content.png')
                 if (err) {
-                    cc.log("TextureCache loadRes fail");
-                    cc.log(err.message || err);
+                    cc.Debug.Log("TextureCache loadRes fail");
+                    cc.Debug.Log(err.message || err);
                     if (completeCallback) {
                         completeCallback(err, tex);
                     }
                     return ret;
                 }
-                // cc.log("TextureCache loadRes ok");
+                // cc.Debug.Log("TextureCache loadRes ok");
                 if (tex != null) {
                     this.dicItem.Add(key, tex);
                 }

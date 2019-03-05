@@ -95,7 +95,7 @@ var UISetting = cc.Class({
     },
 
     OnClickBtnBack: function (event, customEventData) {
-        cc.log("UISetting OnClickBtnBack");
+        cc.Debug.Log("UISetting OnClickBtnBack");
         // this.controller.Close();
 
         if (this.controller != null) {

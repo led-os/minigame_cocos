@@ -30,7 +30,7 @@ cc.Class({
     clicked: function () {
         var uiViewParent = this.GetUIViewParent();// 
         var lan = cc.Language.main();
-        cc.log("language id= "+this.info.id);
+        cc.Debug.Log("language id= "+this.info.id);
         lan.SetLanguage(this.info.id);
         cc.Common.SetItemOfKey(cc.AppRes.KEY_LANGUAGE,this.info.id);
         this.target.OnClickBtnBack();

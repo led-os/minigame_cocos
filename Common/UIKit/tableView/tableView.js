@@ -291,7 +291,7 @@ var tableView = cc.Class({
                     w_item = node.width;
                     h_item = Math.floor(this.content.height / childrenCount);
                     cell.setContentSize(w_item, h_item);
-                    cc.log("w_item=" + w_item + " h_item" + h_item);
+                    cc.Debug.Log("w_item=" + w_item + " h_item" + h_item);
                     var rctran = cell.getComponent(cc.RectTransform);
                     if (rctran != null) {
                         rctran.OnResize();
@@ -334,7 +334,7 @@ var tableView = cc.Class({
                     w_item = Math.floor(this.content.width / childrenCount);
                     h_item = node.height;
                     cell.setContentSize(w_item, h_item);
-                    cc.log("w_item=" + w_item + " h_item" + h_item);
+                    cc.Debug.Log("w_item=" + w_item + " h_item" + h_item);
                     var rctran = cell.getComponent(cc.RectTransform);
                     if (rctran != null) {
                         rctran.OnResize();

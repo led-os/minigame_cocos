@@ -8,6 +8,7 @@ cc.Class({
         //     type: cc.Object
         // },
         datastore: new Array(),
+        //datastore: {},
     },
     Init: function () {
         // this.datastore = new Array();
@@ -15,7 +16,7 @@ cc.Class({
 
 
     Add: function (key, value) {
-        this.datastore[key] = value; 
+        this.datastore[key] = value;
     },
 
     Get: function (key) {
@@ -31,7 +32,7 @@ cc.Class({
         for (var key in this.datastore) {
             str += key + " -> " + this.datastore[key] + ";  "
         }
-        cc.log(str);
+        cc.Debug.Log(str);
     },
 
     Count: function () {
@@ -43,7 +44,7 @@ cc.Class({
         for (var key in Object.keys(this.datastore)) {
             ++n;
         }
-        cc.log(n);
+        cc.Debug.Log(n);
         return n;
     },
 

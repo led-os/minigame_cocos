@@ -21,11 +21,11 @@ var UITabBarItem = cc.Class({
         cc.TextureCache.main.Load(info.pic, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
-                cc.log("UITabBarItem loadRes  fail");
-                cc.log(err.message || err);
+                cc.Debug.Log("UITabBarItem loadRes  fail");
+                cc.Debug.Log(err.message || err);
                 return;
             }
-            cc.log("UITabBarItem loadRes  ok");
+            cc.Debug.Log("UITabBarItem loadRes  ok");
             this.sprite.spriteFrame = new cc.SpriteFrame(tex);
             // this.sprite.spriteFrame.setTexture(tex);
         }.bind(this));

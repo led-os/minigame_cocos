@@ -46,15 +46,15 @@ cc.Class({
     //SetViewParent
     SetViewParent: function (node) {
 
-        cc.log("SetViewParent node");
+        cc.Debug.Log("SetViewParent node");
         if (node == null) {
-            cc.log("SetViewParent node is null");
+            cc.Debug.Log("SetViewParent node is null");
         }
         if (this.objController == null) {
             this.CreateObjController();
         }
         if (this.objController == null) {
-            cc.log("objController is null");
+            cc.Debug.Log("objController is null");
         }
         this.objController.parent = node;
     },

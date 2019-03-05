@@ -18,7 +18,7 @@ cc.Class({
     onLoad: function () {
         this.label.string = this.text; 
         //cc.director.loadScene("MyScene"); 
-        cc.log("hello world onLoad");   
+        cc.Debug.Log("hello world onLoad");   
      // TabBarViewController.main.test();
     
     

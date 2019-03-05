@@ -93,7 +93,7 @@ var UILearnProgressCellItem = cc.Class({
             this.imageIcon.activateMaterial(name);
 
             var colorShow = new cc.Vec3(color.r / 255, color.g / 255, color.b / 255);
-            cc.log("colorShow=" + colorShow);
+            cc.Debug.Log("colorShow=" + colorShow);
             mat.setParamValue("colorShow", colorShow);
         }
 
@@ -129,7 +129,7 @@ var UILearnProgressCellItem = cc.Class({
                 {
                     cc.TextureCache.main.Load(info.pic, function (err, tex) {
                         if (err) {
-                            cc.log(err.message || err);
+                            cc.Debug.Log(err.message || err);
                         }
                         //this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
                         this.UpdateIcon(tex, this.colorSel);
@@ -139,7 +139,7 @@ var UILearnProgressCellItem = cc.Class({
                     var str = game.ShapeTitleOfItem(info);
                     this.textTitle.string = str;
                     this.textDetail.string = game.GameStatusOfShape(info);
-                    cc.log("textDetail=" + this.textDetail.string);
+                    cc.Debug.Log("textDetail=" + this.textDetail.string);
                 }
 
                 break;
@@ -150,7 +150,7 @@ var UILearnProgressCellItem = cc.Class({
                     var infoshape = game.listShape[this.indexShape];
                     cc.TextureCache.main.Load(infoshape.pic, function (err, tex) {
                         if (err) {
-                            cc.log(err.message || err);
+                            cc.Debug.Log(err.message || err);
                             return;
                         }
                         //this.imageBg.spriteFrame = new cc.SpriteFrame(tex);

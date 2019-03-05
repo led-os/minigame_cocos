@@ -7,7 +7,7 @@ var Tts = cc.Class({
         GetTextUrl: function (str) {
             //百度
             var url = "http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=" + str;
-            cc.log(url);
+            cc.Debug.Log(url);
             return url;
         },
 

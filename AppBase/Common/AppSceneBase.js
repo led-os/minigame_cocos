@@ -64,12 +64,12 @@ var AppSceneBase = cc.Class({
         isHasRunApp: false,
     },
     onLoad: function () {
-        cc.log("AppSceneBase onLoad");
+        cc.Debug.Log("AppSceneBase onLoad");
         //AppSceneBase.main = this;
         // if(AppSceneBase.main==null){
-        //     cc.log(" AppSceneBase.main onLoad size is null");
+        //     cc.Debug.Log(" AppSceneBase.main onLoad size is null");
         // }else{
-        //     cc.log(" AppSceneBase.main onLoad size is not null");
+        //     cc.Debug.Log(" AppSceneBase.main onLoad size is not null");
         // }
 
         cc.Common.appSceneMain = this;
@@ -97,7 +97,7 @@ var AppSceneBase = cc.Class({
     },
 
     RunApp: function () {
-        cc.log("AppSceneBase RunApp");
+        cc.Debug.Log("AppSceneBase RunApp");
 
     },
     InitValue: function () {
@@ -107,17 +107,17 @@ var AppSceneBase = cc.Class({
             // var size = this.canvasMain.designResolution;//参考设计分辨率
             // this.sizeCanvas = cc.size(0, 0);
             // this.sizeCanvas.height = size.height;
-            // cc.log("canvasMain size=" + size);
+            // cc.Debug.Log("canvasMain size=" + size);
             // let screenSize = cc.view.getVisibleSize();//屏幕分辨率
-            // cc.log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
+            // cc.Debug.Log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
 
             // this.sizeCanvas.width = screenSize.width * this.sizeCanvas.height / screenSize.height;
-            // cc.log("sizeCanvas size=" + this.sizeCanvas);
+            // cc.Debug.Log("sizeCanvas size=" + this.sizeCanvas);
             // var framesize = cc.view.getFrameSize();
-            // cc.log("frame size=" + framesize);
+            // cc.Debug.Log("frame size=" + framesize);
             // // cc.view.setFrameSize(windowSize.width,windowSize.height);
             // // var framesize1 = cc.view.getFrameSize();
-            // //  cc.log("new frame size=" + framesize1);
+            // //  cc.Debug.Log("new frame size=" + framesize1);
 
 
             this.sizeCanvas = cc.Common.GetSizeCanvas(this.canvasMain.designResolution);
@@ -155,7 +155,7 @@ var AppSceneBase = cc.Class({
                 isLoadAll = false;
             }
         }
-        cc.log("appscenebase isLoadAll=" + isLoadAll);
+        cc.Debug.Log("appscenebase isLoadAll=" + isLoadAll);
         if (isLoadAll == true) {
             //启动app
             this.isHasRunApp = true;
@@ -168,7 +168,7 @@ var AppSceneBase = cc.Class({
                 cc.Common.SetItemOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, true);
             }
 
-            var lan = cc.Language.main();
+            var lan = cc.Language.main(); 
             var lanid = cc.Common.GetItemOfKey(cc.AppRes.KEY_LANGUAGE, cc.sys.LANGUAGE_CHINESE);
             lan.SetLanguage(lanid);
 
@@ -176,7 +176,7 @@ var AppSceneBase = cc.Class({
         }
     },
     AppPreLoadDidFinish: function (p) {
-        cc.log("AppPreLoadDidFinish ");
+        cc.Debug.Log("AppPreLoadDidFinish ");
         if (this.isHasRunApp == true) {
             return;
         }
@@ -184,10 +184,10 @@ var AppSceneBase = cc.Class({
 
         // var lan = Language.main();
         // lan.SetLanguage(cc.sys.LANGUAGE_CHINESE);
-        // cc.log("AppPreLoadDidFinish APP_NAME:" + lan.GetString("APP_NAME"));
+        // cc.Debug.Log("AppPreLoadDidFinish APP_NAME:" + lan.GetString("APP_NAME"));
 
         // lan.SetLanguage(cc.sys.LANGUAGE_ENGLISH);
-        // cc.log("AppPreLoadDidFinish APP_NAME:" + lan.GetString("APP_NAME"));
+        // cc.Debug.Log("AppPreLoadDidFinish APP_NAME:" + lan.GetString("APP_NAME"));
     },
 
     //UIViewController controller

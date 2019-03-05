@@ -62,16 +62,16 @@ var LTLocalization = cc.Class({
         var listTable = this.csvParser.listTable;
         var list = listTable[0];
         for (var i = 1; i < list.length; i++) {
-            //cc.log("GetLanguageIndexByName indexLanguage i=" + i + " list[i]=" + list[i] + " str=" + str);
+            //cc.Debug.Log("GetLanguageIndexByName indexLanguage i=" + i + " list[i]=" + list[i] + " str=" + str);
             if (list[i] == str) {
-                // cc.log("indexLanguage i=" + i + " list[i]=" + list[i] + " str=" + str);
+                // cc.Debug.Log("indexLanguage i=" + i + " list[i]=" + list[i] + " str=" + str);
                 return i;
             }
         }
         return 1;
     },
     ReadData: function (data) {
-        //  cc.log("LTLocalization=" + data); 
+        //  cc.Debug.Log("LTLocalization=" + data); 
         this.dicData = new Dictionary();
         this.csvParser = new CSVParser();
         this.csvParser.ReadData(data);
@@ -91,12 +91,12 @@ var LTLocalization = cc.Class({
         //var row_count = this.csvParser.listTable.length;
         var row_count = this.csvParser.GetRowCount();
 
-        cc.log("indexLanguage=" + this.indexLanguage + " key_lan=" + key_lan);
+        cc.Debug.Log("indexLanguage=" + this.indexLanguage + " key_lan=" + key_lan);
 
         for (var row = 0; row < row_count; row++) {
             var key = this.csvParser.GetText(row, 0);
             var value = this.csvParser.GetText(row, this.indexLanguage);
-            //cc.log("dicData.Add key=" + key + " value=" + value);
+            //cc.Debug.Log("dicData.Add key=" + key + " value=" + value);
             this.dicData.Add(key, value);
         }
     },
@@ -116,7 +116,7 @@ var LTLocalization = cc.Class({
             return false;
         }
         var ret = this.dicData.Contains(key);
-        cc.log("IsContainsKey ret=" + ret);
+        cc.Debug.Log("IsContainsKey ret=" + ret);
         return ret;
     },
 

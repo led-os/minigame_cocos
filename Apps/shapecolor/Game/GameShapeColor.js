@@ -94,7 +94,7 @@ var GameShapeColor = cc.Class({
             var offsety = bd.height / 2;
             offsety = 0;
             var pt = this.RandomPointOfRect(rc, offsetx, offsety);
-            //cc.log("LayOut:i=" + info.i + " j=" + info.j + " rc=" + rc + " pt=" + pt + " bd=" + bd.size);
+            //cc.Debug.Log("LayOut:i=" + info.i + " j=" + info.j + " rc=" + rc + " pt=" + pt + " bd=" + bd.size);
             var z = node.getPosition().z;
             node.setPosition(pt.x, pt.y, z);
 
@@ -176,7 +176,7 @@ var GameShapeColor = cc.Class({
         this.ptDown = posnew;
 
         //Vector3 posword = mainCam.ScreenToWorldPoint(pos);
-        cc.log("onTouchDown: postouch=" + pos);
+        cc.Debug.Log("onTouchDown: postouch=" + pos);
         var index = 0;
         for (let info of this.listItem) {
             var isLock = this.IsItemLock(info);
@@ -185,13 +185,13 @@ var GameShapeColor = cc.Class({
             }
 
             var bd = info.node.getBoundingBox();//rect
-            cc.log("onTouchDown: posnew=" + posnew + " bd=" + bd + " index=" + index);
+            cc.Debug.Log("onTouchDown: posnew=" + posnew + " bd=" + bd + " index=" + index);
 
             // var positem = info.node.getPosition();
-            // cc.log("positem x=" + positem.x + " y=" + positem.y);
+            // cc.Debug.Log("positem x=" + positem.x + " y=" + positem.y);
             // var rc = new cc.Rect(positem.x - bd.width / 2, positem.y - bd.height / 2, bd.width, bd.height);
 
-            //cc.log("onTouchDown: rc=" + rc);
+            //cc.Debug.Log("onTouchDown: rc=" + rc);
             //posword.z = bd.center.z;
             if (bd.contains(posnew)) {
 
@@ -208,7 +208,7 @@ var GameShapeColor = cc.Class({
                 //     }
                 // }
 
-                cc.log("itemInfoSel:id:" + this.itemInfoSel.id + " color:" + this.itemInfoSel.color);
+                cc.Debug.Log("itemInfoSel:id:" + this.itemInfoSel.id + " color:" + this.itemInfoSel.color);
                 break;
             }
 
@@ -218,14 +218,14 @@ var GameShapeColor = cc.Class({
     OnTouchMove: function (pos) {
 
         if (!this.isItemHasSel) {
-            cc.log("onTouchMove ng 1");
+            cc.Debug.Log("onTouchMove ng 1");
             return;
         }
         //var posnew = new cc.Vec2(pos.x - this.node.getContentSize().width / 2, pos.y - this.node.getContentSize().height / 2);
         var posnew = pos;
         var isLock = this.IsItemLock(this.itemInfoSel);
         if (isLock) {
-            // cc.log("onTouchMove ng 2");
+            // cc.Debug.Log("onTouchMove ng 2");
             return;
         }
         var x, y, w, h;
@@ -233,7 +233,7 @@ var GameShapeColor = cc.Class({
         var ptStep = new cc.Vec2(posnew.x - this.ptDown.x, posnew.y - this.ptDown.y);
         var positemNew = new cc.Vec2(this.posItemDown.x + ptStep.x, this.posItemDown.y + ptStep.y);
         //this.itemInfoSel.node.setPosition(positemNew);
-        // cc.log("OnTouchMove positemNew=" + positemNew + " ptStep=" + ptStep);
+        // cc.Debug.Log("OnTouchMove positemNew=" + positemNew + " ptStep=" + ptStep);
         //将选中item暂时置顶
         //posword.z = this.itemPosZ - 2; 
         var body = this.itemInfoSel.node.getComponent(cc.RigidBody);
@@ -297,7 +297,7 @@ var GameShapeColor = cc.Class({
             }
 
             if ((rc.contains(positemNew)) && (this.itemInfoSel.id == info.id) && (this.itemInfoSel.color == info.color)) {
-                cc.log("合并正确");
+                cc.Debug.Log("合并正确");
 
                 //合并正确
                 this.SetItemLock(info, true);
@@ -339,7 +339,7 @@ var GameShapeColor = cc.Class({
         //this.CheckGameWin();
     },
     OnTouchUp: function (pos) {
-        cc.log("OnTouchUp");
+        cc.Debug.Log("OnTouchUp");
         if (!this.isItemHasSel) {
             return;
         }
@@ -456,7 +456,7 @@ var GameShapeColor = cc.Class({
             var scaley = rc.height * ratio / size.height;
             scale = Math.min(scalex, scaley);
         }
-        cc.log("node scale = " + scale + " size=" + size + " rc=" + rc);
+        cc.Debug.Log("node scale = " + scale + " size=" + size + " rc=" + rc);
         return scale;
     },
     GetRectDisplay: function () {
@@ -528,7 +528,7 @@ var GameShapeColor = cc.Class({
 
     LoadGame: function (mode) {
 
-        cc.log("LoadGame:mode=" + mode);
+        cc.Debug.Log("LoadGame:mode=" + mode);
         this.ClearGame();
         switch (mode) {
             case GameShapeColor.GAME_MODE_SHAPE:
@@ -557,7 +557,7 @@ var GameShapeColor = cc.Class({
         var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
         var infoshape = this.GetItemInfoShapeColor(idx, this.listShape);
         if (infoshape == null) {
-            cc.log("LoadGameByShape null");
+            cc.Debug.Log("LoadGameByShape null");
             return;
         }
 
@@ -585,7 +585,7 @@ var GameShapeColor = cc.Class({
             var j = Math.floor(indexRect / this.totalRow);
             //向下取整
             var idx_color = indexColor[Math.floor(k / 2)];
-            //cc.log("LoadGameByShape length="+this.listColor.length+" idx_color="+idx_color+" k="+k+" idx_new="+idx_new+" indexColor.len="+indexColor.length);
+            //cc.Debug.Log("LoadGameByShape length="+this.listColor.length+" idx_color="+idx_color+" k="+k+" idx_new="+idx_new+" indexColor.len="+indexColor.length);
             var infocolor = this.listColor[idx_color];
 
             // GameObject obj = null;
@@ -723,7 +723,7 @@ var GameShapeColor = cc.Class({
         var totalItem = totalMainShape + totalOtherShape;
         this.totalRow = this.CalcRowCol(totalItem);
         this.totalCol = this.totalRow;
-        //cc.log("totalItem=" + totalItem + " row=" + totalRow + " col=" + totalCol);
+        //cc.Debug.Log("totalItem=" + totalItem + " row=" + totalRow + " col=" + totalCol);
 
         var listShapeOther = this.GetOtherItemList(infoshape, this.listShape);
         var indexShapeOther = this.RandomIndex(listShapeOther.length, (Math.floor(totalMainShape / 2) - 1));
@@ -818,12 +818,12 @@ var GameShapeColor = cc.Class({
 
         //加载图片
         var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(pic);
-        //cc.log("item_pic=" + pic);
+        //cc.Debug.Log("item_pic=" + pic);
         cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
-                cc.log("item_pic err");
-                cc.log(err.message || err);
+                cc.Debug.Log("item_pic err");
+                cc.Debug.Log(err.message || err);
                 return;
             }
             sprite.spriteFrame = new cc.SpriteFrame(tex);
@@ -850,7 +850,7 @@ var GameShapeColor = cc.Class({
             if (collider != null) {
 
                 collider.size = cc.size(tex.width, tex.height);
-                cc.log("collider=" + collider.size);
+                cc.Debug.Log("collider=" + collider.size);
             }
 
             // sprite.node.zIndex = 10;
@@ -893,7 +893,7 @@ var GameShapeColor = cc.Class({
                 var iResolution = new cc.Vec3(sprite.node.width, sprite.node.height, 0);
                 mat.setParamValue("iResolution", iResolution);
                 var colorShow = new cc.Vec3(color.r / 255, color.g / 255, color.b / 255);
-                cc.log("colorShow=" + colorShow);
+                cc.Debug.Log("colorShow=" + colorShow);
                 mat.setParamValue("colorShow", colorShow);
             }
         }

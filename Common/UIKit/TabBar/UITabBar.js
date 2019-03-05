@@ -24,18 +24,18 @@ cc.Class({
 
     },
     onLoad: function () {
-        cc.log("UITabBar onLoad");
+        cc.Debug.Log("UITabBar onLoad");
         this._super();
         this.LoadPrefab();
         var strImage = "Common/UI/UIKit/barbg";
         cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
-                //cc.log("UITabBar loadRes barbg fail");
-                cc.log(err.message || err);
+                //cc.Debug.Log("UITabBar loadRes barbg fail");
+                cc.Debug.Log(err.message || err);
                 return;
             }
-            //cc.log("UITabBar loadRes barbg ok");
+            //cc.Debug.Log("UITabBar loadRes barbg ok");
             this.spriteBg.spriteFrame = new cc.SpriteFrame(tex);
             this.LayOut();
 
@@ -62,7 +62,7 @@ cc.Class({
         var y = size.height / 2;
         x = 0;
         y = -AppSceneBase.main.sizeCanvas.height / 2 + y;
-        cc.log("size = " + size + " x=" + x);
+        cc.Debug.Log("size = " + size + " x=" + x);
 
         this.spriteBg.node.setPosition(x, y);
     },

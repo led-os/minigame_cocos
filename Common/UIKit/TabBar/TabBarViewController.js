@@ -51,7 +51,7 @@ var TabBarViewController = cc.Class({
     CreateBar: function () {
 
         //this.listItem = new Array();
-        cc.log("TabBarViewController CreateTabBar");
+        cc.Debug.Log("TabBarViewController CreateTabBar");
         var node = cc.instantiate(this.uiTabBarPrefab);
         this.uiTabBar = node.getComponent(UITabBar);
         this.uiTabBar.SetController(this);
@@ -151,10 +151,10 @@ var TabBarViewController = cc.Class({
 TabBarViewController._main = null;
 TabBarViewController.main = function () {
     if (!TabBarViewController._main) {
-        cc.log("_main is null");
+        cc.Debug.Log("_main is null");
         TabBarViewController._main = new TabBarViewController();
     } else {
-        cc.log("_main is not null");
+        cc.Debug.Log("_main is not null");
     }
     return TabBarViewController._main;
 }

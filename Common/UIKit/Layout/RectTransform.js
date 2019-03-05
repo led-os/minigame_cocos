@@ -178,14 +178,14 @@ var RectTransform = cc.Class({
         var x, y, w, h;
         w = this.node.getContentSize().width;
         h = this.node.getContentSize().height;
-        cc.log("OnResize w=" + w + " h=" + h);
+        cc.Debug.Log("OnResize w=" + w + " h=" + h);
 
         var children = this.node._children;
         for (var i = 0; i < children.length; i++) {
             var child = children[i];
             var rctran = child.getComponent(RectTransform);
             if (rctran != null) {
-               // cc.log("OnResize child");
+               // cc.Debug.Log("OnResize child");
                 rctran.OnResize();
             }
 
@@ -291,7 +291,7 @@ var RectTransform = cc.Class({
         h = size.height;
         x = this.node.getPosition().x;
         y = this.node.getPosition().y;
-        cc.log("UpdateType this.alignType=" + this._alignType + " w=" + w + " h=" + h + " x=" + x + " y=" + y + " w_parent=" + w_parent + " h_parent=" + h_parent);
+        cc.Debug.Log("UpdateType this.alignType=" + this._alignType + " w=" + w + " h=" + h + " x=" + x + " y=" + y + " w_parent=" + w_parent + " h_parent=" + h_parent);
         //Common.appSceneMain.sizeCanvas.height 
         switch (this._alignType) {
             case LayoutAlign.AlignType.UP:

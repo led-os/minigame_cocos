@@ -20,10 +20,10 @@ var UICellItemBase = cc.Class({
             if (navi != null) {
                 navi.Push(controller);
             }else{
-                cc.log("GotoController：navi is null");
+                cc.Debug.Log("GotoController：navi is null");
             }
         }else{
-            cc.log("GotoController：this.target.controller is null");
+            cc.Debug.Log("GotoController：this.target.controller is null");
         }
     },
 });

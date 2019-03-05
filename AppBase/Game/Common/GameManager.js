@@ -74,11 +74,11 @@ var GameManager = cc.Class({
     },
 
     GotoNextLevel: function () {
-        cc.log("gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
+        cc.Debug.Log("gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
         GameManager.gameLevel++;
-        cc.log("gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
+        cc.Debug.Log("gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
         if (GameManager.gameLevel >= GameManager.maxGuankaNum) {
-            cc.log("GotoNextPlace:gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
+            cc.Debug.Log("GotoNextPlace:gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
             this.GotoNextPlace();
             return;
 
@@ -120,9 +120,9 @@ var GameManager = cc.Class({
     },
     //关卡循环
     GotoNextLevelWithoutPlace: function () {
-        cc.log("gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
+        cc.Debug.Log("gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
         GameManager.gameLevel++;
-        cc.log("gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
+        cc.Debug.Log("gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
         if (GameManager.gameLevel >= GameManager.maxGuankaNum) {
             GameManager.gameLevel = 0;
 
@@ -134,7 +134,7 @@ var GameManager = cc.Class({
     //return List<object>
     GetGuankaListOfAllPlace: function () {
         var listRet;// = new List<object>();
-        cc.log("GetGuankaListOfAllPlace placeTotal=" + GameManager.placeTotal);
+        cc.Debug.Log("GetGuankaListOfAllPlace placeTotal=" + GameManager.placeTotal);
         for (var i = 0; i < GameManager.placeTotal; i++) {
             GameManager.placeLevel = i;
             //必须在placeLevel设置之后再设置gameLevel
@@ -165,11 +165,11 @@ GameManager._main = null;
 GameManager.main = function () {
     // 
     if (!GameManager._main) {
-        cc.log("_main is null");
+        cc.Debug.Log("_main is null");
         GameManager._main = new GameManager();
         GameManager._main.Init();
     } else {
-        cc.log("_main is not null");
+        cc.Debug.Log("_main is not null");
     }
 
     return GameManager._main;

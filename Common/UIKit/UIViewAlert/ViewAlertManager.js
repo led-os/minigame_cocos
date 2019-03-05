@@ -24,7 +24,7 @@ var ViewAlertManager = cc.Class({
         var strPrefab = "Common/Prefab/UIKit/UIViewAlert/UIViewAlert";
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.log(err.message || err);
+                cc.Debug.Log(err.message || err);
                 return;
             }
             this.uiPrefab = prefab;
@@ -96,11 +96,11 @@ var ViewAlertManager = cc.Class({
 ViewAlertManager._main = null;
 ViewAlertManager.main = function () {
     if (!ViewAlertManager._main) {
-        cc.log("_main is null");
+        cc.Debug.Log("_main is null");
         ViewAlertManager._main = new ViewAlertManager();
         ViewAlertManager._main.Init();
     } else {
-        cc.log("_main is not null");
+        cc.Debug.Log("_main is not null");
     }
     return ViewAlertManager._main;
 }

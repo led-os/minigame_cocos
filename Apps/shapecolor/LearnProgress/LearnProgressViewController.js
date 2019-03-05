@@ -27,7 +27,7 @@ var LearnProgressViewController = cc.Class({
         var strPrefab = "App/Prefab/Home/UILearnProgress";
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.log(err.message || err);
+                cc.Debug.Log(err.message || err);
                 return;
             }
             this.uiPrefab = prefab;
@@ -67,11 +67,11 @@ LearnProgressViewController._main = null;
 LearnProgressViewController.main = function () {
     // 
     if (!LearnProgressViewController._main) {
-        cc.log("_main is null");
+        cc.Debug.Log("_main is null");
         LearnProgressViewController._main = new LearnProgressViewController();
         LearnProgressViewController._main.Init();
     } else {
-        cc.log("_main is not null");
+        cc.Debug.Log("_main is not null");
     }
 
     return LearnProgressViewController._main;

@@ -20,7 +20,7 @@ var CSVParser = cc.Class({
 
         //     for (var col = 0; col < this.listTable[row].length; col++) {
         //         var str = this.GetText(row, col);
-        //         cc.log("row=" + row + " col=" + col + " :" + str);
+        //         cc.Debug.Log("row=" + row + " col=" + col + " :" + str);
         //     }
         // }
 
@@ -28,15 +28,15 @@ var CSVParser = cc.Class({
 
     //整个str分割行数
     SplitAllLine: function (str) {
-        //cc.log("SplitLine="+str);
+        //cc.Debug.Log("SplitLine="+str);
         var list = str.split("\n");
         // list.forEach(function (value, index) {
-        //     cc.log("line "+index+" =" + value);
+        //     cc.Debug.Log("line "+index+" =" + value);
         // }.bind(this));
 
         var index = 0;
         for (let value of list) {
-            // cc.log("line " + index + " =" + value);
+            // cc.Debug.Log("line " + index + " =" + value);
             if (value.length > 0) {
                 if (value[0] == this.KEY_WORD_CANCEL) {
                     // 去掉注释
@@ -61,7 +61,7 @@ var CSVParser = cc.Class({
         var yinhao_pos_end = -1;
         var strYinhao = "";
         for (var i = 0; i < str.length; i++) {
-            //cc.log("SplitLine:"+str[i]);
+            //cc.Debug.Log("SplitLine:"+str[i]);
             var word = str[i];
 
             if (yinhao_pos_start >= 0) {
@@ -77,7 +77,7 @@ var CSVParser = cc.Class({
                 //substring:pos to (i-1)
                 var len = (i - 1) - pos + 1;
                 var strtmp = str.substr(pos, len);
-                //cc.log("SplitLine:" + strtmp);
+                //cc.Debug.Log("SplitLine:" + strtmp);
                 list.push(strtmp);
                 pos = i + 1;
             }
@@ -93,7 +93,7 @@ var CSVParser = cc.Class({
                     yinhao_pos_end = postmp;
                     //has found
                     skip_step = postmp - i + 1;
-                    //cc.log("postmp=" + postmp + " skip_step=" + skip_step);
+                    //cc.Debug.Log("postmp=" + postmp + " skip_step=" + skip_step);
                 }
                 // i += skip_step;
             }
@@ -103,12 +103,12 @@ var CSVParser = cc.Class({
 
                     var len = i - pos + 1;
                     var strtmp = str.substr(pos, len);
-                    //cc.log("SplitLine:" + strtmp);
+                    //cc.Debug.Log("SplitLine:" + strtmp);
                     list.push(strtmp);
 
                 } else {
                     //整个
-                    cc.log("SplitLine add all:str=" + str);
+                    cc.Debug.Log("SplitLine add all:str=" + str);
                     list.push(str);
                 }
             }
@@ -119,7 +119,7 @@ var CSVParser = cc.Class({
 
         var index = 0;
         for (let value of list) {
-            //  cc.log("SplitLine list=" + value);
+            //  cc.Debug.Log("SplitLine list=" + value);
             index++;
         }
         this.listTable.push(list);

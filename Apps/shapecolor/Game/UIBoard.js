@@ -86,7 +86,7 @@ var UIBoard = cc.Class({
 
             collider.size = cc.size(w, h);
             collider.offset = cc.v2(x, y);
-            cc.log("collider.size=  " + collider.size);
+            cc.Debug.Log("collider.size=  " + collider.size);
 
         }
     },

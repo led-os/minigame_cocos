@@ -22,13 +22,13 @@ var UITouchEvent = cc.Class({
     },
 
     Init: function () {
-        // cc.log("UITouchEvent Init");
+        // cc.Debug.Log("UITouchEvent Init");
         this.node.on(cc.Node.EventType.TOUCH_START, function (event) {
             // var pos = event.getLocation();//canvas坐标原点在屏幕左下角 
             // var posnode = this.node.convertToNodeSpace(pos);//坐标原点在node左下角
             // var posnodeAR = this.node.convertToNodeSpaceAR(pos);//坐标原点在node的锚点
 
-            // cc.log("UITouchEvent OnTouchDown:pos=" + pos+ " posnode="+posnode);
+            // cc.Debug.Log("UITouchEvent OnTouchDown:pos=" + pos+ " posnode="+posnode);
             if (this.callBackTouch != null) {
                 this.callBackTouch(this, UITouchEvent.TOUCH_DOWN, event);
             }

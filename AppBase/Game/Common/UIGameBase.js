@@ -33,7 +33,7 @@ var UIGameBase = cc.Class({
         var strPrefab = "App/Prefab/Game/Game" + cc.Config.main().appType;
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.log(err.message || err);
+                cc.Debug.Log(err.message || err);
                 return;
             }
             this.gamePrefab = prefab;
@@ -67,7 +67,7 @@ var UIGameBase = cc.Class({
     },
     ParseGuanka: function (callback) {
         this.callbackGuankaFinish = callback;
-        cc.log("ParseGuanka UIGameBase");
+        cc.Debug.Log("ParseGuanka UIGameBase");
         return 0;
     },
 
@@ -98,11 +98,11 @@ UIGameBase._main = null;
 UIGameBase.main = function () {
     // 
     if (!UIGameBase._main) {
-        cc.log("_main is null");
+        cc.Debug.Log("_main is null");
         UIGameBase._main = new UIGameBase();
         UIGameBase._main.Init();
     } else {
-        cc.log("_main is not null");
+        cc.Debug.Log("_main is not null");
     }
 
     return UIGameBase._main;

@@ -12,7 +12,7 @@ var MainViewController = cc.Class({
         this.Push(HomeViewController.main());//HomeViewController
       //moon ui for test
         var str = cc.Language.main().GetString("APP_NAME");
-        cc.log("Language GetString=" + str);
+        cc.Debug.Log("Language GetString=" + str);
     },
 
 });
@@ -24,10 +24,10 @@ var MainViewController = cc.Class({
 MainViewController._main = null;
 MainViewController.main = function () {
     if (!MainViewController._main) {
-        cc.log("_main is null");
+        cc.Debug.Log("_main is null");
         MainViewController._main = new MainViewController();
     } else {
-        cc.log("_main is not null");
+        cc.Debug.Log("_main is not null");
     }
     return MainViewController._main;
 }

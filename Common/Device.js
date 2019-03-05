@@ -13,7 +13,7 @@ var Device = cc.Class({
         isLandscape: {
             get: function () {
                 var sz = cc.view.getVisibleSize();//屏幕分辨率
-                cc.log("sz=" + sz);
+                cc.Debug.Log("sz=" + sz);
                 if (sz.width > sz.height) {
                     return true;
                 }

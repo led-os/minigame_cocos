@@ -53,12 +53,12 @@ var Common = cc.Class({
             }
             var sizeCanvas = cc.size(0, 0);
             sizeCanvas.height = size.height;
-            //cc.log("canvasMain size=" + size);
+            //cc.Debug.Log("canvasMain size=" + size);
             let screenSize = cc.view.getVisibleSize();//屏幕分辨率
-            //cc.log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
+            //cc.Debug.Log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
 
             sizeCanvas.width = screenSize.width * sizeCanvas.height / screenSize.height;
-            //cc.log("sizeCanvas size=" + sizeCanvas);
+            //cc.Debug.Log("sizeCanvas size=" + sizeCanvas);
             return sizeCanvas;
         },
 
@@ -84,7 +84,7 @@ var Common = cc.Class({
             var strsplit = ",";
             var list = strrgb.split(strsplit);
             var index = 0;
-            //cc.log("RGBString2Color:list="+list.length);
+            //cc.Debug.Log("RGBString2Color:list="+list.length);
 
             for (let value of list) {
                 if (index == 0) {
@@ -167,37 +167,58 @@ var Common = cc.Class({
 
         GetItemOfKey: function (key, default_value) {
             var v = cc.sys.localStorage.getItem(key);
-            if (v == null) {
-                cc.log("key is null:" + key);
+            if (Common.isBlankString(v)) {
+                //cc.Debug.Log("key is null:" + key);
                 return default_value;
             }
-            // var v_int = parseInt(v);
             return v;
         },
         SetItemOfKey: function (key, value) {
-            var str = value.toString();
-            cc.sys.localStorage.setItem(key, str);
+            cc.sys.localStorage.setItem(key, value);
         },
+
+        SetBoolOfKey: function (key, value) {
+            cc.sys.localStorage.setItem(key, value.toString());
+        },
+
         GetBoolOfKey: function (key, default_value) {
             var v = cc.sys.localStorage.getItem(key);
-            if (v == null) {
-                cc.log("key is null:" + key);
+            //微信小程序key不存在的时候返回""而非null
+            if (Common.isBlankString(v)) {
+                cc.Debug.Log("GetBoolOfKey key is null:" + key);
                 return default_value;
             }
+            cc.Debug.Log("GetBoolOfKey key is :" + key + " v=" + v);
+            // if (cc.Common.main().isWeiXin) {
+            //     return v;
+            // }
+            //cc.sys.localStorage.setItem 保存 bool变量的时候实际保存的是"true"和“false"字符串
             if (v == "true") {
                 return true;
+            } else {
+                return false;
             }
-            return false;
+            return v;
         },
 
         GetIntOfKey: function (key, default_value) {
             var v = cc.sys.localStorage.getItem(key);
-            if (v == null) {
-                cc.log("key is null:" + key);
+            //微信小程序key不存在的时候返回""而非null
+            if (Common.isBlankString(v)) {
+                cc.Debug.Log("key is null:" + key);
                 return default_value;
             }
+
             var v_int = parseInt(v);
+            cc.Debug.Log("GetIntOfKey key=:" + key + " v=" + v + " v_int=" + v_int);
             return v_int;
+        },
+        isBlankString: function (str) {
+            if (typeof str == "undefined" || str == null || str == "") {
+                return true;
+            } else {
+                return false;
+            }
         },
 
         GetButtonText: function (btn) {
@@ -217,7 +238,7 @@ var Common = cc.Class({
             var size = labelTmp.node.getContentSize();
 
 
-            cc.log("labelTmp size= " + size + " bd=" + labelTmp.node.getBoundingBox());
+            cc.Debug.Log("labelTmp size= " + size + " bd=" + labelTmp.node.getBoundingBox());
 
 
 
@@ -228,7 +249,7 @@ var Common = cc.Class({
             node.active = true;
 
             size = labelTmp.node.getContentSize();
-            cc.log("labelTmp2 size= " + size + " bd=" + labelTmp.node.getBoundingBox());
+            //cc.Debug.Log("labelTmp2 size= " + size + " bd=" + labelTmp.node.getBoundingBox());
 
             node.removeFromParent(true);
             //Common.GetTextHeight(text, fontsize);
@@ -253,7 +274,7 @@ var Common = cc.Class({
             size = labelTmp.node.getContentSize();
 
 
-            cc.log("labelTmp size= " + size + " bd=" + labelTmp.node.getBoundingBox());
+            //cc.Debug.Log("labelTmp size= " + size + " bd=" + labelTmp.node.getBoundingBox());
 
 
             node.removeFromParent(true);
@@ -274,7 +295,7 @@ var Common = cc.Class({
             var size = labelTmp.node.getContentSize();
             var h = size.height;
             // h = node.width;
-            cc.log("labelTmp GetTextHeight h= " + h + " size=" + size + " fontsize=" + fontsize);
+            cc.Debug.Log("labelTmp GetTextHeight h= " + h + " size=" + size + " fontsize=" + fontsize);
 
 
             node.removeFromParent(true);
@@ -297,9 +318,10 @@ var Common = cc.Class({
     },
 
     properties: {
+        //get 和 set 函数不能放在statics里
         isAndroid: {
             get: function () {
-                cc.log("isAndroid");
+                //cc.Debug.Log("isAndroid");
                 return (cc.sys.platform == cc.sys.OS_ANDROID) ? true : false;
             },
             // set: function (value) {
@@ -317,6 +339,13 @@ var Common = cc.Class({
         isWin: {
             get: function () {
                 return (cc.sys.platform == cc.sys.OS_WINDOWS) ? true : false;
+            },
+
+        },
+
+        isWeiXin: {
+            get: function () {
+                return (cc.sys.platform == cc.sys.WECHAT_GAME) ? true : false;
             },
 
         },
@@ -343,10 +372,10 @@ var Common = cc.Class({
 Common._main = null;
 Common.main = function () {
     if (!Common._main) {
-        cc.log("_main is null");
+        // cc.Debug.Log("_main is null");
         Common._main = new Common();
     } else {
-        cc.log("_main is not null");
+        // cc.Debug.Log("_main is not null");
     }
     return Common._main;
 }

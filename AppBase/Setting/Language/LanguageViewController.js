@@ -33,7 +33,7 @@ var LanguageViewController = cc.Class({
         var strPrefab = "Common/Prefab/Setting/UILanguage";
        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.log(err.message || err);
+                cc.Debug.Log(err.message || err);
             }
             this.uiPrefab = prefab;
             this.CreateUI();
@@ -42,17 +42,17 @@ var LanguageViewController = cc.Class({
     },
 
     ViewDidLoad: function () {
-        cc.log("LanguageViewController ViewDidLoad");
+        cc.Debug.Log("LanguageViewController ViewDidLoad");
         this._super();
         this.LoadPrefab();
     },
     ViewDidUnLoad: function () {
-        cc.log("LanguageViewController ViewDidUnLoad");
+        cc.Debug.Log("LanguageViewController ViewDidUnLoad");
         this._super();
 
     },
     LayOutView: function () {
-        cc.log("LanguageViewController LayOutView");
+        cc.Debug.Log("LanguageViewController LayOutView");
         //  base.LayOutView();
 
     },

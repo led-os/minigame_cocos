@@ -57,20 +57,20 @@ var AdConfig = cc.Class({
         cc.loader.loadRes(file, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {
-                cc.log("AdConfig:err=" + err);
+                cc.Debug.Log("AdConfig:err=" + err);
                 // return;
             }
 
-            // cc.log("AdConfig:rootJson.text=" + rootJson.text);
+            // cc.Debug.Log("AdConfig:rootJson.text=" + rootJson.text);
             if (err == null) {
                 this.ParseData(rootJson.json);
             }
 
-            // cc.log("id=" + id);
+            // cc.Debug.Log("id=" + id);
             var info = this.GetLoadInfoById(id);
             if (info != null) {
                 info.isLoad = true;
-                // cc.log("id= info.isLoad=" + info.isLoad);
+                // cc.Debug.Log("id= info.isLoad=" + info.isLoad);
             }
             this.CheckAllLoad();
         }.bind(this));
@@ -78,27 +78,27 @@ var AdConfig = cc.Class({
         /*
                 cc.loader.load(cc.url.raw('resources/AdConfig_android.json'), function (err, res) {
                     if (err) {
-                        cc.log("AdConfig:" + err);
+                        cc.Debug.Log("AdConfig:" + err);
                     } else {
                         var list = res;
         
-                        cc.log("AdConfig:load.text=" + res.text);
+                        cc.Debug.Log("AdConfig:load.text=" + res.text);
                         this.ParseData(res);
                     }
         
         
-                    // cc.log("id=" + id);
+                    // cc.Debug.Log("id=" + id);
                     var info = this.GetLoadInfoById(id);
                     if (info != null) {
                         info.isLoad = true;
-                        // cc.log("id= info.isLoad=" + info.isLoad);
+                        // cc.Debug.Log("id= info.isLoad=" + info.isLoad);
                     }
                     this.CheckAllLoad();
         
                 }.bind(this));
                 */
 
-        //cc.log("isLoadAll=loadRes end");
+        //cc.Debug.Log("isLoadAll=loadRes end");
     },
 
     GetLoadInfoById: function (id) {
@@ -116,24 +116,24 @@ var AdConfig = cc.Class({
                 isLoadAll = false;
             }
         }
-        // cc.log("isLoadAll=" + isLoadAll);
+        // cc.Debug.Log("isLoadAll=" + isLoadAll);
         if (isLoadAll == true) {
-            // cc.log("isLoadAll= 1 " + isLoadAll);
+            // cc.Debug.Log("isLoadAll= 1 " + isLoadAll);
             if (AdConfig.callbackFinish != null) {
                 AdConfig.loadInfo.isLoad = true;
-                // cc.log("isLoadAll= 2 " + isLoadAll);
+                // cc.Debug.Log("isLoadAll= 2 " + isLoadAll);
                 AdConfig.callbackFinish(this);
             } else {
-                cc.log("AdConfig isLoadAll= callbackFinish is null ");
+                cc.Debug.Log("AdConfig isLoadAll= callbackFinish is null ");
             }
         }
     },
     ParseData: function (json) {
         if (json == null) {
-            cc.log("AdConfig:ParseData=null");
+            cc.Debug.Log("AdConfig:ParseData=null");
         }
         var appid = json.APPID.huawei;
-        cc.log("AdConfig:appid=" + appid);
+        cc.Debug.Log("AdConfig:appid=" + appid);
 
     },
 
@@ -141,7 +141,7 @@ var AdConfig = cc.Class({
 
         // if (AdConfig.callbackFinish != null) {
         //     AdConfig.loadInfo.isLoad = true;
-        //     // cc.log("isLoadAll= 2 " + isLoadAll);
+        //     // cc.Debug.Log("isLoadAll= 2 " + isLoadAll);
         //     Config.callbackFinish(this);
         // }
 
@@ -181,7 +181,7 @@ var AdConfig = cc.Class({
         }
         //fileName += ".json";
         var filepath = strDir + "/" + fileName;
-        cc.log("AdConfig:filepath=" + filepath);
+        cc.Debug.Log("AdConfig:filepath=" + filepath);
         this.Load(filepath, AdConfig.MAIN);
         /*
                 string json = FileUtil.ReadStringFromResources(strDir + "/" + fileName);//ReadStringAsset
@@ -252,12 +252,12 @@ var AdConfig = cc.Class({
 AdConfig._main = null;
 AdConfig.main = function () {
     if (!AdConfig._main) {
-        cc.log("_main is null");
+        cc.Debug.Log("_main is null");
         AdConfig._main = new AdConfig();
         AdConfig._main.InitValue();
         AdConfig._main.Init();
     } else {
-        cc.log("_main is not null");
+        cc.Debug.Log("_main is not null");
     }
     return AdConfig._main;
 }

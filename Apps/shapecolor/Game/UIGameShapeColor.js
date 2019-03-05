@@ -68,7 +68,7 @@ var UIGameShapeColor = cc.Class({
     },
 
     StringOfGameStatus: function (status) {
-        var str = "";
+        var str = "unknown"+status;
         switch (status) {
             case GameShapeColor.GAME_STATUS_UN_START:
                 str = cc.Language.main().GetString("STR_GAME_STATUS_UN_START");
@@ -86,7 +86,7 @@ var UIGameShapeColor = cc.Class({
     GameStatusOfShape: function (info) {
         var key = GameShapeColor.STR_KEY_GAME_STATUS_SHAPE + info.id;
         var status = cc.Common.GetIntOfKey(key, GameShapeColor.GAME_STATUS_UN_START);
-        cc.log("status=" + status);
+        cc.Debug.Log("status=" + status);
         var str = this.StringOfGameStatus(status);
         return str;
     },
@@ -109,7 +109,7 @@ var UIGameShapeColor = cc.Class({
 
 
     UpdateGuankaLevel: function (level) {
-        cc.log("UIGameShapeColor::UpdateGuankaLevel");
+        cc.Debug.Log("UIGameShapeColor::UpdateGuankaLevel");
         this.game.listShape = this.listShape;
         this.game.listColor = this.listColor;
         this.game.textTitle = this.textTitle;
@@ -118,10 +118,10 @@ var UIGameShapeColor = cc.Class({
     },
 
     CheckAllLoad: function () {
-        cc.log("UIGameShapeColor::CheckAllLoad this.isShowGame=" + this.isShowGame + " this.listGuanka=" + this.listGuanka.length);
+        cc.Debug.Log("UIGameShapeColor::CheckAllLoad this.isShowGame=" + this.isShowGame + " this.listGuanka=" + this.listGuanka.length);
         if (cc.Common.CheckAllLoad(this.listProLoad) == true) {
             if (this.callbackGuankaFinish != null) {
-                cc.log("UIGameShapeColor::CheckAllLoad callbackGuankaFinish this.listGuanka=" + this.listGuanka.length);
+                cc.Debug.Log("UIGameShapeColor::CheckAllLoad callbackGuankaFinish this.listGuanka=" + this.listGuanka.length);
                 this.callbackGuankaFinish();
             }
 
@@ -163,7 +163,7 @@ var UIGameShapeColor = cc.Class({
     },
 
     ParseGuankaInternal: function () {
-        cc.log("ParseGuanka UIGameShapeColor");
+        cc.Debug.Log("ParseGuanka UIGameShapeColor");
         //清空
         this.listProLoad.length = 0;
         //shape
@@ -193,7 +193,7 @@ var UIGameShapeColor = cc.Class({
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {
-                cc.log("config:err=" + err);
+                cc.Debug.Log("config:err=" + err);
             }
             if (err == null) {
                 var infoload = cc.Common.GetLoadItemById(this.listProLoad, info.id);
@@ -217,7 +217,7 @@ var UIGameShapeColor = cc.Class({
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {
-                cc.log("config:err=" + err);
+                cc.Debug.Log("config:err=" + err);
             }
             if (err == null) {
                 var infoload = cc.Common.GetLoadItemById(this.listProLoad, info.id);
@@ -242,7 +242,7 @@ var UIGameShapeColor = cc.Class({
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {
-                cc.log("config:err=" + err);
+                cc.Debug.Log("config:err=" + err);
             }
             if (err == null) {
                 var infoload = cc.Common.GetLoadItemById(this.listProLoad, info.id);
@@ -285,7 +285,7 @@ var UIGameShapeColor = cc.Class({
             this.listShape.push(info);
             this.listGuanka.push(info);
         }
-        cc.log("config:this.listGuanka=" + this.listGuanka.length);
+        cc.Debug.Log("config:this.listGuanka=" + this.listGuanka.length);
         this.CheckAllLoad();
     },
     ParseColor: function (json) {
@@ -300,7 +300,7 @@ var UIGameShapeColor = cc.Class({
             var item = items[i];
             info.id = item.id;
             info.color = cc.Common.RGBString2Color(item.color);
-            cc.log("i=" + i + " info.color=" + info.color + " item.color=" + item.color);
+            cc.Debug.Log("i=" + i + " info.color=" + info.color + " item.color=" + item.color);
             this.listColor.push(info);
         }
         this.CheckAllLoad();

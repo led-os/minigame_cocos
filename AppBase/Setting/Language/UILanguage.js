@@ -37,7 +37,7 @@ cc.Class({
     },
 
     OnClickBtnBack: function (event, customEventData) {
-        cc.log("UISetting OnClickBtnBack");
+        cc.Debug.Log("UISetting OnClickBtnBack");
         if (this.controller != null) {
             var navi = this.controller.naviController;
             if (navi != null) {

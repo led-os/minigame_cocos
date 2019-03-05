@@ -25,7 +25,7 @@ var AudioCache = cc.Class({
 
         if (this.dicItem.Contains(key) == true) {
             ret = this.dicItem.Get(key);
-            cc.log("AudioCache  load  from cache");
+            cc.Debug.Log("AudioCache  load  from cache");
             if (completeCallback) {
                 completeCallback(null, ret);
             }
@@ -33,15 +33,15 @@ var AudioCache = cc.Class({
 
             cc.loader.loadRes(filepath, cc.AudioClip, function (err, audioClip) {
                 if (err) {
-                    cc.log("AudioCache loadRes fail");
-                    cc.log(err.message || err);
+                    cc.Debug.Log("AudioCache loadRes fail");
+                    cc.Debug.Log(err.message || err);
                     if (completeCallback) {
                         completeCallback(err, audioClip);
                     }
                     return ret;
                 }
 
-                cc.log("AudioCache loadRes ok");
+                cc.Debug.Log("AudioCache loadRes ok");
                 if (audioClip != null) {
                     this.dicItem.Add(key, audioClip);
                 }

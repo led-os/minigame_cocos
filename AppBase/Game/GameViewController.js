@@ -61,7 +61,7 @@ var GameViewController = cc.Class({
         var strPrefab = "App/Prefab/Game/UIGame" + cc.Config.main().appType;
        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.log(err.message || err);
+                cc.Debug.Log(err.message || err);
                 return;
             }
             this.uiPrefab = prefab;
@@ -81,19 +81,19 @@ var GameViewController = cc.Class({
 
 
     ViewDidLoad: function () {
-        cc.log("GameViewController ViewDidLoad");
+        cc.Debug.Log("GameViewController ViewDidLoad");
         this._super();
         //this.LoadPrefab();
         this.CreateUI();
     },
     ViewDidUnLoad: function () {
-        cc.log("GameViewController ViewDidUnLoad");
+        cc.Debug.Log("GameViewController ViewDidUnLoad");
         this._super();
         this.ui = null;
 
     },
     LayOutView: function () {
-        cc.log("GameViewController LayOutView");
+        cc.Debug.Log("GameViewController LayOutView");
         //  base.LayOutView();
 
     },
@@ -111,11 +111,11 @@ GameViewController._main = null;
 GameViewController.main = function () {
     // 
     if (!GameViewController._main) {
-        cc.log("_main is null");
+        cc.Debug.Log("_main is null");
         GameViewController._main = new GameViewController();
         GameViewController._main.Init();
     } else {
-        cc.log("_main is not null");
+        cc.Debug.Log("_main is not null");
     }
 
     return GameViewController._main;

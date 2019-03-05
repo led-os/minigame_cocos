@@ -33,7 +33,7 @@ var SettingViewController = cc.Class({
         var strPrefab = "Common/Prefab/Setting/UISetting";
        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.log(err.message || err);
+                cc.Debug.Log(err.message || err);
             }
             this.uiPrefab = prefab;
             this.CreateUI();
@@ -64,11 +64,11 @@ SettingViewController._main = null;
 SettingViewController.main = function () {
     // 
     if (!SettingViewController._main) {
-        cc.log("_main is null");
+        cc.Debug.Log("_main is null");
         SettingViewController._main = new SettingViewController();
         SettingViewController._main.Init();
     } else {
-        cc.log("_main is not null");
+        cc.Debug.Log("_main is not null");
     }
 
     return SettingViewController._main;

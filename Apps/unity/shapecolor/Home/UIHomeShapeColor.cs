@@ -44,7 +44,7 @@ public class UIHomeShapeColor : UIHomeBase, IPopViewControllerDelegate
         {
             TTS.Speek(appname);
         }
-
+        
     }
     // Use this for initialization
     void Start()
