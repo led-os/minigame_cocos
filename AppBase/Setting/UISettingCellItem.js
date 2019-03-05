@@ -9,11 +9,12 @@ cc.Class({
     properties: {
         imageBg: cc.Sprite,
         textTitle: cc.Label,
+        btnSwitch: cc.Button,
     },
 
     onLoad: function () {
         this._super();
-
+        this.UnifyButtonSprite(this.btnSwitch);
     },
 
     init: function init(index, data, reload, group) {
@@ -72,7 +73,58 @@ cc.Class({
 
     UpdateItem: function (info) {
         this.textTitle.string = info.title;
+        this.btnSwitch.node.active = false;
+        if (info.tag == UISetting.TAG_SETTING_BACKGROUND_MUSIC) {
+            this.btnSwitch.node.active = true;
+            var ret = cc.Common.GetItemOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+            this.UpdateBtnSwitch(ret);
+        }
+    },
+    UpdateBtnSwitch: function (isSel) {
+        var strImage = cc.AppRes.IMAGE_BTN_SWITCH_UNSEL;
+        if (isSel) {
+            strImage = cc.AppRes.IMAGE_BTN_SWITCH_SEL;
+        }
+        cc.log("UpdateBtnSwitch issel=" + isSel + " strImage=" + strImage);
+        cc.TextureCache.main.Load2(strImage, false, function (err, tex) {
+            if (err) {
+                cc.log("UpdateBtnSwitch err");
+                cc.log(err.message || err);
+                return;
+            }
+            cc.log("UpdateBtnSwitch spriteFrame");
+            if (tex == null) {
+                cc.log("UpdateBtnSwitch spriteFrame=null");
+            }
+            this.btnSwitch.node.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(tex);
+        }.bind(this));
+
     },
 
+    OnClickBtnSwitch: function (event, customEventData) {
+        if (this.info.tag == UISetting.TAG_SETTING_BACKGROUND_MUSIC) {
+            var ret = cc.Common.GetItemOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
+            cc.log("UpdateBtnSwitch read ret=" + ret);
+            var v = false;
+            if (ret == "true") {
+                v = false;
+                cc.log("UpdateBtnSwitch 1 value=" + v);
+            } else {
+                v = true;
+                cc.log("UpdateBtnSwitch 2 value=" + v);
+            }
+            cc.Common.SetItemOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, v);
+            cc.log("UpdateBtnSwitch value=" + v);
+            this.UpdateBtnSwitch(v);
+            if (v) {
+                //  AudioPlay.main.Play();
+            }
+            else {
+                // AudioPlay.main.Stop();
+            }
+
+
+        }
+    },
 });
 

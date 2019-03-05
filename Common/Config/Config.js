@@ -68,7 +68,6 @@ var Config = cc.Class({
             },
         },
     },
-},
 
     SetLoadFinishCallBack: function (callback, info) {
         Config.callbackFinish = callback;

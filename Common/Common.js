@@ -20,6 +20,8 @@ var Common = cc.Class({
         WIDTH_DESIGN_DEFAULT: 2048,
         HEIGHT_DESIGN_DEFAULT: 1536,
 
+        gold: 0,
+
         //cocos2d-js中Math对象的常用方法总结
         //https://blog.csdn.net/lianghui0811/article/details/76525065?utm_source=blogxgwz4
         GetBestFitScale: function (w_content, h_content, w_rect, h_rect) {
@@ -166,6 +168,7 @@ var Common = cc.Class({
         GetItemOfKey: function (key, default_value) {
             var v = cc.sys.localStorage.getItem(key);
             if (v == null) {
+                cc.log("key is null:"+key);
                 return default_value;
             }
             // var v_int = parseInt(v);

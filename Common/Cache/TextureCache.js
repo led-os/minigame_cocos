@@ -31,6 +31,85 @@ var TextureCache = cc.Class({
                 completeCallback(null, ret);
             }
         } else {
+            // //加载图片： https://www.jianshu.com/p/8bd1eb0240d7
+            // cc.loader.loadRes(filepath, cc.Texture2D, function (err, tex) {
+            //     //cc.url.raw('res/textures/content.png')
+            //     if (err) {
+            //         cc.log("TextureCache loadRes fail");
+            //         cc.log(err.message || err);
+            //         if (completeCallback) {
+            //             completeCallback(err, tex);
+            //         }
+            //         return ret;
+            //     }
+            //     // cc.log("TextureCache loadRes ok");
+            //     if (tex != null) {
+            //         this.dicItem.Add(key, tex);
+            //     }
+            //     if (completeCallback) {
+            //         completeCallback(err, tex);
+            //     }
+            //     //this.sprite.spriteFrame = new cc.SpriteFrame(tex); 
+            // }.bind(this));
+            this.LoadNotCache(filepath, completeCallback);
+        }
+        return ret;
+
+    },
+
+    Load2: function (filepath, isCache, completeCallback) {
+        if (isCache) {
+            this.LoadCache(filepath, completeCallback);
+        } else {
+            this.LoadNotCache(filepath, completeCallback);
+        }
+    },
+
+
+    LoadCache: function (filepath, completeCallback) {
+        this.Init();
+        var ret = null;
+        var key = filepath;
+
+        if (this.dicItem.Contains(key) == true) {
+            ret = this.dicItem.Get(key);
+            cc.log("TextureCache  load  from cache");
+            if (completeCallback) {
+                completeCallback(null, ret);
+            }
+        } else {
+            // //加载图片： https://www.jianshu.com/p/8bd1eb0240d7
+            // cc.loader.loadRes(filepath, cc.Texture2D, function (err, tex) {
+            //     //cc.url.raw('res/textures/content.png')
+            //     if (err) {
+            //         cc.log("TextureCache loadRes fail");
+            //         cc.log(err.message || err);
+            //         if (completeCallback) {
+            //             completeCallback(err, tex);
+            //         }
+            //         return ret;
+            //     }
+            //     // cc.log("TextureCache loadRes ok");
+            //     if (tex != null) {
+            //         this.dicItem.Add(key, tex);
+            //     }
+            //     if (completeCallback) {
+            //         completeCallback(err, tex);
+            //     }
+            //     //this.sprite.spriteFrame = new cc.SpriteFrame(tex); 
+            // }.bind(this));
+            this.LoadNotCache(filepath, completeCallback);
+        }
+        return ret;
+
+    },
+
+    LoadNotCache: function (filepath, completeCallback) {
+        this.Init();
+        var ret = null;
+        var key = filepath;
+
+        {
             //加载图片： https://www.jianshu.com/p/8bd1eb0240d7
             cc.loader.loadRes(filepath, cc.Texture2D, function (err, tex) {
                 //cc.url.raw('res/textures/content.png')
@@ -55,7 +134,6 @@ var TextureCache = cc.Class({
         return ret;
 
     },
-
 
 });
 
