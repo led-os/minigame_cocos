@@ -48,7 +48,7 @@ var UILearnProgressCellItem = cc.Class({
         // }
     },
 
-    init: function init(index, data, reload, group) {
+    init: function (index, data, reload, group) {
         this.node.active = true;
         this.index = index;
         if (index >= data.array.length) {
@@ -57,12 +57,12 @@ var UILearnProgressCellItem = cc.Class({
             this.node.active = false;
             return;
         }
-        this.textTitle.string = index;
-        var uiViewParent = this.GetUIViewParent();// 
-        if (uiViewParent.listItem != null) {
-            var info = uiViewParent.listItem[index];
-            this.UpdateItem(info);
-        }
+
+        this.target = data.target;
+        this.info = data.array[index];
+        this.itemType = this.target.itemType;
+        this.UpdateItem(this.info);
+
 
     },
     clicked: function () {
@@ -148,7 +148,7 @@ var UILearnProgressCellItem = cc.Class({
 
                     this.indexShape = Math.floor(game.listShape.length / 2);
                     var infoshape = game.listShape[this.indexShape];
-                    cc.TextureCache.main.Load(info.pic, function (err, tex) {
+                    cc.TextureCache.main.Load(infoshape.pic, function (err, tex) {
                         if (err) {
                             cc.log(err.message || err);
                             return;
