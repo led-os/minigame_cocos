@@ -8,8 +8,14 @@ var AppRes = cc.Class({
         //image
         IMAGE_HOME_BG: "App/UI/Home/LearnProgressBg",
 
-        //string
+        //key
         KEY_LANGUAGE: "KEY_LANGUAGE",
+        KEY_NOT_FIRST_RUN: "STR_KEY_NOT_FIRST_RUN",
+        KEY_BACKGROUND_MUSIC: "KEY_BACKGROUND_MUSIC",
+        KEY_LANGUAGE: "STR_KEY_LANGUAGE",
+        KEY_COMMENT_VERSION: "key_comment_",
+        KEY_COMMENT_LAST_TIME: "key_comment_last_time",
+        KEY_USER_GUIDE: "key_comment_user_guide_",
     },
 
 

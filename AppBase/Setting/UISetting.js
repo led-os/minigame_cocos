@@ -24,7 +24,7 @@ var UISetting = cc.Class({
             type: cc.Button
         },
         tableView: cc.TableView,
-
+        textTitle: cc.Label,
         imageBg: cc.Sprite,
         topBar: cc.Node,
         oneCellNum: 1,
@@ -42,6 +42,9 @@ var UISetting = cc.Class({
 
         this.UnifyButtonSprite(this.btnBack);
         this.UpdateItem();
+
+        this.textTitle.string = cc.Language.main().GetString("STR_SETTING");
+
     },
 
     UpdateItem: function () {

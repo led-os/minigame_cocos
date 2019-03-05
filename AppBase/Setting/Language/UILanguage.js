@@ -31,7 +31,7 @@ cc.Class({
         this.node.setContentSize(this.node.parent.getContentSize());
 
         this.UnifyButtonSprite(this.btnBack);
-
+        this.textTitle.string = cc.Language.main().GetString("STR_LANGUAGE");
         this.UpdateItem();
 
     },

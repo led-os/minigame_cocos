@@ -333,8 +333,8 @@ var RectTransform = cc.Class({
                 break;
             case LayoutAlign.AlignType.UP_RIGHT:
                 {
-                    x = w_parent / 2 - w / 2;
-                    y = h_parent / 2 - h / 2;
+                    x = w_parent / 2 - w / 2-this.offsetMax.x;
+                    y = h_parent / 2 - h / 2-this.offsetMax.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;

@@ -28,6 +28,7 @@ cc.Class({
         this.target = data.target;
         this.info = data.array[index];
         this.UpdateItem(this.info);
+        //KEY_BACKGROUND_MUSIC
     },
 
     clicked: function () {
