@@ -66,6 +66,8 @@ cc.Class({
         x_start = 0;
         y_start = size.height / 2 + h;
         //this.imageNameBg.node.setPosition(x_start, y_start);
+
+        //cc.AudioPlay.main().PlayBgMusic();
     },
 
     start() {

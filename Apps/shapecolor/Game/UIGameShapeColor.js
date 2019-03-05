@@ -12,6 +12,8 @@ var UIGameShapeColor = cc.Class({
             default: null,
             type: cc.Button
         },
+        textTitle: cc.Label,
+
         game: {
             default: null,
             type: GameShapeColor
@@ -83,14 +85,14 @@ var UIGameShapeColor = cc.Class({
     },
     GameStatusOfShape: function (info) {
         var key = GameShapeColor.STR_KEY_GAME_STATUS_SHAPE + info.id;
-        var status = cc.Common.GetItemOfKey(key, GameShapeColor.GAME_STATUS_UN_START);
-        //cc.log("status=" + status);
+        var status = cc.Common.GetIntOfKey(key, GameShapeColor.GAME_STATUS_UN_START);
+        cc.log("status=" + status);
         var str = this.StringOfGameStatus(status);
         return str;
     },
     GameStatusOfColor: function (info) {
         var key = GameShapeColor.STR_KEY_GAME_STATUS_COLOR + info.id;
-        var status = cc.Common.GetItemOfKey(key, GameShapeColor.GAME_STATUS_UN_START);
+        var status = cc.Common.GetIntOfKey(key, GameShapeColor.GAME_STATUS_UN_START);
         var str = this.StringOfGameStatus(status);
         return str;
     },
@@ -110,7 +112,8 @@ var UIGameShapeColor = cc.Class({
         cc.log("UIGameShapeColor::UpdateGuankaLevel");
         this.game.listShape = this.listShape;
         this.game.listColor = this.listColor;
-
+        this.game.textTitle = this.textTitle;
+        this.textTitle.node.active = false;
         this.game.LoadGame(cc.GameManager.gameMode);
     },
 
@@ -142,7 +145,7 @@ var UIGameShapeColor = cc.Class({
         if (this.listBg != null) {
             this.listBg.splice(0, this.listBg.length);
         }
-        
+
     },
     GetGuankaTotal: function () {
         // var count = this.ParseGuanka();

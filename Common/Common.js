@@ -168,7 +168,7 @@ var Common = cc.Class({
         GetItemOfKey: function (key, default_value) {
             var v = cc.sys.localStorage.getItem(key);
             if (v == null) {
-                cc.log("key is null:"+key);
+                cc.log("key is null:" + key);
                 return default_value;
             }
             // var v_int = parseInt(v);
@@ -177,6 +177,27 @@ var Common = cc.Class({
         SetItemOfKey: function (key, value) {
             var str = value.toString();
             cc.sys.localStorage.setItem(key, str);
+        },
+        GetBoolOfKey: function (key, default_value) {
+            var v = cc.sys.localStorage.getItem(key);
+            if (v == null) {
+                cc.log("key is null:" + key);
+                return default_value;
+            }
+            if (v == "true") {
+                return true;
+            }
+            return false;
+        },
+
+        GetIntOfKey: function (key, default_value) {
+            var v = cc.sys.localStorage.getItem(key);
+            if (v == null) {
+                cc.log("key is null:" + key);
+                return default_value;
+            }
+            var v_int = parseInt(v);
+            return v_int;
         },
 
         GetButtonText: function (btn) {

@@ -33,7 +33,7 @@ cc.Class({
         this.UnifyButtonSprite(this.btnBack);
         this.textTitle.string = cc.Language.main().GetString("STR_LANGUAGE");
         this.UpdateItem();
-
+        this.LayOut();
     },
 
     OnClickBtnBack: function (event, customEventData) {
@@ -47,8 +47,14 @@ cc.Class({
     },
 
 
-    LayOut: function () {
-        //LayoutScale.ScaleImage(this.imageBg, true);
+    LayOut: function () { 
+        var size = this.node.getContentSize();
+        var ratio = 0.8;
+        var x, y, w, h;
+        w = size.width * ratio;
+        h = size.height * ratio;
+        this.nodeContent.setContentSize(w,h);
+
     },
 
     UpdateItem: function () {

@@ -59,6 +59,23 @@ var AudioPlay = cc.Class({
         }.bind(this));
     },
 
+    //背景音乐
+    PlayBgMusic: function () {
+        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+        if (ret) {
+            cc.AudioCache.main.Load("App/Audio/Bg", function (err, audioClip) {
+                if (err) {
+                    cc.log(err.message || err);
+                    return ret;
+                }
+                this.PlayMusic(audioClip);
+            }.bind(this));
+        }
+    },
+
+    PlayStopBgMusic: function () {
+        cc.audioEngine.stopAll();
+    },
 });
 
 AudioPlay._main = null;

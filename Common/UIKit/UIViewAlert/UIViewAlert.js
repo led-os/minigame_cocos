@@ -20,8 +20,17 @@ var UIViewAlert = cc.Class({
         this.UnifyButtonSprite(this.btnYes);
         this.UnifyButtonSprite(this.btnNo);
         //this.imageBg.node.addComponent(cc.UITouchEvent);
+        this.LayOut();
     },
 
+    LayOut: function () {
+        var size = this.node.getContentSize();
+        var ratio = 0.8;
+        var x, y, w, h;
+        w = size.width * ratio;
+        h = w*9/16;
+        this.content.setContentSize(w, h);
+    },
     SetText: function (title, msg, yes, no) {
         this.textTitle.string = title;
         this.textMsg.string = msg;
@@ -33,8 +42,8 @@ var UIViewAlert = cc.Class({
             var textBtn = cc.Common.GetButtonText(this.btnYes);
 
             fontsize = textBtn.fontSize;
-            var w_yes = cc.Common.GetTextWidth(yes, fontsize) + fontsize/2;
-            var w_no = cc.Common.GetTextWidth(no, fontsize) + fontsize/2;
+            var w_yes = cc.Common.GetTextWidth(yes, fontsize) + fontsize / 2;
+            var w_no = cc.Common.GetTextWidth(no, fontsize) + fontsize / 2;
 
             w = Math.max(w_yes, w_no);
 
@@ -43,7 +52,7 @@ var UIViewAlert = cc.Class({
             this.btnYes.node.setContentSize(w, h);
 
             textBtn = cc.Common.GetButtonText(this.btnNo);
-            textBtn.string = no; 
+            textBtn.string = no;
             h = this.btnNo.node.getContentSize().height;
             this.btnNo.node.setContentSize(w, h);
 

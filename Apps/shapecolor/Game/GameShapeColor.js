@@ -30,7 +30,7 @@ var GameShapeColor = cc.Class({
 
     properties: {
         imageBg: cc.Sprite,
-
+        textTitle: cc.Label,
         listShape: null,
         listColor: null,
         // listColor: {
@@ -160,7 +160,8 @@ var GameShapeColor = cc.Class({
                 if (isYes) {
                     cc.GameManager.main().GotoNextLevelWithoutPlace();
                 } else {
-
+                    //replay
+                    cc.GameManager.main().GotoPlayAgain();
                 }
             }.bind(this)
         );
@@ -400,6 +401,11 @@ var GameShapeColor = cc.Class({
         //speak
         var str = this.StringOfItem(info);
         cc.Tts.Speak(str, true);
+        if(this.textTitle!=null)
+        {
+            this.textTitle.node.active = true;
+            this.textTitle.string = str;
+        }
 
     },
 

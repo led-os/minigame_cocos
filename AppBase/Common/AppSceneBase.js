@@ -160,7 +160,7 @@ var AppSceneBase = cc.Class({
             //启动app
             this.isHasRunApp = true;
 
-            var isFirstRun = !cc.Common.GetItemOfKey(cc.AppRes.KEY_NOT_FIRST_RUN, false);
+            var isFirstRun = !cc.Common.GetBoolOfKey(cc.AppRes.KEY_NOT_FIRST_RUN, false);
             if (isFirstRun) {
                 cc.Common.gold = cc.AppRes.GOLD_INIT_VALUE;
                 //第一次安装

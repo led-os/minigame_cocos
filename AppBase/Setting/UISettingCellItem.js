@@ -103,27 +103,25 @@ cc.Class({
 
     OnClickBtnSwitch: function (event, customEventData) {
         if (this.info.tag == UISetting.TAG_SETTING_BACKGROUND_MUSIC) {
-            var ret = cc.Common.GetItemOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
+            var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
             cc.log("UpdateBtnSwitch read ret=" + ret);
-            var v = false;
-            if (ret == "true") {
-                v = false;
-                cc.log("UpdateBtnSwitch 1 value=" + v);
-            } else {
-                v = true;
-                cc.log("UpdateBtnSwitch 2 value=" + v);
-            }
+            var v = !ret;
+            // if (ret == "true") {
+            //     v = false;
+            //     cc.log("UpdateBtnSwitch 1 value=" + v);
+            // } else {
+            //     v = true;
+            //     cc.log("UpdateBtnSwitch 2 value=" + v);
+            // }
             cc.Common.SetItemOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, v);
             cc.log("UpdateBtnSwitch value=" + v);
             this.UpdateBtnSwitch(v);
             if (v) {
-                //  AudioPlay.main.Play();
+                cc.AudioPlay.main().PlayBgMusic();
             }
             else {
-                // AudioPlay.main.Stop();
+                cc.AudioPlay.main().PlayStopBgMusic();
             }
-
-
         }
     },
 });
