@@ -6,15 +6,20 @@ var Tts = cc.Class({
     statics: {
         GetTextUrl: function (str) {
             //百度
-            var url = "http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=" + str;
+            //https://www.cnblogs.com/kasher/p/8483274.html
+            var url = "https://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=" + str;
             cc.Debug.Log(url);
             return url;
         },
 
         Speak: function (str, isnet) {
-            if (isnet) {
-                if (cc.sys.isNative) {
-                    cc.AudioPlay.main().PlayUrl(Tts.GetTextUrl(str));
+            if (cc.Common.main().isWeiXin) {
+                cc.TtsWeiXin.Speak(Tts.GetTextUrl(str));
+            } else {
+                if (isnet) {
+                    if (cc.sys.isNative) {
+                        cc.AudioPlay.main().PlayUrl(Tts.GetTextUrl(str));
+                    }
                 }
             }
 

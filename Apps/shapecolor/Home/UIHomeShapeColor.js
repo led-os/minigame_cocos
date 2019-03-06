@@ -110,25 +110,25 @@ cc.Class({
         if (cc.Common.main().isWeiXin) {
             //https://blog.csdn.net/u014466109/article/details/81100304
             //video :https://blog.csdn.net/haibo19981/article/details/81251882
-            let winSize = wx.getSystemInfoSync();
+            // let winSize = wx.getSystemInfoSync();
 
-            console.log(winSize);
-            let bannerHeight = 80;
-            let bannerWidth = 300;
+            // console.log(winSize);
+            // let bannerHeight = 80;
+            // let bannerWidth = 300;
 
-            this._bannerAd = wx.createBannerAd({
-                adUnitId: 'adunit-549b2e8b53ad8e21', //填写广告id
-                style: {
-                    left: (winSize.windowWidth - bannerWidth) / 2,
-                    top: winSize.windowHeight - bannerHeight,
-                    width: bannerWidth,
-                }
-            });
-            this._bannerAd.show(); //banner 默认隐藏(hide) 要打开
-            //微信缩放后得到banner的真实高度，从新设置banner的top 属性
-            this._bannerAd.onResize(res => {
-                this._bannerAd.style.top = winSize.windowHeight - this._bannerAd.style.realHeight;
-            });
+            // this._bannerAd = wx.createBannerAd({
+            //     adUnitId: 'adunit-549b2e8b53ad8e21', //填写广告id
+            //     style: {
+            //         left: (winSize.windowWidth - bannerWidth) / 2,
+            //         top: winSize.windowHeight - bannerHeight,
+            //         width: bannerWidth,
+            //     }
+            // });
+            // this._bannerAd.show(); //banner 默认隐藏(hide) 要打开
+            // //微信缩放后得到banner的真实高度，从新设置banner的top 属性
+            // this._bannerAd.onResize(res => {
+            //     this._bannerAd.style.top = winSize.windowHeight - this._bannerAd.style.realHeight;
+            // });
         }
     },
 
