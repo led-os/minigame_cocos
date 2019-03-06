@@ -11,10 +11,18 @@ var TtsWeiXin = cc.Class({
 
         PlayUrl: function (url) {
             const audio = wx.createInnerAudioContext()
-            //@moon 让微信在静音模式下继续播放声音
-            audio.obeyMuteSwitch = false;
+            //@moon 让微信在静音模式下继续播放声音 https://segmentfault.com/a/1190000016875469?utm_medium=referral&utm_source=tuicool
+            if (wx.setInnerAudioOption) {
+                wx.setInnerAudioOption({
+                    obeyMuteSwitch: false,
+                    autoplay: true
+                })
+            } else {
+                audio.obeyMuteSwitch = false;
+                audio.autoplay = true;
+            }
+            //@moon
 
-            audio.autoplay = true;
             audio.src = url;
             //audio.src = 'https://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=1&text=福';
             //audio.src = 'https://cdn.feilaib.top/img/sounds/bg.mp3';
@@ -48,6 +56,8 @@ var TtsWeiXin = cc.Class({
                 audio.play();
             });
 
+
+            auto.play();
         },
         /*
                 // 合成
