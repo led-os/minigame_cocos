@@ -57,7 +57,7 @@ var TtsWeiXin = cc.Class({
             });
 
 
-            auto.play();
+            audio.play();
         },
         /*
                 // 合成
