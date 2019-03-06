@@ -25,7 +25,7 @@ var TtsWeiXin = cc.Class({
 
             audio.src = url;
             //audio.src = 'https://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=1&text=福';
-            //audio.src = 'https://cdn.feilaib.top/img/sounds/bg.mp3';
+            // audio.src = 'https://cdn.feilaib.top/img/sounds/bg.mp3';
 
             console.log(audio.src);
             audio.onPlay(() => {

@@ -12,7 +12,12 @@ var Tts = cc.Class({
             //mpga 格式：https://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=
             // var url = "https://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=" + str;
 
-            var url = "https://tsn.baidu.com/text2audio?&lan=zh&cuid=moon&ctp=1&tok=24.b79c9ea129a4009fc20b0b542d1aa8e4.2592000.1554471263.282335-15699370&tex=" + str;
+
+            //需要对tsn接口的文本字符串参数进行编码 没有做编码，直接上文本的，也会出现安卓正常IOS没有声音的情况
+            var strencode = encodeURIComponent(str);
+            //strencode = str;
+
+            var url = "https://tsn.baidu.com/text2audio?&lan=zh&cuid=moon&ctp=1&tok=24.b79c9ea129a4009fc20b0b542d1aa8e4.2592000.1554471263.282335-15699370&tex=" + strencode;
             cc.Debug.Log(url);
             return url;
         },
@@ -72,12 +77,12 @@ var Tts = cc.Class({
             var url = Tts.GetTextUrl(str);
             if (cc.Common.main().isWeiXin) {
                 cc.TtsWeiXin.Speak(url);
+                // cc.AudioPlay.main().PlayUrl(url);
             } else if (cc.sys.isBrowser) {
                 this.SpeakWeb(str);
             }
 
             else {
-                //  this.SpeakWeb(str);
                 //cc.AudioPlay.main().PlayUrl(url);
                 if (isnet) {
                     if (cc.sys.isNative) {
@@ -92,7 +97,8 @@ var Tts = cc.Class({
         SpeakWeb: function (str) {
             //添加mp3后缀 让cc.loader.load认为加载声音资源
             var ext = "&1.mp3";
-            var url = Tts.GetTextUrl(str + ext);
+            var url = Tts.GetTextUrl(str) + ext;
+            cc.Debug.Log(url);
             //url = "https://cdn.feilaib.top/img/sounds/bg.mp3";
             cc.AudioPlay.main().PlayUrl(url);
         },
