@@ -11,6 +11,9 @@ var TtsWeiXin = cc.Class({
 
         PlayUrl: function (url) {
             const audio = wx.createInnerAudioContext()
+            //@moon 让微信在静音模式下继续播放声音
+            audio.obeyMuteSwitch = false;
+
             audio.autoplay = true;
             audio.src = url;
             //audio.src = 'https://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=1&text=福';
