@@ -350,6 +350,7 @@ var Common = cc.Class({
 
         },
 
+
     },
 
     Init: function () {

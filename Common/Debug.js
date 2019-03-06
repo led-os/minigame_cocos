@@ -5,12 +5,14 @@ var Debug = cc.Class({
     statics: {
         // 声明静态变量 
         Log: function (str) {
-            if (cc.Common.main().isWeiXin) {
-                console.log(str);
-            } else {
-                cc.log(str);
-            }
-            //console.log(str);
+            console.log(str);
+            // if (cc.Common.main().isWeiXin) {
+            //     console.log(str);
+            // } else {
+            //     //cc.log(str);
+            //      console.log(str);
+            // }
+
         },
 
 

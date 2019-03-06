@@ -37,8 +37,8 @@ var AudioPlay = cc.Class({
         cc.audioEngine.playEffect(file, false);
     },
 
-    //网络文件
-    PlayUrl: function (url) {
+    //先下载网络文件到本地再播放
+    PlayUrlByDownload: function (url) {
         var httpReq = new cc.HttpRequest();
         httpReq.Get(url, function (err, data) {
             if (err) {
@@ -56,7 +56,9 @@ var AudioPlay = cc.Class({
             }
         }.bind(this));
     },
-    PlayUrl2: function (url) {
+
+    //直接播放网络文件不同平台支持的文件格式不一样，一般mp3比较通用
+    PlayUrl: function (url) {
         //https://cdn.feilaib.top/img/sounds/bg.mp3
         //cc.loader.load("https://cdn.feilaib.top/img/sounds/bg.mp3", function (err, audio) 
         //cc.loader.load({ id: url+".mp3", type: "mp3" }, function (err, audio) 
