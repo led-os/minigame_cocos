@@ -294,7 +294,7 @@ var tableView = cc.Class({
                     cc.Debug.Log("w_item=" + w_item + " h_item" + h_item);
                     var rctran = cell.getComponent(cc.RectTransform);
                     if (rctran != null) {
-                        rctran.OnResize();
+                        rctran.LayOut();
                     }
                     //@moon
 
@@ -337,7 +337,7 @@ var tableView = cc.Class({
                     cc.Debug.Log("w_item=" + w_item + " h_item" + h_item);
                     var rctran = cell.getComponent(cc.RectTransform);
                     if (rctran != null) {
-                        rctran.OnResize();
+                        rctran.LayOut();
                     }
 
                     cell.y = (cell.anchorY - 0.5) * cell.height;

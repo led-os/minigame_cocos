@@ -55,7 +55,7 @@ var RectTransform = cc.Class({
                 this._offsetMin = value;
                 // this.UpdateType(this.sizeType, true);
                 // this.UpdateType(this.sizeType, false);
-                this.OnResize();
+                this.LayOut();
             },
         },
 
@@ -72,7 +72,7 @@ var RectTransform = cc.Class({
                 this._offsetMax = value;
                 // this.UpdateType(this.sizeType, true);
                 // this.UpdateType(this.sizeType, false);
-                this.OnResize();
+                this.LayOut();
             },
         },
 
@@ -90,7 +90,7 @@ var RectTransform = cc.Class({
                 this._anchorMin = value;
                 // this.UpdateType(this.sizeType, true);
                 // this.UpdateType(this.sizeType, false);
-                this.OnResize();
+                this.LayOut();
             },
         },
         
@@ -107,7 +107,7 @@ var RectTransform = cc.Class({
                 this._anchorMax = value;
                 // this.UpdateType(this.sizeType, true);
                 // this.UpdateType(this.sizeType, false);
-                this.OnResize();
+                this.LayOut();
             },
         },
 
@@ -166,11 +166,11 @@ var RectTransform = cc.Class({
 
     },
     onLoad: function () {
-        this.OnResize();
+        this.LayOut();
 
     },
 
-    OnResize: function () {
+    LayOut: function () {
 
         this.UpdateType(this.sizeTypeX, true);
         this.UpdateType(this.sizeTypeY, false);
@@ -186,7 +186,7 @@ var RectTransform = cc.Class({
             var rctran = child.getComponent(RectTransform);
             if (rctran != null) {
                // cc.Debug.Log("OnResize child");
-                rctran.OnResize();
+                rctran.LayOut();
             }
 
         }

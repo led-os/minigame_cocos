@@ -40,11 +40,9 @@ var AudioPlay = cc.Class({
     //网络文件
     PlayUrl: function (url) {
         var httpReq = new cc.HttpRequest();
-        httpReq.Get(url, function (err, data)
-        // http.get(url, function (err, data)
-        {
+        httpReq.Get(url, function (err, data) {
             if (err) {
-                console.log(err);
+                cc.Debug.Log(err);
                 return;
             }
             //console.log(data);
@@ -58,6 +56,22 @@ var AudioPlay = cc.Class({
             }
         }.bind(this));
     },
+    PlayUrl2: function (url) {
+        //https://cdn.feilaib.top/img/sounds/bg.mp3
+        //cc.loader.load("https://cdn.feilaib.top/img/sounds/bg.mp3", function (err, audio) 
+        //cc.loader.load({ id: url+".mp3", type: "mp3" }, function (err, audio) 
+        var url_new = url;
+        cc.loader.load(url_new, function (err, audio) {
+            if (err) {
+                cc.Debug.Log(err.message || err);
+                cc.Debug.Log("playurl fail:" + url_new);
+                return;
+            }
+            this.PlayAudioClip(audio);
+
+        }.bind(this));
+    },
+
 
     //背景音乐
     PlayBgMusic: function () {

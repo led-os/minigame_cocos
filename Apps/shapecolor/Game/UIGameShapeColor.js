@@ -68,7 +68,7 @@ var UIGameShapeColor = cc.Class({
     },
 
     StringOfGameStatus: function (status) {
-        var str = "unknown"+status;
+        var str = "unknown" + status;
         switch (status) {
             case GameShapeColor.GAME_STATUS_UN_START:
                 str = cc.Language.main().GetString("STR_GAME_STATUS_UN_START");
@@ -115,6 +115,24 @@ var UIGameShapeColor = cc.Class({
         this.game.textTitle = this.textTitle;
         this.textTitle.node.active = false;
         this.game.LoadGame(cc.GameManager.gameMode);
+
+        //imagebg
+        var url = "http://i1.bvimg.com/679362/29748b18acf1446a.png"
+        cc.loader.load(url, function (err, tex) {
+            //cc.url.raw('res/textures/content.png')
+            if (err) {
+
+                cc.Debug.Log(err.message || err);
+                return ret;
+            }
+            // cc.Debug.Log("TextureCache loadRes ok");
+
+            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
+            lyscale.LayOut();
+
+        }.bind(this));
+ 
     },
 
     CheckAllLoad: function () {
