@@ -78,7 +78,7 @@ cc.Class({
         this.btnSwitch.node.active = false;
         if (info.tag == UISetting.TAG_SETTING_BACKGROUND_MUSIC) {
             this.btnSwitch.node.active = true;
-            var ret = cc.Common.GetItemOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+            var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
             this.UpdateBtnSwitch(ret);
         }
     },

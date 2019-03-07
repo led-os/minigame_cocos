@@ -38,6 +38,8 @@ cc.Class({
         var name = cc.Language.main().GetString("APP_NAME");
         this.textName.string = name;
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+        cc.Debug.Log("KEY_BACKGROUND_MUSIC home=" + ret);
         if (ret) 
         {
             cc.Tts.Speak(name);

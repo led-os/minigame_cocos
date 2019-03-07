@@ -188,16 +188,26 @@ var Common = cc.Class({
                 cc.Debug.Log("GetBoolOfKey key is null:" + key);
                 return default_value;
             }
-            cc.Debug.Log("GetBoolOfKey key is :" + key + " v=" + v);
+            cc.Debug.Log("GetBoolOfKey key is :" + key + " v=" + v + " typeof=" + typeof v);
             // if (cc.Common.main().isWeiXin) {
             //     return v;
             // }
-            //cc.sys.localStorage.setItem 保存 bool变量的时候实际保存的是"true"和“false"字符串
-            if (v == "true") {
-                return true;
-            } else {
-                return false;
+            //cc.sys.localStorage.setItem 保存 bool变量的时候有一些平台实际保存的是"true"和“false"字符串
+            var type = typeof v;
+            if ("boolean" == type) {
+                //微信小程序
+                return v;
             }
+
+            if ("string" == type) {
+                if (v == "true") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+
             return v;
         },
 

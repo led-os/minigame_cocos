@@ -160,15 +160,18 @@ var AppSceneBase = cc.Class({
             //启动app
             this.isHasRunApp = true;
 
-            var isFirstRun = !cc.Common.GetBoolOfKey(cc.AppRes.KEY_NOT_FIRST_RUN, false);
+            var isFirstRun = cc.Common.GetBoolOfKey(cc.AppRes.KEY_FIRST_RUN, true);
+            cc.Debug.Log("isFirstRun=" + isFirstRun);
             if (isFirstRun) {
                 cc.Common.gold = cc.AppRes.GOLD_INIT_VALUE;
                 //第一次安装
-                cc.Common.SetItemOfKey(cc.AppRes.KEY_NOT_FIRST_RUN, true);
+                cc.Common.SetItemOfKey(cc.AppRes.KEY_FIRST_RUN, false);
                 cc.Common.SetItemOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, true);
+                var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+                cc.Debug.Log("KEY_BACKGROUND_MUSIC=" + ret);
             }
 
-            var lan = cc.Language.main(); 
+            var lan = cc.Language.main();
             var lanid = cc.Common.GetItemOfKey(cc.AppRes.KEY_LANGUAGE, cc.sys.LANGUAGE_CHINESE);
             lan.SetLanguage(lanid);
 
