@@ -400,7 +400,7 @@ var GameShapeColor = cc.Class({
 
         //speak
         var str = this.StringOfItem(info);
-        cc.Tts.Speak(str, true);
+        cc.Tts.Speak(str);
         if(this.textTitle!=null)
         {
             this.textTitle.node.active = true;
@@ -678,7 +678,7 @@ var GameShapeColor = cc.Class({
 
         //othershape
         indexShape = this.RandomIndex(this.listShape.length, totalOtherColor);
-        var listOther = this.GetOtherItemList(infocolor, listColor);
+        var listOther = this.GetOtherItemList(infocolor, this.listColor);
         var indexOther = this.RandomIndex(listOther.length, totalOtherColor);
         for (var k = 0; k < totalOtherColor; k++) {
             var indexRect = indexRectList[totalMainColor + k];

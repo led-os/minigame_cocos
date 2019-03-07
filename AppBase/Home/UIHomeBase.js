@@ -37,7 +37,10 @@ cc.Class({
 
         var name = cc.Language.main().GetString("APP_NAME");
         this.textName.string = name;
-        cc.Tts.Speak(name, true);
+        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+        if (ret) {
+            cc.Tts.Speak(name);
+        }
 
         var strImage = cc.AppRes.IMAGE_HOME_BG;
         cc.TextureCache.main.Load(strImage, function (err, tex) {
@@ -67,7 +70,7 @@ cc.Class({
         y_start = size.height / 2 + h;
         //this.imageNameBg.node.setPosition(x_start, y_start);
 
-    cc.AudioPlay.main().PlayBgMusic();
+        cc.AudioPlay.main().PlayBgMusic();
     },
 
     start() {

@@ -22,17 +22,19 @@ var HttpRequest = cc.Class({
         xhr.open("GET", requestURL, true);
 
         //必须设置为arraybuffer 不然会闪退
-        xhr.responseType = 'arraybuffer';
+        xhr.responseType = 'arraybuffer';//arraybuffer
 
         if (cc.sys.isNative) {
-            xhr.setRequestHeader("Accept-Encoding", "gzip,deflate", "text/html;charset=UTF-8");
+            //charset=UTF-8:当文本为非UTF8的时候会乱码，所以关闭
+            // xhr.setRequestHeader("Accept-Encoding", "gzip,deflate", "text/html;charset=UTF-8");
         }
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 300)) {
-                // console.log("http res(" + xhr.responseText.length + "):" + xhr.responseText);
+
                 try {
-                    //var ret = xhr.responseText;
+                    //var str = xhr.responseText;
+                    // console.log("http res(" + xhr.responseText.length + "):" + xhr.responseText);
                     var ret = xhr.response;
                     if (cb) {
                         cb(null, ret);
