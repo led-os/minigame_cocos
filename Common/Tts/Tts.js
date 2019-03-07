@@ -19,8 +19,12 @@ var Tts = cc.Class({
             //strencode = str;
 
             //var url = "https://tsn.baidu.com/text2audio?&lan=zh&cuid=moon&ctp=1&tok=24.b79c9ea129a4009fc20b0b542d1aa8e4.2592000.1554471263.282335-15699370&tex=" + strencode;
-
             var url = "https://tsn.baidu.com/text2audio?&lan=zh&cuid=moon&ctp=1&tok=" + Tts.accessToken + "&tex=" + strencode;
+            if ((cc.sys.isBrowser) || (cc.Common.main().isWeiXin)) {
+                //openapi.baidu.com/oauth浏览器不能跨域访问
+                url = "https://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=" + strencode;
+            }
+
             cc.Debug.Log(url);
             return url;
         },
@@ -111,17 +115,22 @@ var Tts = cc.Class({
         },
         Speak: function (str) {
             Tts.textSpeak = str;
+
+            if ((cc.sys.isBrowser) || (cc.Common.main().isWeiXin)) {
+                Tts.accessToken = "24.b79c9ea129a4009fc20b0b542d1aa8e4.2592000.1554471263.282335-15699370";
+            }
+
+
             if (cc.Common.isBlankString(Tts.accessToken)) {
                 this.GetBaiDuAccessToken();
             } else {
                 this.SpeakInternal(str);
             }
 
-
-
         },
         SpeakInternal: function (str) {
             var url = Tts.GetTextUrl(str);
+
             if (cc.Common.main().isWeiXin) {
                 cc.TtsWeiXin.Speak(url);
                 // cc.AudioPlay.main().PlayUrl(url);
@@ -139,7 +148,7 @@ var Tts = cc.Class({
         },
 
 
-        SpeakWeb: function (sturlr) {
+        SpeakWeb: function (url) {
             //添加mp3后缀 让cc.loader.load认为加载声音资源
             var ext = "&1.mp3";
             var url_new = url + ext;

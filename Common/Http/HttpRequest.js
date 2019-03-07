@@ -28,6 +28,13 @@ var HttpRequest = cc.Class({
             //charset=UTF-8:当文本为非UTF8的时候会乱码，所以关闭
             // xhr.setRequestHeader("Accept-Encoding", "gzip,deflate", "text/html;charset=UTF-8");
         }
+        if (cc.sys.isBrowser) {
+            //跨域问题
+           // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+            // xhr.response.setRequestHeader("Access-Control-Allow-Origin", "*");
+
+        }
+
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 300)) {
