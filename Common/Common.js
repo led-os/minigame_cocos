@@ -166,49 +166,83 @@ var Common = cc.Class({
         },
 
         GetItemOfKey: function (key, default_value) {
-            var v = cc.sys.localStorage.getItem(key);
-            if (Common.isBlankString(v)) {
-                //cc.Debug.Log("key is null:" + key);
-                return default_value;
-            }
-            return v;
-        },
-        SetItemOfKey: function (key, value) {
-            cc.sys.localStorage.setItem(key, value);
-        },
-
-        SetBoolOfKey: function (key, value) {
-            cc.sys.localStorage.setItem(key, value.toString());
-        },
-
-        GetBoolOfKey: function (key, default_value) {
-            var v = cc.sys.localStorage.getItem(key);
-            //微信小程序key不存在的时候返回""而非null
-            if (Common.isBlankString(v)) {
-                cc.Debug.Log("GetBoolOfKey key is null:" + key);
-                return default_value;
-            }
-            cc.Debug.Log("GetBoolOfKey key is :" + key + " v=" + v + " typeof=" + typeof v);
-            // if (cc.Common.main().isWeiXin) {
-            //     return v;
-            // }
-            //cc.sys.localStorage.setItem 保存 bool变量的时候有一些平台实际保存的是"true"和“false"字符串
-            var type = typeof v;
-            if ("boolean" == type) {
-                //微信小程序
-                return v;
-            }
-
-            if ("string" == type) {
-                if (v == "true") {
-                    return true;
-                } else {
-                    return false;
+            var v = "";
+            if (cc.Common.main().isWeiXin) {
+                v = wx.getStorageSync(key);
+                if (!Common.isKeyExistWeiXin(v)) {
+                    //cc.Debug.Log("key is null:" + key);
+                    return default_value;
+                }
+                cc.Debug.Log("GetItemOfKey wx key=" + key + " value=" + v);
+            } else {
+                v = cc.sys.localStorage.getItem(key);
+                if (Common.isBlankString(v)) {
+                    //cc.Debug.Log("key is null:" + key);
+                    return default_value;
                 }
             }
 
-
             return v;
+        },
+        SetItemOfKey: function (key, value) {
+            if (cc.Common.main().isWeiXin) {
+                wx.setStorageSync(key, value);
+                cc.Debug.Log("SetItemOfKey wx key=" + key + " value=" + value);
+                var v = wx.getStorageSync(key);
+                cc.Debug.Log("SetItemOfKey wx key now =" + key + " v=" + v);
+            } else {
+                cc.sys.localStorage.setItem(key, value);
+            }
+        },
+
+        SetBoolOfKey: function (key, value) {
+            if (cc.Common.main().isWeiXin) {
+                wx.setStorageSync(key, value);
+                cc.Debug.Log("SetBoolOfKey wx key=" + key + " value=" + value);
+            } else {
+                cc.sys.localStorage.setItem(key, value.toString());
+            }
+        },
+
+        GetBoolOfKey: function (key, default_value) {
+            if (cc.Common.main().isWeiXin) {
+                var v = wx.getStorageSync(key);
+                cc.Debug.Log("GetBoolOfKey wx key=" + key + " value=" + v + " type=" + typeof v);
+                if (!Common.isKeyExistWeiXin(v)) {
+                    cc.Debug.Log("GetBoolOfKey key is null:" + key);
+                    return default_value;
+                }
+                return v;
+            }
+            else {
+                var v = cc.sys.localStorage.getItem(key);
+                //微信小程序key不存在的时候返回""而非null
+                if (Common.isBlankString(v)) {
+                    cc.Debug.Log("GetBoolOfKey key is null:" + key);
+                    return default_value;
+                }
+                cc.Debug.Log("GetBoolOfKey key is :" + key + " v=" + v + " typeof=" + typeof v);
+                // if (cc.Common.main().isWeiXin) {
+                //     return v;
+                // }
+                //cc.sys.localStorage.setItem 保存 bool变量的时候有一些平台实际保存的是"true"和“false"字符串
+                var type = typeof v;
+                if ("boolean" == type) {
+                    //微信小程序
+                    return v;
+                }
+
+                if ("string" == type) {
+                    if (v == "true") {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+
+                return v;
+            }
+
         },
 
         GetIntOfKey: function (key, default_value) {
@@ -229,6 +263,20 @@ var Common = cc.Class({
             } else {
                 return false;
             }
+        },
+
+        //判断微信getStorage key是否存在
+        isKeyExistWeiXin: function (value) {
+            var type = typeof value;
+            if (type == "string") {
+                return !Common.isBlankString(value);
+            }
+            if ("boolean" == type) {
+                //微信小程序
+                return true;
+            }
+
+            return true;
         },
 
         GetButtonText: function (btn) {
