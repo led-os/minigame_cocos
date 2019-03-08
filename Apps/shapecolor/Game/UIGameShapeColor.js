@@ -118,7 +118,8 @@ var UIGameShapeColor = cc.Class({
 
         //imagebg
         // var url = "http://i1.bvimg.com/679362/29748b18acf1446a.png"
-        var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg2.jpg";
+        //var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg0.jpg";
+        var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg1.png";
         cc.TextureCache.main.Load(url, function (err, tex) {
             if (err) {
 
