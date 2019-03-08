@@ -25,12 +25,16 @@ var GameShapeColor = cc.Class({
         TAG_ITEM_UNLOCK: 0,
 
         isShaderInited: false,
-
+        ID_BOMB: "bomb",
+        isSelectTheBomb: false,
     },
 
     properties: {
         imageBg: cc.Sprite,
         textTitle: cc.Label,
+
+        nodeBomb: cc.Node,//炸弹
+
         listShape: null,
         listColor: null,
         // listColor: {
@@ -107,6 +111,12 @@ var GameShapeColor = cc.Class({
 
     CheckGameWin: function () {
         var isAllItemLock = true;
+
+        if (this.isSelectTheBomb) {
+            //显示踩到炸弹了 游戏结束
+            this.OnGameBomb();
+            return;
+        }
         for (let info of this.listItem) {
             if (info.isMain == true) {
                 var isLock = this.IsItemLock(info);
@@ -118,11 +128,30 @@ var GameShapeColor = cc.Class({
         }
 
         if (isAllItemLock) {
-            //show game win 
-            // Invoke("OnGameWin", 1f);
+            //show game win  
             this.OnGameWin();
 
         }
+    },
+
+    OnGameBomb: function () {
+        var title = cc.Language.main().GetString("STR_UIVIEWALERT_TITLE_GAME_BOMB");
+        var msg = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_GAME_BOMB");
+        var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_GAME_BOMB");
+        var no = cc.Language.main().GetString("STR_UIVIEWALERT_NO_GAME_BOMB");
+
+        cc.ViewAlertManager.main().ShowFull(title, msg, yes, no, false, "STR_KEYNAME_VIEWALERT_GAME_BOMB",
+            function (alert, isYes) {
+                if (isYes) {
+                    //replay
+                    cc.GameManager.main().GotoPlayAgain();
+                } else {
+
+                }
+            }.bind(this)
+        );
+
+
     },
 
     OnGameWin: function () {
@@ -134,7 +163,7 @@ var GameShapeColor = cc.Class({
         var level = cc.GameManager.main().gameLevel;
         var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
         var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
-        cc.Debug.Log("game finish idx_sub="+idx_sub+" GUANKA_NUM_PER_ITEM="+GameShapeColor.GUANKA_NUM_PER_ITEM);
+        cc.Debug.Log("game finish idx_sub=" + idx_sub + " GUANKA_NUM_PER_ITEM=" + GameShapeColor.GUANKA_NUM_PER_ITEM);
         if ((idx_sub + 1) == GameShapeColor.GUANKA_NUM_PER_ITEM) {
             var infoitem = null;
             var key = null;
@@ -146,7 +175,7 @@ var GameShapeColor = cc.Class({
                 infoitem = this.GetItemInfoShapeColor(idx, this.listColor);
                 key = GameShapeColor.STR_KEY_GAME_STATUS_COLOR + infoitem.id;
             }
-            cc.Debug.Log("game finish key="+key+" this.gameMode="+cc.GameManager.gameMode);
+            cc.Debug.Log("game finish key=" + key + " this.gameMode=" + cc.GameManager.gameMode);
             if (key != null) {
                 cc.Common.SetItemOfKey(key, GameShapeColor.GAME_STATUS_FINISH);
             }
@@ -298,8 +327,16 @@ var GameShapeColor = cc.Class({
                 continue;
             }
 
-            if ((rc.contains(positemNew)) && (this.itemInfoSel.id == info.id) && (this.itemInfoSel.color == info.color)) {
+            if (rc.contains(positemNew)) {
+                if (!this.isTheSamePairItems(this.itemInfoSel, info)) {
+                    continue;
+                }
                 cc.Debug.Log("合并正确");
+
+                this.isSelectTheBomb = false;
+                if (this.itemInfoSel.id == GameShapeColor.ID_BOMB) {
+                    this.isSelectTheBomb = true;
+                }
 
                 //合并正确
                 this.SetItemLock(info, true);
@@ -327,7 +364,7 @@ var GameShapeColor = cc.Class({
                         key = GameShapeColor.STR_KEY_GAME_STATUS_COLOR + infoitem.id;
 
                     }
-                    cc.Debug.Log("game play key="+key+" this.gameMode="+cc.GameManager.gameMode);
+                    cc.Debug.Log("game play key=" + key + " this.gameMode=" + cc.GameManager.gameMode);
                     if (key != null) {
                         cc.Common.SetItemOfKey(key, GameShapeColor.GAME_STATUS_PLAY);
                     }
@@ -377,6 +414,23 @@ var GameShapeColor = cc.Class({
                 this.OnTouchUp(posnodeAR);
                 break;
         }
+    },
+
+    //是否同一对
+    isTheSamePairItems: function (infoSel, info) {
+        var ret = false;
+        cc.Debug.Log("isTheSamePairItems:infoSel.id=" + infoSel.id + " info.isInner=" + info.isInner);
+
+        if (infoSel.id == GameShapeColor.ID_BOMB) {
+            if ((!info.isInner) && (info.isMain)) {
+                ret = true;
+            }
+        } else {
+            if ((infoSel.id == info.id) && (infoSel.color == info.color)) {
+                ret = true;
+            }
+        }
+        return ret;
     },
 
     RunDisapperAnimation(info) {
@@ -525,6 +579,11 @@ var GameShapeColor = cc.Class({
         //清空
         this.listItem.length = 0;
         this.listColorShow.length = 0;
+
+        if (this.nodeBomb != null) {
+            this.nodeBomb.removeFromParent(true);
+            this.nodeBomb = null;
+        }
     },
 
     LoadGame: function (mode) {
@@ -547,8 +606,8 @@ var GameShapeColor = cc.Class({
         if (this.listColorShow.length != 0) {
             var idx = cc.Common.RandomRange(0, this.listColorShow.length)
             var infocolor = this.listColor[idx];
+            this.CreateBomb(infocolor.color);
         }
-
         this.LayOut();
     },
 
@@ -914,6 +973,73 @@ var GameShapeColor = cc.Class({
 
         return node;
     },
+
+    //创建炸弹
+    CreateBomb: function (color) {
+        if (this.nodeBomb != null) {
+            return;
+        }
+        var node = new cc.Node("bumb");
+        this.nodeBomb = node
+        node.parent = this.node;
+
+        var z = this.itemPosZ - 5;
+        node.setPosition(0, 0, z);
+
+        var sprite = node.addComponent(cc.Sprite);
+        //加载图片
+        var strImage = cc.AppRes.IMAGE_Game_Bomb;
+        //cc.Debug.Log("item_pic=" + pic);
+        cc.TextureCache.main.Load(strImage, function (err, tex) {
+            if (err) {
+                cc.Debug.Log("item_pic err");
+                cc.Debug.Log(err.message || err);
+                return;
+            }
+            sprite.spriteFrame = new cc.SpriteFrame(tex);
+
+            //添加物理特性
+            {
+                var body = sprite.node.addComponent(cc.RigidBody);
+                body.gravityScale = 0;//关闭重力
+                // // bd.useGravity = false;
+                body.fixedRotation = true;
+
+                //防止刚体穿越
+                body.bullet = true;
+
+                // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+                //var collider = node.addComponent(cc.PolygonCollider);
+                var collider = sprite.node.addComponent(cc.PhysicsBoxCollider);
+                var mj = sprite.node.addComponent(cc.MouseJoint);
+                if (collider != null) {
+                    collider.size = cc.size(tex.width, tex.height);
+                    cc.Debug.Log("collider=" + collider.size);
+                }
+            }
+            this.LayOut();
+        }.bind(this));
+
+        //高亮颜色
+        {
+            // ShapeHighlighterController hlc = AddHighLight(objBomb);
+            // hlc.UpdateColor(color);
+        }
+
+
+
+        var infoItem = new cc.ShapeColorItemInfo();
+        infoItem.node = this.nodeBomb;
+        // infoItem.objTrail = infoshape.objTrail;
+        infoItem.id = GameShapeColor.ID_BOMB;
+        //   infoItem.color = infocolor.color;
+        infoItem.isMain = false;
+        infoItem.isInner = false;
+        this.SetItemLock(infoItem, false);
+
+        this.listItem.push(infoItem);
+    },
+
     //return ShapeColorItemInfo
     AddItem: function (rc, infoshape, infocolor, node, isInner, isMain) {
         var infoItem = new cc.ShapeColorItemInfo();

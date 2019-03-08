@@ -36,6 +36,9 @@ var AppRes = cc.Class({
         IMAGE_CELL_BG_ORINGE: "App/UI/Setting/SettingCellBgOringe",
         IMAGE_CELL_BG_YELLOW: "App/UI/Setting/SettingCellBgYellow",
 
+        //game
+        IMAGE_Game_Bomb: "App/UI/Game/Bomb",
+
     },
 
 
