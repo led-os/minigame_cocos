@@ -2,6 +2,7 @@
 
 //写文件
 //https://blog.csdn.net/lck8989/article/details/81021416
+//https://www.jianshu.com/p/37640cdc3717
 
 var HttpRequest = cc.Class({
     extends: cc.Object,
@@ -29,9 +30,11 @@ var HttpRequest = cc.Class({
             // xhr.setRequestHeader("Accept-Encoding", "gzip,deflate", "text/html;charset=UTF-8");
         }
         if (cc.sys.isBrowser) {
-            //跨域问题
-            //xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-            // xhr.response.setRequestHeader("Access-Control-Allow-Origin", "*");
+            //跨域问题 
+            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+            xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST');
+            // xhr.setRequestHeader('Access-Control-Allow-Headers', 'x-requested-with,content-type,authorization');
+            //xhr.setRequestHeader("Content-Type", "application/json");
 
         }
 
