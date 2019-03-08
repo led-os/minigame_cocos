@@ -30,7 +30,7 @@ var HttpRequest = cc.Class({
         }
         if (cc.sys.isBrowser) {
             //跨域问题
-           // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+            //xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
             // xhr.response.setRequestHeader("Access-Control-Allow-Origin", "*");
 
         }

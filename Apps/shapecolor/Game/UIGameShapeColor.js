@@ -160,7 +160,7 @@ var UIGameShapeColor = cc.Class({
         }
 
 
-        var rdm = cc.Common.RandomRange(0, listBgNew.length); 
+        var rdm = cc.Common.RandomRange(0, listBgNew.length);
         cc.Debug.Log("listBgNew.count = " + listBgNew.length + " rdm=" + rdm);
 
         var info = this.game.GetItemInfoShapeColor(rdm, listBgNew);
@@ -294,19 +294,19 @@ var UIGameShapeColor = cc.Class({
         info.id = this.bglistId = "bglist";
         info.isLoad = false;
         this.listProLoad.push(info);
-        // var filepath = cc.Common.GAME_RES_DIR + "/image_bg/bg.json";
-        // cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
-        //     if (err) {
-        //         cc.Debug.Log("config:err=" + err);
-        //     }
-        //     if (err == null) {
-        //         var infoload = cc.Common.GetLoadItemById(this.listProLoad, info.id);
-        //         if (infoload != null) {
-        //             infoload.isLoad = true;
-        //         }
-        //         this.ParseBgList(rootJson.json);
-        //     }
-        // }.bind(this));
+        var filepath = cc.Common.GAME_RES_DIR + "/guanka/bg.json";
+        cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
+            if (err) {
+                cc.Debug.Log("config:err=" + err);
+            }
+            if (err == null) {
+                var infoload = cc.Common.GetLoadItemById(this.listProLoad, info.id);
+                if (infoload != null) {
+                    infoload.isLoad = true;
+                }
+                this.ParseBgList(rootJson.json);
+            }
+        }.bind(this));
 
         //ng
         var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg.json";
@@ -325,20 +325,23 @@ var UIGameShapeColor = cc.Class({
         //     }
         // }.bind(this));
 
-        var httpReq = new cc.HttpRequest();
-        httpReq.Get(url, function (err, data) {
-            if (err) {
-                cc.Debug.Log(err);
-                return;
-            }
-            var infoload = cc.Common.GetLoadItemById(this.listProLoad, info.id);
-            if (infoload != null) {
-                infoload.isLoad = true;
-            }
-            var str = String.fromCharCode.apply(null, new Uint8Array(data));
-            var rootJson = JSON.parse(str);
-            this.ParseBgList(rootJson);
-        }.bind(this));
+
+        //https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/GameRes/image_bg/bg.json?sign=da97fbe3f6b62f1369097601dac034ff&t=1552047837
+        //存在浏览器跨域访问问题
+        // var httpReq = new cc.HttpRequest();
+        // httpReq.Get(url, function (err, data) {
+        //     if (err) {
+        //         cc.Debug.Log(err);
+        //         return;
+        //     }
+        //     var infoload = cc.Common.GetLoadItemById(this.listProLoad, info.id);
+        //     if (infoload != null) {
+        //         infoload.isLoad = true;
+        //     }
+        //     var str = String.fromCharCode.apply(null, new Uint8Array(data));
+        //     var rootJson = JSON.parse(str);
+        //     this.ParseBgList(rootJson);
+        // }.bind(this));
 
     },
     ParseShape: function (json) {
