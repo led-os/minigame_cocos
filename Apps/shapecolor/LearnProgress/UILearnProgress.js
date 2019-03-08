@@ -24,7 +24,7 @@ var UILearnProgress = cc.Class({
         heightCell: 0,
         numRows: 0,
         numInstancesCreated: 0,
-        itemType: 0,  
+        itemType: 0,
         colorUnSel: cc.Color,
         colorUnSel: cc.Color,
         listItem: {
@@ -36,6 +36,8 @@ var UILearnProgress = cc.Class({
 
     onLoad: function () {
         this._super();
+        this.node.setContentSize(this.node.parent.getContentSize());
+
         this.UnifyButtonSprite(this.btnBack);
         this.UnifyButtonSprite(this.btnShape);
         this.UnifyButtonSprite(this.btnColor);
@@ -117,7 +119,7 @@ var UILearnProgress = cc.Class({
     OnBtnClickShape: function () {
 
         var textBtn = cc.Common.GetButtonText(this.btnShape);
-    
+
         textBtn.node.color = this.colorSel;
         textBtn = cc.Common.GetButtonText(this.btnColor);
         textBtn.node.color = this.colorUnSel;

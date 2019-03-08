@@ -41,8 +41,11 @@ cc.Class({
 
     InitList: function () {
         this.tableView.uiViewParent = this;
+        this.tableView.cellHeight = 256;
+        var size = this.node.getContentSize();
+        this.oneCellNum = Math.floor(size.width / this.tableView.cellHeight);
         this.tableView.oneCellNum = this.oneCellNum;
-        this.tableView.cellHeight = 512;
+
         this.tableView.initTableView(this.listItem.length, { array: this.listItem, target: this });
     },
 
