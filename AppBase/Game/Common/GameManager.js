@@ -9,9 +9,9 @@ var GameManager = cc.Class({
     extends: cc.Object,
 
     statics: {
-        gameLevel: 0,//streamingAssetsPath下的游戏配置等数据
+
+
         placeTotal: 0,
-        gameLevelFinish: 0,//streamingAssetsPath 下的游戏图片等资源
         gameMode: 0,
         placeLevel: 0,
         maxGuankaNum:
@@ -31,6 +31,31 @@ var GameManager = cc.Class({
             type: cc.Prefab
         },
         callbackGuankaFinish: null,
+        //get 和 set 函数不能放在statics里
+        gameLevel: {
+            get: function () {
+                var key = "KEY_GAME_LEVEL_PLACE" + GameManager.placeLevel;
+                return cc.Common.GetIntOfKey(key, 0);
+            },
+            set: function (value) {
+                var key = "KEY_GAME_LEVEL_PLACE" + GameManager.placeLevel;
+                cc.Common.SetItemOfKey(key, value);
+            },
+        },
+
+
+
+        gameLevelFinish://已经通关 
+        {
+            get: function () {
+                var key = "KEY_GAME_LEVEL_PLACE_FINISH" + GameManager.placeLevel;
+                return cc.Common.GetIntOfKey(key, -1);
+            },
+            set: function (value) {
+                var key = "KEY_GAME_LEVEL_PLACE_FINISH" + GameManager.placeLevel;
+                cc.Common.SetItemOfKey(key, value);
+            },
+        },
 
 
     },
@@ -57,33 +82,33 @@ var GameManager = cc.Class({
     },
 
     GotoPlayAgain: function () {
-        GameViewController.main().gameBase.UpdateGuankaLevel(GameManager.gameLevel);
+        GameViewController.main().gameBase.UpdateGuankaLevel(this.gameLevel);
     },
 
     GotoPreLevel: function () {
 
-        GameManager.gameLevel--;
-        if (GameManager.gameLevel < 0) {
+        this.gameLevel--;
+        if (this.gameLevel < 0) {
             this.GotoPrePlace();
             return;
 
         }
         // GameManager.GotoGame();
-        GameViewController.main().gameBase.UpdateGuankaLevel(GameManager.gameLevel);
+        GameViewController.main().gameBase.UpdateGuankaLevel(this.gameLevel);
 
     },
 
     GotoNextLevel: function () {
-        cc.Debug.Log("gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
-        GameManager.gameLevel++;
-        cc.Debug.Log("gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
-        if (GameManager.gameLevel >= GameManager.maxGuankaNum) {
-            cc.Debug.Log("GotoNextPlace:gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
+        cc.Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
+        this.gameLevel++;
+        cc.Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
+        if (this.gameLevel >= GameManager.maxGuankaNum) {
+            cc.Debug.Log("GotoNextPlace:gameLevel=" + this.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
             this.GotoNextPlace();
             return;
 
         }
-        GameViewController.main().gameBase.UpdateGuankaLevel(GameManager.gameLevel);
+        GameViewController.main().gameBase.UpdateGuankaLevel(this.gameLevel);
 
     },
 
@@ -97,10 +122,10 @@ var GameManager = cc.Class({
 
         }
         //必须在placeLevel设置之后再设置gameLevel
-        GameManager.gameLevel = 0;
+        this.gameLevel = 0;
 
         this.ParseGuanka(this.callbackGuankaFinish);
-        GameViewController.main().gameBase.UpdateGuankaLevel(GameManager.gameLevel);
+        GameViewController.main().gameBase.UpdateGuankaLevel(this.gameLevel);
 
     },
 
@@ -112,22 +137,22 @@ var GameManager = cc.Class({
 
         }
         //必须在placeLevel设置之后再设置gameLevel
-        GameManager.gameLevel = 0;
+        this.gameLevel = 0;
 
         this.ParseGuanka(this.callbackGuankaFinish);
-        GameViewController.main().gameBase.UpdateGuankaLevel(GameManager.gameLevel);
+        GameViewController.main().gameBase.UpdateGuankaLevel(this.gameLevel);
 
     },
     //关卡循环
     GotoNextLevelWithoutPlace: function () {
-        cc.Debug.Log("gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
-        GameManager.gameLevel++;
-        cc.Debug.Log("gameLevel=" + GameManager.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
-        if (GameManager.gameLevel >= GameManager.maxGuankaNum) {
-            GameManager.gameLevel = 0;
+        cc.Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
+        this.gameLevel++;
+        cc.Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
+        if (this.gameLevel >= GameManager.maxGuankaNum) {
+            this.gameLevel = 0;
 
         }
-        GameViewController.main().gameBase.UpdateGuankaLevel(GameManager.gameLevel);
+        GameViewController.main().gameBase.UpdateGuankaLevel(this.gameLevel);
 
     },
 
@@ -138,7 +163,7 @@ var GameManager = cc.Class({
         for (var i = 0; i < GameManager.placeTotal; i++) {
             GameManager.placeLevel = i;
             //必须在placeLevel设置之后再设置gameLevel
-            GameManager.gameLevel = 0;
+            this.gameLevel = 0;
             this.ParseGuanka(this.callbackGuankaFinish);
             // if (UIGameBase.listGuanka == null) {
             //     Debug.Log("listGuanka is null");

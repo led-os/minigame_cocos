@@ -81,6 +81,7 @@ cc.Class({
             var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
             this.UpdateBtnSwitch(ret);
         }
+        this.UpdateImageBg(UISetting.listImage[this.index % 3]);
     },
     UpdateBtnSwitch: function (isSel) {
         var strImage = cc.AppRes.IMAGE_BTN_SWITCH_UNSEL;
@@ -101,6 +102,18 @@ cc.Class({
             this.btnSwitch.node.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(tex);
         }.bind(this));
 
+    },
+
+    UpdateImageBg: function (pic) {
+        cc.TextureCache.main.Load(pic, function (err, tex) {
+            if (err) {
+                cc.Debug.Log("UpdateImageBg err="+err+" pic="+pic);
+                cc.Debug.Log(err.message || err);
+                return;
+            }
+            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+
+        }.bind(this));
     },
 
     OnClickBtnSwitch: function (event, customEventData) {

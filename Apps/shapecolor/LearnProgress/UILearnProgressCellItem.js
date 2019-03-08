@@ -2,6 +2,7 @@ var UIView = require("UIView");
 var UICellItemBase = require("UICellItemBase");
 var GameViewController = require("GameViewController");
 var GameShapeColor = require("GameShapeColor");
+var UISetting = require("UISetting");
 
 
 var UILearnProgressCellItem = cc.Class({
@@ -165,8 +166,24 @@ var UILearnProgressCellItem = cc.Class({
                 }
                 break;
         }
+
+        this.UpdateImageBg(UISetting.listImage[this.index % 3]);
+
         this.LayOut();
     },
+
+    UpdateImageBg: function (pic) {
+        cc.TextureCache.main.Load(pic, function (err, tex) {
+            if (err) {
+                cc.Debug.Log("UpdateImageBg err="+err+" pic="+pic);
+                cc.Debug.Log(err.message || err);
+                return;
+            }
+            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+
+        }.bind(this));
+    },
+
     LayOut: function () {
     },
 

@@ -241,9 +241,13 @@ cc.Class({
     },
 
     GotoGameByMode: function (mode) {
-        //AudioPlay.main.PlayFile(AppCommon.AUDIO_BTN_CLICK);
+        //AudioPlay.main.PlayFile(AppCommon.AUDIO_BTN_CLICK); 
         cc.GameManager.gameMode = mode;
-        //cc.GameManager.placeLevel = mode;
+
+        if (cc.Config.main().appKeyName == cc.AppType.SHAPECOLOR) {
+            cc.GameManager.placeLevel = mode;
+        }
+
         if (this.controller != null) {
             var navi = this.controller.naviController;
             var total = cc.GameManager.placeTotal;

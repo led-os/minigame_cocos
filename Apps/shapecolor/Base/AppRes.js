@@ -12,10 +12,6 @@ var AppRes = cc.Class({
         GOLD_INIT_VALUE: 10,
         GOLD_GUANKA_STEP: 4,
 
-        //image
-        IMAGE_HOME_BG: "App/UI/Home/LearnProgressBg",
-        IMAGE_BTN_SWITCH_UNSEL: "App/UI/Common/BtnSwitchUnSel",
-        IMAGE_BTN_SWITCH_SEL: "App/UI/Common/BtnSwitchSel",
         //key
         KEY_LANGUAGE: "KEY_LANGUAGE",
         KEY_FIRST_RUN: "KEY_FIRST_RUN",
@@ -24,6 +20,22 @@ var AppRes = cc.Class({
         KEY_COMMENT_VERSION: "key_comment_",
         KEY_COMMENT_LAST_TIME: "key_comment_last_time",
         KEY_USER_GUIDE: "key_comment_user_guide_",
+
+        //image
+        IMAGE_HOME_BG: "App/UI/Home/LearnProgressBg",
+        IMAGE_BTN_SWITCH_UNSEL: "App/UI/Common/BtnSwitchUnSel",
+        IMAGE_BTN_SWITCH_SEL: "App/UI/Common/BtnSwitchSel",
+
+
+        IMAGE_GUANKA_CELL_ITEM_BG_UNLOCK: "App/UI/Guanka/guanka_item_unlock",
+        IMAGE_GUANKA_CELL_ITEM_BG_LOCK: "App/UI/Guanka/guanka_item_lock",
+        IMAGE_GUANKA_CELL_ITEM_BG_PLAY: "App/UI/Guanka/guanka_item_playing",
+
+
+        IMAGE_CELL_BG_BLUE: "App/UI/Setting/SettingCellBgBlue",
+        IMAGE_CELL_BG_ORINGE: "App/UI/Setting/SettingCellBgOringe",
+        IMAGE_CELL_BG_YELLOW: "App/UI/Setting/SettingCellBgYellow",
+
     },
 
 

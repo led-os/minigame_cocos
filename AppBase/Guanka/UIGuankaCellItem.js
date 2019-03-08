@@ -26,10 +26,37 @@ cc.Class({
         }
         this.target = data.target;
         this.info = data.array[index];
-        this.textTitle.string = index;
+        this.textTitle.string = index + 1;
+        var idx_playing = cc.GameManager.main().gameLevelFinish + 1;
+        if (index > idx_playing) {
+            this.textTitle.node.active = false;
+            this.UpdateImage(cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_LOCK);
+        }
+        else if (index == idx_playing) {
+            this.textTitle.node.active = false;
+            this.UpdateImage(cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_PLAY);
+        } else {
+            this.textTitle.node.active = true;
+            this.UpdateImage(cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_UNLOCK);
+        }
     },
-    clicked: function clicked() { 
-        this.target.GotoGame(this.index); 
-    }
+    clicked: function clicked() {
+        this.target.GotoGame(this.index);
+    },
+
+    UpdateImage: function (pic) {
+        cc.TextureCache.main.Load(pic, function (err, tex) {
+            //cc.url.raw('res/textures/content.png')
+            if (err) {
+                cc.Debug.Log(err.message || err);
+                return;
+            }
+            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
+            if (lyscale) {
+                lyscale.LayOut();
+            }
+        }.bind(this));
+    },
 });
 

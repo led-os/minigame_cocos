@@ -127,26 +127,28 @@ var GameShapeColor = cc.Class({
 
     OnGameWin: function () {
         //show game win
-        cc.GameManager.gameLevelFinish = cc.GameManager.gameLevel;
+        cc.GameManager.main().gameLevelFinish = cc.GameManager.main().gameLevel;
         //gameEndParticle.Play();
 
         //记录游戏完成
-        var level = cc.GameManager.gameLevel;
+        var level = cc.GameManager.main().gameLevel;
         var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
         var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
+        cc.Debug.Log("game finish idx_sub="+idx_sub+" GUANKA_NUM_PER_ITEM="+GameShapeColor.GUANKA_NUM_PER_ITEM);
         if ((idx_sub + 1) == GameShapeColor.GUANKA_NUM_PER_ITEM) {
             var infoitem = null;
             var key = null;
-            if (this.gameMode == GameShapeColor.GAME_MODE_SHAPE) {
+            if (cc.GameManager.gameMode == GameShapeColor.GAME_MODE_SHAPE) {
                 infoitem = this.GetItemInfoShapeColor(idx, this.listShape);
                 key = GameShapeColor.STR_KEY_GAME_STATUS_SHAPE + infoitem.id;
             }
-            if (this.gameMode == GameShapeColor.GAME_MODE_COLOR) {
+            if (cc.GameManager.gameMode == GameShapeColor.GAME_MODE_COLOR) {
                 infoitem = this.GetItemInfoShapeColor(idx, this.listColor);
                 key = GameShapeColor.STR_KEY_GAME_STATUS_COLOR + infoitem.id;
             }
+            cc.Debug.Log("game finish key="+key+" this.gameMode="+cc.GameManager.gameMode);
             if (key != null) {
-                cc.sys.localStorage.setItem(key, GameShapeColor.GAME_STATUS_FINISH);
+                cc.Common.SetItemOfKey(key, GameShapeColor.GAME_STATUS_FINISH);
             }
         }
 
@@ -310,24 +312,24 @@ var GameShapeColor = cc.Class({
 
 
                 //记录游戏开始进行中
-                var level = cc.GameManager.gameLevel;
+                var level = cc.GameManager.main().gameLevel;
                 var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
                 var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
                 if (idx_sub == 0) {
                     var infoitem = null;
                     var key = null;
-                    if (this.gameMode == GameShapeColor.GAME_MODE_SHAPE) {
+                    if (cc.GameManager.gameMode == GameShapeColor.GAME_MODE_SHAPE) {
                         infoitem = this.GetItemInfoShapeColor(idx, this.listShape);
                         key = GameShapeColor.STR_KEY_GAME_STATUS_SHAPE + infoitem.id;
-                        //PlayerPrefs.SetInt(key, GAME_STATUS_PLAY); 
                     }
-                    if (this.gameMode == GameShapeColor.GAME_MODE_COLOR) {
+                    if (cc.GameManager.gameMode == GameShapeColor.GAME_MODE_COLOR) {
                         infoitem = this.GetItemInfoShapeColor(idx, this.listColor);
                         key = GameShapeColor.STR_KEY_GAME_STATUS_COLOR + infoitem.id;
 
                     }
+                    cc.Debug.Log("game play key="+key+" this.gameMode="+cc.GameManager.gameMode);
                     if (key != null) {
-                        cc.sys.localStorage.setItem(key, GameShapeColor.GAME_STATUS_PLAY);
+                        cc.Common.SetItemOfKey(key, GameShapeColor.GAME_STATUS_PLAY);
                     }
 
                 }
@@ -401,8 +403,7 @@ var GameShapeColor = cc.Class({
         //speak
         var str = this.StringOfItem(info);
         cc.Tts.Speak(str);
-        if(this.textTitle!=null)
-        {
+        if (this.textTitle != null) {
             this.textTitle.node.active = true;
             this.textTitle.string = str;
         }
@@ -553,7 +554,7 @@ var GameShapeColor = cc.Class({
 
     LoadGameByShape: function (mode) {
 
-        var level = cc.GameManager.gameLevel;
+        var level = cc.GameManager.main().gameLevel;
         var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
         var infoshape = this.GetItemInfoShapeColor(idx, this.listShape);
         if (infoshape == null) {
@@ -629,7 +630,7 @@ var GameShapeColor = cc.Class({
         }
     },
     LoadGameByColor: function (mode) {
-        var level = cc.GameManager.gameLevel;
+        var level = cc.GameManager.main().gameLevel;
         var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
         var infocolor = this.GetItemInfoShapeColor(idx, this.listColor);
         if (infocolor == null) {
@@ -703,7 +704,7 @@ var GameShapeColor = cc.Class({
 
     },
     LoadGameByShapeColor: function (mode) {
-        var level = cc.GameManager.gameLevel;
+        var level = cc.GameManager.main().gameLevel;
         var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
         var infoshape = this.GetItemInfoShapeColor(idx, this.listShape);
         if (infoshape == null) {

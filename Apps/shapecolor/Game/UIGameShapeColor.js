@@ -144,7 +144,7 @@ var UIGameShapeColor = cc.Class({
             }
 
             if (this.isShowGame) {
-                this.UpdateGuankaLevel(cc.GameManager.gameLevel);
+                this.UpdateGuankaLevel(cc.GameManager.main().gameLevel);
             }
         }
 
@@ -206,8 +206,11 @@ var UIGameShapeColor = cc.Class({
         info.id = this.shapeId = "shape";
         info.isLoad = false;
         this.listProLoad.push(info);
-
-        var filepath = cc.Common.GAME_RES_DIR + "/guanka/shape_list_place" + cc.GameManager.placeLevel + ".json";
+        var idx = cc.GameManager.placeLevel;
+        if (cc.Config.main().appKeyName == cc.AppType.SHAPECOLOR) {
+            idx = 0;
+        }
+        var filepath = cc.Common.GAME_RES_DIR + "/guanka/shape_list_place" + idx+ ".json";
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {
@@ -277,7 +280,7 @@ var UIGameShapeColor = cc.Class({
             this.CheckAllLoad();
             return;
         }
-        var idx = cc.GameManager.placeLevel;
+        //var idx = cc.GameManager.placeLevel;
         var strPlace = json.place;
         var items = json.list;
         if (items == null) {
@@ -311,7 +314,7 @@ var UIGameShapeColor = cc.Class({
             this.CheckAllLoad();
             return;
         }
-        var idx = cc.GameManager.placeLevel;
+        //var idx = cc.GameManager.placeLevel;
         var items = json.list;
         for (var i = 0; i < items.length; i++) {
             var info = new cc.ShapeColorItemInfo();

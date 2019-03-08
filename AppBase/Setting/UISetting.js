@@ -17,6 +17,7 @@ var UISetting = cc.Class({
         TAG_SETTING_RESTORE_IAP: 5,
         TAG_SETTING_LAST: 6,
 
+        listImage: [cc.AppRes.IMAGE_CELL_BG_BLUE, cc.AppRes.IMAGE_CELL_BG_ORINGE, cc.AppRes.IMAGE_CELL_BG_YELLOW],
     },
     properties: {
         btnBack: {

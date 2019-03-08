@@ -54,7 +54,7 @@ cc.Class({
     },
 
     GotoGame: function (idx) {
-        cc.GameManager.gameLevel = idx;
+        cc.GameManager.main().gameLevel = idx;
         cc.GameManager.main().GotoGame(this.controller);
     },
 });
