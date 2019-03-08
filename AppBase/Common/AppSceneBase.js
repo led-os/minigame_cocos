@@ -101,7 +101,7 @@ var AppSceneBase = cc.Class({
 
     },
     InitValue: function () {
-
+        var w, h;
         {
             //初始化分辨率相关参数
             // var size = this.canvasMain.designResolution;//参考设计分辨率
@@ -120,10 +120,15 @@ var AppSceneBase = cc.Class({
             // //  cc.Debug.Log("new frame size=" + framesize1);
 
             //按2048
+            w = this.canvasMain.designResolution.width;
+            h = this.canvasMain.designResolution.height;
+
             if (cc.Device.main.isLandscape) {
+                this.canvasMain.designResolution = new cc.size(Math.max(w, h), Math.min(w, h));
                 this.canvasMain.fitWidth = true;
                 this.canvasMain.fitHeight = false;
             } else {
+                this.canvasMain.designResolution = new cc.size(Math.min(h, h), Math.max(w, h));
                 this.canvasMain.fitHeight = true;
                 this.canvasMain.fitWidth = false;
             }
