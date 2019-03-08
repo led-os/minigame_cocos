@@ -408,7 +408,26 @@ var Common = cc.Class({
 
         },
 
-
+        noad:
+        {
+            get: function () {
+                var key = "APP_NO_AD";
+                var ret = Common.GetBoolOfKey(key, false);
+                return ret;
+            },
+            set: function (value) {
+                var key = "APP_NO_AD";
+                Common.SetItemOfKey(key, value);
+                // if (value) {
+                //     ret = 1;
+                //     AdConfig.main.SetNoAd();
+                // }
+                // else {
+                //     ret = 0;
+                // }
+                // PlayerPrefs.SetInt(key, ret);
+            },
+        },
     },
 
     Init: function () {
