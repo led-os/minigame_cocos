@@ -117,9 +117,9 @@ var UIGameShapeColor = cc.Class({
         this.game.LoadGame(cc.GameManager.gameMode);
 
         //imagebg
-        var url = "http://i1.bvimg.com/679362/29748b18acf1446a.png"
-        cc.loader.load(url, function (err, tex) {
-            //cc.url.raw('res/textures/content.png')
+        // var url = "http://i1.bvimg.com/679362/29748b18acf1446a.png"
+        var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg2.jpg";
+        cc.TextureCache.main.Load(url, function (err, tex) {
             if (err) {
 
                 cc.Debug.Log(err.message || err);
@@ -132,7 +132,7 @@ var UIGameShapeColor = cc.Class({
             lyscale.LayOut();
 
         }.bind(this));
- 
+
     },
 
     CheckAllLoad: function () {
@@ -210,7 +210,7 @@ var UIGameShapeColor = cc.Class({
         if (cc.Config.main().appKeyName == cc.AppType.SHAPECOLOR) {
             idx = 0;
         }
-        var filepath = cc.Common.GAME_RES_DIR + "/guanka/shape_list_place" + idx+ ".json";
+        var filepath = cc.Common.GAME_RES_DIR + "/guanka/shape_list_place" + idx + ".json";
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {

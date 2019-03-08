@@ -301,28 +301,6 @@ var GameShapeColor = cc.Class({
             w = bd.width / 4;
             h = bd.height / 4;
             var rc = new cc.Rect(info.node.getPosition().x - w / 2, info.node.getPosition().y - h / 2, w, h);
-
-            // if (objBomb != null)
-            // {
-            //     Bounds bdBomb = objBomb.GetComponent<SpriteRenderer>().bounds;
-            //     w = bdBomb.size.x / 4;
-            //     h = bdBomb.size.y / 4;
-            //     Rect rcBomb = new Rect(objBomb.transform.position.x - w / 2, objBomb.transform.position.y - h / 2, w, h);
-
-            //     if (info.obj != objBomb)
-            //     {
-            //         if (rcBomb.Contains(info.obj.transform.position))
-            //         {
-            //             Debug.Log("炸弹被合并了。。。");
-            //             if (iDelegate != null)
-            //             {
-            //                 iDelegate.OnGameShapeColorDidBomb(this);
-            //             }
-            //             break;
-            //         }
-            //     }
-            // }
-
             if (info == this.itemInfoSel) {
                 continue;
             }
@@ -872,13 +850,10 @@ var GameShapeColor = cc.Class({
             pic = info.picInner;
         }
 
-
-
-
-
         //加载图片
-        var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(pic);
-        //cc.Debug.Log("item_pic=" + pic);
+       // var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(cc.AppRes.URL_HTTP_HEAD+pic);
+       var strImage = cc.AppRes.URL_HTTP_HEAD+pic;
+        cc.Debug.Log("strImage=" + strImage);
         cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {

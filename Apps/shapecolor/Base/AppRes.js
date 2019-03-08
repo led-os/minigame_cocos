@@ -21,6 +21,8 @@ var AppRes = cc.Class({
         KEY_COMMENT_LAST_TIME: "key_comment_last_time",
         KEY_USER_GUIDE: "key_comment_user_guide_",
 
+        //https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/GameRes/image/banyuan/banyuan.png?sign=6f70fe6cbbb02943d6b433348ce66ba8&t=1552029703
+        URL_HTTP_HEAD: "https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/",
         //image
         IMAGE_HOME_BG: "App/UI/Home/LearnProgressBg",
         IMAGE_BTN_SWITCH_UNSEL: "App/UI/Common/BtnSwitchUnSel",

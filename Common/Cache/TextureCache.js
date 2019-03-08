@@ -17,9 +17,23 @@ var TextureCache = cc.Class({
         this.dicItem = new Dictionary();
     },
 
+    isHttpUrl: function (str) {
+        var idx = str.indexOf("https://");
+        if (idx != 0) {
+            idx = str.indexOf("http://");
+        }
+        if (idx == 0) {
+            return true;
+        }
+        return false;
+    },
+
     // * loadRes(url: string, completeCallback: (error: Error, resource: any) => void): void
     //Texture2D
     Load: function (filepath, completeCallback) {
+        if (this.isHttpUrl(filepath)) {
+            return this.LoadUrl(filepath, completeCallback);
+        }
         this.Init();
         var ret = null;
         var key = filepath;
@@ -120,17 +134,41 @@ var TextureCache = cc.Class({
                         completeCallback(err, tex);
                     }
                     return ret;
-                }
-                // cc.Debug.Log("TextureCache loadRes ok");
+                } 
                 if (tex != null) {
                     this.dicItem.Add(key, tex);
                 }
                 if (completeCallback) {
                     completeCallback(err, tex);
-                }
-                //this.sprite.spriteFrame = new cc.SpriteFrame(tex); 
+                } 
             }.bind(this));
         }
+        return ret;
+
+    },
+
+    LoadUrl: function (url, completeCallback) {
+        this.Init();
+        var ret = null;
+        var key = url;
+
+        cc.loader.load(url, function (err, tex) {
+            if (err) {
+                cc.Debug.Log("TextureCache loadRes fail");
+                cc.Debug.Log(err.message || err);
+                if (completeCallback) {
+                    completeCallback(err, tex);
+                }
+                return ret;
+            } 
+            // if (tex != null) {
+            //     this.dicItem.Add(key, tex);
+            // }
+            if (completeCallback) {
+                completeCallback(err, tex);
+            } 
+        }.bind(this));
+
         return ret;
 
     },
