@@ -154,7 +154,7 @@ TabBarViewController.main = function () {
         cc.Debug.Log("_main is null");
         TabBarViewController._main = new TabBarViewController();
     } else {
-        cc.Debug.Log("_main is not null");
+        //cc.Debug.Log("_main is not null");
     }
     return TabBarViewController._main;
 }

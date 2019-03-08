@@ -280,7 +280,7 @@ Config.main = function () {
         Config._common.Load();
 
     } else {
-        cc.Debug.Log("_main is not null");
+        //cc.Debug.Log("_main is not null");
     }
     return Config._main;
 }

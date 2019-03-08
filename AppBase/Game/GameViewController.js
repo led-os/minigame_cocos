@@ -115,7 +115,7 @@ GameViewController.main = function () {
         GameViewController._main = new GameViewController();
         GameViewController._main.Init();
     } else {
-        cc.Debug.Log("_main is not null");
+        //cc.Debug.Log("_main is not null");
     }
 
     return GameViewController._main;

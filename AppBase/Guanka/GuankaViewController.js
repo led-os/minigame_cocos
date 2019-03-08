@@ -90,7 +90,7 @@ GuankaViewController.main = function () {
         GuankaViewController._main = new GuankaViewController();
         GuankaViewController._main.Init();
     } else {
-        cc.Debug.Log("_main is not null");
+        //cc.Debug.Log("_main is not null");
     }
 
     return GuankaViewController._main;

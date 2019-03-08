@@ -130,6 +130,9 @@ var Common = cc.Class({
             if (rdm >= max) {
                 rdm = max - 1;
             }
+            if (rdm < min) {
+                rdm = min;
+            }
             return rdm;
         },
         //防止超出Rect范围

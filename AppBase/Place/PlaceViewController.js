@@ -87,7 +87,7 @@ PlaceViewController.main = function () {
         PlaceViewController._main = new PlaceViewController();
         PlaceViewController._main.Init();
     } else {
-        cc.Debug.Log("_main is not null");
+        //cc.Debug.Log("_main is not null");
     }
 
     return PlaceViewController._main;

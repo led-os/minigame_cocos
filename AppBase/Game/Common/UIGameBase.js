@@ -102,7 +102,7 @@ UIGameBase.main = function () {
         UIGameBase._main = new UIGameBase();
         UIGameBase._main.Init();
     } else {
-        cc.Debug.Log("_main is not null");
+        //cc.Debug.Log("_main is not null");
     }
 
     return UIGameBase._main;

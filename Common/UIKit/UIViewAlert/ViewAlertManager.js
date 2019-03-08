@@ -100,7 +100,7 @@ ViewAlertManager.main = function () {
         ViewAlertManager._main = new ViewAlertManager();
         ViewAlertManager._main.Init();
     } else {
-        cc.Debug.Log("_main is not null");
+        //cc.Debug.Log("_main is not null");
     }
     return ViewAlertManager._main;
 }

@@ -27,7 +27,7 @@ MainViewController.main = function () {
         cc.Debug.Log("_main is null");
         MainViewController._main = new MainViewController();
     } else {
-        cc.Debug.Log("_main is not null");
+        //cc.Debug.Log("_main is not null");
     }
     return MainViewController._main;
 }

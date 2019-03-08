@@ -186,7 +186,7 @@ Language.main = function () {
         Language._game.SetLanguage(cc.sys.LANGUAGE_CHINESE);
 
     } else {
-        cc.Debug.Log("Language _main is not null");
+        //cc.Debug.Log("Language _main is not null");
     }
     return Language._main;
 }

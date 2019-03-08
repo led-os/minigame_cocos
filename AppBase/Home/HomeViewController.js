@@ -105,7 +105,7 @@ HomeViewController.main = function () {
         HomeViewController._main = new HomeViewController();
         HomeViewController._main.Init();
     } else {
-        cc.Debug.Log("_main is not null");
+        //cc.Debug.Log("_main is not null");
     }
 
     return HomeViewController._main;

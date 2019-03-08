@@ -68,7 +68,7 @@ SettingViewController.main = function () {
         SettingViewController._main = new SettingViewController();
         SettingViewController._main.Init();
     } else {
-        cc.Debug.Log("_main is not null");
+        //cc.Debug.Log("_main is not null");
     }
 
     return SettingViewController._main;

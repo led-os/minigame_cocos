@@ -128,7 +128,8 @@ var UILearnProgressCellItem = cc.Class({
         switch (this.itemType) {
             case UILearnProgressCellItem.ITEM_TYPE_SHAPE:
                 {
-                    cc.TextureCache.main.Load(info.pic, function (err, tex) {
+                    var url = cc.AppRes.URL_HTTP_HEAD+info.pic;
+                    cc.TextureCache.main.Load(url, function (err, tex) {
                         if (err) {
                             cc.Debug.Log(err.message || err);
                         }
@@ -149,7 +150,8 @@ var UILearnProgressCellItem = cc.Class({
 
                     this.indexShape = Math.floor(game.listShape.length / 2);
                     var infoshape = game.listShape[this.indexShape];
-                    cc.TextureCache.main.Load(infoshape.pic, function (err, tex) {
+                    var url = cc.AppRes.URL_HTTP_HEAD+infoshape.pic;
+                    cc.TextureCache.main.Load(url, function (err, tex) {
                         if (err) {
                             cc.Debug.Log(err.message || err);
                             return;

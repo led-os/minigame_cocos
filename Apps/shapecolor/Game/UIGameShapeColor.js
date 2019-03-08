@@ -115,25 +115,7 @@ var UIGameShapeColor = cc.Class({
         this.game.textTitle = this.textTitle;
         this.textTitle.node.active = false;
         this.game.LoadGame(cc.GameManager.gameMode);
-
-        //imagebg
-        // var url = "http://i1.bvimg.com/679362/29748b18acf1446a.png"
-        //var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg0.jpg";
-        var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg1.png";
-        cc.TextureCache.main.Load(url, function (err, tex) {
-            if (err) {
-
-                cc.Debug.Log(err.message || err);
-                return ret;
-            }
-            // cc.Debug.Log("TextureCache loadRes ok");
-
-            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
-            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
-            lyscale.LayOut();
-
-        }.bind(this));
-
+        this.LoadBg();
     },
 
     CheckAllLoad: function () {
@@ -151,6 +133,60 @@ var UIGameShapeColor = cc.Class({
 
 
     },
+
+    IsInColorFilter: function (colorfilter, info) {
+        var isfilter = false;
+        for (let infocolor of colorfilter.listColorFilter) {
+            if (info.id == infocolor.id) {
+                isfilter = true;
+                break;
+            }
+        }
+        return isfilter;
+    },
+    LoadBg: function () {
+        var listBgNew = [];
+        for (let infobg of this.listBg) {
+            var isColorFilter = false;
+            for (let infocolor of this.game.listColorShow) {
+                isColorFilter = this.IsInColorFilter(infobg, infocolor);
+                if (isColorFilter) {
+                    break;
+                }
+            }
+            if (!isColorFilter) {
+                listBgNew.push(infobg);
+            }
+        }
+
+
+        var rdm = cc.Common.RandomRange(0, listBgNew.length); 
+        cc.Debug.Log("listBgNew.count = " + listBgNew.length + " rdm=" + rdm);
+
+        var info = this.game.GetItemInfoShapeColor(rdm, listBgNew);
+        //imagebg
+        // var url = "http://i1.bvimg.com/679362/29748b18acf1446a.png"
+        //var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg0.jpg";
+        // var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg1.png"; 
+        var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/" + info.pic;
+
+        cc.Debug.Log("listBgNew.count = " + listBgNew.length + " url=" + url);
+        cc.TextureCache.main.Load(url, function (err, tex) {
+            if (err) {
+
+                cc.Debug.Log(err.message || err);
+                return ret;
+            }
+            // cc.Debug.Log("TextureCache loadRes ok");
+
+            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
+            lyscale.LayOut();
+
+        }.bind(this));
+
+    },
+
     CleanGuankaList: function () {
         if (this.listGuanka != null) {
             this.listGuanka.splice(0, this.listGuanka.length);
@@ -225,7 +261,6 @@ var UIGameShapeColor = cc.Class({
                 this.ParseShape(rootJson.json);
             }
         }.bind(this));
-
     },
 
     StartParseColor: function () {
@@ -259,20 +294,50 @@ var UIGameShapeColor = cc.Class({
         info.id = this.bglistId = "bglist";
         info.isLoad = false;
         this.listProLoad.push(info);
+        // var filepath = cc.Common.GAME_RES_DIR + "/image_bg/bg.json";
+        // cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
+        //     if (err) {
+        //         cc.Debug.Log("config:err=" + err);
+        //     }
+        //     if (err == null) {
+        //         var infoload = cc.Common.GetLoadItemById(this.listProLoad, info.id);
+        //         if (infoload != null) {
+        //             infoload.isLoad = true;
+        //         }
+        //         this.ParseBgList(rootJson.json);
+        //     }
+        // }.bind(this));
 
-        var filepath = cc.Common.GAME_RES_DIR + "/image_bg/bg.json";
-        cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
+        //ng
+        var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg.json";
+        cc.Debug.Log("StartParseBgList:url=" + url);
+        // cc.loader.load(url, function (err, rootJson) {
+        //     if (err) {
+        //         cc.Debug.Log(err.message || err);
+        //         cc.Debug.Log("StartParseBgList:err=" + err.message);
+        //     }
+        //     if (err == null) {
+        //         var infoload = cc.Common.GetLoadItemById(this.listProLoad, info.id);
+        //         if (infoload != null) {
+        //             infoload.isLoad = true;
+        //         }
+        //         this.ParseBgList(rootJson.json);
+        //     }
+        // }.bind(this));
 
+        var httpReq = new cc.HttpRequest();
+        httpReq.Get(url, function (err, data) {
             if (err) {
-                cc.Debug.Log("config:err=" + err);
+                cc.Debug.Log(err);
+                return;
             }
-            if (err == null) {
-                var infoload = cc.Common.GetLoadItemById(this.listProLoad, info.id);
-                if (infoload != null) {
-                    infoload.isLoad = true;
-                }
-                this.ParseBgList(rootJson.json);
+            var infoload = cc.Common.GetLoadItemById(this.listProLoad, info.id);
+            if (infoload != null) {
+                infoload.isLoad = true;
             }
+            var str = String.fromCharCode.apply(null, new Uint8Array(data));
+            var rootJson = JSON.parse(str);
+            this.ParseBgList(rootJson);
         }.bind(this));
 
     },
@@ -337,7 +402,7 @@ var UIGameShapeColor = cc.Class({
             var info = new cc.ShapeColorItemInfo();
             var item = items[i];
             var strdir = cc.Common.GAME_RES_DIR + "/image_bg";
-            info.pic = strdir + "/" + item.pic;
+            info.pic = item.pic;
             var colorFilter = item.color_filter;
             for (var j = 0; j < colorFilter.length; j++) {
                 var itemtmp = colorFilter[j];

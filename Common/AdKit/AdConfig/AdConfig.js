@@ -257,7 +257,7 @@ AdConfig.main = function () {
         AdConfig._main.InitValue();
         AdConfig._main.Init();
     } else {
-        cc.Debug.Log("_main is not null");
+        //cc.Debug.Log("_main is not null");
     }
     return AdConfig._main;
 }

@@ -71,7 +71,7 @@ LearnProgressViewController.main = function () {
         LearnProgressViewController._main = new LearnProgressViewController();
         LearnProgressViewController._main.Init();
     } else {
-        cc.Debug.Log("_main is not null");
+        //cc.Debug.Log("_main is not null");
     }
 
     return LearnProgressViewController._main;
