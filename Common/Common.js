@@ -45,19 +45,33 @@ var Common = cc.Class({
         },
 
 
-        GetSizeCanvas: function (sizeDesign) {
+        GetSizeCanvas: function (canvas) {
+
+            var isFitHeight = true;
+            var isFitWidth = false;
             //初始化分辨率相关参数
             var size = cc.size(cc.Common.WIDTH_DESIGN_DEFAULT, cc.Common.HEIGHT_DESIGN_DEFAULT) // this.canvasMain.designResolution; 参考设计分辨率
-            if (sizeDesign != null) {
-                size = sizeDesign;
+            if (canvas != null) {
+                size = canvas.designResolution;
+                isFitHeight = canvas.fitHeight;
+                isFitWidth = canvas.fitWidth;
             }
             var sizeCanvas = cc.size(0, 0);
-            sizeCanvas.height = size.height;
-            //cc.Debug.Log("canvasMain size=" + size);
             let screenSize = cc.view.getVisibleSize();//屏幕分辨率
+            if (isFitHeight) {
+                sizeCanvas.height = size.height;
+                sizeCanvas.width = screenSize.width * sizeCanvas.height / screenSize.height;
+            }
+
+            if (isFitWidth) {
+                sizeCanvas.width = size.width;
+                sizeCanvas.height = screenSize.height * sizeCanvas.width / screenSize.width;
+            }
+
+            //cc.Debug.Log("canvasMain size=" + size);
             //cc.Debug.Log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
 
-            sizeCanvas.width = screenSize.width * sizeCanvas.height / screenSize.height;
+
             //cc.Debug.Log("sizeCanvas size=" + sizeCanvas);
             return sizeCanvas;
         },

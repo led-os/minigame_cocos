@@ -119,8 +119,16 @@ var AppSceneBase = cc.Class({
             // // var framesize1 = cc.view.getFrameSize();
             // //  cc.Debug.Log("new frame size=" + framesize1);
 
+            //按2048
+            if (cc.Device.main.isLandscape) {
+                this.canvasMain.fitWidth = true;
+                this.canvasMain.fitHeight = false;
+            } else {
+                this.canvasMain.fitHeight = true;
+                this.canvasMain.fitWidth = false;
+            }
 
-            this.sizeCanvas = cc.Common.GetSizeCanvas(this.canvasMain.designResolution);
+            this.sizeCanvas = cc.Common.GetSizeCanvas(this.canvasMain);
         }
 
         //config
