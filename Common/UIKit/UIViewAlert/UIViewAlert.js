@@ -27,8 +27,8 @@ var UIViewAlert = cc.Class({
         var size = this.node.getContentSize();
         var ratio = 0.8;
         var x, y, w, h;
-        w = size.width * ratio;
-        h = w*9/16;
+        w = Math.min(size.width, size.height) * ratio;
+        h = w * 9 / 16;
         this.content.setContentSize(w, h);
     },
     SetText: function (title, msg, yes, no) {

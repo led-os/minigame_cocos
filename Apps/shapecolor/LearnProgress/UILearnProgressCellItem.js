@@ -128,7 +128,7 @@ var UILearnProgressCellItem = cc.Class({
         switch (this.itemType) {
             case UILearnProgressCellItem.ITEM_TYPE_SHAPE:
                 {
-                    var url = cc.AppRes.URL_HTTP_HEAD+info.pic;
+                    var url = cc.AppRes.URL_HTTP_HEAD + info.pic;
                     cc.TextureCache.main.Load(url, function (err, tex) {
                         if (err) {
                             cc.Debug.Log(err.message || err);
@@ -150,7 +150,7 @@ var UILearnProgressCellItem = cc.Class({
 
                     this.indexShape = Math.floor(game.listShape.length / 2);
                     var infoshape = game.listShape[this.indexShape];
-                    var url = cc.AppRes.URL_HTTP_HEAD+infoshape.pic;
+                    var url = cc.AppRes.URL_HTTP_HEAD + infoshape.pic;
                     cc.TextureCache.main.Load(url, function (err, tex) {
                         if (err) {
                             cc.Debug.Log(err.message || err);
@@ -175,14 +175,24 @@ var UILearnProgressCellItem = cc.Class({
     },
 
     UpdateImageBg: function (pic) {
-        cc.TextureCache.main.Load(pic, function (err, tex) {
-            if (err) {
-                cc.Debug.Log("UpdateImageBg err="+err+" pic="+pic);
-                cc.Debug.Log(err.message || err);
-                return;
-            }
-            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+        //不会保留图片的sliced参数
+        // cc.TextureCache.main.Load(pic, function (err, tex) {
+        //     if (err) {
+        //         cc.Debug.Log(err.message || err);
+        //         return;
+        //     }
+        //     this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
 
+        // }.bind(this));
+
+        //ok  会保留图片的sliced参数
+        cc.loader.loadRes(pic, cc.SpriteFrame, function (err, frame) {
+            if (err) {
+                cc.Debug.Log(err.message || err);
+
+                return ret;
+            }
+            this.imageBg.spriteFrame = frame;
         }.bind(this));
     },
 

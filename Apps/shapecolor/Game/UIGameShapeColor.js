@@ -158,14 +158,16 @@ var UIGameShapeColor = cc.Class({
                 listBgNew.push(infobg);
             }
         }
-
+        if (listBgNew.length == 0) {
+            listBgNew = this.listBg;
+        }
 
         var rdm = cc.Common.RandomRange(0, listBgNew.length);
         cc.Debug.Log("listBgNew.count = " + listBgNew.length + " rdm=" + rdm);
 
         var info = this.game.GetItemInfoShapeColor(rdm, listBgNew);
         //imagebg
-        // var url = "http://i1.bvimg.com/679362/29748b18acf1446a.png"
+        //var url = "http://i1.bvimg.com/679362/29748b18acf1446a.png"
         //var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg0.jpg";
         // var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg1.png"; 
         var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/" + info.pic;

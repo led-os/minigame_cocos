@@ -431,7 +431,9 @@ var GameShapeColor = cc.Class({
         //     AudioSource audioSource = audioPlayer.GetComponent<AudioSource>();
         //     audioSource.PlayOneShot(audioClipItemFinish);
         // }
-
+        if (info.id == GameShapeColor.ID_BOMB) {
+            return;
+        }
         //speak
         var str = this.StringOfItem(info);
         cc.Tts.Speak(str);
@@ -454,7 +456,11 @@ var GameShapeColor = cc.Class({
         var str = "";
         var strColor = cc.Language.game().GetString("COLOR_TITLE_" + info.colorid);
         var strShape = cc.Language.game().GetString(this.LanguageKeyOfShape(info));
-        var str = strColor + strShape;
+        var str_split = "";
+        if (cc.Language.main().GetLanguage() == cc.sys.LANGUAGE_ENGLISH) {
+            str_split = " ";
+        }
+        var str = strColor + str_split + strShape;
         return str;
     },
 
@@ -851,8 +857,8 @@ var GameShapeColor = cc.Class({
         }
 
         //加载图片
-       // var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(cc.AppRes.URL_HTTP_HEAD+pic);
-       var strImage = cc.AppRes.URL_HTTP_HEAD+pic;
+        // var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(cc.AppRes.URL_HTTP_HEAD+pic);
+        var strImage = cc.AppRes.URL_HTTP_HEAD + pic;
         cc.Debug.Log("strImage=" + strImage);
         cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')

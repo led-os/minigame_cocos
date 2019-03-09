@@ -51,14 +51,14 @@ var UISetting = cc.Class({
     UpdateItem: function () {
         this.listItem.length = 0;
         //if (cc.AppVersion.main().appCheckHasFinished)
-        {
+        if (cc.sys.isNative) {
             var info = new cc.ItemInfo();
             info.title = cc.Language.main().GetString("STR_SETTING_COMMENT");
             info.tag = UISetting.TAG_SETTING_COMMENT;
             this.listItem.push(info);
         }
         //if (cc.AppVersion.main().appCheckHasFinished)
-        {
+        if (cc.sys.isNative) {
             var info = new cc.ItemInfo();
             var strversin = cc.Common.main().GetAppVersion();
             var str = cc.Language.main().GetString("STR_SETTING_VERSION") + "(" + strversin + ")";
@@ -80,17 +80,22 @@ var UISetting = cc.Class({
             info.tag = UISetting.TAG_SETTING_BACKGROUND_MUSIC;
             this.listItem.push(info);
         }
-        if (cc.Config.main().isHaveRemoveAd) {
-            var info = new cc.ItemInfo();
-            info.title = cc.Language.main().GetString("STR_BTN_NOAD");
-            info.tag = UISetting.TAG_SETTING_NOAD;
-            this.listItem.push(info);
-        }
-        if (cc.Common.main().isiOS && cc.Config.main().isHaveRemoveAd) {
-            var info = new cc.ItemInfo();
-            info.title = cc.Language.main().GetString("STR_BTN_RESTORE_NOAD");
-            info.tag = UISetting.TAG_SETTING_RESTORE_IAP;
-            this.listItem.push(info);
+
+        if (cc.sys.isNative) {
+
+
+            if (cc.Config.main().isHaveRemoveAd) {
+                var info = new cc.ItemInfo();
+                info.title = cc.Language.main().GetString("STR_BTN_NOAD");
+                info.tag = UISetting.TAG_SETTING_NOAD;
+                this.listItem.push(info);
+            }
+            if (cc.Common.main().isiOS && cc.Config.main().isHaveRemoveAd) {
+                var info = new cc.ItemInfo();
+                info.title = cc.Language.main().GetString("STR_BTN_RESTORE_NOAD");
+                info.tag = UISetting.TAG_SETTING_RESTORE_IAP;
+                this.listItem.push(info);
+            }
         }
         this.InitList();
     },

@@ -105,14 +105,27 @@ cc.Class({
     },
 
     UpdateImageBg: function (pic) {
-        cc.TextureCache.main.Load(pic, function (err, tex) {
-            if (err) {
-                cc.Debug.Log("UpdateImageBg err="+err+" pic="+pic);
-                cc.Debug.Log(err.message || err);
-                return;
-            }
-            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+        //不会保留图片的sliced参数
+        // cc.TextureCache.main.Load(pic, function (err, tex) {
+        //     if (err) {
+        //         cc.Debug.Log("UpdateImageBg err=" + err + " pic=" + pic);
+        //         cc.Debug.Log(err.message || err);
+        //         return;
+        //     }
+        //    /// this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+        //    this.imageBg.spriteFrame.setTexture(tex);
 
+        //     // this.imageBg.type = cc.Sprite.Type.SLICED;
+        // }.bind(this));
+
+        //ok  会保留图片的sliced参数
+        cc.loader.loadRes(pic, cc.SpriteFrame, function (err, frame) {
+            if (err) {
+                cc.Debug.Log(err.message || err);
+
+                return ret;
+            }
+            this.imageBg.spriteFrame = frame;
         }.bind(this));
     },
 

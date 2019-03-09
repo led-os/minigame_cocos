@@ -156,8 +156,8 @@
       "width": 2048,
       "height": 1536
     },
-    "_fitWidth": false,
-    "_fitHeight": true,
+    "_fitWidth": true,
+    "_fitHeight": false,
     "_id": "d1k6WoxExOII7rq8XbEGKc"
   },
   {
