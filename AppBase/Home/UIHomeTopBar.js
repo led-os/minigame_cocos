@@ -45,9 +45,25 @@ cc.Class({
         this.UnifyButtonSprite(this.btnSetting);
         this.UnifyButtonSprite(this.btnShare);
         this.UnifyButtonSprite(this.btnAdVideo);
+
+        if (!cc.sys.isNative) {
+            this.btnNoAd.node.active = false;
+            if (this.btnRestoreIAP != null) {
+                this.btnRestoreIAP.node.active = false;
+            }
+            this.btnMore.node.active = false;
+            this.btnShare.node.active = false;
+        }
+
+        this.LayOut();
     },
 
     LayOut: function () {
+        var ly = this.node.getComponent(cc.Layout);
+        if (ly != null) {
+            //有些按钮隐藏后重新布局
+            ly._doLayout();
+        }
 
     },
 

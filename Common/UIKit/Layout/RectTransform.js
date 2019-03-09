@@ -76,7 +76,7 @@ var RectTransform = cc.Class({
             },
         },
 
-        
+
         //     The normalized position in the parent RectTransform that the lower left corner
         //     is anchored to.
         _anchorMin: cc.Vec2,
@@ -93,7 +93,7 @@ var RectTransform = cc.Class({
                 this.LayOut();
             },
         },
-        
+
         //     The normalized position in the parent RectTransform that the upper right corner
         //     is anchored to.
         _anchorMax: cc.Vec2,
@@ -178,14 +178,14 @@ var RectTransform = cc.Class({
         var x, y, w, h;
         w = this.node.getContentSize().width;
         h = this.node.getContentSize().height;
-        cc.Debug.Log("OnResize w=" + w + " h=" + h);
+        //cc.Debug.Log("OnResize w=" + w + " h=" + h);
 
         var children = this.node._children;
         for (var i = 0; i < children.length; i++) {
             var child = children[i];
             var rctran = child.getComponent(RectTransform);
             if (rctran != null) {
-               // cc.Debug.Log("OnResize child");
+                // cc.Debug.Log("OnResize child");
                 rctran.LayOut();
             }
 
@@ -291,33 +291,33 @@ var RectTransform = cc.Class({
         h = size.height;
         x = this.node.getPosition().x;
         y = this.node.getPosition().y;
-        cc.Debug.Log("UpdateType this.alignType=" + this._alignType + " w=" + w + " h=" + h + " x=" + x + " y=" + y + " w_parent=" + w_parent + " h_parent=" + h_parent);
+        //cc.Debug.Log("UpdateType this.alignType=" + this._alignType + " w=" + w + " h=" + h + " x=" + x + " y=" + y + " w_parent=" + w_parent + " h_parent=" + h_parent);
         //Common.appSceneMain.sizeCanvas.height 
         switch (this._alignType) {
             case LayoutAlign.AlignType.UP:
                 {
                     x = this.node.getPosition().x;
-                    y = h_parent / 2 - h / 2;
+                    y = h_parent / 2 - h / 2 - this.offsetMax.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case LayoutAlign.AlignType.DOWN:
                 {
                     x = this.node.getPosition().x;
-                    y = -h_parent / 2 + h / 2;
+                    y = -h_parent / 2 + h / 2 + this.offsetMin.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case LayoutAlign.AlignType.LEFT:
                 {
-                    x = -w_parent / 2 + w / 2+ this.offsetMin.x;
+                    x = -w_parent / 2 + w / 2 + this.offsetMin.x;
                     y = this.node.getPosition().y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case LayoutAlign.AlignType.RIGHT:
                 {
-                    x = w_parent / 2 - w / 2- this.offsetMax.x;
+                    x = w_parent / 2 - w / 2 - this.offsetMax.x;
                     y = this.node.getPosition().y;
                     this.node.setPosition(x, y, 0);
                 }
@@ -326,35 +326,35 @@ var RectTransform = cc.Class({
             case LayoutAlign.AlignType.UP_LEFT:
                 {
                     //x = this.node.getPosition().x;
-                    x = -w_parent / 2 + w / 2;
-                    y = h_parent / 2 - h / 2;
+                    x = -w_parent / 2 + w / 2 + this.offsetMin.x;
+                    y = h_parent / 2 - h / 2 - this.offsetMax.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case LayoutAlign.AlignType.UP_RIGHT:
                 {
-                    x = w_parent / 2 - w / 2-this.offsetMax.x;
-                    y = h_parent / 2 - h / 2-this.offsetMax.y;
+                    x = w_parent / 2 - w / 2 - this.offsetMax.x;
+                    y = h_parent / 2 - h / 2 - this.offsetMax.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case LayoutAlign.AlignType.DOWN_LEFT:
                 {
-                    x = -w_parent / 2 + w / 2;
-                    y = -h_parent / 2 + h / 2;
+                    x = -w_parent / 2 + w / 2 + this.offsetMin.x;
+                    y = -h_parent / 2 + h / 2 + this.offsetMin.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case LayoutAlign.AlignType.DOWN_RIGHT:
                 {
-                    x = w_parent / 2 - w / 2;
-                    y = -h_parent / 2 + h / 2;
+                    x = w_parent / 2 - w / 2 - this.offsetMax.x;
+                    y = -h_parent / 2 + h / 2 + this.offsetMin.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
 
         }
     },
-}); 
-cc.RectTransform = module.export = RectTransform; 
+});
+cc.RectTransform = module.export = RectTransform;
 

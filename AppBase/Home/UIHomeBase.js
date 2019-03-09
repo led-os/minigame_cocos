@@ -30,7 +30,7 @@ cc.Class({
         this._super();
         // this.node.setContentSize(Common.appSceneMain.sizeCanvas); 
         this.node.setContentSize(this.node.parent.getContentSize());
-
+     
         var x, y, w, h;
 
         var size = this.node.getContentSize();
@@ -40,8 +40,7 @@ cc.Class({
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
         cc.Debug.Log("KEY_BACKGROUND_MUSIC home=" + ret);
-        if (ret) 
-        {
+        if (ret) {
             cc.Tts.Speak(name);
         }
 

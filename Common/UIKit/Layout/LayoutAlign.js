@@ -43,11 +43,13 @@ var LayoutAlign = cc.Class({
 
 
     onLoad: function () {
-        cc.Debug.Log("onLoad this.alignType=" + this.alignType);
-        this.UpdateType(this.alignType);
+        // cc.Debug.Log("onLoad this.alignType=" + this.alignType);
+        this.LayOut();
 
     },
-
+    LayOut: function () {
+        this.UpdateType(this.alignType);
+    },
     UpdateType: function (type) {
         this._alignType = type;
         if (type == AlignType.NONE) {
@@ -139,6 +141,6 @@ var LayoutAlign = cc.Class({
         }
     },
 
-}); 
+});
 
 cc.LayoutAlign = module.export = LayoutAlign; 
