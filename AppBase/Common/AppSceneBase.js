@@ -185,7 +185,7 @@ var AppSceneBase = cc.Class({
             }
 
             var lan = cc.Language.main();
-            var lanid = cc.Common.GetItemOfKey(cc.AppRes.KEY_LANGUAGE, cc.sys.LANGUAGE_CHINESE);
+            var lanid = cc.Common.GetItemOfKey(cc.AppRes.KEY_LANGUAGE, cc.Language.main().defaultLanId);
             lan.SetLanguage(lanid);
 
             this.RunApp();

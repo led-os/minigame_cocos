@@ -31,13 +31,17 @@ var TextureCache = cc.Class({
     // * loadRes(url: string, completeCallback: (error: Error, resource: any) => void): void
     //Texture2D
     Load: function (filepath, completeCallback) {
+        var key = filepath;
+        var ret = null;
+
         if (this.isHttpUrl(filepath)) {
             return this.LoadUrl(filepath, completeCallback);
+        } else {
+            //去除后缀
+            key = cc.FileUtil.GetFileBeforeExtWithOutDot(filepath);
         }
         this.Init();
-        var ret = null;
-        var key = filepath;
-
+        //cc.Debug.Log("TextureCache  Load  key="+key);
         if (this.dicItem.Contains(key) == true) {
             ret = this.dicItem.Get(key);
             cc.Debug.Log("TextureCache  load  from cache");
@@ -134,13 +138,13 @@ var TextureCache = cc.Class({
                         completeCallback(err, tex);
                     }
                     return ret;
-                } 
+                }
                 if (tex != null) {
                     this.dicItem.Add(key, tex);
                 }
                 if (completeCallback) {
                     completeCallback(err, tex);
-                } 
+                }
             }.bind(this));
         }
         return ret;
@@ -160,13 +164,13 @@ var TextureCache = cc.Class({
                     completeCallback(err, tex);
                 }
                 return ret;
-            } 
+            }
             // if (tex != null) {
             //     this.dicItem.Add(key, tex);
             // }
             if (completeCallback) {
                 completeCallback(err, tex);
-            } 
+            }
         }.bind(this));
 
         return ret;

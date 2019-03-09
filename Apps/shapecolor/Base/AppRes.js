@@ -22,7 +22,7 @@ var AppRes = cc.Class({
         KEY_USER_GUIDE: "key_comment_user_guide_",
 
         //https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/GameRes/image/banyuan/banyuan.png?sign=6f70fe6cbbb02943d6b433348ce66ba8&t=1552029703
-        URL_HTTP_HEAD: "https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/",
+
         //image
         IMAGE_HOME_BG: "App/UI/Home/LearnProgressBg",
         IMAGE_BTN_SWITCH_UNSEL: "App/UI/Common/BtnSwitchUnSel",
@@ -43,9 +43,31 @@ var AppRes = cc.Class({
 
     },
 
+    properties:
+    {
+        URL_HTTP_HEAD:
+        {
+            get: function () {
+                var str = "";
+                if (cc.sys.platform == cc.sys.WECHAT_GAME) {
+                    str = "https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/";
+                }
+                return str;
+            },
+        }
 
+
+    },
 
 });
+
+AppRes._main = null;
+AppRes.main = function () {
+    if (!AppRes._main) {
+        AppRes._main = new AppRes();
+    }
+    return AppRes._main;
+}
 
 cc.AppRes = module.export = AppRes;
 

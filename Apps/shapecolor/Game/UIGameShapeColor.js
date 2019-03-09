@@ -170,14 +170,14 @@ var UIGameShapeColor = cc.Class({
         //var url = "http://i1.bvimg.com/679362/29748b18acf1446a.png"
         //var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg0.jpg";
         // var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg1.png"; 
-        var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/" + info.pic;
+        var url = cc.AppRes.main().URL_HTTP_HEAD + cc.Common.Cloud_RES_DIR + "/image_bg/" + info.pic;
 
         cc.Debug.Log("listBgNew.count = " + listBgNew.length + " url=" + url);
         cc.TextureCache.main.Load(url, function (err, tex) {
             if (err) {
 
                 cc.Debug.Log(err.message || err);
-                return ret;
+                return;
             }
             // cc.Debug.Log("TextureCache loadRes ok");
 
@@ -311,7 +311,7 @@ var UIGameShapeColor = cc.Class({
         }.bind(this));
 
         //ng
-        var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg.json";
+        var url = cc.AppRes.main().URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg.json";
         cc.Debug.Log("StartParseBgList:url=" + url);
         // cc.loader.load(url, function (err, rootJson) {
         //     if (err) {
@@ -362,9 +362,9 @@ var UIGameShapeColor = cc.Class({
             var info = new cc.ShapeColorItemInfo();
             var item = items[i];
             info.id = item.id;
-            var picdir = cc.Common.GAME_RES_DIR + "/image/" + info.id;
+            var picdir = cc.Common.Cloud_RES_DIR + "/image/" + info.id;
             if (cc.Config.main().appKeyName != cc.AppType.SHAPECOLOR) {
-                picdir = cc.Common.GAME_RES_DIR + "/image/" + strPlace;
+                picdir = cc.Common.Cloud_RES_DIR + "/image/" + strPlace;
 
             }
             info.pic = picdir + "/" + info.id + ".png";
@@ -406,7 +406,7 @@ var UIGameShapeColor = cc.Class({
         for (var i = 0; i < items.length; i++) {
             var info = new cc.ShapeColorItemInfo();
             var item = items[i];
-            var strdir = cc.Common.GAME_RES_DIR + "/image_bg";
+            var strdir = cc.Common.Cloud_RES_DIR + "/image_bg";
             info.pic = item.pic;
             var colorFilter = item.color_filter;
             for (var j = 0; j < colorFilter.length; j++) {

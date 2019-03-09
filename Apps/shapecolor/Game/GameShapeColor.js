@@ -858,7 +858,7 @@ var GameShapeColor = cc.Class({
 
         //加载图片
         // var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(cc.AppRes.URL_HTTP_HEAD+pic);
-        var strImage = cc.AppRes.URL_HTTP_HEAD + pic;
+        var strImage = cc.AppRes.main().URL_HTTP_HEAD + pic;
         cc.Debug.Log("strImage=" + strImage);
         cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')

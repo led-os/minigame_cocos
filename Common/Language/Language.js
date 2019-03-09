@@ -24,7 +24,16 @@ var Language = cc.Class({
             type: LTLocalization,
         },
 
-
+        defaultLanId:
+        {
+            get: function () {
+                var ret = cc.sys.LANGUAGE_CHINESE;
+                if (cc.sys.platform == cc.sys.MOBILE_BROWSER) {
+                    ret = cc.sys.LANGUAGE_ENGLISH;
+                }
+                return ret;
+            },
+        },
     },
     InitValue: function () {
         {
@@ -173,7 +182,7 @@ Language.main = function () {
 
         fileName = cc.Common.RES_CONFIG_DATA + "/language/language.csv";
         Language._main.Init(fileName);
-        Language._main.SetLanguage(cc.sys.LANGUAGE_CHINESE);
+        //Language._main.SetLanguage(cc.sys.LANGUAGE_CHINESE);
 
         fileName = cc.Common.RES_CONFIG_DATA_COMMON + "/language/language.csv";
         Language._common = new Language();
@@ -183,7 +192,7 @@ Language.main = function () {
         fileName = cc.Common.GAME_RES_DIR + "/language/language.csv";
         Language._game = new Language();
         Language._game.Init(fileName);
-        Language._game.SetLanguage(cc.sys.LANGUAGE_CHINESE);
+        //Language._game.SetLanguage(cc.sys.LANGUAGE_CHINESE);
 
     } else {
         //cc.Debug.Log("Language _main is not null");
@@ -194,7 +203,7 @@ Language.main = function () {
 
 
 Language._game = null;
-Language.game = function () { 
+Language.game = function () {
     return Language._game;
 }
 
