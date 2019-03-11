@@ -130,6 +130,77 @@ cc.Class({
             //     this._bannerAd.style.top = winSize.windowHeight - this._bannerAd.style.realHeight;
             // });
         }
+
+        /*
+        var JSZip = require('jszip');
+        var zip = new JSZip();
+
+        zip.file("Hello.txt", "Hello World\n");
+
+        // var img = zip.folder("images");
+        // img.file("smile.gif", imgData, { base64: true });
+
+
+        // 压缩
+        // zip.generateAsync({
+        //     // 压缩类型选择nodebuffer，在回调函数中会返回zip压缩包的Buffer的值，再利用fs保存至本地
+        //     type: "blob",//blob nodebuffer
+        //     // 压缩算法
+        //     compression: "DEFLATE",
+        //     compressionOptions: {
+        //         level: 9
+        //     }
+
+        zip.generateAsync({ type: 'blob' })
+            .then(function (content) {
+                cc.Debug.Log("zip generateAsync ok" + " type=" + typeof content + " content=" + content);
+                // 写入磁盘 
+                //if (cc.sys.isNative) 
+                {
+                    //https://cocos2d-x.org/reference/html5-js/V3.0/symbols/jsb.fileUtils.html
+                    //  var path = jsb.fileUtils.getWritablePath() + "tmp_test.zip";
+                    // cc.Debug.Log('zip PATH: ' + path);
+
+
+
+                    //                 var reader = new FileReader()
+                    //                 reader.onload = function () {
+                    //                     var buffer = new Buffer(reader.result)
+                    //                     //temp文件夹应已存在
+                    //                     fs.writeFile(`temp/${Date.now()}.mp4`, buffer, {}, (err, res) =& gt; {
+                    //                         if (err) {
+                    //                             console.error(err)
+                    //                             return
+                    //                         }
+                    //                         console.log('video saved')
+                    //                     })
+                    // } 
+                   // saveAs(content, "example.zip");
+
+                    var blob = new Blob(['中文字符串'], {
+                        type: 'text/plain'
+                    });
+                    var r = new FileReader();
+                    r.onload = function (e) {
+                        console.log("zip r=" + r.result);
+                        console.info("zip info r=" +r.result);
+                        //  jsb.fileUtils.writeDataToFile(new Uint8Array(r.result), path);
+
+                        // var buf = new Uint8Array(r.result);
+                        // console.info(buf); //[228, 184, 173, 230, 150, 135, 229, 173, 151, 231, 172, 166, 228, 184, 178]
+                        // r.readAsText(new Blob([buf]), 'utf-8');
+                        // r.onload = function () {
+                        //     console.info("zip text="+r.result); //中文字符串
+                        // };
+                    };
+                    r.readAsArrayBuffer(content);
+                    console.log("zip readAsArrayBuffer end=" + r.result);
+                }
+
+            });
+            */
+
+
     },
 
     start: function () {
