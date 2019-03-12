@@ -1,10 +1,10 @@
 var UIViewController = require("UIViewController");
 var UIGameBase = require("UIGameBase");
-var GameShapeColor = require("GameShapeColor");
+var GameBlock = require("GameBlock");
 var AppType = require("AppType");
 //var LoadItemInfo = require("LoadItemInfo");
 
-var UIGameShapeColor = cc.Class({
+var UIGameBlock = cc.Class({
     extends: UIGameBase,
     properties: {
 
@@ -16,7 +16,7 @@ var UIGameShapeColor = cc.Class({
 
         game: {
             default: null,
-            type: GameShapeColor
+            type: GameBlock
         },
 
         listShape: {
@@ -48,7 +48,7 @@ var UIGameShapeColor = cc.Class({
 
     CreateGame: function () {
         var node = cc.instantiate(this.gamePrefab);
-        this.game = node.getComponent(GameShapeColor);
+        this.game = node.getComponent(GameBlock);
         this.game.node.parent = this.node;
 
         //zorder 让imageBg 显示在最底层，game显示在UI下面
@@ -70,13 +70,13 @@ var UIGameShapeColor = cc.Class({
     StringOfGameStatus: function (status) {
         var str = "unknown" + status;
         switch (status) {
-            case GameShapeColor.GAME_STATUS_UN_START:
+            case GameBlock.GAME_STATUS_UN_START:
                 str = cc.Language.main().GetString("STR_GAME_STATUS_UN_START");
                 break;
-            case GameShapeColor.GAME_STATUS_PLAY:
+            case GameBlock.GAME_STATUS_PLAY:
                 str = cc.Language.main().GetString("STR_GAME_STATUS_PLAY");
                 break;
-            case GameShapeColor.GAME_STATUS_FINISH:
+            case GameBlock.GAME_STATUS_FINISH:
                 str = cc.Language.main().GetString("STR_GAME_STATUS_FINISH");
                 break;
         }
@@ -84,15 +84,15 @@ var UIGameShapeColor = cc.Class({
         return str;
     },
     GameStatusOfShape: function (info) {
-        var key = GameShapeColor.STR_KEY_GAME_STATUS_SHAPE + info.id;
-        var status = cc.Common.GetIntOfKey(key, GameShapeColor.GAME_STATUS_UN_START);
+        var key = GameBlock.STR_KEY_GAME_STATUS_SHAPE + info.id;
+        var status = cc.Common.GetIntOfKey(key, GameBlock.GAME_STATUS_UN_START);
         cc.Debug.Log("status=" + status);
         var str = this.StringOfGameStatus(status);
         return str;
     },
     GameStatusOfColor: function (info) {
-        var key = GameShapeColor.STR_KEY_GAME_STATUS_COLOR + info.id;
-        var status = cc.Common.GetIntOfKey(key, GameShapeColor.GAME_STATUS_UN_START);
+        var key = GameBlock.STR_KEY_GAME_STATUS_COLOR + info.id;
+        var status = cc.Common.GetIntOfKey(key, GameBlock.GAME_STATUS_UN_START);
         var str = this.StringOfGameStatus(status);
         return str;
     },
@@ -109,7 +109,7 @@ var UIGameShapeColor = cc.Class({
 
 
     UpdateGuankaLevel: function (level) {
-        cc.Debug.Log("UIGameShapeColor::UpdateGuankaLevel");
+        cc.Debug.Log("UIGameBlock::UpdateGuankaLevel");
         this.game.listShape = this.listShape;
         this.game.listColor = this.listColor;
         this.game.textTitle = this.textTitle;
@@ -119,10 +119,10 @@ var UIGameShapeColor = cc.Class({
     },
 
     CheckAllLoad: function () {
-        cc.Debug.Log("UIGameShapeColor::CheckAllLoad this.isShowGame=" + this.isShowGame + " this.listGuanka=" + this.listGuanka.length);
+        cc.Debug.Log("UIGameBlock::CheckAllLoad this.isShowGame=" + this.isShowGame + " this.listGuanka=" + this.listGuanka.length);
         if (cc.Common.CheckAllLoad(this.listProLoad) == true) {
             if (this.callbackGuankaFinish != null) {
-                cc.Debug.Log("UIGameShapeColor::CheckAllLoad callbackGuankaFinish this.listGuanka=" + this.listGuanka.length);
+                cc.Debug.Log("UIGameBlock::CheckAllLoad callbackGuankaFinish this.listGuanka=" + this.listGuanka.length);
                 this.callbackGuankaFinish();
             }
 
@@ -211,7 +211,7 @@ var UIGameShapeColor = cc.Class({
         // var count = this.ParseGuanka();
         var count = 0;
         if (this.listShape != null) {
-            count = GameShapeColor.GUANKA_NUM_PER_ITEM * this.listShape.length;
+            count = GameBlock.GUANKA_NUM_PER_ITEM * this.listShape.length;
         }
         return count;
     },
@@ -223,7 +223,7 @@ var UIGameShapeColor = cc.Class({
     },
 
     ParseGuankaInternal: function () {
-        cc.Debug.Log("ParseGuanka UIGameShapeColor");
+        cc.Debug.Log("ParseGuanka UIGameBlock");
         //清空
         this.listProLoad.length = 0;
         //shape

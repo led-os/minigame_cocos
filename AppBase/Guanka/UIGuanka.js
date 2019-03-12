@@ -26,7 +26,7 @@ cc.Class({
 
         this.textTitle.string = cc.Language.main().GetString("STR_GUANKA");
         cc.GameManager.main().ParseGuanka(function () {
-            cc.Debug.Log("UIGameShapeColor::UpdateItem");
+            cc.Debug.Log("UIGameBlock::UpdateItem");
             this.UpdateItem();
         }.bind(this)
         );
@@ -52,7 +52,7 @@ cc.Class({
     UpdateItem: function () {
         var game = GameViewController.main().gameBase;
         this.listItem = game.listGuanka;
-        cc.Debug.Log("UIGameShapeColor::this.listItem=" + this.listItem.length);
+        cc.Debug.Log("UIGameBlock::this.listItem=" + this.listItem.length);
         this.InitList();
     },
 

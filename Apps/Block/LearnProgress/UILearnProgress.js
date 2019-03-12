@@ -1,7 +1,7 @@
 var UIView = require("UIView");
 var UIPlaceBase = require("UIPlaceBase");
 var UILearnProgressCellItem = require("UILearnProgressCellItem");
-var UIGameShapeColor = require("UIGameShapeColor");
+var UIGameBlock = require("UIGameBlock");
 var GameViewController = require("GameViewController");
 //var GameManager = require("GameManager");
 
