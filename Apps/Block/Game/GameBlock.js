@@ -7,11 +7,11 @@ var UIView = require("UIView");
 
 //weixin小程序appid: wxc6734d6401f5a3db
 //cocos: wx6ac3f5090a6b99c5
-var GameShapeColor = cc.Class({
+var GameBlock = cc.Class({
     extends: UIView,
     statics: {
         GUANKA_NUM_PER_ITEM: 5,
-        GAME_MODE_SHAPE: 0,
+        GAME_MODE_NORMAL: 0,
         GAME_MODE_COLOR: 1,
         GAME_MODE_SHAPE_COLOR: 2,
 
@@ -161,23 +161,23 @@ var GameShapeColor = cc.Class({
 
         //记录游戏完成
         var level = cc.GameManager.main().gameLevel;
-        var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
-        var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
-        cc.Debug.Log("game finish idx_sub=" + idx_sub + " GUANKA_NUM_PER_ITEM=" + GameShapeColor.GUANKA_NUM_PER_ITEM);
-        if ((idx_sub + 1) == GameShapeColor.GUANKA_NUM_PER_ITEM) {
+        var idx = Math.floor(level / GameBlock.GUANKA_NUM_PER_ITEM);
+        var idx_sub = level % GameBlock.GUANKA_NUM_PER_ITEM;
+        cc.Debug.Log("game finish idx_sub=" + idx_sub + " GUANKA_NUM_PER_ITEM=" + GameBlock.GUANKA_NUM_PER_ITEM);
+        if ((idx_sub + 1) == GameBlock.GUANKA_NUM_PER_ITEM) {
             var infoitem = null;
             var key = null;
-            if (cc.GameManager.gameMode == GameShapeColor.GAME_MODE_SHAPE) {
+            if (cc.GameManager.gameMode == GameBlock.GAME_MODE_SHAPE) {
                 infoitem = this.GetItemInfoShapeColor(idx, this.listShape);
-                key = GameShapeColor.STR_KEY_GAME_STATUS_SHAPE + infoitem.id;
+                key = GameBlock.STR_KEY_GAME_STATUS_SHAPE + infoitem.id;
             }
-            if (cc.GameManager.gameMode == GameShapeColor.GAME_MODE_COLOR) {
+            if (cc.GameManager.gameMode == GameBlock.GAME_MODE_COLOR) {
                 infoitem = this.GetItemInfoShapeColor(idx, this.listColor);
-                key = GameShapeColor.STR_KEY_GAME_STATUS_COLOR + infoitem.id;
+                key = GameBlock.STR_KEY_GAME_STATUS_COLOR + infoitem.id;
             }
             cc.Debug.Log("game finish key=" + key + " this.gameMode=" + cc.GameManager.gameMode);
             if (key != null) {
-                cc.Common.SetItemOfKey(key, GameShapeColor.GAME_STATUS_FINISH);
+                cc.Common.SetItemOfKey(key, GameBlock.GAME_STATUS_FINISH);
             }
         }
 
@@ -312,7 +312,7 @@ var GameShapeColor = cc.Class({
                 cc.Debug.Log("合并正确");
 
                 this.isSelectTheBomb = false;
-                if (this.itemInfoSel.id == GameShapeColor.ID_BOMB) {
+                if (this.itemInfoSel.id == GameBlock.ID_BOMB) {
                     this.isSelectTheBomb = true;
                 }
 
@@ -328,23 +328,23 @@ var GameShapeColor = cc.Class({
 
                 //记录游戏开始进行中
                 var level = cc.GameManager.main().gameLevel;
-                var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
-                var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
+                var idx = Math.floor(level / GameBlock.GUANKA_NUM_PER_ITEM);
+                var idx_sub = level % GameBlock.GUANKA_NUM_PER_ITEM;
                 if (idx_sub == 0) {
                     var infoitem = null;
                     var key = null;
-                    if (cc.GameManager.gameMode == GameShapeColor.GAME_MODE_SHAPE) {
+                    if (cc.GameManager.gameMode == GameBlock.GAME_MODE_SHAPE) {
                         infoitem = this.GetItemInfoShapeColor(idx, this.listShape);
-                        key = GameShapeColor.STR_KEY_GAME_STATUS_SHAPE + infoitem.id;
+                        key = GameBlock.STR_KEY_GAME_STATUS_SHAPE + infoitem.id;
                     }
-                    if (cc.GameManager.gameMode == GameShapeColor.GAME_MODE_COLOR) {
+                    if (cc.GameManager.gameMode == GameBlock.GAME_MODE_COLOR) {
                         infoitem = this.GetItemInfoShapeColor(idx, this.listColor);
-                        key = GameShapeColor.STR_KEY_GAME_STATUS_COLOR + infoitem.id;
+                        key = GameBlock.STR_KEY_GAME_STATUS_COLOR + infoitem.id;
 
                     }
                     cc.Debug.Log("game play key=" + key + " this.gameMode=" + cc.GameManager.gameMode);
                     if (key != null) {
-                        cc.Common.SetItemOfKey(key, GameShapeColor.GAME_STATUS_PLAY);
+                        cc.Common.SetItemOfKey(key, GameBlock.GAME_STATUS_PLAY);
                     }
 
                 }
@@ -399,7 +399,7 @@ var GameShapeColor = cc.Class({
         var ret = false;
         cc.Debug.Log("isTheSamePairItems:infoSel.id=" + infoSel.id + " info.isInner=" + info.isInner);
 
-        if (infoSel.id == GameShapeColor.ID_BOMB) {
+        if (infoSel.id == GameBlock.ID_BOMB) {
             if ((!info.isInner) && (info.isMain)) {
                 ret = true;
             }
@@ -431,7 +431,7 @@ var GameShapeColor = cc.Class({
         //     AudioSource audioSource = audioPlayer.GetComponent<AudioSource>();
         //     audioSource.PlayOneShot(audioClipItemFinish);
         // }
-        if (info.id == GameShapeColor.ID_BOMB) {
+        if (info.id == GameBlock.ID_BOMB) {
             return;
         }
         //speak
@@ -575,14 +575,14 @@ var GameShapeColor = cc.Class({
         cc.Debug.Log("LoadGame:mode=" + mode);
         this.ClearGame();
         switch (mode) {
-            case GameShapeColor.GAME_MODE_SHAPE:
+            case GameBlock.GAME_MODE_SHAPE:
                 this.LoadGameByShape(mode);
                 break;
 
-            case GameShapeColor.GAME_MODE_COLOR:
+            case GameBlock.GAME_MODE_COLOR:
                 this.LoadGameByColor(mode);
                 break;
-            case GameShapeColor.GAME_MODE_SHAPE_COLOR:
+            case GameBlock.GAME_MODE_SHAPE_COLOR:
                 this.LoadGameByShapeColor(mode);
                 break;
         }
@@ -598,7 +598,7 @@ var GameShapeColor = cc.Class({
     LoadGameByShape: function (mode) {
 
         var level = cc.GameManager.main().gameLevel;
-        var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
+        var idx = Math.floor(level / GameBlock.GUANKA_NUM_PER_ITEM);
         var infoshape = this.GetItemInfoShapeColor(idx, this.listShape);
         if (infoshape == null) {
             cc.Debug.Log("LoadGameByShape null");
@@ -609,7 +609,7 @@ var GameShapeColor = cc.Class({
         var mainShapePair = [1, 2, 2, 2, 3];
         var otherShapeNum = [0, 0, 1, 2, 2];
 
-        var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
+        var idx_sub = level % GameBlock.GUANKA_NUM_PER_ITEM;
         var totalMainShape = mainShapePair[idx_sub] * 2;
         var totalOtherShape = otherShapeNum[idx_sub];
 
@@ -657,7 +657,7 @@ var GameShapeColor = cc.Class({
             var infoOther = listOther[idxtmp];
 
             var idx_color = indexColor[k];
-            if (mode == GameShapeColor.GAME_MODE_SHAPE) {
+            if (mode == GameBlock.GAME_MODE_SHAPE) {
                 // 统一颜色
                 idx_color = indexColor[0];
             }
@@ -674,7 +674,7 @@ var GameShapeColor = cc.Class({
     },
     LoadGameByColor: function (mode) {
         var level = cc.GameManager.main().gameLevel;
-        var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
+        var idx = Math.floor(level / GameBlock.GUANKA_NUM_PER_ITEM);
         var infocolor = this.GetItemInfoShapeColor(idx, this.listColor);
         if (infocolor == null) {
             return;
@@ -686,7 +686,7 @@ var GameShapeColor = cc.Class({
         var mainColorPair = [1, 2, 2, 2, 3];
         var otherColorNum = [0, 0, 1, 2, 2];
 
-        var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
+        var idx_sub = level % GameBlock.GUANKA_NUM_PER_ITEM;
         var totalMainColor = mainColorPair[idx_sub] * 2;
         var totalOtherColor = otherColorNum[idx_sub];
 
@@ -748,7 +748,7 @@ var GameShapeColor = cc.Class({
     },
     LoadGameByShapeColor: function (mode) {
         var level = cc.GameManager.main().gameLevel;
-        var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
+        var idx = Math.floor(level / GameBlock.GUANKA_NUM_PER_ITEM);
         var infoshape = this.GetItemInfoShapeColor(idx, this.listShape);
         if (infoshape == null) {
 
@@ -759,7 +759,7 @@ var GameShapeColor = cc.Class({
         var mainShapePair = [2, 3, 3, 3, 4];
         var otherShapeNum = [0, 1, 2, 3, 3];
 
-        var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
+        var idx_sub = level % GameBlock.GUANKA_NUM_PER_ITEM;
         var totalMainShape = mainShapePair[idx_sub] * 2;
         var totalOtherShape = otherShapeNum[idx_sub];
 
@@ -818,7 +818,7 @@ var GameShapeColor = cc.Class({
             var infoOther = listOther[idxtmp];
 
             var idx_color = indexColor[k];
-            if (mode == GameShapeColor.GAME_MODE_SHAPE) {
+            if (mode == GameBlock.GAME_MODE_SHAPE) {
                 // 统一颜色
                 idx_color = indexColor[0];
             }
@@ -1012,7 +1012,7 @@ var GameShapeColor = cc.Class({
         var infoItem = new cc.ShapeColorItemInfo();
         infoItem.node = this.nodeBomb;
         // infoItem.objTrail = infoshape.objTrail;
-        infoItem.id = GameShapeColor.ID_BOMB;
+        infoItem.id = GameBlock.ID_BOMB;
         //   infoItem.color = infocolor.color;
         infoItem.isMain = false;
         infoItem.isInner = false;
@@ -1047,16 +1047,16 @@ var GameShapeColor = cc.Class({
     //ItemInfo
     SetItemLock: function (info, isLock) {
         if (isLock) {
-            info.tag = GameShapeColor.TAG_ITEM_LOCK;
+            info.tag = GameBlock.TAG_ITEM_LOCK;
         }
         else {
-            info.tag = GameShapeColor.TAG_ITEM_UNLOCK;
+            info.tag = GameBlock.TAG_ITEM_UNLOCK;
         }
     },
     //bool
     IsItemLock: function (info) {
         var ret = false;
-        if (info.tag == GameShapeColor.TAG_ITEM_LOCK) {
+        if (info.tag == GameBlock.TAG_ITEM_LOCK) {
             ret = true;
         }
         return ret;
