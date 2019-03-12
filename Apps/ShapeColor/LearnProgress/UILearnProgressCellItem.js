@@ -1,7 +1,7 @@
 var UIView = require("UIView");
 var UICellItemBase = require("UICellItemBase");
 var GameViewController = require("GameViewController");
-//var GameShapeColor = require("GameShapeColor");
+var GameShapeColor = require("GameShapeColor");
 var UISetting = require("UISetting");
 
 

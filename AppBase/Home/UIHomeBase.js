@@ -30,7 +30,7 @@ cc.Class({
         this._super();
         // this.node.setContentSize(Common.appSceneMain.sizeCanvas); 
         this.node.setContentSize(this.node.parent.getContentSize());
-     
+
         var x, y, w, h;
 
         var size = this.node.getContentSize();
@@ -73,6 +73,11 @@ cc.Class({
         //this.imageNameBg.node.setPosition(x_start, y_start);
 
         cc.AudioPlay.main().PlayBgMusic();
+
+        if (cc.Common.main().isWeiXin) {
+            //显示分享
+            wx.showShareMenu();
+        }
     },
 
     start() {
