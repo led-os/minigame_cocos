@@ -20,7 +20,7 @@ var UIGameBase = cc.Class({
             type: cc.LoadItemInfo
         },
         imageBg: cc.Sprite,
-        callbackGuankaFinish:null,
+        callbackGuankaFinish: null,
 
     },
     Init: function () {
@@ -88,6 +88,30 @@ var UIGameBase = cc.Class({
     UpdatePlaceLevel: function (level) {
     },
     //guanka
+
+
+    ShowUserGuide: function () {
+        var key = cc.AppRes.KEY_USER_GUIDE + cc.Common.main().GetAppVersion();
+        var isshowplay = cc.Common.GetBoolOfKey(key, false);
+        if (isshowplay == true) {
+            return;
+        }
+        var title = cc.Language.main().GetString("STR_UIVIEWALERT_TITLE_USER_GUIDE");
+        var msg = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_USER_GUIDE");
+        var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_USER_GUIDE");
+        var no = yes;
+
+        cc.ViewAlertManager.main().ShowFull(title, msg, yes, no, false, "STR_KEYNAME_VIEWALERT_USER_GUIDE",
+            function (alert, isYes) {
+                if (isYes) {
+                } else {
+
+                }
+                cc.Common.SetBoolOfKey(key, true);
+
+            }.bind(this)
+        );
+    },
 });
 
 //单例对象 方法一

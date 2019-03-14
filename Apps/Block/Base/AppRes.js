@@ -39,7 +39,7 @@ var AppRes = cc.Class({
         IMAGE_CELL_BG_YELLOW: "App/UI/Setting/SettingCellBgYellow",
 
         //game
-        IMAGE_Game_Bomb: "App/UI/Game/Bomb",
+        IMAGE_Game_Block: "App/UI/Game/Block",
 
     },
 

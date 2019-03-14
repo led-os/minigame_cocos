@@ -4,9 +4,7 @@ var AppRes = require("AppRes");
 // var Common = require("Common");
 var PlaceViewController = require("PlaceViewController");
 var GuankaViewController = require("GuankaViewController");
-//var NaviViewController = require("NaviViewController"); 
-var GameShapeColor = require("GameShapeColor");
-var LearnProgressViewController = require("LearnProgressViewController");
+var GameBlock = require("GameBlock"); 
 
 cc.Class({
     extends: UIHomeBase,
@@ -59,10 +57,7 @@ cc.Class({
         if (cc.Common.main().isAndroid) {
 
         }
-
-        cc.ShaderManager.main().Add(require("ShaderShapeColor"));
-        cc.ShaderManager.main().Add(require("Glowing"));
-
+ 
         //var ev = this.node.addComponent(cc.UITouchEvent);
 
         // cc.AudioPlay.main().PlayFile("App/Audio/BtnClick");
@@ -322,9 +317,9 @@ cc.Class({
         if (this.controller != null) {
             var navi = this.controller.naviController;
             var total = cc.GameManager.placeTotal;
-            if (cc.Config.main().appKeyName != cc.AppType.SHAPECOLOR) {
-                total = 0;
-            }
+            // if (cc.Config.main().appKeyName != cc.AppType.SHAPECOLOR) {
+            //     total = 0;
+            // }
             if (total > 1) {
                 if (navi != null) {
                     navi.Push(PlaceViewController.main());
@@ -341,27 +336,19 @@ cc.Class({
         if (!this.isActionFinish) {
             return;
         }
-        this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE);
+        this.GotoGameByMode(GameBlock.GAME_MODE_NORMAL);
     },
     OnClickBtnColor: function (event, customEventData) {
         if (!this.isActionFinish) {
             return;
         }
-        this.GotoGameByMode(GameShapeColor.GAME_MODE_COLOR);
+        // this.GotoGameByMode(GameShapeColor.GAME_MODE_COLOR);
     },
     OnClickBtnShapeColor: function (event, customEventData) {
         if (!this.isActionFinish) {
             return;
         }
-        this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE_COLOR);
-    },
-    OnClickBtnBoard: function (event, customEventData) {
-
-        if (this.controller != null) {
-            var navi = this.controller.naviController;
-            navi.Push(LearnProgressViewController.main());
-        }
-
-    },
+        // this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE_COLOR);
+    }, 
 });
 
