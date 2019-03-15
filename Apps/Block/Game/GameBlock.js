@@ -10,6 +10,7 @@ var GameBlock = cc.Class({
 
     properties: {
         imageBg: cc.Sprite,
+        imageLine: cc.Sprite,//游戏线，碰到就游戏结束
         textTitle: cc.Label,
 
         listItem: {

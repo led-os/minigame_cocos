@@ -167,6 +167,7 @@ var Common = cc.Class({
                 pt.y = rc.y + bd.height / 2;
             }
             node.setPosition(pt);
+            return pt;
         },
 
         //物理系统默认是关闭的，手动开启物理系统
@@ -271,7 +272,7 @@ var Common = cc.Class({
             }
 
             var v_int = parseInt(v);
-            cc.Debug.Log("GetIntOfKey key=:" + key + " v=" + v + " v_int=" + v_int);
+            //cc.Debug.Log("GetIntOfKey key=:" + key + " v=" + v + " v_int=" + v_int);
             return v_int;
         },
         isBlankString: function (str) {

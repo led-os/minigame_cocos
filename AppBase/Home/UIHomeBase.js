@@ -36,6 +36,9 @@ cc.Class({
         var size = this.node.getContentSize();
 
         var name = cc.Language.main().GetString("APP_NAME");
+        if (cc.Device.main.isLandscape) {
+            name = cc.Language.main().GetString("APP_NAME_HD");
+        }
         this.textName.string = name;
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
