@@ -1,15 +1,18 @@
 var UIViewController = require("UIViewController");
-// var Common = require("Common"); 
+var GameBase = require("GameBase");
 var UIView = require("UIView");
 var GameBlock = cc.Class({
-    extends: UIView,
+    extends: GameBase,
     statics: {
         GAME_MODE_NORMAL: 0,
 
+        GAME_STATUS_OVER: -1,
+        GAME_STATUS_NONE: 0,
+        GAME_STATUS_START: 1,
+        GAME_STATUS_WIN: 2,
     },
 
     properties: {
-        imageBg: cc.Sprite,
         imageLine: cc.Sprite,//游戏线，碰到就游戏结束
         textTitle: cc.Label,
 
@@ -35,15 +38,15 @@ var GameBlock = cc.Class({
         var ev = this.node.addComponent(cc.UITouchEvent);
         ev.callBackTouch = this.OnUITouchEvent.bind(this);
 
-        var speedTime = 0.1;
+        this.speedTime = 0.1;
         this.speed = 0;
         this.isStartMove = false;
         var h;
         var rcDisplay = this.GetRectDisplay();
         h = rcDisplay.height / this.rowTotal;
         this.startOffsetY = h * (this.rowTotal - 2);
-        this.schedule(this.OnUpdateSpeed, speedTime);
 
+        this.gameStatus = GameBlock.GAME_STATUS_NONE;
     },
 
     Init: function () {
@@ -55,7 +58,9 @@ var GameBlock = cc.Class({
     },
 
     OnUpdateSpeed: function () {
-
+        if (this.gameStatus == GameBlock.GAME_STATUS_OVER) {
+            return;
+        } 
         var x, y, w, h;;
         var idx = 0;
         for (let info of this.listItem) {
@@ -86,31 +91,56 @@ var GameBlock = cc.Class({
             }
 
             node.setPosition(x, y, z);
+
+            var isOver = this.CheckGameOver(node);
+            if (isOver) {
+                this.OnGameOver();
+            }
             idx++;
 
         }
 
     },
-    CheckGameWin: function () {
-        var isAllItemLock = true;
-        for (let info of this.listItem) {
-            if (info.isMain == true) {
-                var isLock = this.IsItemLock(info);
-                if (!isLock) {
-                    isAllItemLock = false;
-                }
-            }
 
+    //return isGameOver
+    CheckGameOver: function (node) {
+        var y = node.getPosition().y - node.getBoundingBox().height / 2;
+        var y_bottom = this.imageLine.node.getPosition().y + this.imageLine.node.getBoundingBox().height / 2;
+        if (y <= y_bottom) {
+            //game over
+            return true;
         }
-
-        if (isAllItemLock) {
-            //show game win  
-            this.OnGameWin();
-
-        }
+        return false;
     },
 
 
+    OnGameOver: function () {
+        if (this.gameStatus == GameBlock.GAME_STATUS_OVER) {
+            return;
+        } 
+        // this.isStartMove = false;
+        this.unschedule(this.OnUpdateSpeed);
+
+        this.gameStatus = GameBlock.GAME_STATUS_OVER;
+
+        var title = cc.Language.main().GetString("STR_UIVIEWALERT_TITLE_GAME_FINISH");
+        var msg = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_GAME_FINISH");
+        var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_GAME_FINISH");
+        var no = cc.Language.main().GetString("STR_UIVIEWALERT_NO_GAME_FINISH");
+
+        cc.ViewAlertManager.main().ShowFull(title, msg, yes, no, true, "STR_KEYNAME_VIEWALERT_GAME_FINISH",
+            function (alert, isYes) {
+                if (isYes) {
+                    //replay
+                    cc.GameManager.main().GotoPlayAgain();
+                } else {
+
+                }
+            }.bind(this)
+        );
+
+
+    },
     OnGameWin: function () {
         //show game win
         cc.GameManager.main().gameLevelFinish = cc.GameManager.main().gameLevel;
@@ -159,29 +189,13 @@ var GameBlock = cc.Class({
 
 
 
-    RunDisapperAnimation(info) {
-        //动画：https://blog.csdn.net/agsgh/article/details/79447090
-        //iTween.ScaleTo(info.obj, new Vector3(0f, 0f, 0f), 1.5f);
-        var duration = 1.0;
-        var action = cc.scaleTo(duration, 0, 0);
-        //delay延时
-        // var time = cc.delayTime(2);
-        var fun = cc.callFunc(function () {
-            this.CheckGameWin();
-        }.bind(this));
-        var seq = cc.sequence([action, fun]);
-        info.node.runAction(seq);
-    },
-
-
     ClearGame: function () {
         for (let info of this.listItem) {
             info.node.removeFromParent();
         }
         //清空
         this.listItem.length = 0;
-
-
+        this.gameStatus = GameBlock.GAME_STATUS_NONE;
     },
 
     LoadGame: function (mode) {
@@ -216,6 +230,8 @@ var GameBlock = cc.Class({
     StartGame: function () {
         this.isStartMove = true;
         this.speed = 10;
+        this.gameStatus = GameBlock.GAME_STATUS_START;
+        this.schedule(this.OnUpdateSpeed, this.speedTime);
     },
 
     //创建方块

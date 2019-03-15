@@ -12,13 +12,17 @@ var UIGameBlock = cc.Class({
             default: null,
             type: cc.Button
         },
-        textTitle: cc.Label,
 
         game: {
             default: null,
             type: GameBlock
         },
 
+        
+        imageBg: cc.Sprite,
+        textTitle: cc.Label,
+
+        
         isShowGame: false,
     },
     onLoad: function () {
