@@ -52,7 +52,7 @@ cc.Class({
                 this.btnRestoreIAP.node.active = false;
             }
             this.btnMore.node.active = false;
-            this.btnShare.node.active = false;
+            //this.btnShare.node.active = false;
         }
 
         this.LayOut();
@@ -73,6 +73,7 @@ cc.Class({
     OnClickBtnMore: function (event, customEventData) {
     },
     OnClickBtnShare: function (event, customEventData) {
+        cc.Share.main().ShareImageText("", cc.AppRes.SHARE_TITLE, cc.AppRes.SHARE_IMAGE_URL, "");
     },
     OnClickBtnSetting: function (event, customEventData) {
         // SettingViewController.main().Show(null,null);

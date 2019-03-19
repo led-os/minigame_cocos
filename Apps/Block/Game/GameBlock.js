@@ -23,17 +23,22 @@ var GameBlock = cc.Class({
         itemPosZ: -20.0,
         height_topbar_canvas: 160.0,
         height_adbanner_canvas: 160.0,
+        rowTotalNorml: 0,
         rowTotal: 0,
         colTotal: 0,
         speed: 0,
         isStartMove: false,
         blockCount: 0,
+        blockTotal: 0,
         startOffsetY: 0,
+        rowTouch: 0,
+        colTouch: 0,
     },
     onLoad: function () {
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
-        this.rowTotal = 10;
+        this.rowTotalNorml = 10;
+        this.rowTotal= this.rowTotalNorml;
         this.colTotal = 4;
         var ev = this.node.addComponent(cc.UITouchEvent);
         ev.callBackTouch = this.OnUITouchEvent.bind(this);
@@ -60,16 +65,19 @@ var GameBlock = cc.Class({
     OnUpdateSpeed: function () {
         if (this.gameStatus == GameBlock.GAME_STATUS_OVER) {
             return;
-        } 
+        }
         var x, y, w, h;;
         var idx = 0;
         for (let info of this.listItem) {
             var node = info.node;
+            if (node == null) {
+                continue;
+            }
             var sprite = node.getComponent(cc.Sprite);
             if (sprite == null) {
                 continue;
             }
-            var rc = this.GetRectItem(info.col, info.row, this.rowTotal, this.colTotal);
+            var rc = this.GetRectItem(info.col, info.row, this.rowTotalNorml, this.colTotal);
             var scale = this.GetItmeScaleInRect(rc, node);
             node.scaleX = scale;
             node.scaleY = scale;
@@ -117,7 +125,7 @@ var GameBlock = cc.Class({
     OnGameOver: function () {
         if (this.gameStatus == GameBlock.GAME_STATUS_OVER) {
             return;
-        } 
+        }
         // this.isStartMove = false;
         this.unschedule(this.OnUpdateSpeed);
 
@@ -191,7 +199,9 @@ var GameBlock = cc.Class({
 
     ClearGame: function () {
         for (let info of this.listItem) {
-            info.node.removeFromParent();
+            if (info.node != null) {
+                info.node.removeFromParent();
+            }
         }
         //清空
         this.listItem.length = 0;
@@ -204,16 +214,18 @@ var GameBlock = cc.Class({
         this.ClearGame();
         this.blockCount = 0;
         this.isStartMove = false;
+        this.blockTotal = 0;
         for (let i = 0; i < this.rowTotal; i++) {
             var rdm = cc.Common.RandomRange(0, this.colTotal);
             for (let j = 0; j < this.colTotal; j++) {
-                if (rdm == j) {
-                    continue;
+                var info = new cc.BlockItemInfo();
+                if (rdm != j) {
+                    var node = this.CreateBlockItem(i, j);
+                    info.node = node;
+                } else {
+                    info.node = null;
                 }
 
-                var node = this.CreateBlockItem(i, j);
-                var info = new cc.BlockItemInfo();
-                info.node = node;
                 info.row = i;
                 info.col = j;
                 this.listItem.push(info);
@@ -221,13 +233,25 @@ var GameBlock = cc.Class({
             }
         }
 
+        this.GetBlockTotal();
 
         this.LayOut();
 
 
     },
 
+    GetBlockTotal: function () {
+        this.blockTotal = 0;
+        for (let infotmp of this.listItem) {
+            if (infotmp.node != null) {
+                this.blockTotal++;
+            }
+        }
+    },
+
     StartGame: function () {
+        return;
+        cc.Debug.Log("StartGame ");
         this.isStartMove = true;
         this.speed = 10;
         this.gameStatus = GameBlock.GAME_STATUS_START;
@@ -263,8 +287,8 @@ var GameBlock = cc.Class({
     },
 
     CheckLoadGameFinish: function () {
-        cc.Debug.Log("CreateBlockItem:this.blockCount=" + this.blockCount);
-        if (this.blockCount >= this.listItem.length) {
+        cc.Debug.Log("CreateBlockItem:this.blockCount=" + this.blockCount + " this.blockTotal=" + this.blockTotal);
+        if (this.blockCount >= this.blockTotal) {
             //所有block显示完成
             this.StartGame();
         }
@@ -281,7 +305,7 @@ var GameBlock = cc.Class({
             var scaley = rc.height * ratio / size.height;
             scale = Math.min(scalex, scaley);
         }
-        //  cc.Debug.Log("node scale = " + scale + " size=" + size + " rc=" + rc);
+        cc.Debug.Log("node scale = " + scale + " size=" + size + " rc=" + rc);
         return scale;
     },
     GetRectDisplay: function () {
@@ -304,8 +328,61 @@ var GameBlock = cc.Class({
         var rc = new cc.Rect(x, y, w, h);
         return rc;
     },
-    OnTouchDown: function (pos) {
 
+    //计算touch后放置新生成的block item 的row index
+    GetNewBlockRow: function () {
+        this.rowTouch = 0;
+        for (var i = 0; i < this.rowTotal; i++) {
+            var index = i * this.colTotal + this.colTouch;
+            var info = this.listItem[index];
+            if (info.node != null) {
+                this.rowTouch = i - 1;
+                break;
+            }
+        }
+        if (this.rowTouch >= 0) {
+            //insert block
+            // var index = this.rowTouch * this.colTotal + this.colTouch;
+            // var info = this.listItem[index];
+            // var node = this.CreateBlockItem(this.rowTouch, this.colTouch);
+            // info.node = node;
+            //判断是否需要消除该行
+
+        } else {
+            //new line
+
+
+            //先row+1
+            this.rowTotal++;
+            for (let infotmp of this.listItem) {
+                infotmp.row += 1;
+            }
+
+            for (var i = this.colTotal - 1; i >= 0; i--) {
+
+                var info = new cc.BlockItemInfo();
+                if (i == this.colTouch) {
+                    var node = this.CreateBlockItem(0, i);
+                    info.node = node;
+                }
+                info.row = 0;
+                info.col = i;
+                // 拼接函数(索引位置, 元素的数量, 元素)
+                this.listItem.splice(0, 0, info);
+
+            }
+            this.LayOut();
+        }
+        this.GetBlockTotal();
+    },
+
+    OnTouchDown: function (pos) {
+        var size = this.node.getContentSize();
+        var w_item = size.width / this.colTotal;
+        var idx = Math.floor((pos.x - (-size.width / 2)) / w_item);
+        cc.Debug.Log("OnTouchDown idx=" + idx);
+        this.colTouch = idx;
+        this.GetNewBlockRow();
     },
     OnTouchMove: function (pos) {
 

@@ -80,6 +80,7 @@ cc.Class({
         if (cc.Common.main().isWeiXin) {
             //显示分享
             wx.showShareMenu();
+            cc.Share.main().SetWeiXinMPShareMenu(cc.AppRes.SHARE_TITLE, cc.AppRes.SHARE_IMAGE_URL);
         }
     },
 
