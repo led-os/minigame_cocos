@@ -5,6 +5,7 @@ var BlockItemInfo = cc.Class({
         col: 0,
         normalPosY: 0,
         movePosY: 0,
+        height:0,
     },
 });
 cc.BlockItemInfo = module.export = BlockItemInfo; 
