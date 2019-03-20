@@ -1,6 +1,7 @@
 var UIViewController = require("UIViewController");
 var GameBase = require("GameBase");
-var UIView = require("UIView");
+var UIBlockItem = require("UIBlockItem");
+
 var GameBlock = cc.Class({
     extends: GameBase,
     statics: {
@@ -15,7 +16,10 @@ var GameBlock = cc.Class({
     properties: {
         imageLine: cc.Sprite,//游戏线，碰到就游戏结束
         textTitle: cc.Label,
-
+        prefabBlock: {
+            default: null,
+            type: cc.Prefab
+        },
         listItem: {
             default: [],
             type: cc.BlockItemInfo
@@ -34,6 +38,8 @@ var GameBlock = cc.Class({
         rowTouch: 0,
         colTouch: 0,
         heightItemRect: 0,
+        isActionRunnig: false,
+
     },
     onLoad: function () {
         this._super();
@@ -53,27 +59,60 @@ var GameBlock = cc.Class({
         this.startOffsetY = h * (this.rowTotal - 2);
 
         this.gameStatus = GameBlock.GAME_STATUS_NONE;
+        this.LoadPrefab(null);
     },
 
     Init: function () {
     },
-
+    LoadPrefab: function (callback) {
+        var strPrefab = "App/Prefab/Game/UIBlockItem";
+        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
+            if (err) {
+                cc.Debug.Log(err.message || err);
+                return;
+            }
+            this.prefabBlock = prefab;;
+            if (callback != null) {
+                callback();
+            }
+        }.bind(this)
+        );
+    },
     LayOut: function () {
         var x, y, w, h;
         this.OnUpdateSpeed();
     },
+    RunItemMoveAction: function (info, posTo, callbackFinish) {
 
-    UpdateItemPostion: function (info) {
+        // info.node.setPosition(posTo);
+        // if (callbackFinish != null) {
+        //     callbackFinish();
+        // }
+        // return;
+
+        var duration = 1.0;
+        this.isActionRunnig = true;
+        cc.Debug.Log("RunItemMoveAction start");
+        var action = cc.moveTo(duration, posTo.x, posTo.y).easing(cc.easeOut(3.0));
+        //delay延时
+        var time = cc.delayTime(0.1);
+
+        var fun = cc.callFunc(function () {
+            if (callbackFinish != null) {
+                callbackFinish();
+            }
+            //info.node.setPosition(posTo);
+            this.isActionRunnig = false;
+            cc.Debug.Log("RunItemMoveAction end");
+        }.bind(this));
+        var seq = cc.sequence([action, fun]);
+        info.node.runAction(seq);
+    },
+    UpdateItemPostion: function (info, isAnimate, callbackFinish) {
         var node = info.node;
 
         var rc = this.GetRectItem(info.col, info.row, this.rowTotalNorml, this.colTotal);
         this.heightItemRect = rc.height;
-
-        if (node != null) {
-            var scale = this.GetItmeScaleInRect(rc, node);
-            node.scaleX = scale;
-            node.scaleY = scale;
-        }
 
         var x = rc.x + rc.width / 2;
         var y = rc.y + rc.height / 2 + this.startOffsetY;
@@ -86,9 +125,15 @@ var GameBlock = cc.Class({
             info.movePosY = y;
         }
         // y = info.normalPosY;
+
+        var pos = new cc.Vec2(x, y);
         if (node != null) {
-            var z = node.getPosition().z - 10;
-            node.setPosition(x, y, z);
+            if (isAnimate) {
+                this.RunItemMoveAction(info, pos, callbackFinish);
+            } else {
+                var z = node.getPosition().z - 10;
+                node.setPosition(x, y, z);
+            }
         }
     },
 
@@ -96,10 +141,13 @@ var GameBlock = cc.Class({
         if (this.gameStatus == GameBlock.GAME_STATUS_OVER) {
             return;
         }
+        if (this.isActionRunnig == true) {
+            return;
+        }
         var x, y, w, h;;
         var idx = 0;
         for (let info of this.listItem) {
-            this.UpdateItemPostion(info);
+            this.UpdateItemPostion(info, false, null);
             var isOver = this.CheckGameOver(info.node);
             if (isOver) {
                 this.OnGameOver();
@@ -213,8 +261,15 @@ var GameBlock = cc.Class({
     },
 
     LoadGame: function (mode) {
-
         cc.Debug.Log("LoadGame:mode=" + mode);
+        if (this.prefabBlock == null) {
+            this.LoadPrefab(this.LoadGameInternal.bind(this));
+        } else {
+            this.LoadGameInternal();
+        }
+    },
+
+    LoadGameInternal: function () {
         this.ClearGame();
         this.blockCount = 0;
         this.isStartMove = false;
@@ -222,13 +277,14 @@ var GameBlock = cc.Class({
 
         this.rowTotalNorml = 10;
         this.rowTotal = this.rowTotalNorml;
-        this.colTotal = 4; 
+        this.colTotal = 4;
         this.speedTime = 0.1;
         this.speed = 0;
-        this.isStartMove = false; 
+        this.isStartMove = false;
         var rcDisplay = this.GetRectDisplay();
         var h = rcDisplay.height / this.rowTotal;
         this.startOffsetY = h * (this.rowTotal - 2);
+        this.isActionRunnig = false;
 
         for (let i = 0; i < this.rowTotal; i++) {
             var rdm = cc.Common.RandomRange(0, this.colTotal);
@@ -275,29 +331,29 @@ var GameBlock = cc.Class({
 
     //创建方块
     CreateBlockItem: function (row, col) {
-        var x, y, w, h;
-        var name = "block_row_" + row + "_col" + col;
-        var node = new cc.Node(name);
+        var x, y;
+
+        var node = cc.instantiate(this.prefabBlock);
         node.parent = this.node;
-        var sprite = node.addComponent(cc.Sprite)
-        var pic = cc.AppRes.IMAGE_Game_Block;
 
-        //加载图片 
-        var strImage = cc.AppRes.main().URL_HTTP_HEAD + pic;
-        cc.Debug.Log("strImage=" + strImage);
-        cc.TextureCache.main.Load(strImage, function (err, tex) {
-            if (err) {
-                cc.Debug.Log("item_pic err");
-                cc.Debug.Log(err.message || err);
-                return;
-            }
-            sprite.spriteFrame = new cc.SpriteFrame(tex);
-            this.LayOut();
-            this.blockCount++;
-            this.scheduleOnce(this.CheckLoadGameFinish, 0.5);
+        var rc = this.GetRectItem(col, row, this.rowTotalNorml, this.colTotal);
+        x = rc.x + rc.width / 2;
+        y = this.imageLine.node.getPosition().y;
+        node.setPosition(x, y);
 
-        }.bind(this));
-
+        var rc = this.GetRectItem(0, 0, this.rowTotalNorml, this.colTotal);
+        node.setContentSize(rc.width, rc.height);
+        var rctran = node.getComponent(cc.RectTransform);
+        if (rctran != null) {
+            rctran.LayOut();
+        }
+        var ui = node.getComponent(UIBlockItem);
+        if (ui != null) {
+            ui.LayOut();
+        }
+        this.LayOut();
+        this.blockCount++;
+        this.scheduleOnce(this.CheckLoadGameFinish, 0.5);
         return node;
     },
 
@@ -307,21 +363,6 @@ var GameBlock = cc.Class({
             //所有block显示完成
             this.StartGame();
         }
-    },
-
-    GetItmeScaleInRect: function (rc, node) {
-        var scale = 1.0;
-        var sprite = node.getComponent(cc.Sprite);
-        var size = node.getContentSize();
-        //var size =cc.size(sprite.spriteFrame.getRect().width,sprite.spriteFrame.getRect().height) ;//node.getContentSize();
-        var ratio = 0.7;
-        if ((size.width != 0) && (size.height != 0)) {
-            var scalex = rc.width * ratio / size.width;
-            var scaley = rc.height * ratio / size.height;
-            scale = Math.min(scalex, scaley);
-        }
-        //  cc.Debug.Log("node scale = " + scale + " size=" + size + " rc=" + rc);
-        return scale;
     },
     GetRectDisplay: function () {
         var x, y, w, h;
@@ -365,22 +406,24 @@ var GameBlock = cc.Class({
             info.row = this.rowTouch;
             var node = this.CreateBlockItem(this.rowTouch, this.colTouch);
             info.node = node;
-            this.UpdateItemPostion(info);
-            //cc.Debug.Log("RemoveOneRow  insert block index=" + index + " row=" + info.row+" this.rowTouch="+this.rowTouch);
+            this.UpdateItemPostion(info, true, function () {
 
-            //判断是否需要消除该行
-            var isfull = true;
-            for (var i = 0; i < this.colTotal; i++) {
-                var index = (this.rowTouch - row_bottom) * this.colTotal + i;
-                var infotmp = this.listItem[index];
-                if (infotmp.node == null) {
-                    isfull = false;
-                    break;
+                //判断是否需要消除该行
+                var isfull = true;
+                for (var i = 0; i < this.colTotal; i++) {
+                    var index = (this.rowTouch - row_bottom) * this.colTotal + i;
+                    var infotmp = this.listItem[index];
+                    if (infotmp.node == null) {
+                        isfull = false;
+                        break;
+                    }
                 }
-            }
-            if (isfull) {
-                this.RemoveOneRow(this.rowTouch);
-            }
+                if (isfull) {
+                    this.RemoveOneRow(this.rowTouch);
+                }
+
+            }.bind(this));
+            //cc.Debug.Log("RemoveOneRow  insert block index=" + index + " row=" + info.row+" this.rowTouch="+this.rowTouch);
 
 
         } else {
@@ -418,7 +461,7 @@ var GameBlock = cc.Class({
                 // var rc = this.GetRectItem(info.col, info.row, this.rowTotalNorml, this.colTotal);
                 // var y = rc.y + rc.height / 2 + this.startOffsetY;
                 // info.normalPosY = y;
-                this.UpdateItemPostion(info);
+                this.UpdateItemPostion(info, true, null);
 
                 // 拼接函数(索引位置, 元素的数量, 元素)
                 this.listItem.splice(0, 0, info);
@@ -470,7 +513,7 @@ var GameBlock = cc.Class({
                         //cc.Debug.Log("infoBottom type=" + typeof info + " i=" + i + " j=" + j + " idx=" + idx);
                         info.row += 1;
                         info.movePosY += this.heightItemRect;
-                        this.UpdateItemPostion(info);
+                        this.UpdateItemPostion(info, false, null);
 
                     } else {
                         cc.Debug.Log("infoBottom out of range i=" + i + " j=" + j);
