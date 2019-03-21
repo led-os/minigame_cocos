@@ -11,6 +11,7 @@ var GameBlock = cc.Class({
         GAME_STATUS_NONE: 0,
         GAME_STATUS_START: 1,
         GAME_STATUS_WIN: 2,
+        GAME_SPEED_VALUE: 10,
     },
 
     properties: {
@@ -90,8 +91,8 @@ var GameBlock = cc.Class({
         // }
         // return;
 
-        var duration = 1.0;
-        this.isActionRunnig = true;
+        var duration = 0.2;
+        this.PauseSpeedTime();
         cc.Debug.Log("RunItemMoveAction start");
         var action = cc.moveTo(duration, posTo.x, posTo.y).easing(cc.easeOut(3.0));
         //delay延时
@@ -101,15 +102,33 @@ var GameBlock = cc.Class({
             if (callbackFinish != null) {
                 callbackFinish();
             }
-            //info.node.setPosition(posTo);
-            this.isActionRunnig = false;
+            if (info.node != null) {
+                // info.node.setPosition(posTo);
+            }
+            this.ResumeSpeedTime();
+            //this.LayOut();
+
+            //this.scheduleOnce(this.ResumeSpeedTime, 0.1);
             cc.Debug.Log("RunItemMoveAction end");
         }.bind(this));
         var seq = cc.sequence([action, fun]);
         info.node.runAction(seq);
     },
-    UpdateItemPostion: function (info, isAnimate, callbackFinish) {
+
+    //posYTo:动画的目标位置
+    UpdateItemPostion: function (info, _isAnimate, posYTo, callbackFinish) {
+        if (this.isActionRunnig == true) {
+            return;
+        }
+        var isAnimate = _isAnimate;
+        //isAnimate = false;
         var node = info.node;
+        if (node != null) {
+            if (isAnimate) {
+                this.PauseSpeedTime();
+            }
+        }
+
 
         var rc = this.GetRectItem(info.col, info.row, this.rowTotalNorml, this.colTotal);
         this.heightItemRect = rc.height;
@@ -118,8 +137,15 @@ var GameBlock = cc.Class({
         var y = rc.y + rc.height / 2 + this.startOffsetY;
 
         if (this.isStartMove) {
-            info.movePosY -= this.speed;
+            if ((!this.isActionRunnig) && (!isAnimate)) {
+                info.movePosY -= this.speed;
+                // cc.Debug.Log("insert item pos isAnimate1="+info.movePosY);
+            }
             y = info.movePosY;
+            // if(isAnimate)
+            // {
+            //     cc.Debug.Log("insert item pos isAnimate2="+info.movePosY);
+            // }
         } else {
             info.normalPosY = y;
             info.movePosY = y;
@@ -129,6 +155,7 @@ var GameBlock = cc.Class({
         var pos = new cc.Vec2(x, y);
         if (node != null) {
             if (isAnimate) {
+                pos.y = posYTo;
                 this.RunItemMoveAction(info, pos, callbackFinish);
             } else {
                 var z = node.getPosition().z - 10;
@@ -141,13 +168,16 @@ var GameBlock = cc.Class({
         if (this.gameStatus == GameBlock.GAME_STATUS_OVER) {
             return;
         }
+
         if (this.isActionRunnig == true) {
+            // cc.Debug.Log("OnUpdateSpeed this.isActionRunnig="+this.isActionRunnig);
             return;
         }
+
         var x, y, w, h;;
         var idx = 0;
         for (let info of this.listItem) {
-            this.UpdateItemPostion(info, false, null);
+            this.UpdateItemPostion(info, false, 0, null);
             var isOver = this.CheckGameOver(info.node);
             if (isOver) {
                 this.OnGameOver();
@@ -155,7 +185,44 @@ var GameBlock = cc.Class({
             idx++;
 
         }
+        // this.CheckRowPosError();
+    },
 
+    GetItemIndex: function (row, col) {
+        if (this.listItem.length == 0) {
+            return 0;
+        }
+        var row_bottom = this.listItem[0].row;
+        var index = (row - row_bottom) * this.colTotal + col;
+        return index;
+    },
+
+
+    CheckRowPosError: function () {
+        if (this.listItem.length == 0) {
+            return;
+        }
+        var row_bottom = this.listItem[0].row;
+        for (var i = row_bottom; i < (row_bottom + this.rowTotal); i++) {
+            var index = this.GetItemIndex(i, 0);
+            if (index < this.listItem.length) {
+                var info0 = this.listItem[index];
+                //cc.Debug.Log("CheckRowPosError:index=" + index+" this.listItem="+this.listItem.length);
+                var y = info0.movePosY;
+                for (var j = 1; j < this.colTotal; j++) {
+                    index = this.GetItemIndex(i, j);
+                    if (index < this.listItem.length) {
+                        var info = this.listItem[index];
+                        if (info.movePosY != y) {
+                            cc.Debug.Log("CheckRowPosError:error row=" + i + " col=" + j + " y=" + y + " info.movePosY=" + info.movePosY);
+                            break;
+                        }
+                    }
+                }
+
+            }
+
+        }
     },
 
     //return isGameOver
@@ -284,16 +351,17 @@ var GameBlock = cc.Class({
         var rcDisplay = this.GetRectDisplay();
         var h = rcDisplay.height / this.rowTotal;
         this.startOffsetY = h * (this.rowTotal - 2);
-        this.isActionRunnig = false;
-
+        this.ResumeSpeedTime();
         for (let i = 0; i < this.rowTotal; i++) {
             var rdm = cc.Common.RandomRange(0, this.colTotal);
+            //rdm =0;
             for (let j = 0; j < this.colTotal; j++) {
                 var info = new cc.BlockItemInfo();
                 if (rdm != j) {
                     var node = this.CreateBlockItem(i, j);
                     info.node = node;
-                } else {
+                }
+                else {
                     info.node = null;
                 }
 
@@ -322,13 +390,26 @@ var GameBlock = cc.Class({
 
     StartGame: function () {
         //return;
+        if (this.gameStatus == GameBlock.GAME_STATUS_START) {
+            return;
+        }
         cc.Debug.Log("StartGame ");
         this.isStartMove = true;
-        this.speed = 10;//10
         this.gameStatus = GameBlock.GAME_STATUS_START;
         this.schedule(this.OnUpdateSpeed, this.speedTime);
+
     },
 
+
+    PauseSpeedTime: function () {
+        // this.speed = 0;//10 
+        this.isActionRunnig = true;
+        cc.Debug.Log("OnUpdateSpeed PauseSpeedTime");
+    },
+    ResumeSpeedTime: function () {
+        this.speed = GameBlock.GAME_SPEED_VALUE;//10
+        this.isActionRunnig = false;
+    },
     //创建方块
     CreateBlockItem: function (row, col) {
         var x, y;
@@ -390,7 +471,8 @@ var GameBlock = cc.Class({
 
         var row_bottom = this.listItem[0].row;
 
-        this.rowTouch = row_bottom;
+        //计算放置目标的row
+        this.rowTouch = row_bottom + this.rowTotal - 1;//初始化最底部
         for (var i = row_bottom; i < (row_bottom + this.rowTotal); i++) {
             var index = (i - row_bottom) * this.colTotal + this.colTouch;
             var info = this.listItem[index];
@@ -399,6 +481,8 @@ var GameBlock = cc.Class({
                 break;
             }
         }
+
+
         if (this.rowTouch >= row_bottom) {
             //insert block
             var index = (this.rowTouch - row_bottom) * this.colTotal + this.colTouch;
@@ -406,7 +490,28 @@ var GameBlock = cc.Class({
             info.row = this.rowTouch;
             var node = this.CreateBlockItem(this.rowTouch, this.colTouch);
             info.node = node;
-            this.UpdateItemPostion(info, true, function () {
+
+            //计算目标row的位置
+            var posY = 0;
+            var isnoitem = true;
+            for (var i = 0; i < this.colTotal; i++) {
+                var index = this.GetItemIndex(this.rowTouch, i);
+                var infotmp = this.listItem[index];
+                if (info.node != null) {
+                    posY = infotmp.movePosY;
+                    info.movePosY = posY;
+                    isnoitem = false;
+                    cc.Debug.Log("insert item pos =" + posY);
+                    break;
+                }
+            }
+
+            if (isnoitem) {
+                cc.Debug.Log("isnoitem pos =" + posY);
+            }
+
+            // this.PauseSpeedTime();
+            this.UpdateItemPostion(info, true, posY, function () {
 
                 //判断是否需要消除该行
                 var isfull = true;
@@ -445,7 +550,7 @@ var GameBlock = cc.Class({
                     break;
                 }
             }
-
+            // this.PauseSpeedTime();
             //生成一行
             for (var i = this.colTotal - 1; i >= 0; i--) {
 
@@ -461,19 +566,15 @@ var GameBlock = cc.Class({
                 // var rc = this.GetRectItem(info.col, info.row, this.rowTotalNorml, this.colTotal);
                 // var y = rc.y + rc.height / 2 + this.startOffsetY;
                 // info.normalPosY = y;
-                this.UpdateItemPostion(info, true, null);
+                this.UpdateItemPostion(info, true, info.movePosY, null);
 
-                // 拼接函数(索引位置, 元素的数量, 元素)
+                // 插入元素(索引位置, 元素的数量, 元素)
                 this.listItem.splice(0, 0, info);
 
             }
             //  this.LayOut();
         }
-        this.GetBlockTotal();
 
-        if (this.rowTotal == 0) {
-            this.OnGameWin();
-        }
     },
 
     //消除一行
@@ -513,7 +614,7 @@ var GameBlock = cc.Class({
                         //cc.Debug.Log("infoBottom type=" + typeof info + " i=" + i + " j=" + j + " idx=" + idx);
                         info.row += 1;
                         info.movePosY += this.heightItemRect;
-                        this.UpdateItemPostion(info, false, null);
+                        this.UpdateItemPostion(info, false, 0, null);
 
                     } else {
                         cc.Debug.Log("infoBottom out of range i=" + i + " j=" + j);
@@ -532,9 +633,20 @@ var GameBlock = cc.Class({
         }
         this.listItem.splice(index, this.colTotal)
         this.rowTotal--;
+
+        this.GetBlockTotal();
+
+        // cc.Debug.Log("rowTotal=" + this.rowTotal);
+        if (this.rowTotal == 0) {
+            this.OnGameWin();
+        }
+
     },
 
     OnTouchDown: function (pos) {
+        if (this.isActionRunnig) {
+            return;
+        }
         var size = this.node.getContentSize();
         var w_item = size.width / this.colTotal;
         var idx = Math.floor((pos.x - (-size.width / 2)) / w_item);
