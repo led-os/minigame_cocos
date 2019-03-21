@@ -45,14 +45,10 @@ var GameBlock = cc.Class({
     onLoad: function () {
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
-        this.rowTotalNorml = 10;
-        this.rowTotal = this.rowTotalNorml;
-        this.colTotal = 4;
+
         var ev = this.node.addComponent(cc.UITouchEvent);
         ev.callBackTouch = this.OnUITouchEvent.bind(this);
 
-        this.speedTime = 0.1;
-        this.speed = 0;
         this.isStartMove = false;
         var h;
         var rcDisplay = this.GetRectDisplay();
@@ -99,13 +95,16 @@ var GameBlock = cc.Class({
         var time = cc.delayTime(0.1);
 
         var fun = cc.callFunc(function () {
+
+            this.ResumeSpeedTime();
+
             if (callbackFinish != null) {
                 callbackFinish();
             }
             if (info.node != null) {
                 // info.node.setPosition(posTo);
             }
-            this.ResumeSpeedTime();
+
             //this.LayOut();
 
             //this.scheduleOnce(this.ResumeSpeedTime, 0.1);
@@ -116,7 +115,7 @@ var GameBlock = cc.Class({
     },
 
     //posYTo:动画的目标位置
-    UpdateItemPostion: function (info, _isAnimate, posYTo, callbackFinish) {
+    UpdateItemPostion: function (info, _isAnimate, posYTo, callbackFinish, isSpeed) {
         if (this.isActionRunnig == true) {
             return;
         }
@@ -137,7 +136,7 @@ var GameBlock = cc.Class({
         var y = rc.y + rc.height / 2 + this.startOffsetY;
 
         if (this.isStartMove) {
-            if ((!this.isActionRunnig) && (!isAnimate)) {
+            if ((!this.isActionRunnig) && (!isAnimate) && (isSpeed)) {
                 info.movePosY -= this.speed;
                 // cc.Debug.Log("insert item pos isAnimate1="+info.movePosY);
             }
@@ -155,7 +154,7 @@ var GameBlock = cc.Class({
         var pos = new cc.Vec2(x, y);
         if (node != null) {
             if (isAnimate) {
-                pos.y = posYTo;
+                //pos.y = posYTo;
                 this.RunItemMoveAction(info, pos, callbackFinish);
             } else {
                 var z = node.getPosition().z - 10;
@@ -164,6 +163,26 @@ var GameBlock = cc.Class({
         }
     },
 
+    //对位置有偏差进行校准
+    ReLayOutItems: function () {
+        var x, y, z;
+        if (this.listItem.length == 0) {
+            return;
+        }
+        var info_bootom = this.listItem[0];
+        var row_bottom = info_bootom.row;
+        var y_bottom = info_bootom.movePosY;
+        for (let info of this.listItem) {
+            info.movePosY = y_bottom + (info.row - row_bottom) * this.heightItemRect;
+            var node = info.node;
+            if (node != null) {
+                x = node.getPosition().x;
+                y = info.movePosY;
+                z = node.getPosition().z - 10;
+                node.setPosition(x, y, z);
+            }
+        }
+    },
     OnUpdateSpeed: function () {
         if (this.gameStatus == GameBlock.GAME_STATUS_OVER) {
             return;
@@ -177,7 +196,7 @@ var GameBlock = cc.Class({
         var x, y, w, h;;
         var idx = 0;
         for (let info of this.listItem) {
-            this.UpdateItemPostion(info, false, 0, null);
+            this.UpdateItemPostion(info, false, 0, null, true);
             var isOver = this.CheckGameOver(info.node);
             if (isOver) {
                 this.OnGameOver();
@@ -342,7 +361,7 @@ var GameBlock = cc.Class({
         this.isStartMove = false;
         this.blockTotal = 0;
 
-        this.rowTotalNorml = 10;
+        this.rowTotalNorml = 10;//10
         this.rowTotal = this.rowTotalNorml;
         this.colTotal = 4;
         this.speedTime = 0.1;
@@ -497,7 +516,7 @@ var GameBlock = cc.Class({
             for (var i = 0; i < this.colTotal; i++) {
                 var index = this.GetItemIndex(this.rowTouch, i);
                 var infotmp = this.listItem[index];
-                if (info.node != null) {
+                if (infotmp.node != null) {
                     posY = infotmp.movePosY;
                     info.movePosY = posY;
                     isnoitem = false;
@@ -527,7 +546,7 @@ var GameBlock = cc.Class({
                     this.RemoveOneRow(this.rowTouch);
                 }
 
-            }.bind(this));
+            }.bind(this), false);
             //cc.Debug.Log("RemoveOneRow  insert block index=" + index + " row=" + info.row+" this.rowTouch="+this.rowTouch);
 
 
@@ -566,7 +585,7 @@ var GameBlock = cc.Class({
                 // var rc = this.GetRectItem(info.col, info.row, this.rowTotalNorml, this.colTotal);
                 // var y = rc.y + rc.height / 2 + this.startOffsetY;
                 // info.normalPosY = y;
-                this.UpdateItemPostion(info, true, info.movePosY, null);
+                this.UpdateItemPostion(info, true, info.movePosY, null, false);
 
                 // 插入元素(索引位置, 元素的数量, 元素)
                 this.listItem.splice(0, 0, info);
@@ -579,8 +598,12 @@ var GameBlock = cc.Class({
 
     //消除一行
     RemoveOneRow: function (row) {
-        var row_bottom = this.listItem[0].row;
 
+        if (this.rowTotal == 1) {
+            // this.PauseSpeedTime();
+            //  return;
+        }
+        var row_bottom = this.listItem[0].row;
         for (var i = 0; i < this.colTotal; i++) {
             var index = (row - row_bottom) * this.colTotal + i;
             var info = this.listItem[index];
@@ -601,7 +624,6 @@ var GameBlock = cc.Class({
                 }
             }
 
-
         } else {
             cc.Debug.Log("infoBottom=" + row_bottom + " row=" + row);
             //位置上移一行
@@ -614,7 +636,7 @@ var GameBlock = cc.Class({
                         //cc.Debug.Log("infoBottom type=" + typeof info + " i=" + i + " j=" + j + " idx=" + idx);
                         info.row += 1;
                         info.movePosY += this.heightItemRect;
-                        this.UpdateItemPostion(info, false, 0, null);
+                        // this.UpdateItemPostion(info, false, info.movePosY, null, false);
 
                     } else {
                         cc.Debug.Log("infoBottom out of range i=" + i + " j=" + j);
@@ -634,6 +656,7 @@ var GameBlock = cc.Class({
         this.listItem.splice(index, this.colTotal)
         this.rowTotal--;
 
+        this.ReLayOutItems();
         this.GetBlockTotal();
 
         // cc.Debug.Log("rowTotal=" + this.rowTotal);
