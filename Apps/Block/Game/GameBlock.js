@@ -80,37 +80,20 @@ var GameBlock = cc.Class({
         this.OnUpdateSpeed();
     },
     RunItemMoveAction: function (info, posTo, callbackFinish) {
-
-        // info.node.setPosition(posTo);
-        // if (callbackFinish != null) {
-        //     callbackFinish();
-        // }
-        // return;
-
-        var duration = 0.2;
+        var duration = 0.1;
         this.PauseSpeedTime();
-        cc.Debug.Log("RunItemMoveAction start");
+        // cc.Debug.Log("RunItemMoveAction start");
         var action = cc.moveTo(duration, posTo.x, posTo.y).easing(cc.easeOut(3.0));
-        //delay延时
-        var time = cc.delayTime(0.1);
-
+        //delay延时 让node显示和callbackFinish同步
+        var time = cc.delayTime(0.01);
         var fun = cc.callFunc(function () {
-
             this.ResumeSpeedTime();
-
             if (callbackFinish != null) {
                 callbackFinish();
             }
-            if (info.node != null) {
-                // info.node.setPosition(posTo);
-            }
-
-            //this.LayOut();
-
-            //this.scheduleOnce(this.ResumeSpeedTime, 0.1);
-            cc.Debug.Log("RunItemMoveAction end");
+            //cc.Debug.Log("RunItemMoveAction end");
         }.bind(this));
-        var seq = cc.sequence([action, fun]);
+        var seq = cc.sequence([action, time, fun]);
         info.node.runAction(seq);
     },
 
