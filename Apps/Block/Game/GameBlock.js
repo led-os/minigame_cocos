@@ -91,6 +91,7 @@ var GameBlock = cc.Class({
             if (callbackFinish != null) {
                 callbackFinish();
             }
+            this.LimiteItemsPos();
             //cc.Debug.Log("RunItemMoveAction end");
         }.bind(this));
         var seq = cc.sequence([action, time, fun]);
@@ -146,6 +147,24 @@ var GameBlock = cc.Class({
         }
     },
 
+    //防止超出底部位置
+    LimiteItemsPos: function () {
+        if (this.listItem.length == 0) {
+            return;
+        }
+
+        var info_bootom = this.listItem[0];
+        var row_bottom = info_bootom.row;
+        var y_bottom = info_bootom.movePosY;
+        var y_bottom_limit = this.imageLine.node.getPosition().y + this.imageLine.node.getBoundingBox().height / 2;
+        if ((y_bottom - this.heightItemRect / 2) <= y_bottom_limit) {
+            y_bottom = y_bottom_limit + this.heightItemRect / 2;
+            info_bootom.movePosY = y_bottom;
+            this.ReLayOutItems();
+        }
+
+    },
+
     //对位置有偏差进行校准
     ReLayOutItems: function () {
         var x, y, z;
@@ -182,11 +201,13 @@ var GameBlock = cc.Class({
             this.UpdateItemPostion(info, false, 0, null, true);
             var isOver = this.CheckGameOver(info.node);
             if (isOver) {
+                // this.gameStatus = GameBlock.GAME_STATUS_OVER;
                 this.OnGameOver();
             }
             idx++;
 
         }
+        this.LimiteItemsPos();
         // this.CheckRowPosError();
     },
 
@@ -246,24 +267,25 @@ var GameBlock = cc.Class({
         if (this.gameStatus == GameBlock.GAME_STATUS_OVER) {
             return;
         }
-        // this.isStartMove = false;
-        this.unschedule(this.OnUpdateSpeed);
+        cc.Debug.Log("OnGameOver");
+        this.isStartMove = false;
+        // this.unschedule(this.OnUpdateSpeed);
+        this.PauseSpeedTime();
 
         this.gameStatus = GameBlock.GAME_STATUS_OVER;
 
-        var title = cc.Language.main().GetString("STR_UIVIEWALERT_TITLE_GAME_FINISH");
-        var msg = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_GAME_FINISH");
-        var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_GAME_FINISH");
-        var no = cc.Language.main().GetString("STR_UIVIEWALERT_NO_GAME_FINISH");
+        var title = cc.Language.main().GetString("STR_UIVIEWALERT_TITLE_GAME_OVER");
+        var msg = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_GAME_OVER");
+        var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_GAME_OVER");
+        var no = cc.Language.main().GetString("STR_UIVIEWALERT_NO_GAME_OVER");
 
         cc.ViewAlertManager.main().ShowFull(title, msg, yes, no, true, "STR_KEYNAME_VIEWALERT_GAME_FINISH",
             function (alert, isYes) {
                 if (isYes) {
-                    //replay
-                    cc.GameManager.main().GotoPlayAgain();
+                    this.ResumeGame();
                 } else {
                     //replay
-                    // cc.GameManager.main().GotoPlayAgain();
+                    cc.GameManager.main().GotoPlayAgain();
                 }
             }.bind(this)
         );
@@ -401,7 +423,26 @@ var GameBlock = cc.Class({
         this.schedule(this.OnUpdateSpeed, this.speedTime);
 
     },
+    ResumeGame: function () {
+        //return; 
+        cc.Debug.Log("ResumeGame ");
+        this.isStartMove = true;
+        this.gameStatus = GameBlock.GAME_STATUS_START;
 
+        var resume_row_nums = 3;
+        var info_bootom = this.listItem[0];
+        var row_bottom = info_bootom.row;
+        var y_bottom = info_bootom.movePosY;
+        var y_bottom_limit = this.imageLine.node.getPosition().y + this.imageLine.node.getBoundingBox().height / 2;
+
+        y_bottom = y_bottom_limit + this.heightItemRect / 2 + resume_row_nums * this.heightItemRect;
+        info_bootom.movePosY = y_bottom;
+
+        this.ReLayOutItems();
+
+        this.ResumeSpeedTime();
+
+    },
 
     PauseSpeedTime: function () {
         // this.speed = 0;//10 
@@ -469,7 +510,7 @@ var GameBlock = cc.Class({
     },
 
     //计算touch后放置新生成的block item 的row index
-    GetNewBlockRow: function () {
+    OnNewBlockRow: function () {
 
         var row_bottom = this.listItem[0].row;
 
@@ -574,7 +615,6 @@ var GameBlock = cc.Class({
                 this.listItem.splice(0, 0, info);
 
             }
-            //  this.LayOut();
         }
 
     },
@@ -653,19 +693,21 @@ var GameBlock = cc.Class({
         if (this.isActionRunnig) {
             return;
         }
+        if (this.gameStatus == GameBlock.GAME_STATUS_OVER) {
+            return;
+        }
         var size = this.node.getContentSize();
         var w_item = size.width / this.colTotal;
         var idx = Math.floor((pos.x - (-size.width / 2)) / w_item);
         cc.Debug.Log("OnTouchDown idx=" + idx);
         this.colTouch = idx;
-        this.GetNewBlockRow();
+        this.OnNewBlockRow();
     },
     OnTouchMove: function (pos) {
 
 
     },
     OnTouchUp: function (pos) {
-
     },
 
     OnUITouchEvent: function (ev, status, event) {
