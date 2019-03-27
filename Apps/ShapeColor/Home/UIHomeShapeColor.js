@@ -4,7 +4,9 @@ var AppRes = require("AppRes");
 // var Common = require("Common");
 var PlaceViewController = require("PlaceViewController");
 var GuankaViewController = require("GuankaViewController");
-var GameBlock = require("GameBlock"); 
+//var NaviViewController = require("NaviViewController"); 
+var GameShapeColor = require("GameShapeColor");
+var LearnProgressViewController = require("LearnProgressViewController");
 
 cc.Class({
     extends: UIHomeBase,
@@ -52,12 +54,14 @@ cc.Class({
         this.listBtns.push(this.btnShapeColor);
 
         this.isActionFinish = false;
-        cc.GameManager.main().ParseGuanka(null);
 
         if (cc.Common.main().isAndroid) {
 
         }
- 
+
+        cc.ShaderManager.main().Add(require("ShaderShapeColor"));
+        cc.ShaderManager.main().Add(require("Glowing"));
+
         //var ev = this.node.addComponent(cc.UITouchEvent);
 
         // cc.AudioPlay.main().PlayFile("App/Audio/BtnClick");
@@ -101,6 +105,8 @@ cc.Class({
         cc.sys.localStorage.setItem(key, true);
         var v1 = cc.sys.localStorage.getItem(key);
         cc.Debug.Log("testkey2=" + key + " v=" + v1);
+
+
 
         if (cc.Common.main().isWeiXin) {
             //https://blog.csdn.net/u014466109/article/details/81100304
@@ -200,6 +206,12 @@ cc.Class({
 
     start: function () {
 
+
+        // wx.shareAppMessage({
+        //     title: "aaaaa一起回味经典的乐趣。",
+        //     imageUrl: "https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/GameRes/image/banyuan/banyuan.png",
+
+        // })
     },
 
     LayOut: function () {
@@ -305,18 +317,17 @@ cc.Class({
             btn.node.runAction(seq.repeatForever());
         }
     },
-
     GotoGameByMode: function (mode) {
-        //AudioPlay.main.PlayFile(AppCommon.AUDIO_BTN_CLICK); 
         cc.GameManager.gameMode = mode;
-
-        if (cc.Config.main().appKeyName == cc.AppType.SHAPECOLOR) {
-            cc.GameManager.placeLevel = mode;
-        }
-
+        cc.GameManager.main().StartParsePlace(function () {
+            this.GotoGameByModeInteranl();
+        }.bind(this)
+        );
+    },
+    GotoGameByModeInteranl: function () {
         if (this.controller != null) {
             var navi = this.controller.naviController;
-            var total = cc.GameManager.placeTotal;
+            var total = cc.GameManager.main().placeTotal;
             // if (cc.Config.main().appKeyName != cc.AppType.SHAPECOLOR) {
             //     total = 0;
             // }
@@ -333,22 +344,49 @@ cc.Class({
     },
 
     OnClickBtnShape: function (event, customEventData) {
+
+        ////3.主动拉起分享接口
+        // cc.loader.loadRes(cc.AppRes.IMAGE_HOME_BG, function (err, data) {
+        //     console.log("share image=" + data.url);
+        //     wx.shareAppMessage({
+        //         title: "经典打飞机游戏始终好玩如初，来吧！一起回味经典的乐趣。",
+        //         imageUrl: data.url,
+        //         success(res) {
+        //             console.log(res)
+        //         },
+        //         fail(res) {
+        //             console.log(res)
+        //         }
+        //     })
+        // }); 
+
+
+
         if (!this.isActionFinish) {
             return;
         }
-        this.GotoGameByMode(GameBlock.GAME_MODE_NORMAL);
+        this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE);
+
     },
     OnClickBtnColor: function (event, customEventData) {
         if (!this.isActionFinish) {
             return;
         }
-        // this.GotoGameByMode(GameShapeColor.GAME_MODE_COLOR);
+        this.GotoGameByMode(GameShapeColor.GAME_MODE_COLOR);
     },
     OnClickBtnShapeColor: function (event, customEventData) {
         if (!this.isActionFinish) {
             return;
         }
-        // this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE_COLOR);
-    }, 
+        this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE_COLOR);
+    },
+    OnClickBtnBoard: function (event, customEventData) {
+
+        if (this.controller != null) {
+            var navi = this.controller.naviController;
+            navi.Push(LearnProgressViewController.main());
+        }
+
+    },
 });
 

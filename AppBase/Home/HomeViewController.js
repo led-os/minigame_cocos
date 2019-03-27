@@ -1,5 +1,5 @@
 var UIViewController = require("UIViewController");
-var UIHomeBase = require("UIHomeBase"); 
+var UIHomeBase = require("UIHomeBase");
 //var Common = require("Common");
 //var Config = require("Config");
 var GameViewController = require("GameViewController");
@@ -30,11 +30,23 @@ var HomeViewController = cc.Class({
         var node = cc.instantiate(this.uiPrefab);
         this.ui = node.getComponent(UIHomeBase);
         this.ui.SetController(this);
+        cc.GameManager.main().StartParsePlace(function () {
+
+        }.bind(this)
+        );
+
+
+        // cc.GameManager.main().StartParsePlace(function () {
+
+        // }.bind(this)
+        // );
+
+        cc.GameManager.main().StartParseGuanka(null);
     },
 
     LoadPrefabDefault: function () {
         var strPrefabDefault = "Common/Prefab/Home/UIHomeDefault";
-       cc.PrefabCache.main.Load(strPrefabDefault, function (err, prefab) {
+        cc.PrefabCache.main.Load(strPrefabDefault, function (err, prefab) {
             if (err) {
                 cc.Debug.Log(err.message || err);
                 this.LoadPrefab();
@@ -50,7 +62,7 @@ var HomeViewController = cc.Class({
         var strPrefab = "App/Prefab/Home/UIHome" + cc.Config.main().appType;
 
         cc.Debug.Log("HomeViewController LoadPrefab=" + strPrefab);
-       cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
+        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
                 cc.Debug.Log(err.message || err);
                 return;
@@ -72,13 +84,12 @@ var HomeViewController = cc.Class({
         this._super();
 
         //提前加载game prefab
-        if(!HomeViewController.isGameHasInit)
-        {
+        if (!HomeViewController.isGameHasInit) {
             var game = GameViewController.main();
             game.SetLoadFinishCallBack(this.AppPreLoadDidFinish.bind(this), null);
-        }else{
+        } else {
             this.LoadPrefabDefault();
-        } 
+        }
     },
     ViewDidUnLoad: function () {
         cc.Debug.Log("HomeViewController ViewDidUnLoad");

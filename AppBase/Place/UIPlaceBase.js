@@ -7,7 +7,7 @@ cc.Class({
     },
 
     onLoad: function () {
-
+        this.node.setContentSize(this.node.parent.getContentSize());
     },
 
 

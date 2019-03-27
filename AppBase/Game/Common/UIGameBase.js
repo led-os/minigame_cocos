@@ -19,8 +19,14 @@ var UIGameBase = cc.Class({
             default: [],
             type: cc.LoadItemInfo
         },
+        listPlace: {
+            default: [],
+            type: cc.Object
+        },
+
         imageBg: cc.Sprite,
         callbackGuankaFinish: null,
+        callbackPlaceFinish: null,
 
     },
     Init: function () {
@@ -54,6 +60,7 @@ var UIGameBase = cc.Class({
     },
 
 
+
     //guanka 
 
     GetGuankaTotal: function () {
@@ -65,7 +72,7 @@ var UIGameBase = cc.Class({
             this.listGuanka.splice(0, this.listGuanka.length);
         }
     },
-    ParseGuanka: function (callback) {
+    StartParseGuanka: function (callback) {
         this.callbackGuankaFinish = callback;
         cc.Debug.Log("ParseGuanka UIGameBase");
         return 0;
@@ -112,6 +119,52 @@ var UIGameBase = cc.Class({
             }.bind(this)
         );
     },
+
+    //place 
+    GetPlaceTotal: function () {
+        return this.listPlace.length;
+    },
+    StartParsePlaceList: function (callback) {
+        if (callback != null) {
+            this.callbackPlaceFinish = callback;
+        }
+        var filepath = cc.Common.GAME_RES_DIR + "/place/place_list.json";
+        cc.Debug.Log("StartParsePlaceList ");
+        cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
+            if (err) {
+                cc.Debug.Log("StartParsePlaceList:err=" + err);
+            }
+            if (err == null) {
+                this.ParsePlaceList(rootJson.json);
+            }
+        }.bind(this));
+    },
+    ParsePlaceList: function (json) {
+        cc.Debug.Log("StartParsePlaceList ParsePlaceList");
+        if ((this.listPlace != null) && (this.listPlace.length != 0)) {
+            cc.Debug.Log("StartParsePlaceList not 0");
+            if (this.callbackPlaceFinish != null) {
+                cc.Debug.Log("StartParsePlaceList callbackPlaceFinish length = " + this.listPlace.length);
+                this.callbackPlaceFinish();
+            }
+            return;
+        }
+        var items = json.items;
+        for (var i = 0; i < items.length; i++) {
+            var info = new cc.ItemInfo();
+            var item = items[i];
+            info.id = item.id;
+            info.type = item.game_type;
+            info.pic = item.pic;
+            this.listPlace.push(info);
+        }
+
+        if (this.callbackPlaceFinish != null) {
+            cc.Debug.Log("StartParsePlaceList callbackPlaceFinish length = " + this.listPlace.length);
+            this.callbackPlaceFinish();
+        }
+    },
+
 });
 
 //单例对象 方法一

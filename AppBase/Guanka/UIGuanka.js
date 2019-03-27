@@ -25,7 +25,7 @@ cc.Class({
         this.UnifyButtonSprite(this.btnBack);
 
         this.textTitle.string = cc.Language.main().GetString("STR_GUANKA");
-        cc.GameManager.main().ParseGuanka(function () {
+        cc.GameManager.main().StartParseGuanka(function () {
             cc.Debug.Log("UIGameBlock::UpdateItem");
             this.UpdateItem();
         }.bind(this)

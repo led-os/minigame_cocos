@@ -3,6 +3,7 @@ var ItemInfo = cc.Class({
     properties: {
         source: '',
         id: '',
+        type: '',
         pic: '',
         title: '',
         description: '',

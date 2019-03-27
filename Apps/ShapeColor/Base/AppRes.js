@@ -21,7 +21,12 @@ var AppRes = cc.Class({
         KEY_COMMENT_LAST_TIME: "key_comment_last_time",
         KEY_USER_GUIDE: "key_comment_user_guide_",
 
+        //share
+        SHARE_TITLE: "宝宝认形状学颜色快乐学习成长",
+        SHARE_IMAGE_URL: "https://6d6f-moonma-dbb297-1258816908.tcb.qcloud.la/ShapeColor/share/cn/share.png?sign=82765d195e432c741a29addcda9dd81d&t=1552968709",
+
         //https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/GameRes/image/banyuan/banyuan.png?sign=6f70fe6cbbb02943d6b433348ce66ba8&t=1552029703
+
 
         //image
         IMAGE_HOME_BG: "App/UI/Home/LearnProgressBg",
@@ -39,7 +44,7 @@ var AppRes = cc.Class({
         IMAGE_CELL_BG_YELLOW: "App/UI/Setting/SettingCellBgYellow",
 
         //game
-        IMAGE_Game_Block: "App/UI/Game/Block",
+        IMAGE_Game_Bomb: "App/UI/Game/Bomb",
 
     },
 

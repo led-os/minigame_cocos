@@ -9,21 +9,8 @@ var GameManager = cc.Class({
     extends: cc.Object,
 
     statics: {
-
-
-        placeTotal: 0,
         gameMode: 0,
         placeLevel: 0,
-        maxGuankaNum:
-        {
-            get: function () {
-                var ret = 0;
-                if (GameViewController.main().gameBase != null) {
-                    ret = GameViewController.main().gameBase.GetGuankaTotal();
-                }
-                return ret;
-            },
-        },
     },
     properties: {
         uiPrefab: {
@@ -56,7 +43,28 @@ var GameManager = cc.Class({
                 cc.Common.SetItemOfKey(key, value);
             },
         },
+        placeTotal:
+        {
+            get: function () {
+                var ret = 0;
+                var game = GameViewController.main().gameBase;
+                if (game != null) {
+                    ret = game.GetPlaceTotal();
+                }
+                return ret;
+            },
+        },
 
+        maxGuankaNum:
+        {
+            get: function () {
+                var ret = 0;
+                if (GameViewController.main().gameBase != null) {
+                    ret = GameViewController.main().gameBase.GetGuankaTotal();
+                }
+                return ret;
+            },
+        },
 
     },
     Init: function () {
@@ -75,10 +83,15 @@ var GameManager = cc.Class({
     CleanGuankaList: function () {
         GameViewController.main().gameBase.CleanGuankaList();
     },
-    ParseGuanka: function (callback) {
+    StartParseGuanka: function (callback) {
         this.CleanGuankaList();
         this.callbackGuankaFinish = callback;
-        GameViewController.main().gameBase.ParseGuanka(callback);
+        GameViewController.main().gameBase.StartParseGuanka(callback);
+    },
+
+    //place 
+    StartParsePlace: function (callback) {
+        GameViewController.main().gameBase.StartParsePlaceList(callback);
     },
 
     GotoPlayAgain: function () {
@@ -99,11 +112,11 @@ var GameManager = cc.Class({
     },
 
     GotoNextLevel: function () {
-        cc.Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
+        cc.Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
         this.gameLevel++;
-        cc.Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
-        if (this.gameLevel >= GameManager.maxGuankaNum) {
-            cc.Debug.Log("GotoNextPlace:gameLevel=" + this.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
+        cc.Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
+        if (this.gameLevel >= this.maxGuankaNum) {
+            cc.Debug.Log("GotoNextPlace:gameLevel=" + this.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
             this.GotoNextPlace();
             return;
 
@@ -124,7 +137,7 @@ var GameManager = cc.Class({
         //必须在placeLevel设置之后再设置gameLevel
         this.gameLevel = 0;
 
-        this.ParseGuanka(this.callbackGuankaFinish);
+        this.StartParseGuanka(this.callbackGuankaFinish);
         GameViewController.main().gameBase.UpdateGuankaLevel(this.gameLevel);
 
     },
@@ -139,16 +152,16 @@ var GameManager = cc.Class({
         //必须在placeLevel设置之后再设置gameLevel
         this.gameLevel = 0;
 
-        this.ParseGuanka(this.callbackGuankaFinish);
+        this.StartParseGuanka(this.callbackGuankaFinish);
         GameViewController.main().gameBase.UpdateGuankaLevel(this.gameLevel);
 
     },
     //关卡循环
     GotoNextLevelWithoutPlace: function () {
-        cc.Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
+        cc.Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
         this.gameLevel++;
-        cc.Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + GameManager.maxGuankaNum);
-        if (this.gameLevel >= GameManager.maxGuankaNum) {
+        cc.Debug.Log("gameLevel=" + this.gameLevel + " maxGuankaNum=" + this.maxGuankaNum);
+        if (this.gameLevel >= this.maxGuankaNum) {
             this.gameLevel = 0;
 
         }
@@ -164,7 +177,7 @@ var GameManager = cc.Class({
             GameManager.placeLevel = i;
             //必须在placeLevel设置之后再设置gameLevel
             this.gameLevel = 0;
-            this.ParseGuanka(this.callbackGuankaFinish);
+            this.StartParseGuanka(this.callbackGuankaFinish);
             // if (UIGameBase.listGuanka == null) {
             //     Debug.Log("listGuanka is null");
             // }

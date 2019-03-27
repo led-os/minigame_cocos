@@ -1,5 +1,5 @@
 var UIViewController = require("UIViewController");
-var UIPlaceBase = require("UIPlaceBase"); 
+var UIPlaceBase = require("UIPlaceBase");
 // var Common = require("Common");
 //var Config = require("Config");
 //var GuankaViewController = require("GuankaViewController"); 
@@ -15,11 +15,11 @@ var PlaceViewController = cc.Class({
             default: null,
             type: UIPlaceBase
         },
- 
+
     },
-    Init: function () { 
+    Init: function () {
     },
-    CreateUI: function () { 
+    CreateUI: function () {
         var node = cc.instantiate(this.uiPrefab);
         if (node != null) {
             this.ui = node.getComponent(UIPlaceBase);
@@ -27,13 +27,14 @@ var PlaceViewController = cc.Class({
         }
     },
 
-    
+
     LoadPrefabDefault: function () {
         var strPrefabDefault = "Common/Prefab/Place/UIPlace";
-       cc.PrefabCache.main.Load(strPrefabDefault, function (err, prefab) { 
+        cc.PrefabCache.main.Load(strPrefabDefault, function (err, prefab) {
             if (err) {
                 cc.Debug.Log(err.message || err);
-                this.LoadPrefab();
+                cc.Debug.Log("LoadPrefabDefault fail strPrefabDefault="+strPrefabDefault);
+                //  this.LoadPrefab();
                 return;
             }
             this.uiPrefab = prefab;
@@ -42,9 +43,11 @@ var PlaceViewController = cc.Class({
         );
     },
 
+
+
     LoadPrefab: function () {
         var strPrefab = "App/Prefab/Place/UIPlace" + cc.Config.main().appType;
-       cc.PrefabCache.main.Load(strPrefab, function (err, prefab) { 
+        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
                 cc.Debug.Log(err.message || err);
                 return;
@@ -71,7 +74,7 @@ var PlaceViewController = cc.Class({
 
     },
 
-    
+
 
 });
 
