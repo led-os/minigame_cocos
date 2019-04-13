@@ -27,10 +27,25 @@ cc.Class({
         }
         this.target = data.target;
         this.info = data.array[index];
-        this.textTitle.string = index;
+        this.textTitle.node.active = false;
+        this.UpdateImage(this.info.pic);
 
-        //  this.node.clicked = this.OnItemclicked.bind(this);
     },
+
+    UpdateImage: function (pic) {
+        cc.TextureCache.main.Load(pic, function (err, tex) {
+            if (err) {
+                cc.Debug.Log("UpdateImage:"+err.message || err);
+                return;
+            }
+            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
+            if (lyscale) {
+                lyscale.LayOut();
+            }
+        }.bind(this));
+    },
+
     clicked: function () {
         cc.Debug.Log('下标:' + this.textTitle.string);
         // if(this.onClickCallBack!=null)

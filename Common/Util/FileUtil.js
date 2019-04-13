@@ -34,7 +34,7 @@ strVariable.substring(start，end )：返回位于String对象中指定位置的
             return ret;
         },
 
-        //文件后缀
+        //文件后缀 不包括.
         GetFileExt: function (filepath) {
             var ret = "";
             var idx = filepath.lastIndexOf(".");

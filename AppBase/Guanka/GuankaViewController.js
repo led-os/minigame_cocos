@@ -1,5 +1,5 @@
 var UIViewController = require("UIViewController");
-var UIGuankaBase = require("UIGuankaBase"); 
+var UIGuankaBase = require("UIGuankaBase");
 //var Common = require("Common");
 //var Config = require("Config");
 
@@ -17,20 +17,19 @@ var GuankaViewController = cc.Class({
 
 
     },
-    Init: function () { 
+    Init: function () {
     },
-    CreateUI: function () { 
+    CreateUI: function () {
         var node = cc.instantiate(this.uiPrefab);
-        this.ui= node.getComponent(UIGuankaBase);
+        this.ui = node.getComponent(UIGuankaBase);
         this.ui.SetController(this);
     },
 
     LoadPrefabDefault: function () {
         var strPrefabDefault = "Common/Prefab/Guanka/UIGuanka";
-       cc.PrefabCache.main.Load(strPrefabDefault, function (err, prefab) {
+        cc.PrefabCache.main.Load(strPrefabDefault, function (err, prefab) {
             if (err) {
-                cc.Debug.Log(err.message || err);
-                this.LoadPrefab();
+                cc.Debug.Log("UIGuanka default err:" + err.message || err);
                 return;
             }
             this.uiPrefab = prefab;
@@ -41,9 +40,10 @@ var GuankaViewController = cc.Class({
 
     LoadPrefab: function () {
         var strPrefab = "App/Prefab/Guanka/UIGuanka" + cc.Config.main().appType;
-       cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
+        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.Debug.Log(err.message || err); 
+                cc.Debug.Log("UIGuanka err:" + err.message || err);
+                this.LoadPrefabDefault();
                 return;
             }
             this.uiPrefab = prefab;
@@ -51,11 +51,11 @@ var GuankaViewController = cc.Class({
         }.bind(this)
         );
     },
- 
+
     ViewDidLoad: function () {
         cc.Debug.Log("GuankaViewController ViewDidLoad");
         this._super();
-        this.LoadPrefabDefault();
+        this.LoadPrefab();
     },
     ViewDidUnLoad: function () {
         cc.Debug.Log("GuankaViewController ViewDidUnLoad");

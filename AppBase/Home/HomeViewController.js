@@ -35,12 +35,6 @@ var HomeViewController = cc.Class({
         }.bind(this)
         );
 
-
-        // cc.GameManager.main().StartParsePlace(function () {
-
-        // }.bind(this)
-        // );
-
         cc.GameManager.main().StartParseGuanka(null);
     },
 
@@ -48,8 +42,7 @@ var HomeViewController = cc.Class({
         var strPrefabDefault = "Common/Prefab/Home/UIHomeDefault";
         cc.PrefabCache.main.Load(strPrefabDefault, function (err, prefab) {
             if (err) {
-                cc.Debug.Log(err.message || err);
-                this.LoadPrefab();
+                cc.Debug.Log("LoadPrefabDefault err:" + err.message || err);
                 return;
             }
             this.uiPrefab = prefab;
@@ -64,7 +57,8 @@ var HomeViewController = cc.Class({
         cc.Debug.Log("HomeViewController LoadPrefab=" + strPrefab);
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.Debug.Log(err.message || err);
+                cc.Debug.Log("LoadPrefab err:" + err.message || err);
+                this.LoadPrefabDefault();
                 return;
             }
             this.uiPrefab = prefab;
@@ -76,19 +70,18 @@ var HomeViewController = cc.Class({
     AppPreLoadDidFinish: function (p) {
         cc.Debug.Log("HomeViewController AppPreLoadDidFinish ");
         HomeViewController.isGameHasInit = true;
-        this.LoadPrefabDefault();
+        this.LoadPrefab();
     },
 
     ViewDidLoad: function () {
         cc.Debug.Log("HomeViewController ViewDidLoad");
         this._super();
-
         //提前加载game prefab
         if (!HomeViewController.isGameHasInit) {
             var game = GameViewController.main();
             game.SetLoadFinishCallBack(this.AppPreLoadDidFinish.bind(this), null);
         } else {
-            this.LoadPrefabDefault();
+            this.LoadPrefab();
         }
     },
     ViewDidUnLoad: function () {

@@ -32,9 +32,7 @@ var PlaceViewController = cc.Class({
         var strPrefabDefault = "Common/Prefab/Place/UIPlace";
         cc.PrefabCache.main.Load(strPrefabDefault, function (err, prefab) {
             if (err) {
-                cc.Debug.Log(err.message || err);
-                cc.Debug.Log("LoadPrefabDefault fail strPrefabDefault="+strPrefabDefault);
-                //  this.LoadPrefab();
+                cc.Debug.Log("UIPlace default err:" + err.message || err);
                 return;
             }
             this.uiPrefab = prefab;
@@ -49,7 +47,8 @@ var PlaceViewController = cc.Class({
         var strPrefab = "App/Prefab/Place/UIPlace" + cc.Config.main().appType;
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.Debug.Log(err.message || err);
+                cc.Debug.Log("UIPlace err:" + err.message || err);
+                this.LoadPrefabDefault();
                 return;
             }
             this.uiPrefab = prefab;
@@ -61,7 +60,7 @@ var PlaceViewController = cc.Class({
     ViewDidLoad: function () {
         cc.Debug.Log("PlaceViewController ViewDidLoad");
         this._super();
-        this.LoadPrefabDefault();
+        this.LoadPrefab();
     },
     ViewDidUnLoad: function () {
         cc.Debug.Log("PlaceViewController ViewDidUnLoad");

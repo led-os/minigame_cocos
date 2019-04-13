@@ -475,9 +475,9 @@ var GameShapeColor = cc.Class({
 
     LanguageKeyOfShape: function (info) {
         var key = info.id;
-        if (cc.Config.main().appKeyName == cc.AppType.SHAPECOLOR) {
-            key = "SHAPE_TITLE_" + info.id;
-        }
+        // if (cc.Config.main().appKeyName == cc.AppType.SHAPECOLOR) {
+        //     key = "SHAPE_TITLE_" + info.id;
+        // }
         return key;
     },
 

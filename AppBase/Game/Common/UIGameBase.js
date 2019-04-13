@@ -153,9 +153,16 @@ var UIGameBase = cc.Class({
         for (var i = 0; i < items.length; i++) {
             var info = new cc.ItemInfo();
             var item = items[i];
-            info.id = item.id;
-            info.type = item.game_type;
-            info.pic = item.pic;
+            info.id = cc.JsonUtil.GetItem(item, "id", ""); 
+            cc.Debug.Log("place id = "+info.id);
+            info.type = cc.JsonUtil.GetItem(item, "type", "");
+            info.isAd = cc.JsonUtil.GetItem(item, "advideo", false);
+            info.pic = cc.Common.GAME_RES_DIR + "/" + cc.JsonUtil.GetItem(item, "pic", "place/image/" + info.id + ".png");
+            info.title = cc.JsonUtil.GetItem(item, "title", "STR_PLACE_" + info.id);
+            //info.icon = info.pic;
+            info.language = cc.JsonUtil.GetItem(item, "language", "language");
+            // info.index = i;
+
             this.listPlace.push(info);
         }
 

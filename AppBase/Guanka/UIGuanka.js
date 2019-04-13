@@ -7,7 +7,6 @@ var GameViewController = require("GameViewController");
 cc.Class({
     extends: UIGuankaBase,
     properties: {
-        imageBg: cc.Sprite,
         tableView: cc.TableView,
         btnBack: {
             default: null,
@@ -20,22 +19,20 @@ cc.Class({
 
     onLoad: function () {
         this._super();
-
-
         this.UnifyButtonSprite(this.btnBack);
 
         this.textTitle.string = cc.Language.main().GetString("STR_GUANKA");
         cc.GameManager.main().StartParseGuanka(function () {
-            cc.Debug.Log("UIGameBlock::UpdateItem");
+            cc.Debug.Log("UIGuanka::UpdateItem");
             this.UpdateItem();
         }.bind(this)
         );
 
 
-        //this.tableView.node.active = false;
+        // this.tableView.node.active = false;
         var ev = this.node.addComponent(cc.UITouchEvent);
 
-
+        // this.UpdateItem();
     },
 
 
@@ -52,7 +49,7 @@ cc.Class({
     UpdateItem: function () {
         var game = GameViewController.main().gameBase;
         this.listItem = game.listGuanka;
-        cc.Debug.Log("UIGameBlock::this.listItem=" + this.listItem.length);
+        cc.Debug.Log("UIGuanka::this.listItem=" + this.listItem.length);
         this.InitList();
     },
 

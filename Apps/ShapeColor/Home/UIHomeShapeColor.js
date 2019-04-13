@@ -328,9 +328,7 @@ cc.Class({
         if (this.controller != null) {
             var navi = this.controller.naviController;
             var total = cc.GameManager.main().placeTotal;
-            // if (cc.Config.main().appKeyName != cc.AppType.SHAPECOLOR) {
-            //     total = 0;
-            // }
+            // total = 0;
             if (total > 1) {
                 if (navi != null) {
                     navi.Push(PlaceViewController.main());

@@ -1,5 +1,5 @@
 var UIViewController = require("UIViewController");
-var UIGameBase = require("UIGameBase"); 
+var UIGameBase = require("UIGameBase");
 //var Common = require("Common");
 //var Config = require("Config");
 //var LoadItemInfo = require("LoadItemInfo");
@@ -57,23 +57,30 @@ var GameViewController = cc.Class({
         this.ui.SetController(this);
     },
 
+    LoadPrefabEnd: function () {
+        if (GameViewController.callbackFinish != null) {
+            if (GameViewController.loadInfo != null) {
+                GameViewController.loadInfo.isLoad = true;
+            }
+
+            GameViewController.callbackFinish(this);
+        }
+    },
+
     LoadPrefab: function () {
         var strPrefab = "App/Prefab/Game/UIGame" + cc.Config.main().appType;
-       cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
+        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
+                cc.Debug.Log("Game LoadPrefab fail");
                 cc.Debug.Log(err.message || err);
+                this.LoadPrefabEnd();
                 return;
             }
             this.uiPrefab = prefab;
             this.LoadUI();
+            cc.Debug.Log("Game LoadPrefab Finish");
+            this.LoadPrefabEnd();
 
-            if (GameViewController.callbackFinish != null) {
-                if (GameViewController.loadInfo != null) {
-                    GameViewController.loadInfo.isLoad = true;
-                }
-
-                GameViewController.callbackFinish(this);
-            }
             // //this.CreateUI();
         }.bind(this)
         );

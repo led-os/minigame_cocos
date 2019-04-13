@@ -6,6 +6,10 @@ var AppType = require("AppType");
 
 var UIGameShapeColor = cc.Class({
     extends: UIGameBase,
+    statics: {
+        PLACE_MATH: "Math",
+    },
+
     properties: {
 
         btnBack: {
@@ -61,9 +65,9 @@ var UIGameShapeColor = cc.Class({
 
     LanguageKeyOfShape: function (info) {
         var key = info.id;
-        if (cc.Config.main().appKeyName == cc.AppType.SHAPECOLOR) {
-            key = "SHAPE_TITLE_" + info.id;
-        }
+        // if (cc.Config.main().appKeyName == cc.AppType.SHAPECOLOR) {
+        //     key = "SHAPE_TITLE_" + info.id;
+        // }
         return key;
     },
 
@@ -218,7 +222,7 @@ var UIGameShapeColor = cc.Class({
         return count;
     },
 
-    ParseGuanka: function (callback) {
+    StartParseGuanka: function (callback) {
         this.callbackGuankaFinish = callback;
         this.isShowGame = false;
         this.ParseGuankaInternal();
@@ -249,9 +253,6 @@ var UIGameShapeColor = cc.Class({
         info.isLoad = false;
         this.listProLoad.push(info);
         var idx = cc.GameManager.placeLevel;
-        if (cc.Config.main().appKeyName == cc.AppType.SHAPECOLOR) {
-            idx = 0;
-        }
         var filepath = cc.Common.GAME_RES_DIR + "/guanka/shape_list_place" + idx + ".json";
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
@@ -369,15 +370,13 @@ var UIGameShapeColor = cc.Class({
             if (cc.Common.main().isWeiXin) {
                 dirRoot = cc.Common.GAME_RES_DIR;
             }
-            var picdir = dirRoot + "/image/" + info.id;
-            if (cc.Config.main().appKeyName != cc.AppType.SHAPECOLOR) {
-                picdir = dirRoot + "/image/" + strPlace;
-
-            }
+            var picdir = dirRoot + "/image/" + strPlace + "/" + info.id;
             info.pic = picdir + "/" + info.id + ".png";
             info.picInner = picdir + "/" + info.id + "_inner.png";
             info.picOuter = picdir + "/" + info.id + "_outer.png";
-            if (cc.Config.main().appKeyName != cc.AppType.SHAPECOLOR) {
+            if (strPlace != UIGameShapeColor.PLACE_MATH) {
+                picdir = dirRoot + "/image/" + strPlace;
+                info.pic = picdir + "/" + info.id + ".png";
                 info.picInner = info.pic;
                 info.picOuter = info.pic;
             }

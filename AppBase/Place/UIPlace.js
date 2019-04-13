@@ -5,7 +5,6 @@ var GameViewController = require("GameViewController");
 cc.Class({
     extends: UIPlaceBase,
     properties: {
-        imageBg: cc.Sprite,
         tableView: cc.TableView,
         btnBack: {
             default: null,
@@ -20,7 +19,6 @@ cc.Class({
         this._super();
         this.UnifyButtonSprite(this.btnBack);
         this.textTitle.string = cc.Language.main().GetString("STR_PLACE");
-        // cc.GameManager.main().ParseGuanka();
         cc.GameManager.main().StartParsePlace(function () {
             this.UpdateItem();
         }.bind(this)

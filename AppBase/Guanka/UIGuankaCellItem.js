@@ -46,7 +46,6 @@ cc.Class({
 
     UpdateImage: function (pic) {
         cc.TextureCache.main.Load(pic, function (err, tex) {
-            //cc.url.raw('res/textures/content.png')
             if (err) {
                 cc.Debug.Log(err.message || err);
                 return;
