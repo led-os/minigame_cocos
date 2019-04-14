@@ -50,6 +50,11 @@ var GameShapeColor = cc.Class({
             type: cc.ShapeColorItemInfo
         },
 
+        gameItemPrefab: {
+            default: null,
+            type: cc.Prefab
+        },
+
         totalRow: 0,
         totalCol: 0,
         itemPosZ: -20.0,
@@ -67,7 +72,7 @@ var GameShapeColor = cc.Class({
     onLoad: function () {
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
-
+        this.LoadGameItemPrefab();
         var ev = this.node.addComponent(cc.UITouchEvent);
         ev.callBackTouch = this.OnUITouchEvent.bind(this);
 
@@ -89,6 +94,18 @@ var GameShapeColor = cc.Class({
             this.UpdateItemPosition(info, isAnimate);
         }
 
+    },
+
+    LoadGameItemPrefab: function () {
+        var strPrefab = "App/Prefab/Game/UIGameItem";
+        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
+            if (err) {
+                cc.Debug.Log(err.message || err);
+                return;
+            }
+            this.gameItemPrefab = prefab;
+        }.bind(this)
+        );
     },
 
     UpdateItemPosition: function (info, isAnimate) {
