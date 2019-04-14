@@ -2,10 +2,11 @@ var UIViewController = require("UIViewController");
 //var Common = require("Common");
 //var Config = require("Config");
 var UIView = require("UIView");
-//var Language = require("Language");
 
 var UIGameBase = cc.Class({
     extends: UIView,
+
+
     properties: {
         gamePrefab: {
             default: null,
@@ -18,10 +19,6 @@ var UIGameBase = cc.Class({
         listProLoad: {
             default: [],
             type: cc.LoadItemInfo
-        },
-        listPlace: {
-            default: [],
-            type: cc.Object
         },
 
         imageBg: cc.Sprite,
@@ -91,11 +88,24 @@ var UIGameBase = cc.Class({
     },
 
     UpdateGuankaLevel: function (level) {
+
     },
     UpdatePlaceLevel: function (level) {
     },
-    //guanka
 
+
+    LoadLanguageGameDidFinish: function (p) {
+
+    },
+
+    LoadLanguageGame: function () {
+        var info = cc.GameManager.main().GetPlaceItemInfo(cc.GameManager.placeLevel);
+        var filepath = cc.Common.GAME_RES_DIR + "/language/" + info.language + ".csv";
+        cc.Debug.Log("LoadLanguageGame::filepath=" + filepath);
+        cc.Language._game = new cc.Language();
+        cc.Language._game.Init2(filepath, this.LoadLanguageGameDidFinish.bind(this));
+
+    },
 
     ShowUserGuide: function () {
         var key = cc.AppRes.KEY_USER_GUIDE + cc.Common.main().GetAppVersion();
@@ -122,7 +132,7 @@ var UIGameBase = cc.Class({
 
     //place 
     GetPlaceTotal: function () {
-        return this.listPlace.length;
+        return cc.GameManager.main().listPlace.length;
     },
     StartParsePlaceList: function (callback) {
         if (callback != null) {
@@ -141,10 +151,10 @@ var UIGameBase = cc.Class({
     },
     ParsePlaceList: function (json) {
         cc.Debug.Log("StartParsePlaceList ParsePlaceList");
-        if ((this.listPlace != null) && (this.listPlace.length != 0)) {
+        if ((cc.GameManager.main().listPlace != null) && (cc.GameManager.main().listPlace.length != 0)) {
             cc.Debug.Log("StartParsePlaceList not 0");
             if (this.callbackPlaceFinish != null) {
-                cc.Debug.Log("StartParsePlaceList callbackPlaceFinish length = " + this.listPlace.length);
+                cc.Debug.Log("StartParsePlaceList callbackPlaceFinish length = " + cc.GameManager.main().listPlace.length);
                 this.callbackPlaceFinish();
             }
             return;
@@ -153,8 +163,8 @@ var UIGameBase = cc.Class({
         for (var i = 0; i < items.length; i++) {
             var info = new cc.ItemInfo();
             var item = items[i];
-            info.id = cc.JsonUtil.GetItem(item, "id", ""); 
-            cc.Debug.Log("place id = "+info.id);
+            info.id = cc.JsonUtil.GetItem(item, "id", "");
+            cc.Debug.Log("place id = " + info.id);
             info.type = cc.JsonUtil.GetItem(item, "type", "");
             info.isAd = cc.JsonUtil.GetItem(item, "advideo", false);
             info.pic = cc.Common.GAME_RES_DIR + "/" + cc.JsonUtil.GetItem(item, "pic", "place/image/" + info.id + ".png");
@@ -163,11 +173,11 @@ var UIGameBase = cc.Class({
             info.language = cc.JsonUtil.GetItem(item, "language", "language");
             // info.index = i;
 
-            this.listPlace.push(info);
+            cc.GameManager.main().listPlace.push(info);
         }
 
         if (this.callbackPlaceFinish != null) {
-            cc.Debug.Log("StartParsePlaceList callbackPlaceFinish length = " + this.listPlace.length);
+            cc.Debug.Log("StartParsePlaceList callbackPlaceFinish length = " + cc.GameManager.main().listPlace.length);
             this.callbackPlaceFinish();
         }
     },

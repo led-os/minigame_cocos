@@ -91,6 +91,24 @@ var Language = cc.Class({
 
         //cc.Debug.Log("isLoadAll=loadRes end");
     },
+
+    Init2: function (file, callback) {
+        this.ltLocalization = new LTLocalization();
+        cc.loader.loadRes(file, function (err, file) {
+            if (err) {
+                cc.Debug.Log("Init2=" + err.message || err);
+                return ret;
+            }
+            this.ltLocalization.ReadData(file.text);
+            cc.Debug.Log("Init2=loadRes end");
+            if (callback != null) {
+                callback(this);
+            }
+        }.bind(this));
+
+        //cc.Debug.Log("isLoadAll=loadRes end");
+    },
+
     CheckAllLoad: function () {
         var isLoadAll = true;
         for (let info of Language.listLoad) {

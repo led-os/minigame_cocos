@@ -8,6 +8,7 @@ var UIGameShapeColor = cc.Class({
     extends: UIGameBase,
     statics: {
         PLACE_MATH: "Math",
+        languageColor: null,
     },
 
     properties: {
@@ -40,20 +41,30 @@ var UIGameShapeColor = cc.Class({
     onLoad: function () {
         this._super();
         this.UnifyButtonSprite(this.btnBack);
-        this.LoadGamePrefab();
+        this.LoadLanguageGame();
+        this.LoadLanguageColor();
+        // this.LoadGamePrefab();
         //var ev = this.node.addComponent(cc.UITouchEvent);
         // ev.callBackTouch = this.OnUITouchEvent;
     },
     start: function () {
 
     },
+    LoadLanguageColor: function () {
+        var filepath = cc.Common.GAME_RES_DIR + "/language/language_color.csv";
+        this.languageColor = new cc.Language();
+        this.languageColor.Init2(filepath, this.LoadLanguageDidFinish.bind(this));
+    },
 
-
+    LoadLanguageDidFinish: function (p) {
+        this.LoadGamePrefab();
+    },
 
     CreateGame: function () {
         var node = cc.instantiate(this.gamePrefab);
         this.game = node.getComponent(GameShapeColor);
         this.game.node.parent = this.node;
+        this.game.languageColor = this.languageColor;
 
         //zorder 让imageBg 显示在最底层，game显示在UI下面
         this.imageBg.node.zIndex = -20;
@@ -106,7 +117,7 @@ var UIGameShapeColor = cc.Class({
         return str;
     },
     ColorTitleOfItem: function (info) {
-        var str = cc.Language.game().GetString("COLOR_TITLE_" + info.id);
+        var str = this.languageColor.GetString(info.id);
         return str;
     },
 
@@ -114,6 +125,7 @@ var UIGameShapeColor = cc.Class({
 
     UpdateGuankaLevel: function (level) {
         cc.Debug.Log("UIGameShapeColor::UpdateGuankaLevel");
+        this._super();
         this.game.listShape = this.listShape;
         this.game.listColor = this.listColor;
         this.game.textTitle = this.textTitle;

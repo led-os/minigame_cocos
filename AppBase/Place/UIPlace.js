@@ -41,7 +41,7 @@ cc.Class({
 
     UpdateItem: function () {
         var game = GameViewController.main().gameBase;
-        this.listItem = game.listPlace;
+        this.listItem = cc.GameManager.main().listPlace;
         cc.Debug.Log("UIPlace UpdateItem this.listItem=" + this.listItem.length);
         this.InitList();
     },

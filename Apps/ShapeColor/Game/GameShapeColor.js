@@ -1,7 +1,6 @@
 var UIViewController = require("UIViewController");
 // var Common = require("Common");
 var UIBoard = require("UIBoard");
-//var ShapeColorItemInfo = require("ShapeColorItemInfo");
 var UIView = require("UIView");
 
 
@@ -61,6 +60,7 @@ var GameShapeColor = cc.Class({
         posItemDown: new cc.Vec2(0, 0),
         itemInfoSel: cc.ShapeColorItemInfo,
         loadItemCount: 0,
+        languageColor: null,
 
     },
     //百度tts:  http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=你要转换的文字 
@@ -465,6 +465,7 @@ var GameShapeColor = cc.Class({
         }
         //speak
         var str = this.StringOfItem(info);
+        cc.Debug.Log("Speak str=" + str);
         cc.Tts.Speak(str);
         if (this.textTitle != null) {
             this.textTitle.node.active = true;
@@ -483,7 +484,7 @@ var GameShapeColor = cc.Class({
 
     StringOfItem: function (info) {
         var str = "";
-        var strColor = cc.Language.game().GetString("COLOR_TITLE_" + info.colorid);
+        var strColor = this.languageColor.GetString(info.colorid);
         var strShape = cc.Language.game().GetString(this.LanguageKeyOfShape(info));
         var str_split = "";
         if (cc.Language.main().GetLanguage() == cc.sys.LANGUAGE_ENGLISH) {
@@ -736,7 +737,7 @@ var GameShapeColor = cc.Class({
             var infoshape = this.listShape[idx_shape];
 
             var node = null;
-            var isInner = (k % 2 == 0) ? true : false; 
+            var isInner = (k % 2 == 0) ? true : false;
             var infoitem = this.CreateItem(infoshape, infocolor, isInner, true, i, j);
 
         }

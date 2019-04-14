@@ -1,13 +1,11 @@
 var UIViewController = require("UIViewController");
 var UIHomeBase = require("UIHomeBase");
-//var Common = require("Common");
-//var Config = require("Config");
+//var Common = require("Common"); 
 var GameViewController = require("GameViewController");
 
 
 var GameManager = cc.Class({
     extends: cc.Object,
-
     statics: {
         gameMode: 0,
         placeLevel: 0,
@@ -65,6 +63,10 @@ var GameManager = cc.Class({
                 return ret;
             },
         },
+        listPlace: {
+            default: [],
+            type: cc.Object
+        },
 
     },
     Init: function () {
@@ -73,6 +75,15 @@ var GameManager = cc.Class({
     LoadPrefab: function () {
 
     },
+
+
+    GetPlaceItemInfo: function (idx) {
+        var game = GameViewController.main().gameBase;
+        var info = cc.GameManager.main().listPlace[idx];
+        cc.Debug.Log("GetPlaceItemInfo idx=" + idx + " GameManager.listPlace.length=" + cc.GameManager.main().listPlace.length);
+        return info;
+    },
+
     //UIViewController
     GotoGame: function (fromController) {
         var navi = fromController.naviController;
