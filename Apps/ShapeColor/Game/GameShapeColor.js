@@ -1,5 +1,5 @@
 var UIViewController = require("UIViewController");
-// var Common = require("Common");
+var UIGameItem = require("UIGameItem");
 var UIBoard = require("UIBoard");
 var UIView = require("UIView");
 
@@ -111,20 +111,29 @@ var GameShapeColor = cc.Class({
     UpdateItemPosition: function (info, isAnimate) {
         var x, y, w, h;
         var node = info.node;
-        var sprite = node.getComponent(cc.Sprite);
-        if (sprite == null) {
+        // var sprite = node.getComponent(cc.Sprite);
+        // if (sprite == null) {
+        //     return;
+        // }
+        var uiGameItem = node.getComponent(UIGameItem);
+        if (uiGameItem == null) {
             return;
         }
+
         var rc = this.GetRectItem(info.i, info.j, this.totalRow, this.totalCol);
-        var scale = this.GetItmeScaleInRect(rc, node);
-        node.scaleX = scale;
-        node.scaleY = scale;
+        var rctran = node.getComponent(cc.RectTransform);
+        rctran.width = rc.width;
+        rctran.height = rc.height;
+
+        // var scale = this.GetItmeScaleInRect(rc, node);
+        // node.scaleX = scale;
+        // node.scaleY = scale;
 
 
-        var bd = node.getBoundingBox();//rect
-        var offsetx = bd.width / 2;
+        // var bd = node.getBoundingBox();//rect
+        var offsetx = 0;
         offsetx = 0;
-        var offsety = bd.height / 2;
+        var offsety = 0;
         offsety = 0;
         var pt = this.RandomPointOfRect(rc, offsetx, offsety);
         //cc.Debug.Log("LayOut:i=" + info.i + " j=" + info.j + " rc=" + rc + " pt=" + pt + " bd=" + bd.size);
@@ -261,7 +270,11 @@ var GameShapeColor = cc.Class({
                 continue;
             }
 
-            var bd = info.node.getBoundingBox();//rect
+            var uiGameItem = info.node.getComponent(UIGameItem);
+            if (uiGameItem == null) {
+                continue;
+            }
+            var bd = uiGameItem.GetBoundingBox();//rect
             cc.Debug.Log("onTouchDown: posnew=" + posnew + " bd=" + bd + " index=" + index);
 
             // var positem = info.node.getPosition();
@@ -313,7 +326,9 @@ var GameShapeColor = cc.Class({
         // cc.Debug.Log("OnTouchMove positemNew=" + positemNew + " ptStep=" + ptStep);
         //将选中item暂时置顶
         //posword.z = this.itemPosZ - 2; 
-        var body = this.itemInfoSel.node.getComponent(cc.RigidBody);
+        //var body = this.itemInfoSel.node.getComponent(cc.RigidBody);
+        var uiGameItemSel = this.itemInfoSel.node.getComponent(UIGameItem); 
+        var body = uiGameItemSel.GetRigidBody();
         if (body != null) {
             // body.MovePosition(posword);
             // body.syncPosition(false);
@@ -342,7 +357,11 @@ var GameShapeColor = cc.Class({
             isLock = this.IsItemLock(info);
             if (isLock) {
             }
-            var bd = info.node.getBoundingBox();
+            var uiGameItem = info.node.getComponent(UIGameItem);
+            if (uiGameItem == null) {
+                continue;
+            }
+            var bd = uiGameItem.GetBoundingBox();
             //posword.z = bd.center.z;
             w = bd.width / 4;
             h = bd.height / 4;
@@ -878,11 +897,15 @@ var GameShapeColor = cc.Class({
     CreateItem: function (infoshape, infocolor, isInner, isMain, i, j) {
         var x, y, w, h;
         var info = infoshape;
+        info.isInner = isInner;
         var name = info.id + "_outer";
         if (isInner == true) {
             name = info.id + "_inner";
         }
-        var node = new cc.Node(name);
+        //var node = new cc.Node(name);
+        var node = cc.instantiate(this.gameItemPrefab);
+        var uiGameItem = node.getComponent(UIGameItem);
+
         var infoRet = new cc.ShapeColorItemInfo();
 
         infoRet.i = i;
@@ -895,6 +918,7 @@ var GameShapeColor = cc.Class({
         infoRet.isInner = isInner;
         infoRet.colorid = infocolor.id;
         infoRet.textureHasLoad = infoshape.textureHasLoad;
+        infoRet.pic = info.pic;
 
         if (isInner == true) {
             this.SetItemLock(infoRet, false);
@@ -907,105 +931,6 @@ var GameShapeColor = cc.Class({
 
         node.parent = this.node;
         node.active = false;
-        var sprite = node.addComponent(cc.Sprite)
-        sprite.name = info.id;
-
-        // RectTransform rcTran = obj.AddComponent<RectTransform>();
-        // SpriteRenderer objSR = obj.AddComponent<SpriteRenderer>();
-        var pic = info.picOuter;
-        if (isInner == true) {
-            pic = info.picInner;
-        }
-
-        //加载图片
-        // var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(cc.AppRes.URL_HTTP_HEAD+pic);
-        var strImage = cc.AppRes.main().URL_HTTP_HEAD + pic;
-        cc.Debug.Log("strImage=" + strImage);
-        cc.TextureCache.main.Load(strImage, function (err, tex) {
-            //cc.url.raw('res/textures/content.png')
-            if (err) {
-                cc.Debug.Log("item_pic err");
-                cc.Debug.Log(err.message || err);
-                return;
-            }
-            sprite.spriteFrame = new cc.SpriteFrame(tex);
-
-
-            //添加物理特性
-            if (isInner == true) {
-                var body = sprite.node.addComponent(cc.RigidBody);
-                body.gravityScale = 0;//关闭重力
-                // // bd.useGravity = false;
-                body.fixedRotation = true;
-
-                //防止刚体穿越
-                body.bullet = true;
-
-                // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-                //var collider = node.addComponent(cc.PolygonCollider);
-                var collider = sprite.node.addComponent(cc.PhysicsBoxCollider);
-                var mj = sprite.node.addComponent(cc.MouseJoint);
-            }
-
-
-            var collider = sprite.node.getComponent(cc.PhysicsBoxCollider);
-            if (collider != null) {
-
-                collider.size = cc.size(tex.width, tex.height);
-                cc.Debug.Log("collider=" + collider.size);
-            }
-
-            // sprite.node.zIndex = 10;
-
-            // this.LayOut();
-            //this.scheduleOnce(this.LoadItemImageFinish, 0.5);
-            this.LoadItemImageFinish(infoRet);
-
-            this.loadItemCount++;
-
-            // }.bind(this).bind(sprite));
-        }.bind(this));
-
-        var z = this.itemPosZ;
-        if (isInner == true) {
-            z = this.itemPosZ - 1;
-        }
-        //obj.transform.position = new Vector3(0, 0, z);
-        node.setPosition(0, 0, z);
-
-        var is_add_shader = true;
-        //color
-        if (cc.Config.main().appKeyName != cc.AppType.SHAPECOLOR) {
-            if (isInner == true) {
-                is_add_shader = false;
-                //ShapeHighlighterController hlc = AddHighLight(obj);
-                //hlc.UpdateColor(color);
-            }
-        }
-        if (is_add_shader == true) {
-            {
-                const renderEngine = cc.renderer.renderEngine;
-                const renderer = renderEngine.renderer;
-                const name = 'ShaderShapeColor';
-                let mat = sprite.getMaterial(name);
-                if (!mat) {
-                    const CustomMaterial = require("CustomMaterial");
-                    mat = new CustomMaterial(name, [
-                        { name: 'iResolution', type: renderer.PARAM_FLOAT3 },
-                        { name: 'colorShow', type: renderer.PARAM_FLOAT3 },
-                    ]);
-                    sprite.setMaterial(name, mat);
-                }
-                sprite.activateMaterial(name);
-                var iResolution = new cc.Vec3(sprite.node.width, sprite.node.height, 0);
-                mat.setParamValue("iResolution", iResolution);
-                var colorShow = new cc.Vec3(infocolor.color.r / 255, infocolor.color.g / 255, infocolor.color.b / 255);
-                cc.Debug.Log("colorShow=" + colorShow);
-                mat.setParamValue("colorShow", colorShow);
-            }
-        }
-
-
 
 
         //添加尾巴 ShapeTrail
@@ -1017,8 +942,11 @@ var GameShapeColor = cc.Class({
         //     ShapeTrail trail = info.objTrail.AddComponent<ShapeTrail>();
 
         // }
-
-
+        uiGameItem.isBomb = false;
+        uiGameItem.UpdateItem(info, function (ui) {
+            this.LoadItemImageFinish(infoRet);
+            this.loadItemCount++;
+        }.bind(this));
 
         return infoRet;
     },
@@ -1028,7 +956,10 @@ var GameShapeColor = cc.Class({
         if (this.nodeBomb != null) {
             return null;
         }
-        var node = new cc.Node("bumb");
+        //var node = new cc.Node("bumb");
+        var node = cc.instantiate(this.gameItemPrefab);
+        var uiGameItem = node.getComponent(UIGameItem);
+
         this.nodeBomb = node
         node.parent = this.node;
         node.active = false;
@@ -1047,41 +978,47 @@ var GameShapeColor = cc.Class({
 
         var sprite = node.addComponent(cc.Sprite);
         //加载图片
-        var strImage = cc.AppRes.IMAGE_Game_Bomb;
-        //cc.Debug.Log("item_pic=" + pic);
-        cc.TextureCache.main.Load(strImage, function (err, tex) {
-            if (err) {
-                cc.Debug.Log("item_pic err");
-                cc.Debug.Log(err.message || err);
-                return null;
-            }
-            sprite.spriteFrame = new cc.SpriteFrame(tex);
 
-            //添加物理特性
-            {
-                var body = sprite.node.addComponent(cc.RigidBody);
-                body.gravityScale = 0;//关闭重力
-                // // bd.useGravity = false;
-                body.fixedRotation = true;
-
-                //防止刚体穿越
-                body.bullet = true;
-
-                // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-                //var collider = node.addComponent(cc.PolygonCollider);
-                var collider = sprite.node.addComponent(cc.PhysicsBoxCollider);
-                var mj = sprite.node.addComponent(cc.MouseJoint);
-                if (collider != null) {
-                    collider.size = cc.size(tex.width, tex.height);
-                    cc.Debug.Log("collider=" + collider.size);
-                }
-            }
-            //this.LayOut();
-            // this.scheduleOnce(this.LoadItemImageFinish, 0.5);
+        uiGameItem.isBomb = true;
+        uiGameItem.UpdateItem(infoItem, function (ui) {
             this.LoadItemImageFinish(infoItem);
             this.loadItemCount++;
-
         }.bind(this));
+
+        //cc.Debug.Log("item_pic=" + pic);
+        // cc.TextureCache.main.Load(strImage, function (err, tex) {
+        //     if (err) {
+        //         cc.Debug.Log("item_pic err");
+        //         cc.Debug.Log(err.message || err);
+        //         return null;
+        //     }
+        //     sprite.spriteFrame = new cc.SpriteFrame(tex);
+
+        //     //添加物理特性
+        //     {
+        //         var body = sprite.node.addComponent(cc.RigidBody);
+        //         body.gravityScale = 0;//关闭重力
+        //         // // bd.useGravity = false;
+        //         body.fixedRotation = true;
+
+        //         //防止刚体穿越
+        //         body.bullet = true;
+
+        //         // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        //         //var collider = node.addComponent(cc.PolygonCollider);
+        //         var collider = sprite.node.addComponent(cc.PhysicsBoxCollider);
+        //         var mj = sprite.node.addComponent(cc.MouseJoint);
+        //         if (collider != null) {
+        //             collider.size = cc.size(tex.width, tex.height);
+        //             cc.Debug.Log("collider=" + collider.size);
+        //         }
+        //     }
+        //     //this.LayOut();
+        //     // this.scheduleOnce(this.LoadItemImageFinish, 0.5);
+        //     this.LoadItemImageFinish(infoItem);
+        //     this.loadItemCount++;
+
+        // }.bind(this));
 
         //高亮颜色
         {
