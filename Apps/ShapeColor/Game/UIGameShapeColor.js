@@ -42,7 +42,7 @@ var UIGameShapeColor = cc.Class({
         this._super();
         this.UnifyButtonSprite(this.btnBack);
         this.LoadLanguageGame();
-        this.LoadLanguageColor();
+        this.LoadLanguageColor(this.LoadLanguageDidFinish.bind(this));
         // this.LoadGamePrefab();
         //var ev = this.node.addComponent(cc.UITouchEvent);
         // ev.callBackTouch = this.OnUITouchEvent;
@@ -50,10 +50,16 @@ var UIGameShapeColor = cc.Class({
     start: function () {
 
     },
-    LoadLanguageColor: function () {
+    LoadLanguageColor: function (callback) {
         var filepath = cc.Common.GAME_RES_DIR + "/language/language_color.csv";
+        if (this.languageColor != null) {
+            if (callback != null) {
+                callback(this);
+            }
+            return;
+        }
         this.languageColor = new cc.Language();
-        this.languageColor.Init2(filepath, this.LoadLanguageDidFinish.bind(this));
+        this.languageColor.Init2(filepath, callback);
     },
 
     LoadLanguageDidFinish: function (p) {
@@ -120,6 +126,8 @@ var UIGameShapeColor = cc.Class({
         var str = "unknown";
         if (this.languageColor != null) {
             str = this.languageColor.GetString(info.id);
+        } else {
+            this.LoadLanguageColor(function (p) { });
         }
         return str;
     },

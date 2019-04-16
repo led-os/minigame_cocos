@@ -615,16 +615,20 @@ var GameShapeColor = cc.Class({
 
     ClearGame: function () {
         for (let info of this.listItem) {
-            info.node.removeFromParent(true);
-            info.node = null;
+            if (info.node != null) {
+                info.node.removeFromParent(true);
+                info.node = null;
+            }
         }
         //清空
         this.listItem.length = 0;
         this.listColorShow.length = 0;
         this.loadItemCount = 0;
         if (this.nodeBomb != null) {
-            this.nodeBomb.removeFromParent(true);
-            this.nodeBomb = null;
+            if (info.nodeBomb != null) {
+                info.nodeBomb.removeFromParent(true);
+                info.nodeBomb = null;
+            }
         }
     },
 
@@ -895,8 +899,10 @@ var GameShapeColor = cc.Class({
     },
     //node:
     CreateItem: function (infoshape, infocolor, isInner, isMain, i, j) {
-      
 
+        if(this.node==null){
+            return;
+        }
 
         //添加尾巴 ShapeTrail
         // if (isInner)
@@ -908,7 +914,7 @@ var GameShapeColor = cc.Class({
 
         // }
         var infoRet = new cc.ShapeColorItemInfo();
-      
+
 
         var node = cc.instantiate(this.gameItemPrefab);
         var x, y, w, h;
@@ -921,7 +927,7 @@ var GameShapeColor = cc.Class({
             name = info.id + "_inner";
         }
         //var node = new cc.Node(name);
-    
+
 
 
 
@@ -945,7 +951,7 @@ var GameShapeColor = cc.Class({
             this.SetItemLock(infoRet, true);
         }
         this.listItem.push(infoRet);
-
+        
 
         node.parent = this.node;
         node.active = false;
@@ -964,6 +970,9 @@ var GameShapeColor = cc.Class({
     CreateBomb: function (color) {
         if (this.nodeBomb != null) {
             return null;
+        }
+        if(this.node==null){
+            return;
         }
         //var node = new cc.Node("bumb");
         var node = cc.instantiate(this.gameItemPrefab);

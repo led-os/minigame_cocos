@@ -4,7 +4,7 @@ var AppRes = require("AppRes");
 // var Common = require("Common");
 var PlaceViewController = require("PlaceViewController");
 var GuankaViewController = require("GuankaViewController");
-//var NaviViewController = require("NaviViewController"); 
+var GameViewController = require("GameViewController");
 var GameShapeColor = require("GameShapeColor");
 var LearnProgressViewController = require("LearnProgressViewController");
 
@@ -43,6 +43,11 @@ cc.Class({
         //物理系统默认是关闭的，手动开启物理系统
         //cc.Common.EnablePhysic(true, false);
         cc.Common.EnablePhysic(true, false);
+
+        var game = GameViewController.main().gameBase;
+        if (game != null) {
+            game.LoadLanguageColor(function (p) { });
+        }
 
         this.UnifyButtonSprite(this.btnShape);
         this.UnifyButtonSprite(this.btnColor);
