@@ -122,10 +122,9 @@ cc.Class({
         cc.loader.loadRes(pic, cc.SpriteFrame, function (err, frame) {
             if (err) {
                 cc.Debug.Log(err.message || err);
-
-                return ret;
+            }else{
+                this.imageBg.spriteFrame = frame;
             }
-            this.imageBg.spriteFrame = frame;
         }.bind(this));
     },
 

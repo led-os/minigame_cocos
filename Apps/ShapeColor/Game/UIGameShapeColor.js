@@ -117,7 +117,10 @@ var UIGameShapeColor = cc.Class({
         return str;
     },
     ColorTitleOfItem: function (info) {
-        var str = this.languageColor.GetString(info.id);
+        var str = "unknown";
+        if (this.languageColor != null) {
+            str = this.languageColor.GetString(info.id);
+        }
         return str;
     },
 

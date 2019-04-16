@@ -49,15 +49,14 @@ cc.Class({
         //     this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
 
         // }.bind(this));
-        
+
         //ok  会保留图片的sliced参数
         cc.loader.loadRes(pic, cc.SpriteFrame, function (err, frame) {
             if (err) {
                 cc.Debug.Log(err.message || err);
-
-                return ret;
+            } else {
+                this.imageBg.spriteFrame = frame;
             }
-            this.imageBg.spriteFrame = frame;
         }.bind(this));
     },
 });

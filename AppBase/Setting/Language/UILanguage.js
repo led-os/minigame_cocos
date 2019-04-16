@@ -29,7 +29,7 @@ cc.Class({
     onLoad: function () {
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
-
+        this.oneCellNum =1;
         this.UnifyButtonSprite(this.btnBack);
         this.textTitle.string = cc.Language.main().GetString("STR_LANGUAGE");
         this.UpdateItem();
@@ -73,7 +73,7 @@ cc.Class({
             this.listItem.push(info);
         }
 
-        this.InitList();
+      this.InitList();
     },
     InitList: function () {
         this.tableView.oneCellNum = this.oneCellNum;
