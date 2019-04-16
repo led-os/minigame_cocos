@@ -615,7 +615,8 @@ var GameShapeColor = cc.Class({
 
     ClearGame: function () {
         for (let info of this.listItem) {
-            info.node.removeFromParent();
+            info.node.removeFromParent(true);
+            info.node = null;
         }
         //清空
         this.listItem.length = 0;
@@ -627,10 +628,18 @@ var GameShapeColor = cc.Class({
         }
     },
 
-    LoadGame: function (mode) {
 
-        cc.Debug.Log("LoadGame:mode=" + mode);
+
+    LoadGame: function (mode) {
         this.ClearGame();
+        // this.scheduleOnce(this.LoadGameInternal, 1);
+        this.LoadGameInternal();
+    },
+
+    LoadGameInternal: function () {
+        var mode = cc.GameManager.gameMode;
+        cc.Debug.Log("LoadGame:mode=" + mode);
+
         switch (mode) {
             case GameShapeColor.GAME_MODE_SHAPE:
                 this.LoadGameByShape(mode);
@@ -886,18 +895,35 @@ var GameShapeColor = cc.Class({
     },
     //node:
     CreateItem: function (infoshape, infocolor, isInner, isMain, i, j) {
+      
+
+
+        //添加尾巴 ShapeTrail
+        // if (isInner)
+        // {
+        //     info.objTrail = new GameObject("trail");
+        //     info.objTrail.transform.parent = obj.transform;
+        //     info.objTrail.transform.localPosition = Vector3.zero;
+        //     ShapeTrail trail = info.objTrail.AddComponent<ShapeTrail>();
+
+        // }
+        var infoRet = new cc.ShapeColorItemInfo();
+      
+
+        var node = cc.instantiate(this.gameItemPrefab);
         var x, y, w, h;
         var info = infoshape;
         info.isInner = isInner;
+        info.color = infocolor.color;
+
         var name = info.id + "_outer";
         if (isInner == true) {
             name = info.id + "_inner";
         }
         //var node = new cc.Node(name);
-        var node = cc.instantiate(this.gameItemPrefab);
-        var uiGameItem = node.getComponent(UIGameItem);
+    
 
-        var infoRet = new cc.ShapeColorItemInfo();
+
 
         infoRet.i = i;
         infoRet.j = j;
@@ -910,6 +936,7 @@ var GameShapeColor = cc.Class({
         infoRet.colorid = infocolor.id;
         infoRet.textureHasLoad = infoshape.textureHasLoad;
         infoRet.pic = info.pic;
+        infoRet.isMathShape = info.isMathShape;
 
         if (isInner == true) {
             this.SetItemLock(infoRet, false);
@@ -923,16 +950,7 @@ var GameShapeColor = cc.Class({
         node.parent = this.node;
         node.active = false;
 
-
-        //添加尾巴 ShapeTrail
-        // if (isInner)
-        // {
-        //     info.objTrail = new GameObject("trail");
-        //     info.objTrail.transform.parent = obj.transform;
-        //     info.objTrail.transform.localPosition = Vector3.zero;
-        //     ShapeTrail trail = info.objTrail.AddComponent<ShapeTrail>();
-
-        // }
+        var uiGameItem = node.getComponent(UIGameItem);
         uiGameItem.isBomb = false;
         uiGameItem.UpdateItem(info, function (ui) {
             this.LoadItemImageFinish(infoRet);
@@ -960,7 +978,7 @@ var GameShapeColor = cc.Class({
         infoItem.node = this.nodeBomb;
         // infoItem.objTrail = infoshape.objTrail;
         infoItem.id = GameShapeColor.ID_BOMB;
-        //   infoItem.color = infocolor.color;
+        infoItem.color = color;
         infoItem.isMain = false;
         infoItem.isInner = false;
         this.SetItemLock(infoItem, false);

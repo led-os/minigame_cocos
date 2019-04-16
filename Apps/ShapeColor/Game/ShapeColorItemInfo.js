@@ -6,6 +6,7 @@ var ShapeColorItemInfo =cc.Class({
         color:new cc.Color(0,0,0,0),
         isMain: false,//主要项
         isInner: false,
+        isMathShape:false,
         colorid: "",
         i: 0,
         j: 0,

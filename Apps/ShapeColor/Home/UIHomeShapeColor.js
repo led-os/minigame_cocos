@@ -41,6 +41,7 @@ cc.Class({
         var x, y, w, h;
 
         //物理系统默认是关闭的，手动开启物理系统
+        //cc.Common.EnablePhysic(true, false);
         cc.Common.EnablePhysic(true, false);
 
         this.UnifyButtonSprite(this.btnShape);
