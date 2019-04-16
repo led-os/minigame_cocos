@@ -17,9 +17,27 @@ var UIGameItem = cc.Class({
         return this.imageItem.node.getBoundingBox();
     },
     GetRigidBody: function () {
-        return this.imageItem.node.getComponent(cc.RigidBody);
+        return this.node.getComponent(cc.RigidBody);
     },
-    
+    UpdatePosition: function (pos) {
+
+        var body = this.GetRigidBody();
+        if (body != null) {
+            // body.MovePosition(posword);
+            // body.syncPosition(false);
+            //MouseJoint
+            //刚体的移动需要用鼠标关节,不能用node.setPosition
+            var mj = this.node.getComponent(cc.MouseJoint);
+            if (mj != null) {
+                cc.Debug.Log("OnTouchMove positemNew=" + pos);
+                mj.target = pos;
+            }
+            // uiGameItemSel.node.setPosition(positemNew);
+
+        } else {
+            cc.Debug.Log("body is null");
+        }
+    },
 
     UpdateItem: function (info, cbFinish) {
         var sprite = this.imageItem;
@@ -38,7 +56,7 @@ var UIGameItem = cc.Class({
         if (this.isBomb) {
             strImage = cc.AppRes.IMAGE_Game_Bomb;
         }
-        cc.Debug.Log("strImage=" + strImage);
+        cc.Debug.Log("isInner=" + isInner + " id=" + info.id);
         cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
@@ -47,11 +65,11 @@ var UIGameItem = cc.Class({
                 return;
             }
             sprite.spriteFrame = new cc.SpriteFrame(tex);
-
+            this.node.setContentSize(new cc.size(tex.width, tex.height));
 
             //添加物理特性
-            if ((info.isInner == true) || (this.isBomb)) {
-                var body = sprite.node.addComponent(cc.RigidBody);
+            if ((isInner == true) || (this.isBomb)) {
+                var body = this.node.addComponent(cc.RigidBody);
                 body.gravityScale = 0;//关闭重力
                 // // bd.useGravity = false;
                 body.fixedRotation = true;
@@ -60,18 +78,17 @@ var UIGameItem = cc.Class({
                 body.bullet = true;
 
                 // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-                //var collider = node.addComponent(cc.PolygonCollider);
-                var collider = sprite.node.addComponent(cc.PhysicsBoxCollider);
-                var mj = sprite.node.addComponent(cc.MouseJoint);
+                var collider = this.node.addComponent(cc.PhysicsBoxCollider);
+                if (collider != null) {
+    
+                    collider.size = cc.size(tex.width, tex.height);
+                    cc.Debug.Log("collider=" + collider.size);
+                }
+                var mj = this.node.addComponent(cc.MouseJoint); 
             }
 
 
-            var collider = sprite.node.getComponent(cc.PhysicsBoxCollider);
-            if (collider != null) {
-
-                collider.size = cc.size(tex.width, tex.height);
-                cc.Debug.Log("collider=" + collider.size);
-            }
+        
 
             // sprite.node.zIndex = 10;
 

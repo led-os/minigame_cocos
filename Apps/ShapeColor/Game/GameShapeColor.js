@@ -173,7 +173,7 @@ var GameShapeColor = cc.Class({
             return;
         }
         for (let info of this.listItem) {
-            if (info.isMain == true) {
+            if ((info.isMain == true) && (info.id != GameShapeColor.ID_BOMB)) {
                 var isLock = this.IsItemLock(info);
                 if (!isLock) {
                     isAllItemLock = false;
@@ -181,6 +181,7 @@ var GameShapeColor = cc.Class({
             }
 
         }
+        cc.Debug.Log("CheckGameWin isAllItemLock=" + isAllItemLock);
 
         if (isAllItemLock) {
             //show game win  
@@ -240,7 +241,7 @@ var GameShapeColor = cc.Class({
         var msg = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_GAME_FINISH");
         var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_GAME_FINISH");
         var no = cc.Language.main().GetString("STR_UIVIEWALERT_NO_GAME_FINISH");
-
+        cc.Debug.Log("game finish ShowFull");
         cc.ViewAlertManager.main().ShowFull(title, msg, yes, no, true, "STR_KEYNAME_VIEWALERT_GAME_FINISH",
             function (alert, isYes) {
                 if (isYes) {
@@ -275,15 +276,15 @@ var GameShapeColor = cc.Class({
                 continue;
             }
             var bd = uiGameItem.GetBoundingBox();//rect
-            cc.Debug.Log("onTouchDown: posnew=" + posnew + " bd=" + bd + " index=" + index);
+            //  cc.Debug.Log("onTouchDown: posnew=" + posnew + " bd=" + bd + " index=" + index);
 
-            // var positem = info.node.getPosition();
+            var positem = info.node.getPosition();
             // cc.Debug.Log("positem x=" + positem.x + " y=" + positem.y);
-            // var rc = new cc.Rect(positem.x - bd.width / 2, positem.y - bd.height / 2, bd.width, bd.height);
+            var rc = new cc.Rect(positem.x - bd.width / 2, positem.y - bd.height / 2, bd.width, bd.height);
 
-            //cc.Debug.Log("onTouchDown: rc=" + rc);
+            cc.Debug.Log("onTouchDown: rc=" + rc + " posnew=" + posnew);
             //posword.z = bd.center.z;
-            if (bd.contains(posnew)) {
+            if (rc.contains(posnew)) {
 
                 this.posItemDown = info.node.getPosition();
                 this.itemInfoSel = info;
@@ -306,7 +307,6 @@ var GameShapeColor = cc.Class({
         }
     },
     OnTouchMove: function (pos) {
-
         if (!this.isItemHasSel) {
             cc.Debug.Log("onTouchMove ng 1");
             return;
@@ -315,7 +315,7 @@ var GameShapeColor = cc.Class({
         var posnew = pos;
         var isLock = this.IsItemLock(this.itemInfoSel);
         if (isLock) {
-            // cc.Debug.Log("onTouchMove ng 2");
+            cc.Debug.Log("onTouchMove isLock");
             return;
         }
         var x, y, w, h;
@@ -323,22 +323,13 @@ var GameShapeColor = cc.Class({
         var ptStep = new cc.Vec2(posnew.x - this.ptDown.x, posnew.y - this.ptDown.y);
         var positemNew = new cc.Vec2(this.posItemDown.x + ptStep.x, this.posItemDown.y + ptStep.y);
         //this.itemInfoSel.node.setPosition(positemNew);
-        // cc.Debug.Log("OnTouchMove positemNew=" + positemNew + " ptStep=" + ptStep);
+
         //将选中item暂时置顶
         //posword.z = this.itemPosZ - 2; 
         //var body = this.itemInfoSel.node.getComponent(cc.RigidBody);
-        var uiGameItemSel = this.itemInfoSel.node.getComponent(UIGameItem); 
-        var body = uiGameItemSel.GetRigidBody();
-        if (body != null) {
-            // body.MovePosition(posword);
-            // body.syncPosition(false);
-            //MouseJoint
-            //刚体的移动需要用鼠标关节,不能用node.setPosition
-            var mj = this.itemInfoSel.node.getComponent(cc.MouseJoint);
-            if (mj != null) {
-                mj.target = positemNew;
-            }
-        }
+        var uiGameItemSel = this.itemInfoSel.node.getComponent(UIGameItem);
+        uiGameItemSel.UpdatePosition(positemNew);
+
 
         //尾巴添加节点
         // if (itemInfoSel.objTrail != null)
