@@ -3,9 +3,10 @@ var UIGameItem = require("UIGameItem");
 var UIBoard = require("UIBoard");
 var UIView = require("UIView");
 
-
+//shu： wx621ff1107207384c
 //weixin小程序appid: wxc6734d6401f5a3db
 //cocos: wx6ac3f5090a6b99c5
+//weixin test app：wx844d0aa648111acb
 var GameShapeColor = cc.Class({
     extends: UIView,
     statics: {
