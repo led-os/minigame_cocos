@@ -9,7 +9,7 @@ var FileSystemWeixin = cc.Class({
         return `${wx.env.USER_DATA_PATH}/` + FileSystemPlatformWrapper.FILE_ROOT_DIR;
     },
 
-    DownloadFile: function (url) {
+    DownloadFile: function (obj) {
 
         const fs = wx.getFileSystemManager()
         var dir = GetRootDirPath();
@@ -17,7 +17,7 @@ var FileSystemWeixin = cc.Class({
         console.log("ret=" + ret);
         // if (!fs.accessSync(dir))
         {
-            //fs.mkdirSync(dir, true)
+            fs.mkdirSync(dir, true)
         }
         var filepath = dir + `/hello.txt`
         console.log("filepath=" + filepath);
@@ -27,11 +27,20 @@ var FileSystemWeixin = cc.Class({
         const downloadTask = wx.downloadFile({
 
             // url: "https://6d6f-moonma-dbb297-1258816908.tcb.qcloud.la/ShapeColor/CloudRes.zip?sign=e78a71df50918d8ee0e181886b20c12f&t=1555465442",
-            url: url,
+            url: obj.url,
             success: function (res) {
                 var filePath = res.tempFilePath;
                 console.log("downloadFile=" + filePath)
-                this.UnzipFile(filePath);
+                // this.UnzipFile(filePath);
+                if (obj.success != null) {
+                    obj.success(res);
+                }
+            }.bind(this),
+
+            fail: function (res) {
+                if (obj.fail != null) {
+                    obj.fail(res);
+                }
             }.bind(this)
 
         })
@@ -39,37 +48,69 @@ var FileSystemWeixin = cc.Class({
             console.log('下载进度', res.progress)
             console.log('已经下载的数据长度', res.totalBytesWritten)
             console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
+
+            if (obj.progress != null) {
+                obj.progress(res);
+            }
         })
 
         // downloadTask.abort() // 取消下载任务
 
     },
 
-    UnzipFile: function (filePath) {
+    UnzipFile: function (obj) {
         const fs = wx.getFileSystemManager();
         var dir = GetRootDirPath();
         fs.unzip({
-
-            zipFilePath: filePath,
-            targetPath: dir,
+            zipFilePath: obj.zipFilePath,
+            targetPath: obj.targetPath,
             success: function (res) {
-                console.log("unzip success=" + dir);
-                this.readFile(dir + "/CloudRes/image/Bird/Albatross.png");
-            }.bind(this)
+                // console.log("unzip success=" + dir);
+                // this.readFile(dir + "/CloudRes/image/Bird/Albatross.png");
+                if (obj.success != null) {
+                    obj.success(res);
+                }
+            }.bind(this),
+            fail: function (res) {
+                if (obj.fail != null) {
+                    obj.fail(res);
+                }
+            }.bind(this),
 
         });
     },
 
-    ReadFile: function (file) {
+    ReadFile: function (obj) {
         const fs = wx.getFileSystemManager()
         var dir = GetRootDirPath();
         fs.readFile({
-            filePath: file,
+            filePath: obj.filePath,
             success: function (res) {
-                console.log("readFile success=" + file)
+                if (obj.success != null) {
+                    obj.success(res);
+                }
             }.bind(this),
             fail: function (res) {
-                console.log("readFile fail=" + file)
+                if (obj.fail != null) {
+                    obj.fail(res);
+                }
+            }.bind(this),
+
+        })
+    },
+    WriteFile: function (obj) {
+        const fs = wx.getFileSystemManager()
+        fs.writeFile({
+            filePath: obj.filePath,
+            success: function (res) {
+                if (obj.success != null) {
+                    obj.success(res);
+                }
+            }.bind(this),
+            fail: function (res) {
+                if (obj.fail != null) {
+                    obj.fail(res);
+                }
             }.bind(this),
 
         })

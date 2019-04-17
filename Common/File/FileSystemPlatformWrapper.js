@@ -17,16 +17,20 @@ var FileSystemPlatformWrapper = cc.Class({
         }
         return p;
     },
-
-    ReadFile: function (filePath) {
+    GetRootDirPath: function () {
+        return "";
     },
 
-    UnzipFile: function (filePath) {
+    ReadFile: function (obj) {
+    },
+    WriteFile: function (obj) {
+    },
+    UnzipFile: function (obj) {
    
     },
-    DownloadFile: function (url) {
+    DownloadFile: function (obj) {
     },
-    
+
 });
 
 cc.FileSystemPlatformWrapper = module.export = FileSystemPlatformWrapper; 

@@ -46,6 +46,8 @@ var AppRes = cc.Class({
         //game
         IMAGE_Game_Bomb: "App/UI/Game/Bomb",
 
+        URL_CLOUND_RES: "https://6d6f-moonma-dbb297-1258816908.tcb.qcloud.la/ShapeColor/CloudRes.zip?sign=e78a71df50918d8ee0e181886b20c12f&t=1555465442",
+
     },
 
     properties:

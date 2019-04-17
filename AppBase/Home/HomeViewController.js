@@ -24,6 +24,7 @@ var HomeViewController = cc.Class({
     Init: function () {
         cc.Debug.Log("HomeViewController Init");
         //  this.LoadPrefab();
+        cc.CloudRes.main().StartDownload();
     },
     CreateUI: function () {
         cc.Debug.Log("HomeViewController CreateUI");
