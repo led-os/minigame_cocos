@@ -4,7 +4,7 @@ var UIBoard = require("UIBoard");
 var UIView = require("UIView");
 
 //shu： wx621ff1107207384c
-//weixin小程序appid: wxc6734d6401f5a3db
+//weixin小程序appid: o
 //cocos: wx6ac3f5090a6b99c5
 //weixin test app：wx844d0aa648111acb
 var GameShapeColor = cc.Class({
@@ -73,7 +73,6 @@ var GameShapeColor = cc.Class({
     onLoad: function () {
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
-        this.LoadGameItemPrefab();
         var ev = this.node.addComponent(cc.UITouchEvent);
         ev.callBackTouch = this.OnUITouchEvent.bind(this);
 
@@ -97,7 +96,7 @@ var GameShapeColor = cc.Class({
 
     },
 
-    LoadGameItemPrefab: function () {
+    LoadGameItemPrefab: function (cbFinish) {
         var strPrefab = "App/Prefab/Game/UIGameItem";
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
@@ -105,6 +104,10 @@ var GameShapeColor = cc.Class({
                 return;
             }
             this.gameItemPrefab = prefab;
+
+            if (cbFinish != null) {
+                cbFinish();
+            }
         }.bind(this)
         );
     },
@@ -626,9 +629,9 @@ var GameShapeColor = cc.Class({
         this.listColorShow.length = 0;
         this.loadItemCount = 0;
         if (this.nodeBomb != null) {
-            if (info.nodeBomb != null) {
-                info.nodeBomb.removeFromParent(true);
-                info.nodeBomb = null;
+            if (this.nodeBomb != null) {
+                this.nodeBomb.removeFromParent(true);
+                this.nodeBomb = null;
             }
         }
     },
@@ -638,7 +641,10 @@ var GameShapeColor = cc.Class({
     LoadGame: function (mode) {
         this.ClearGame();
         // this.scheduleOnce(this.LoadGameInternal, 1);
-        this.LoadGameInternal();
+        this.LoadGameItemPrefab(function () {
+            this.LoadGameInternal();
+        }.bind(this));
+
     },
 
     LoadGameInternal: function () {
@@ -901,7 +907,7 @@ var GameShapeColor = cc.Class({
     //node:
     CreateItem: function (infoshape, infocolor, isInner, isMain, i, j) {
 
-        if(this.node==null){
+        if (this.node == null) {
             return;
         }
 
@@ -952,7 +958,7 @@ var GameShapeColor = cc.Class({
             this.SetItemLock(infoRet, true);
         }
         this.listItem.push(infoRet);
-        
+
 
         node.parent = this.node;
         node.active = false;
@@ -972,7 +978,7 @@ var GameShapeColor = cc.Class({
         if (this.nodeBomb != null) {
             return null;
         }
-        if(this.node==null){
+        if (this.node == null) {
             return;
         }
         //var node = new cc.Node("bumb");

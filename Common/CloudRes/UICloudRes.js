@@ -12,9 +12,11 @@ var UICloudRes = cc.Class({
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
         this.textTitle.string = cc.Language.main().GetString("STR_CLOUDRES_TITLE");
+       // this.progressBar.totalLength = this.node.getContentSize().width-32;
         this.UpdateProgress(0);
 
         cc.CloudRes.main().StartDownload({
+            url: cc.Device.main.isLandscape ? cc.AppRes.URL_CLOUND_RES_HD : cc.AppRes.URL_CLOUND_RES,
             success: function (res) {
 
             }.bind(this),
@@ -25,7 +27,7 @@ var UICloudRes = cc.Class({
                 console.log('CloudRes下载进度=', res.progress)
                 console.log('CloudRes已经下载的数据长度=', res.totalBytesWritten)
                 console.log('CloudRes预期需要下载的数据总长度=', res.totalBytesExpectedToWrite)
-                this.UpdateProgress(res.progress);
+                this.UpdateProgress(res.progress / 100.0);
             }.bind(this),
         });
 
@@ -52,6 +54,7 @@ var UICloudRes = cc.Class({
 
     },
     OnCloudResDidFinish: function () {
+        cc.Common.SetBoolOfKey(cc.AppRes.KEY_DOWNLOAD_CLOUNDRES, true);
         if (this.controller != null) {
             this.controller.Close();
         }

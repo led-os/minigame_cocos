@@ -30,7 +30,8 @@ var FileSystemPlatformWrapper = cc.Class({
     },
     DownloadFile: function (obj) {
     },
-
+    DeleteFile: function (filepath) { 
+    },
 });
 
 cc.FileSystemPlatformWrapper = module.export = FileSystemPlatformWrapper; 

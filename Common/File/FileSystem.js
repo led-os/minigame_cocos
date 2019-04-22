@@ -81,7 +81,14 @@ var FileSystem = cc.Class({
         if (this.platform == null) {
             return;
         }
-        this.platform.DownloadFile(url);
+        this.platform.DownloadFile(obj);
+    },
+
+    DeleteFile: function (filepath) {
+        if (this.platform == null) {
+            return;
+        }
+        this.platform.DeleteFile(filepath);
     },
 });
 

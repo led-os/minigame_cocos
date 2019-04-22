@@ -200,9 +200,9 @@ var UIGameShapeColor = cc.Class({
         // var url = cc.AppRes.URL_HTTP_HEAD + cc.Common.GAME_RES_DIR + "/image_bg/bg1.png"; 
         var dirRoot = cc.Common.CLOUD_RES_DIR;
         if (cc.Common.main().isWeiXin) {
-            dirRoot = cc.Common.GAME_RES_DIR;
+            dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
         }
-        var url = cc.AppRes.main().URL_HTTP_HEAD + dirRoot + "/image_bg/" + info.pic;
+        var url = dirRoot + "/image_bg/" + info.pic;
         cc.Debug.Log("listBgNew.count = " + listBgNew.length + " url=" + url);
         cc.TextureCache.main.Load(url, function (err, tex) {
             if (err) {
@@ -391,7 +391,8 @@ var UIGameShapeColor = cc.Class({
             info.id = item.id;
             var dirRoot = cc.Common.CLOUD_RES_DIR;
             if (cc.Common.main().isWeiXin) {
-                dirRoot = cc.Common.GAME_RES_DIR;
+                // dirRoot = cc.Common.GAME_RES_DIR;
+                dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
             }
             var picdir = dirRoot + "/image/" + strPlace + "/" + info.id;
             info.pic = picdir + "/" + info.id + ".png";

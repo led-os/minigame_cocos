@@ -34,11 +34,17 @@ var HomeViewController = cc.Class({
         cc.GameManager.main().StartParsePlace(function () {
 
         }.bind(this)
-        );
+        ); 
 
+       // CloudResViewController.main().Show(null, null);
+        
         cc.GameManager.main().StartParseGuanka(null);
-
-        CloudResViewController.main().Show(null, null);
+        if (cc.Common.main().isWeiXin) {
+            var isDownload = cc.Common.GetBoolOfKey(cc.AppRes.KEY_DOWNLOAD_CLOUNDRES, false);
+            if (!isDownload) {
+                CloudResViewController.main().Show(null, null);
+            }
+        }
     },
 
     LoadPrefabDefault: function () {

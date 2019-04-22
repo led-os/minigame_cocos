@@ -7,7 +7,7 @@ var CloudRes = cc.Class({
 
     StartDownload: function (obj) {
         cc.FileSystem.main().DownloadFile({
-            url: cc.AppRes.URL_CLOUND_RES,
+            url: obj.url,
             success: function (res) {
                 var filePath = res.tempFilePath;
                 console.log("downloadFile=" + filePath)
@@ -41,7 +41,7 @@ var CloudRes = cc.Class({
             success: function (res) {
                 console.log("unzip success=" + filePath);
                 // this.readFile(dir + "/CloudRes/image/Bird/Albatross.png");
-
+                cc.FileSystem.main().DeleteFile(filePath);
             }.bind(this),
             fail: function (res) {
 

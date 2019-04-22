@@ -10,6 +10,7 @@ var Common = cc.Class({
         GAME_DATA_DIR: "GameData",//streamingAssetsPath下的游戏配置等数据
         GAME_DATA_DIR_COMMON: "GameData/common",
         GAME_RES_DIR: "GameRes",//streamingAssetsPath 下的游戏图片等资源
+        CLOUD_RES_DIR_NAME: "CloudRes",//放在云端的资源
         CLOUD_RES_DIR: "GameRes/CloudRes",//放在云端的资源
         RES_CONFIG_DATA: "ConfigData",
         RES_CONFIG_DATA_COMMON: "ConfigDataCommon",

@@ -22,6 +22,10 @@ var TextureCache = cc.Class({
         if (idx != 0) {
             idx = str.indexOf("http://");
         }
+        if (idx != 0) {
+            //微信缓存本地文件
+            idx = str.indexOf("wxfile://");
+        }
         if (idx == 0) {
             return true;
         }
@@ -158,7 +162,7 @@ var TextureCache = cc.Class({
 
         cc.loader.load(url, function (err, tex) {
             if (err) {
-                cc.Debug.Log("TextureCache loadRes fail");
+                cc.Debug.Log("TextureCache loadRes fail url=" + url);
                 cc.Debug.Log(err.message || err);
                 if (completeCallback) {
                     completeCallback(err, tex);

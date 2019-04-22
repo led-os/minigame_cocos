@@ -75,11 +75,13 @@ var UIGameItem = cc.Class({
         var color = info.color;
         //加载图片
         // var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(cc.AppRes.URL_HTTP_HEAD+pic);
-        var strImage = cc.AppRes.main().URL_HTTP_HEAD + pic;
+        // var strImage = cc.AppRes.main().URL_HTTP_HEAD + pic;
+        var strImage = pic;
         if (this.isBomb) {
             strImage = cc.AppRes.IMAGE_Game_Bomb;
         }
-        cc.TextureCache.main.Load(strImage, function (err, tex) {
+
+        var funcLoad = function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
                 cc.Debug.Log("item_pic err");
@@ -97,9 +99,9 @@ var UIGameItem = cc.Class({
             cc.Debug.Log("UpdateBoardItem color =" + color);
             this.UpdateItemColor(sprite, color);
 
-        }.bind(this));
+        }.bind(this);
 
-
+        cc.TextureCache.main.Load(strImage, funcLoad);
     },
     UpdateItem: function (info, cbFinish) {
         if (!this.isBomb) {
@@ -121,15 +123,16 @@ var UIGameItem = cc.Class({
 
         //加载图片
         // var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(cc.AppRes.URL_HTTP_HEAD+pic);
-        var strImage = cc.AppRes.main().URL_HTTP_HEAD + pic;
+        //cc.AppRes.main().URL_HTTP_HEAD + 
+        var strImage = pic;
         if (this.isBomb) {
             strImage = cc.AppRes.IMAGE_Game_Bomb;
         }
         if (isInner == true) {
             // strImage = cc.AppRes.IMAGE_Game_Bomb;
         }
-        cc.Debug.Log("isInner=" + isInner + " id=" + info.id);
-        cc.TextureCache.main.Load(strImage, function (err, tex) {
+        cc.Debug.Log("isInner=" + isInner + " id=" + info.id + " pic=" + strImage);
+        var funcLoad = function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
                 cc.Debug.Log("item_pic err");
@@ -178,7 +181,20 @@ var UIGameItem = cc.Class({
             // this.loadItemCount++;
 
             // }.bind(this).bind(sprite));
-        }.bind(this));
+        }.bind(this);
+
+        // if (cc.Common.main().isWeiXin) {
+        //     if (this.isBomb) {
+        //         cc.TextureCache.main.Load(strImage, funcLoad);
+        //     } else {
+        //         cc.TextureCache.main.LoadUrl(strImage, funcLoad);
+        //     }
+        // } else {
+        //     cc.TextureCache.main.Load(strImage, funcLoad);
+        // }
+
+        cc.TextureCache.main.Load(strImage, funcLoad);
+
 
         var z = this.itemPosZ;
         if (isInner == true) {
