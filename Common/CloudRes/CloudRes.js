@@ -5,21 +5,30 @@ var CloudRes = cc.Class({
     },
 
 
-    StartDownload: function () {
+    StartDownload: function (obj) {
         cc.FileSystem.main().DownloadFile({
-            url: AppRes.URL_CLOUND_RES,
+            url: cc.AppRes.URL_CLOUND_RES,
             success: function (res) {
                 var filePath = res.tempFilePath;
                 console.log("downloadFile=" + filePath)
                 this.UnzipFile(filePath);
+                if (obj.success != null) {
+                    obj.success(res);
+                }
             }.bind(this),
             fail: function (res) {
                 console.log("readFile fail=" + file)
+                if (obj.fail != null) {
+                    obj.fail(res);
+                }
             }.bind(this),
             progress: function (res) {
                 console.log('CloudRes下载进度=', res.progress)
                 console.log('CloudRes已经下载的数据长度=', res.totalBytesWritten)
                 console.log('CloudRes预期需要下载的数据总长度=', res.totalBytesExpectedToWrite)
+                if (obj.progress != null) {
+                    obj.progress(res);
+                }
             }.bind(this),
         });
     },

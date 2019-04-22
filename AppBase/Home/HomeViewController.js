@@ -1,7 +1,7 @@
 var UIViewController = require("UIViewController");
 var UIHomeBase = require("UIHomeBase");
 //var Common = require("Common");
-//var Config = require("Config");
+var CloudResViewController = require("CloudResViewController");
 var GameViewController = require("GameViewController");
 
 var HomeViewController = cc.Class({
@@ -24,7 +24,7 @@ var HomeViewController = cc.Class({
     Init: function () {
         cc.Debug.Log("HomeViewController Init");
         //  this.LoadPrefab();
-        cc.CloudRes.main().StartDownload();
+        // cc.CloudRes.main().StartDownload();
     },
     CreateUI: function () {
         cc.Debug.Log("HomeViewController CreateUI");
@@ -37,6 +37,8 @@ var HomeViewController = cc.Class({
         );
 
         cc.GameManager.main().StartParseGuanka(null);
+
+        CloudResViewController.main().Show(null, null);
     },
 
     LoadPrefabDefault: function () {
