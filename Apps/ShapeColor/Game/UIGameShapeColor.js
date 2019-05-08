@@ -276,7 +276,9 @@ var UIGameShapeColor = cc.Class({
         info.isLoad = false;
         this.listProLoad.push(info);
         var idx = cc.GameManager.placeLevel;
-        var filepath = cc.Common.GAME_RES_DIR + "/guanka/shape_list_place" + idx + ".json";
+        var infoPlace = cc.GameManager.main().GetPlaceItemInfo(idx);
+        //var filepath = cc.Common.GAME_RES_DIR + "/guanka/item_Bird" + ".json";//+ infoPlace.id 
+        var filepath = cc.Common.GAME_RES_DIR + "/guanka/item_" + infoPlace.id + ".json";//
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {
@@ -380,11 +382,7 @@ var UIGameShapeColor = cc.Class({
         }
         //var idx = cc.GameManager.placeLevel;
         var strPlace = json.place;
-        var items = json.list;
-        if (items == null) {
-            items = json.items;
-        }
-
+        var items = json.items;
         for (var i = 0; i < items.length; i++) {
             var info = new cc.ShapeColorItemInfo();
             var item = items[i];

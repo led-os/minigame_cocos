@@ -6,6 +6,11 @@ var UIView = require("UIView");
 var UIGameBase = cc.Class({
     extends: UIView,
 
+    statics: {
+        PLACE_ITEM_TYPE_NONE: "none",
+        PLACE_ITEM_TYPE_VIDEO: "video",
+        PLACE_ITEM_TYPE_LOCK: "lock",
+    },
 
     properties: {
         gamePrefab: {
@@ -164,14 +169,27 @@ var UIGameBase = cc.Class({
             var info = new cc.ItemInfo();
             var item = items[i];
             info.id = cc.JsonUtil.GetItem(item, "id", "");
+            info.game = cc.JsonUtil.GetItem(item, "game", "");
             cc.Debug.Log("place id = " + info.id);
             info.type = cc.JsonUtil.GetItem(item, "type", "");
-            info.isAd = cc.JsonUtil.GetItem(item, "advideo", false);
             info.pic = cc.Common.GAME_RES_DIR + "/" + cc.JsonUtil.GetItem(item, "pic", "place/image/" + info.id + ".png");
             info.title = cc.JsonUtil.GetItem(item, "title", "STR_PLACE_" + info.id);
             //info.icon = info.pic;
             info.language = cc.JsonUtil.GetItem(item, "language", "language");
             // info.index = i;
+
+            info.isAd = false;
+            //if (AppVersion.appCheckHasFinished && (!Common.noad)) 
+            {
+                if (info.type == UIGameBase.PLACE_ITEM_TYPE_VIDEO) {
+                    info.isAd = true;
+                }
+                {
+                    if (info.type == UIGameBase.FPLACE_ITEM_TYPE_LOCK) {
+                        info.isAd = true;
+                    }
+                }
+            }
 
             cc.GameManager.main().listPlace.push(info);
         }

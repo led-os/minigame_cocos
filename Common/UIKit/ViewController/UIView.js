@@ -46,6 +46,9 @@ cc.Class({
     },
 
     LayOut: function () {
+    },
+
+    LayOutDidFinish: function () {
 
     },
 

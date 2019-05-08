@@ -33,18 +33,20 @@ var HomeViewController = cc.Class({
         this.ui.SetController(this);
         cc.GameManager.main().StartParsePlace(function () {
 
-        }.bind(this)
-        ); 
-
-       // CloudResViewController.main().Show(null, null);
-        
-        cc.GameManager.main().StartParseGuanka(null);
-        if (cc.Common.main().isWeiXin) {
-            var isDownload = cc.Common.GetBoolOfKey(cc.AppRes.KEY_DOWNLOAD_CLOUNDRES, false);
-            if (!isDownload) {
-                CloudResViewController.main().Show(null, null);
+            cc.GameManager.main().StartParseGuanka(null);
+            // if (cc.Common.main().isWeiXin) 
+            {
+                var isDownload = cc.Common.GetBoolOfKey(cc.AppRes.KEY_DOWNLOAD_CLOUNDRES, false);
+                // if (!isDownload)
+                {
+                    CloudResViewController.main().Show(null, null);
+                }
             }
-        }
+        }.bind(this)
+        );
+
+        // CloudResViewController.main().Show(null, null);
+
     },
 
     LoadPrefabDefault: function () {

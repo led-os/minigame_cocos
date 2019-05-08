@@ -1,18 +1,19 @@
 var UIView = require("UIView");
+var UIProgress = require("UIProgress");
 var UICloudRes = cc.Class({
     extends: UIView,
     properties: {
         imageBg: cc.Sprite,
         textTitle: cc.Label,
         textStatus: cc.Label,
-        progressBar: cc.ProgressBar,
+        uiProgress: UIProgress,
     },
 
     onLoad: function () {
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
         this.textTitle.string = cc.Language.main().GetString("STR_CLOUDRES_TITLE");
-       // this.progressBar.totalLength = this.node.getContentSize().width-32;
+        // this.progressBar.totalLength = this.node.getContentSize().width-32;
         this.UpdateProgress(0);
 
         cc.CloudRes.main().StartDownload({
@@ -31,6 +32,7 @@ var UICloudRes = cc.Class({
             }.bind(this),
         });
 
+        this.LayOut();
     },
 
     UpdateProgress: function (value) {
@@ -41,8 +43,9 @@ var UICloudRes = cc.Class({
         if (progress > 1) {
             progress = 1;
         }
-        var percent = Math.floor(progress * 100);
-        this.progressBar.progress = progress;
+        var percent = Math.floor(progress * 100); 
+        progress = 0.5;
+        this.uiProgress.UpdateProgress(progress);
         //下载进度:xxx%
         var str = cc.Language.main().GetString("STR_CLOUDRES_STATUS");
         str = str.replace("xxx", percent.toString());
@@ -58,6 +61,11 @@ var UICloudRes = cc.Class({
         if (this.controller != null) {
             this.controller.Close();
         }
+    },
+
+    LayOut: function () {
+        var size = this.node.getContentSize();
+       
     },
 
 
