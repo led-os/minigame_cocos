@@ -15,6 +15,12 @@ var GameShapeColor = cc.Class({
         GAME_MODE_COLOR: 1,
         GAME_MODE_SHAPE_COLOR: 2,
 
+        ERROR_STATUS_NONE: 0,
+        ERROR_STATUS_SHAPE: 1,
+        ERROR_STATUS_COLOR: 2,
+        ERROR_STATUS_SHAPE_COLOR: 3,
+
+
         STR_KEY_GAME_STATUS_SHAPE: "KEY_GAME_STATUS_SHAPE_",
         STR_KEY_GAME_STATUS_COLOR: "KEY_GAME_STATUS_COLOR_",
         GAME_STATUS_UN_START: 0,//没有开始
@@ -27,6 +33,7 @@ var GameShapeColor = cc.Class({
         isShaderInited: false,
         ID_BOMB: "bomb",
         isSelectTheBomb: false,
+
     },
 
     properties: {
@@ -67,6 +74,9 @@ var GameShapeColor = cc.Class({
         itemInfoSel: cc.ShapeColorItemInfo,
         loadItemCount: 0,
         languageColor: null,
+
+        isError: false,
+        cbGameDidError: null,
 
     },
     //百度tts:  http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=你要转换的文字 
@@ -265,7 +275,10 @@ var GameShapeColor = cc.Class({
         //var posnew = new cc.Vec2(pos.x - this.node.getContentSize().width / 2, pos.y - this.node.getContentSize().height / 2);
         var posnew = pos;
         this.ptDown = posnew;
-
+        this.isError = false;
+        if ((this.cbGameDidError != null)) {
+            this.cbGameDidError(this, GameShapeColor.ERROR_STATUS_HDIE, "");
+        }
         //Vector3 posword = mainCam.ScreenToWorldPoint(pos);
         cc.Debug.Log("onTouchDown: postouch=" + pos);
         var index = 0;
@@ -367,6 +380,23 @@ var GameShapeColor = cc.Class({
 
             if (rc.contains(positemNew)) {
                 if (!this.isTheSamePairItems(this.itemInfoSel, info)) {
+                    if ((this.cbGameDidError != null) && (!this.isError)) {
+                        this.isError = true;
+                        var error = 0;
+                        if ((this.itemInfoSel.id != info.id) && (this.itemInfoSel.color != info.color)) {
+                            error = GameShapeColor.ERROR_STATUS_SHAPE_COLOR;
+                        }
+                        else {
+                            if (this.itemInfoSel.id != info.id) {
+                                error = GameShapeColor.ERROR_STATUS_SHAPE;
+                            }
+                            if (this.itemInfoSel.color != info.color) {
+                                error = GameShapeColor.ERROR_STATUS_COLOR;
+                            }
+                        }
+
+                        this.cbGameDidError(this, error, "");
+                    }
                     continue;
                 }
                 cc.Debug.Log("合并正确");
@@ -502,7 +532,9 @@ var GameShapeColor = cc.Class({
             this.textTitle.node.active = true;
             this.textTitle.string = str;
         }
-
+        if ((this.cbGameDidError != null)) {
+            this.cbGameDidError(this, GameShapeColor.ERROR_STATUS_NONE, str);
+        }
     },
 
     LanguageKeyOfShape: function (info) {

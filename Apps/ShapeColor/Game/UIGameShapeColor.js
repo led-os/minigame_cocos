@@ -36,6 +36,7 @@ var UIGameShapeColor = cc.Class({
         this.UnifyButtonSprite(this.btnBack);
         this.LoadLanguageGame();
         this.LoadLanguageColor(this.LoadLanguageDidFinish.bind(this));
+        this.textTitle.node.active = false;
         // this.LoadGamePrefab();
         //var ev = this.node.addComponent(cc.UITouchEvent);
         // ev.callBackTouch = this.OnUITouchEvent;
@@ -64,7 +65,7 @@ var UIGameShapeColor = cc.Class({
         this.game = node.getComponent(GameShapeColor);
         this.game.node.parent = this.node;
         this.game.languageColor = this.languageColor;
-
+        this.game.cbGameDidError = this.OnGameShapeColorDidError.bind(this);
         //zorder 让imageBg 显示在最底层，game显示在UI下面
         this.imageBg.node.zIndex = -20;
         this.game.node.zIndex = -10;
@@ -138,6 +139,46 @@ var UIGameShapeColor = cc.Class({
         //必须在loadgame之后loadbg
         this.LoadBg();
     },
+    OnGameShapeColorDidError: function (g, error, str) {
+        this.UpdateError(error, str);
+    },
+    UpdateError: function (error, str) {
+        var title = "";
+        var color = cc.Color.WHITE;
+        this.textTitle.node.active = true;
+     
+        switch (error) {
+            case GameShapeColor.ERROR_STATUS_NONE:
+                title = str;
+                color = cc.Color.WHITE;
+                break;
+            case GameShapeColor.ERROR_STATUS_SHAPE:
+                title = cc.Language.main().GetString("STR_ERROR_SHAPE");
+                color = cc.Color.RED;
+                cc.Tts.Speak(title);
+                break;
+            case GameShapeColor.ERROR_STATUS_COLOR:
+                title = cc.Language.main().GetString("STR_ERROR_COLOR");
+                color = cc.Color.RED;
+                cc.Tts.Speak(title);
+                break;
+            case GameShapeColor.ERROR_STATUS_SHAPE_COLOR:
+                title = cc.Language.main().GetString("STR_ERROR_SHAPE_COLOR");
+                color = cc.Color.RED;
+                cc.Tts.Speak(title);
+                break;
+            case GameShapeColor.ERROR_STATUS_HIDE:
+                this.textTitle.node.active = false;
+                break;
+            case GameShapeColor.ERROR_STATUS_SHOW:
+                this.textTitle.node.active = true;
+                break;
+        }
+        cc.Debug.Log("UpdateError error=" + error + " title=" + title);
+        this.textTitle.string = title;
+        this.textTitle.node.color = color;
+    },
+
 
     CheckAllLoad: function () {
         cc.Debug.Log("UIGameShapeColor::CheckAllLoad this.isShowGame=" + this.isShowGame + " this.listGuanka=" + this.listGuanka.length);

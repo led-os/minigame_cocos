@@ -79,7 +79,7 @@ var AudioPlay = cc.Class({
     PlayBgMusic: function () {
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
         if (ret) {
-            cc.AudioCache.main.Load("App/Audio/Bg", function (err, audioClip) {
+            cc.AudioCache.main.Load(cc.AppRes.AUDIO_BG, function (err, audioClip) {
                 if (err) {
                     cc.Debug.Log(err.message || err);
                     return ret;
