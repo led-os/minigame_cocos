@@ -79,7 +79,12 @@ var AudioPlay = cc.Class({
     PlayBgMusic: function () {
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
         if (ret) {
-            cc.AudioCache.main.Load(cc.AppRes.AUDIO_BG, function (err, audioClip) {
+            var dirRoot = cc.Common.CLOUD_RES_DIR;
+            if (cc.Common.main().isWeiXin) {
+                dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
+            }
+            var url = dirRoot + "/" + cc.AppRes.AUDIO_BG;
+            cc.AudioCache.main.Load(url, function (err, audioClip) {
                 if (err) {
                     cc.Debug.Log(err.message || err);
                     return ret;

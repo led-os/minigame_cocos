@@ -208,7 +208,13 @@ var UIGameBase = cc.Class({
             info.game = cc.JsonUtil.GetItem(item, "game", "");
             cc.Debug.Log("place id = " + info.id);
             info.type = cc.JsonUtil.GetItem(item, "type", "");
-            info.pic = cc.Common.GAME_RES_DIR + "/" + cc.JsonUtil.GetItem(item, "pic", "place/image/" + info.id + ".png");
+           
+            var dirRoot = cc.Common.CLOUD_RES_DIR;
+            if (cc.Common.main().isWeiXin) {
+                dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
+            }
+            info.pic = dirRoot + "/place/image/" + info.id + ".png";
+            
             info.title = cc.JsonUtil.GetItem(item, "title", "STR_PLACE_" + info.id);
             //info.icon = info.pic;
             info.language = cc.JsonUtil.GetItem(item, "language", "language");
