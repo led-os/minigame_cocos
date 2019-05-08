@@ -1,6 +1,6 @@
 var UIViewController = require("UIViewController");
 //var Common = require("Common");
-//var Config = require("Config");
+var AlertLockViewController = require("AlertLockViewController");
 var UIView = require("UIView");
 
 var UIGameBase = cc.Class({
@@ -32,7 +32,7 @@ var UIGameBase = cc.Class({
         btnBack: {
             default: null,
             type: cc.Button
-        }, 
+        },
         imageBg: cc.Sprite,
         textTitle: cc.Label,
         callbackGuankaFinish: null,
@@ -44,6 +44,8 @@ var UIGameBase = cc.Class({
     onLoad: function () {
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
+        this.UnifyButtonSprite(this.btnMusic);
+        this.UpdateBtnMusic();
     },
     LoadGamePrefab: function () {
         var strPrefab = "App/Prefab/Game/Game" + cc.Config.main().appType;
@@ -69,7 +71,24 @@ var UIGameBase = cc.Class({
         }
     },
 
+    UpdateBtnMusic: function () {
+        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+        cc.TextureUtil.UpdateButtonTexture(this.btnMusic, ret ? cc.AppRes.IMAGE_BtnMusicOn : cc.AppRes.IMAGE_BtnMusicOff, false);
+    },
+
+
     OnClickBtnMusic: function (event, customEventData) {
+        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
+        var v = !ret;
+        cc.Debug.Log("UpdateBtnSwitch value=" + v);
+        cc.Common.SetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, v);
+        this.UpdateBtnMusic();
+        if (v) {
+            cc.AudioPlay.main().PlayBgMusic();
+        }
+        else {
+            cc.AudioPlay.main().PlayStopBgMusic();
+        }
     },
 
     //guanka 
@@ -102,6 +121,14 @@ var UIGameBase = cc.Class({
     },
 
     UpdateGuankaLevel: function (level) {
+        var idx = cc.GameManager.main().gameLevel;
+        cc.Debug.Log("UIGameBase::UpdateGuankaLevel idx=" + idx);
+        if (idx >= 3) {
+            var isLock = cc.Common.GetBoolOfKey(cc.AppRes.KEY_GAME_LOCK, true);
+            if (isLock) {
+                AlertLockViewController.main().Show(null, null);
+            }
+        }
 
     },
     UpdatePlaceLevel: function (level) {

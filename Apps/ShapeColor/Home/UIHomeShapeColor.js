@@ -7,7 +7,7 @@ var GuankaViewController = require("GuankaViewController");
 var GameViewController = require("GameViewController");
 var GameShapeColor = require("GameShapeColor");
 var LearnProgressViewController = require("LearnProgressViewController");
-
+var AlertLockViewController = require("AlertLockViewController");
 cc.Class({
     extends: UIHomeBase,
     properties: {
@@ -67,7 +67,7 @@ cc.Class({
 
         cc.ShaderManager.main().Add(require("ShaderShapeColor"));
         cc.ShaderManager.main().Add(require("Glowing"));
- 
+
         //var ev = this.node.addComponent(cc.UITouchEvent);
 
         // cc.AudioPlay.main().PlayFile("App/Audio/BtnClick");
@@ -206,7 +206,6 @@ cc.Class({
 
             });
             */
-
 
     },
 
@@ -363,8 +362,6 @@ cc.Class({
         //         }
         //     })
         // }); 
-
-
 
         if (!this.isActionFinish) {
             return;

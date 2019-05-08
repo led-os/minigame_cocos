@@ -21,6 +21,7 @@ var AppRes = cc.Class({
         KEY_COMMENT_LAST_TIME: "key_comment_last_time",
         KEY_USER_GUIDE: "key_comment_user_guide_",
         KEY_DOWNLOAD_CLOUNDRES: "KEY_DOWNLOAD_CLOUNDRES",
+        KEY_GAME_LOCK: "KEY_GAME_LOCK22111222",
 
         //share
         SHARE_TITLE: "宝宝认形状学颜色快乐学习成长",
@@ -30,6 +31,9 @@ var AppRes = cc.Class({
 
 
         //image
+        IMAGE_BtnMusicOn: "App/UI/Home/BtnMusicOn",
+        IMAGE_BtnMusicOff: "App/UI/Home/BtnMusicOff",
+
         IMAGE_HOME_BG: "App/UI/Home/LearnProgressBg",
         IMAGE_BTN_SWITCH_UNSEL: "App/UI/Common/BtnSwitchUnSel",
         IMAGE_BTN_SWITCH_SEL: "App/UI/Common/BtnSwitchSel",

@@ -49,6 +49,7 @@ cc.Class({
         this.UnifyButtonSprite(this.btnSetting);
         this.UnifyButtonSprite(this.btnShare);
         this.UnifyButtonSprite(this.btnAdVideo);
+        this.UnifyButtonSprite(this.btnMusic);
 
         if (!cc.sys.isNative) {
             this.btnNoAd.node.active = false;
@@ -58,7 +59,7 @@ cc.Class({
             this.btnMore.node.active = false;
             //this.btnShare.node.active = false;
         }
-
+        this.UpdateBtnMusic();
         this.LayOut();
     },
 
@@ -71,7 +72,23 @@ cc.Class({
 
     },
 
+    UpdateBtnMusic: function () {
+        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+        cc.TextureUtil.UpdateButtonTexture(this.btnMusic, ret ? cc.AppRes.IMAGE_BtnMusicOn : cc.AppRes.IMAGE_BtnMusicOff, false);
+    },
+
     OnClickBtnMusic: function (event, customEventData) {
+        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
+        var v = !ret;
+        cc.Debug.Log("UpdateBtnSwitch value=" + v);
+        cc.Common.SetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, v);
+        this.UpdateBtnMusic();
+        if (v) {
+            cc.AudioPlay.main().PlayBgMusic();
+        }
+        else {
+            cc.AudioPlay.main().PlayStopBgMusic();
+        }
     },
     OnClickBtnNoAd: function (event, customEventData) {
     },
