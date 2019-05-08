@@ -35,6 +35,10 @@ cc.Class({
             default: null,
             type: cc.Button
         },
+        btnMusic: {
+            default: null,
+            type: cc.Button
+        },
     },
 
     onLoad: function () {
@@ -67,7 +71,8 @@ cc.Class({
 
     },
 
-
+    OnClickBtnMusic: function (event, customEventData) {
+    },
     OnClickBtnNoAd: function (event, customEventData) {
     },
     OnClickBtnMore: function (event, customEventData) {

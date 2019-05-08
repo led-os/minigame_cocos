@@ -25,8 +25,16 @@ var UIGameBase = cc.Class({
             default: [],
             type: cc.LoadItemInfo
         },
-
+        btnMusic: {
+            default: null,
+            type: cc.Button
+        },
+        btnBack: {
+            default: null,
+            type: cc.Button
+        }, 
         imageBg: cc.Sprite,
+        textTitle: cc.Label,
         callbackGuankaFinish: null,
         callbackPlaceFinish: null,
 
@@ -61,7 +69,8 @@ var UIGameBase = cc.Class({
         }
     },
 
-
+    OnClickBtnMusic: function (event, customEventData) {
+    },
 
     //guanka 
 

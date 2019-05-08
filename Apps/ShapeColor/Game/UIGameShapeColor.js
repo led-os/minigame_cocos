@@ -12,13 +12,6 @@ var UIGameShapeColor = cc.Class({
     },
 
     properties: {
-
-        btnBack: {
-            default: null,
-            type: cc.Button
-        },
-        textTitle: cc.Label,
-
         game: {
             default: null,
             type: GameShapeColor

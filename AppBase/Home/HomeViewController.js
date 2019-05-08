@@ -34,10 +34,10 @@ var HomeViewController = cc.Class({
         cc.GameManager.main().StartParsePlace(function () {
 
             cc.GameManager.main().StartParseGuanka(null);
-            // if (cc.Common.main().isWeiXin) 
+            if (cc.Common.main().isWeiXin) 
             {
                 var isDownload = cc.Common.GetBoolOfKey(cc.AppRes.KEY_DOWNLOAD_CLOUNDRES, false);
-                // if (!isDownload)
+                 if (!isDownload)
                 {
                     CloudResViewController.main().Show(null, null);
                 }

@@ -43,8 +43,8 @@ var UICloudRes = cc.Class({
         if (progress > 1) {
             progress = 1;
         }
-        var percent = Math.floor(progress * 100); 
-        progress = 0.5;
+        var percent = Math.floor(progress * 100);
+        // progress = 0.5;
         this.uiProgress.UpdateProgress(progress);
         //下载进度:xxx%
         var str = cc.Language.main().GetString("STR_CLOUDRES_STATUS");
@@ -65,7 +65,7 @@ var UICloudRes = cc.Class({
 
     LayOut: function () {
         var size = this.node.getContentSize();
-       
+
     },
 
 
