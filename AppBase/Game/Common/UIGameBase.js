@@ -123,9 +123,11 @@ var UIGameBase = cc.Class({
     UpdateGuankaLevel: function (level) {
         var idx = cc.GameManager.main().gameLevel;
         cc.Debug.Log("UIGameBase::UpdateGuankaLevel idx=" + idx);
-        if (idx >= 3) {
+        // if (idx >= 3) 
+        {
             var isLock = cc.Common.GetBoolOfKey(cc.AppRes.KEY_GAME_LOCK, true);
-            if (isLock) {
+            // if (isLock) 
+            {
                 AlertLockViewController.main().Show(null, null);
             }
         }
@@ -208,13 +210,13 @@ var UIGameBase = cc.Class({
             info.game = cc.JsonUtil.GetItem(item, "game", "");
             cc.Debug.Log("place id = " + info.id);
             info.type = cc.JsonUtil.GetItem(item, "type", "");
-           
+
             var dirRoot = cc.Common.CLOUD_RES_DIR;
             if (cc.Common.main().isWeiXin) {
                 dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
             }
             info.pic = dirRoot + "/place/image/" + info.id + ".png";
-            
+
             info.title = cc.JsonUtil.GetItem(item, "title", "STR_PLACE_" + info.id);
             //info.icon = info.pic;
             info.language = cc.JsonUtil.GetItem(item, "language", "language");

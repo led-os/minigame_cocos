@@ -84,6 +84,12 @@ var AudioPlay = cc.Class({
                 dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
             }
             var url = dirRoot + "/" + cc.AppRes.AUDIO_BG;
+
+            if (cc.Common.main().isWeiXin) {
+                this.PlayUrl(url + ".mp3");
+                return;
+            }
+
             cc.AudioCache.main.Load(url, function (err, audioClip) {
                 if (err) {
                     cc.Debug.Log(err.message || err);

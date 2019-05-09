@@ -37,6 +37,37 @@ var LayoutAlign = cc.Class({
                 return this.UpdateType(value);
             },
         },
+
+
+        //     The offset of the lower left corner of the rectangle relative to the lower left
+        //     anchor.
+        _offsetMin: cc.Vec2,
+        offsetMin:
+        {
+            type: cc.Vec2,
+            get: function () {
+                return this._offsetMin;
+            },
+            set: function (value) {
+                this._offsetMin = value;
+                this.LayOut();
+            },
+        },
+
+        _offsetMax: cc.Vec2,
+        //     The offset of the upper right corner of the rectangle relative to the upper right
+        //     anchor.
+        offsetMax:
+        {
+            type: cc.Vec2,
+            get: function () {
+                return this._offsetMax;
+            },
+            set: function (value) {
+                this._offsetMax = value;
+                this.LayOut();
+            },
+        },
     },
 
 
@@ -82,27 +113,27 @@ var LayoutAlign = cc.Class({
             case AlignType.UP:
                 {
                     x = this.node.getPosition().x;
-                    y = h_parent / 2 - h / 2;
+                    y = h_parent / 2 - h / 2 - this.offsetMax.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case AlignType.DOWN:
                 {
                     x = this.node.getPosition().x;
-                    y = -h_parent / 2 + h / 2;
+                    y = -h_parent / 2 + h / 2 + this.offsetMin.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case AlignType.LEFT:
                 {
-                    x = -w_parent / 2 + w / 2;
+                    x = -w_parent / 2 + w / 2 + this.offsetMin.x;
                     y = this.node.getPosition().y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case AlignType.RIGHT:
                 {
-                    x = w_parent / 2 - w / 2;
+                    x = w_parent / 2 - w / 2 - this.offsetMax.x;
                     y = this.node.getPosition().y;
                     this.node.setPosition(x, y, 0);
                 }
@@ -111,29 +142,29 @@ var LayoutAlign = cc.Class({
             case AlignType.UP_LEFT:
                 {
                     //x = this.node.getPosition().x;
-                    x = -w_parent / 2 + w / 2;
-                    y = h_parent / 2 - h / 2;
+                    x = -w_parent / 2 + w / 2 + this.offsetMin.x;
+                    y = h_parent / 2 - h / 2 - this.offsetMax.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case AlignType.UP_RIGHT:
                 {
-                    x = w_parent / 2 - w / 2;
-                    y = h_parent / 2 - h / 2;
+                    x = w_parent / 2 - w / 2 - this.offsetMax.x;
+                    y = h_parent / 2 - h / 2 - this.offsetMax.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case AlignType.DOWN_LEFT:
                 {
-                    x = -w_parent / 2 + w / 2;
-                    y = -h_parent / 2 + h / 2;
+                    x = -w_parent / 2 + w / 2 + this.offsetMin.x;
+                    y = -h_parent / 2 + h / 2 + this.offsetMin.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
             case AlignType.DOWN_RIGHT:
                 {
-                    x = w_parent / 2 - w / 2;
-                    y = -h_parent / 2 + h / 2;
+                    x = w_parent / 2 - w / 2 - this.offsetMax.x;
+                    y = -h_parent / 2 + h / 2 + this.offsetMin.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;

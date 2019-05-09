@@ -51,6 +51,7 @@ var UIAlertLock = cc.Class({
 
         this.UpdateBtnText(this.btnYes, strYes, w);
         this.UpdateBtnText(this.btnNo, strNo, w);
+        this.LayOut();
     },
 
     UpdateBtnText: function (btn, str, w) {
@@ -60,6 +61,16 @@ var UIAlertLock = cc.Class({
         btn.node.setContentSize(w, h);
     },
 
+    LayOut: function () {
+        var size = this.node.getContentSize();
+        var ratio = 0.5;
+        var x, y, w, h;
+        w = size.width * ratio;
+        h = size.height * ratio;
+        w = Math.min(w,h);
+        h = w;
+        this.content.setContentSize(w, h);
+    },
 
     DoUnLockGame: function () {
         cc.Common.SetBoolOfKey(cc.AppRes.KEY_GAME_LOCK, false);
