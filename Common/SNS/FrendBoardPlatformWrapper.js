@@ -14,8 +14,10 @@ var FrendBoardPlatformWrapper = cc.Class({
         return p;
     },
  
-    SaveData: function (source, title, pic, url) {
+    SaveData: function (score) {
 
+    },
+    ShowFrendBoard: function () { 
     },
 });
 

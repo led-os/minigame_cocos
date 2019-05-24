@@ -12,11 +12,19 @@ var FrendBoard = cc.Class({
         this.platform = p.GetPlatform();
     },
 
-    SaveData: function (source, title, pic, url) {
+    //score:string
+    SaveData: function (score) {
         if (this.platform == null) {
             return;
         }
-        this.platform.FrendBoardImageText(source, title, pic, url);
+        this.platform.SaveData(score);
+    },
+
+    ShowFrendBoard:function () {
+        if (this.platform == null) {
+            return;
+        }
+        this.platform.ShowFrendBoard();
     },
 });
 

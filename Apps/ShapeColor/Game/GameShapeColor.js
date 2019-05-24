@@ -4,7 +4,7 @@ var UIBoard = require("UIBoard");
 var UIView = require("UIView");
 
 //shu： wx621ff1107207384c
-//weixin小程序appid: o
+//weixin小程序appid: heng: wx2c5d3abfad26e8b1
 //cocos: wx6ac3f5090a6b99c5
 //weixin test app：wx844d0aa648111acb
 var GameShapeColor = cc.Class({

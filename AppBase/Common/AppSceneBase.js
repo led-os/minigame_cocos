@@ -108,8 +108,8 @@ var AppSceneBase = cc.Class({
             // this.sizeCanvas = cc.size(0, 0);
             // this.sizeCanvas.height = size.height;
             // cc.Debug.Log("canvasMain size=" + size);
-            // let screenSize = cc.view.getVisibleSize();//屏幕分辨率
-            // cc.Debug.Log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
+             let screenSize = cc.view.getVisibleSize();//屏幕分辨率
+             cc.Debug.Log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
 
             // this.sizeCanvas.width = screenSize.width * this.sizeCanvas.height / screenSize.height;
             // cc.Debug.Log("sizeCanvas size=" + this.sizeCanvas);
@@ -213,7 +213,7 @@ var AppSceneBase = cc.Class({
             this.rootViewController.DestroyObjController();
         }
         this.rootViewController = controller;
-        this.rootViewController.SetViewParent(this.canvasMain.node);//this.rootNode  this.canvasMain.node
+        this.rootViewController.SetViewParent(this.rootNode);//this.rootNode  this.canvasMain.node
 
 
     },

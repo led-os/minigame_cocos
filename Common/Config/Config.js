@@ -34,6 +34,13 @@ var Config = cc.Class({
                 return this.rootJsonCommon.APP_TYPE;
             },
         },
+        version:
+        {
+            get: function () {
+                return this.rootJsonCommon.version;
+            },
+        },
+
         channel:
         {
             get: function () {
@@ -66,7 +73,7 @@ var Config = cc.Class({
                 }
                 return ret;
             },
-        },
+        }, 
     },
 
     SetLoadFinishCallBack: function (callback, info) {

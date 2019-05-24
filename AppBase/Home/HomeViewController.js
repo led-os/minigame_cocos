@@ -1,7 +1,6 @@
 var UIViewController = require("UIViewController");
 var UIHomeBase = require("UIHomeBase");
 //var Common = require("Common");
-var CloudResViewController = require("CloudResViewController");
 var GameViewController = require("GameViewController");
 
 var HomeViewController = cc.Class({
@@ -32,16 +31,7 @@ var HomeViewController = cc.Class({
         this.ui = node.getComponent(UIHomeBase);
         this.ui.SetController(this);
         cc.GameManager.main().StartParsePlace(function () {
-
             cc.GameManager.main().StartParseGuanka(null);
-            if (cc.Common.main().isWeiXin) 
-            {
-                var isDownload = cc.Common.GetBoolOfKey(cc.AppRes.KEY_DOWNLOAD_CLOUNDRES, false);
-                 if (!isDownload)
-                {
-                    CloudResViewController.main().Show(null, null);
-                }
-            }
         }.bind(this)
         );
 

@@ -44,8 +44,26 @@ var UISetting = cc.Class({
         this.UnifyButtonSprite(this.btnBack);
         this.UpdateItem();
 
-        this.textTitle.string = cc.Language.main().GetString("STR_SETTING");
+        this.textTitle.string = cc.Language.main().GetString("STR_SETTING"); 
 
+        var dirRoot = cc.Common.CLOUD_RES_DIR;
+        if (cc.Common.main().isWeiXin) {
+            dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
+        }
+        var strbg = dirRoot + "/" + cc.AppRes.SETTING_BG;
+        cc.Debug.Log(" setting strbg=" + strbg);
+        cc.TextureCache.main.Load(strbg, function (err, tex) {
+            if (err) {
+                cc.Debug.Log(" setting strbg error");
+                cc.Debug.Log(err.message || err);
+                return;
+            }
+            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
+            if (lyscale) {
+                lyscale.LayOut();
+            }
+        }.bind(this));
     },
 
     UpdateItem: function () {

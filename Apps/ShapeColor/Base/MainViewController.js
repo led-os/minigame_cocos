@@ -3,18 +3,54 @@ var HomeViewController = require("HomeViewController");
 //var Language = require("Language");
 var PlaceViewController = require("PlaceViewController");
 var GuankaViewController = require("GuankaViewController");
+var CloudResViewController = require("CloudResViewController");
 
 var MainViewController = cc.Class({
     extends: NaviViewController,
-  
+
     ViewDidLoad: function () {
         this._super();
-        this.Push(HomeViewController.main());//HomeViewController
-      //moon ui for test
+        //moon ui for test
         var str = cc.Language.main().GetString("APP_NAME");
         cc.Debug.Log("Language GetString=" + str);
+
+        var isShowClound = false;
+        if (cc.Common.main().isWeiXin) {
+            var isDownload = cc.Common.GetBoolOfKey(cc.AppRes.KEY_DOWNLOAD_CLOUNDRES, false);
+            if (!isDownload) {
+                //第一次 下载资源
+                isShowClound = true;
+            } else {
+                cc.CloudResVersion.main().Load(function () {
+                    var versionNow = cc.Config.main().version;
+                    var versionLocal = cc.CloudResVersion.main().version;
+                    cc.Debug.Log("version: versionNow=" + versionNow + " versionLocal=" + versionLocal);
+                    if (versionNow > versionLocal) {
+                        //需要更新资源 
+                        isShowClound = true;
+                    }
+
+                }.bind(this));
+            }
+        }
+
+        if (isShowClound) {
+            this.GotoCloundRes();
+        } else {
+            this.GotoHome();
+        }
     },
 
+    CloundResDidClose(p) {
+        this.GotoHome();
+    },
+
+    GotoCloundRes() {
+        CloudResViewController.main().Show(null, this.CloundResDidClose.bind(this));
+    },
+    GotoHome() {
+        this.Push(HomeViewController.main());//HomeViewController
+    },
 });
 
 //单例对象 方法一

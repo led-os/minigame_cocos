@@ -60,10 +60,27 @@ cc.Class({
         this.listBtns.push(this.btnShapeColor);
 
         this.isActionFinish = false;
-
+ 
         if (cc.Common.main().isAndroid) {
 
         }
+
+        var dirRoot = cc.Common.CLOUD_RES_DIR;
+        if (cc.Common.main().isWeiXin) {
+            dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
+        }
+        var strbg = dirRoot + "/" + cc.AppRes.HOME_BG;
+        cc.TextureCache.main.Load(strbg, function (err, tex) {
+            if (err) {
+                cc.Debug.Log(err.message || err);
+                return;
+            }
+            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
+            if (lyscale) {
+                lyscale.LayOut();
+            }
+        }.bind(this));
 
         cc.ShaderManager.main().Add(require("ShaderShapeColor"));
         cc.ShaderManager.main().Add(require("Glowing"));
@@ -361,12 +378,14 @@ cc.Class({
         //             console.log(res)
         //         }
         //     })
-        // }); 
+        // }); pp
 
         if (!this.isActionFinish) {
             return;
         }
         this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE);
+
+        //cc.FrendBoard.main().ShowFrendBoard();
 
     },
     OnClickBtnColor: function (event, customEventData) {
@@ -374,6 +393,9 @@ cc.Class({
             return;
         }
         this.GotoGameByMode(GameShapeColor.GAME_MODE_COLOR);
+
+        //let score = '' + 50;
+        //cc.FrendBoard.main().SaveData(score);
     },
     OnClickBtnShapeColor: function (event, customEventData) {
         if (!this.isActionFinish) {

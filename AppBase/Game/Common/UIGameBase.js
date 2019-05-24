@@ -123,12 +123,10 @@ var UIGameBase = cc.Class({
     UpdateGuankaLevel: function (level) {
         var idx = cc.GameManager.main().gameLevel;
         cc.Debug.Log("UIGameBase::UpdateGuankaLevel idx=" + idx);
-        // if (idx >= 3) 
-        {
+        if (idx >= 3) {
             var isLock = cc.Common.GetBoolOfKey(cc.AppRes.KEY_GAME_LOCK, true);
-            // if (isLock) 
-            {
-                AlertLockViewController.main().Show(null, null);
+            if (isLock) {
+                //AlertLockViewController.main().Show(null, null);
             }
         }
 

@@ -71,9 +71,7 @@ var Common = cc.Class({
 
             //cc.Debug.Log("canvasMain size=" + size);
             //cc.Debug.Log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
-
-
-            //cc.Debug.Log("sizeCanvas size=" + sizeCanvas);
+            cc.Debug.Log("sizeCanvas size=" + sizeCanvas);
             return sizeCanvas;
         },
 
