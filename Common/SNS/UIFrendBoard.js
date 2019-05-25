@@ -42,9 +42,8 @@ cc.Class({
 
     start() {
         if (cc.Common.main().isWeiXin) {
-            this.Show(true);
+            this.Show(false);
         }
-
 
     },
 
@@ -89,6 +88,7 @@ cc.Class({
 
     Show(isShow) {
         this.isShowRanking = isShow;
+        this.spDisplay.node.active = isShow;
         if (isShow) {
             this.messageSharecanvas()
         }

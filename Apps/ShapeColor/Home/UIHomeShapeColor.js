@@ -387,6 +387,10 @@ cc.Class({
 
         //cc.FrendBoard.main().ShowFrendBoard();
 
+        // let score = "60";
+        // cc.Debug.Log("OnGameWin score="+score);
+        // cc.FrendBoard.main().SaveData(score);
+
     },
     OnClickBtnColor: function (event, customEventData) {
         if (!this.isActionFinish) {
@@ -394,8 +398,8 @@ cc.Class({
         }
         this.GotoGameByMode(GameShapeColor.GAME_MODE_COLOR);
 
-        //let score = '' + 50;
-        //cc.FrendBoard.main().SaveData(score);
+       // let score = '' + 50;
+       // cc.FrendBoard.main().SaveData(score);
     },
     OnClickBtnShapeColor: function (event, customEventData) {
         if (!this.isActionFinish) {

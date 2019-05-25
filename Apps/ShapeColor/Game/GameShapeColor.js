@@ -225,9 +225,16 @@ var GameShapeColor = cc.Class({
     },
 
     OnGameWin: function () {
-        //show game win
-        cc.GameManager.main().gameLevelFinish = cc.GameManager.main().gameLevel;
-        //gameEndParticle.Play();
+
+        cc.Debug.Log("OnGameWin gameLevelFinish="+cc.GameManager.main().gameLevelFinish+" gameLevel="+cc.GameManager.main().gameLevel);
+        if (cc.GameManager.main().gameLevelFinish < cc.GameManager.main().gameLevel) {
+            cc.GameManager.main().gameLevelFinish = cc.GameManager.main().gameLevel;
+            //好友排行榜
+            let score = cc.GameManager.placeLevel + "-" + cc.GameManager.main().gameLevel;
+            cc.Debug.Log("OnGameWin score="+score);
+            cc.FrendBoard.main().SaveData(score);
+        }
+
 
         //记录游戏完成
         var level = cc.GameManager.main().gameLevel;
