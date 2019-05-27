@@ -11,7 +11,6 @@ var FrendBoardWeiXin = cc.Class({
     },
 
 
-
     //https://www.jianshu.com/p/abf753ded43b
     //https://segmentfault.com/a/1190000015034592?utm_source=tag-newest
     SaveData: function (score) {
@@ -32,15 +31,6 @@ var FrendBoardWeiXin = cc.Class({
         });
     },
 
-
-    ShowFrendBoard: function () {
-        // 排行榜也应该是实时的，所以需要sharedCanvas 绘制新的排行榜
-        let openDataContext = wx.getOpenDataContext();
-        openDataContext.postMessage({
-            type: 'friends',
-            text: "text",
-        }); 
-    },
 });
 
 cc.FrendBoardWeiXin = module.export = FrendBoardWeiXin; 

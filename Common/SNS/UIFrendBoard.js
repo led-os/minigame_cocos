@@ -7,9 +7,10 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
+var UIView = require("UIView");
 
 cc.Class({
-    extends: cc.Component,
+    extends: UIView,
 
     properties: {
         // foo: {
@@ -27,7 +28,22 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-        spDisplay: cc.Sprite,
+
+        btnBack: cc.Button,
+        tableView: cc.TableView,
+
+        imageBg: cc.Sprite,
+        imageBoard: cc.Sprite,
+        nodeContent: cc.Node,
+        textTitle: cc.Label,
+        oneCellNum: 1,
+        heightCell: 160,
+        listItem: {
+            default: [],
+            type: cc.Object
+        },
+
+        displayOpenData: cc.Sprite,//微信小程序 开放数据域
         texCanvas: cc.Texture2D,
         isShowRanking: false,
 
@@ -36,13 +52,21 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
+        this.UnifyButtonSprite(this.btnBack);
         this.texCanvas = new cc.Texture2D();
         this.isShowRanking = false;
+        if (cc.Common.main().isWeiXin) {
+            this.displayOpenData.node.active = true;
+            this.nodeContent.active = false;
+        } else {
+            this.displayOpenData.node.active = false;
+            this.nodeContent.active = true;
+        }
     },
 
     start() {
         if (cc.Common.main().isWeiXin) {
-            this.Show(false);
+            this.Show(true);
         }
 
     },
@@ -55,15 +79,17 @@ cc.Class({
         var sharedCanvas = openDataContext.canvas;
         this.texCanvas.initWithElement(sharedCanvas);
         this.texCanvas.handleLoadedTexture();
-        this.spDisplay.spriteFrame = new cc.SpriteFrame(this.texCanvas);
+        this.displayOpenData.spriteFrame = new cc.SpriteFrame(this.texCanvas);
 
-        //cc.Debug.Log("UIFrendBoard::texCanvas w=" + this.texCanvas.width + " h=" + this.texCanvas.height + " sz = " + this.spDisplay.node.getContentSize());
+        //cc.Debug.Log("UIFrendBoard::texCanvas w=" + this.texCanvas.width + " h=" + this.texCanvas.height + " sz = " + this.displayOpenData.node.getContentSize());
 
     },
 
     update() {
         if (this.isShowRanking) {
-            this._updaetSubDomainCanvas();
+            if (cc.Common.main().isWeiXin) {
+                this._updaetSubDomainCanvas();
+            }
         }
     },
     messageSharecanvas(type, text) {
@@ -88,9 +114,22 @@ cc.Class({
 
     Show(isShow) {
         this.isShowRanking = isShow;
-        this.spDisplay.node.active = isShow;
-        if (isShow) {
-            this.messageSharecanvas()
+        if (cc.Common.main().isWeiXin) {
+            //this.displayOpenData.node.active = isShow;
+            if (isShow) {
+                this.messageSharecanvas()
+            }
+        } else {
+
+        }
+
+    },
+
+
+    OnClickBtnBack(event, customEventData) {
+        if (this.controller != null) {
+            this.controller.Close();
         }
     },
+
 });

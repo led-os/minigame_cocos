@@ -107,4 +107,8 @@ cc.Class({
     },
     OnClickBtnAdVideo: function (event, customEventData) {
     },
+
+    OnClickBtnFrendBoard: function (event, customEventData) {
+        cc.FrendBoard.main().Show();
+    },
 }); 

@@ -1,3 +1,6 @@
+
+var FrendBoardViewController = require("FrendBoardViewController");
+
 var FrendBoard = cc.Class({
     extends: cc.Object,// cc.ItemInfo,
     properties: {
@@ -20,12 +23,17 @@ var FrendBoard = cc.Class({
         this.platform.SaveData(score);
     },
 
-    ShowFrendBoard:function () {
-        if (this.platform == null) {
-            return;
-        }
-        this.platform.ShowFrendBoard();
+    // ShowFrendBoard: function () {
+    //     if (this.platform == null) {
+    //         return;
+    //     }
+    //     this.platform.ShowFrendBoard();
+    // },
+
+    Show() {
+        FrendBoardViewController.main().Show(null, null);
     },
+
 });
 
 FrendBoard._main = null;

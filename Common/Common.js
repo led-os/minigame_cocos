@@ -424,6 +424,14 @@ var Common = cc.Class({
             },
 
         },
+        
+        isFacebook: {
+            get: function () {
+                return false;
+                return (cc.sys.platform == cc.sys.WECHAT_GAME) ? true : false;
+            },
+
+        },
 
         noad:
         {

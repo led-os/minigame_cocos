@@ -10,14 +10,18 @@ var FrendBoardPlatformWrapper = cc.Class({
             //显示分享
             //  wx.showFrendBoardMenu();
             p = new cc.FrendBoardWeiXin();
+        } else if (cc.Common.main().isFacebook) {
+            p = new cc.FrendBoardFacebook();
         }
+
+
         return p;
     },
- 
+
     SaveData: function (score) {
 
     },
-    ShowFrendBoard: function () { 
+    ShowFrendBoard: function () {
     },
 });
 

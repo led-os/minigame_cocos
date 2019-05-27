@@ -58,7 +58,8 @@ cc.Class({
         this.listBtns.push(this.btnShape);
         this.listBtns.push(this.btnColor);
         this.listBtns.push(this.btnShapeColor);
-
+        this.listBtns.push(this.btnFrendBoard);
+        
         this.isActionFinish = false;
  
         if (cc.Common.main().isAndroid) {
@@ -385,7 +386,7 @@ cc.Class({
         }
         this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE);
 
-        //cc.FrendBoard.main().ShowFrendBoard();
+      
 
         // let score = "60";
         // cc.Debug.Log("OnGameWin score="+score);

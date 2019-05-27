@@ -19,7 +19,7 @@ cc.Class({
             default: null,
             type: cc.Node
         },
-
+        btnFrendBoard: cc.Button,
         imageBg: cc.Sprite,
         imageNameBg: cc.Sprite,
         textName: cc.Label,
@@ -30,7 +30,7 @@ cc.Class({
         this._super();
         // this.node.setContentSize(Common.appSceneMain.sizeCanvas); 
         this.node.setContentSize(this.node.parent.getContentSize());
-
+        this.UnifyButtonSprite(this.btnFrendBoard);
         var x, y, w, h;
 
         var size = this.node.getContentSize();
@@ -146,5 +146,8 @@ cc.Class({
         this.imageNameBg.node.runAction(seq);
     },
 
+    OnClickBtnFrendBoard: function (event, customEventData) {
+        cc.FrendBoard.main().Show(); 
+    },
 });
 
