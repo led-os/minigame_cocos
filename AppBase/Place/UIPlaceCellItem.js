@@ -52,7 +52,7 @@ cc.Class({
         // {
         //     this.onClickCallBack(this);
         // }
-        cc.GameManager.placeLevel = this.index;
+        cc.GameManager.main().placeLevel = this.index;
 
         if (this.target.controller != null) {
             var navi = this.target.controller.naviController;

@@ -10,16 +10,13 @@ var UIGameBase = cc.Class({
         PLACE_ITEM_TYPE_NONE: "none",
         PLACE_ITEM_TYPE_VIDEO: "video",
         PLACE_ITEM_TYPE_LOCK: "lock",
+        GAME_AD_INSERT_SHOW_STEP: 2
     },
 
     properties: {
         gamePrefab: {
             default: null,
             type: cc.Prefab
-        },
-        listGuanka: {
-            default: [],
-            type: cc.Object
         },
         listProLoad: {
             default: [],
@@ -91,34 +88,9 @@ var UIGameBase = cc.Class({
         }
     },
 
-    //guanka 
+    //guanka  
 
-    GetGuankaTotal: function () {
-        return 0;
-    },
 
-    CleanGuankaList: function () {
-        if (this.listGuanka != null) {
-            this.listGuanka.splice(0, this.listGuanka.length);
-        }
-    },
-    StartParseGuanka: function (callback) {
-        this.callbackGuankaFinish = callback;
-        cc.Debug.Log("ParseGuanka UIGameBase");
-        return 0;
-    },
-
-    //ItemInfo
-    GetGuankaItemInfo: function (idx) {
-        if (this.listGuanka == null) {
-            return null;
-        }
-        if (idx >= this.listGuanka.Count) {
-            return null;
-        }
-        var info = this.listGuanka[idx];
-        return info;
-    },
 
     UpdateGuankaLevel: function (level) {
         var idx = cc.GameManager.main().gameLevel;
@@ -140,7 +112,7 @@ var UIGameBase = cc.Class({
     },
 
     LoadLanguageGame: function () {
-        var info = cc.GameManager.main().GetPlaceItemInfo(cc.GameManager.placeLevel);
+        var info = cc.GameManager.main().GetPlaceItemInfo(cc.GameManager.main().placeLevel);
         var filepath = cc.Common.GAME_RES_DIR + "/language/" + info.language + ".csv";
         cc.Debug.Log("LoadLanguageGame::filepath=" + filepath);
         cc.Language._game = new cc.Language();
@@ -171,75 +143,49 @@ var UIGameBase = cc.Class({
         );
     },
 
-    //place 
-    GetPlaceTotal: function () {
-        return cc.GameManager.main().listPlace.length;
+    ShowAdInsert(step) {
+        var _step = step;
+        if (_step <= 0) {
+            _step = 1;
+        }
+        //cc.GameManager.main().isShowGameAdInsert = false;
+        // if ((GameManager.gameLevel != 0) && ((GameManager.gameLevel % _step) == 0))
+        if ((cc.GameManager.main().gameLevel % _step) == 0) {
+            cc.AdKitCommon.main.InitAdInsert();
+            cc.AdKitCommon.main.ShowAdInsert(100);
+            //GameManager.main.isShowGameAdInsert = true;
+        }
     },
-    StartParsePlaceList: function (callback) {
-        if (callback != null) {
-            this.callbackPlaceFinish = callback;
+
+    OnGameWinBase() {
+        this.ShowAdInsert(UIGameBase.GAME_AD_INSERT_SHOW_STEP);
+        if (cc.GameManager.main().gameLevelFinish < cc.GameManager.main().gameLevel) {
+            cc.GameManager.main().gameLevelFinish = cc.GameManager.main().gameLevel;
+            //好友排行榜
+            let score = cc.GameManager.placeLevel + "-" + cc.GameManager.main().gameLevel;
+            cc.Debug.Log("OnGameWin score=" + score);
+            cc.FrendBoard.main().SaveData(score);
         }
-        var filepath = cc.Common.GAME_RES_DIR + "/place/place_list.json";
-        cc.Debug.Log("StartParsePlaceList ");
-        cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
-            if (err) {
-                cc.Debug.Log("StartParsePlaceList:err=" + err);
-            }
-            if (err == null) {
-                this.ParsePlaceList(rootJson.json);
-            }
-        }.bind(this));
+
     },
-    ParsePlaceList: function (json) {
-        cc.Debug.Log("StartParsePlaceList ParsePlaceList");
-        if ((cc.GameManager.main().listPlace != null) && (cc.GameManager.main().listPlace.length != 0)) {
-            cc.Debug.Log("StartParsePlaceList not 0");
-            if (this.callbackPlaceFinish != null) {
-                cc.Debug.Log("StartParsePlaceList callbackPlaceFinish length = " + cc.GameManager.main().listPlace.length);
-                this.callbackPlaceFinish();
-            }
-            return;
-        }
-        var items = json.items;
-        for (var i = 0; i < items.length; i++) {
-            var info = new cc.ItemInfo();
-            var item = items[i];
-            info.id = cc.JsonUtil.GetItem(item, "id", "");
-            info.game = cc.JsonUtil.GetItem(item, "game", "");
-            cc.Debug.Log("place id = " + info.id);
-            info.type = cc.JsonUtil.GetItem(item, "type", "");
 
-            var dirRoot = cc.Common.CLOUD_RES_DIR;
-            if (cc.Common.main().isWeiXin) {
-                dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
-            }
-            info.pic = dirRoot + "/place/image/" + info.id + ".png";
-
-            info.title = cc.JsonUtil.GetItem(item, "title", "STR_PLACE_" + info.id);
-            //info.icon = info.pic;
-            info.language = cc.JsonUtil.GetItem(item, "language", "language");
-            // info.index = i;
-
-            info.isAd = false;
-            //if (AppVersion.appCheckHasFinished && (!Common.noad)) 
-            {
-                if (info.type == UIGameBase.PLACE_ITEM_TYPE_VIDEO) {
-                    info.isAd = true;
+    ShowGameWinAlert() {
+        var title = cc.Language.main().GetString("STR_UIVIEWALERT_TITLE_GAME_FINISH");
+        var msg = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_GAME_FINISH");
+        var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_GAME_FINISH");
+        var no = cc.Language.main().GetString("STR_UIVIEWALERT_NO_GAME_FINISH");
+        cc.Debug.Log("game finish ShowFull");
+        cc.ViewAlertManager.main().ShowFull(title, msg, yes, no, true, "STR_KEYNAME_VIEWALERT_GAME_FINISH",
+            function (alert, isYes) {
+                if (isYes) {
+                    cc.GameManager.main().GotoNextLevelWithoutPlace();
+                } else {
+                    //replay
+                    cc.GameManager.main().GotoPlayAgain();
                 }
-                {
-                    if (info.type == UIGameBase.FPLACE_ITEM_TYPE_LOCK) {
-                        info.isAd = true;
-                    }
-                }
-            }
+            }.bind(this)
+        );
 
-            cc.GameManager.main().listPlace.push(info);
-        }
-
-        if (this.callbackPlaceFinish != null) {
-            cc.Debug.Log("StartParsePlaceList callbackPlaceFinish length = " + cc.GameManager.main().listPlace.length);
-            this.callbackPlaceFinish();
-        }
     },
 
 });

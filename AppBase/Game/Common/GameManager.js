@@ -8,7 +8,7 @@ var GameManager = cc.Class({
     extends: cc.Object,
     statics: {
         gameMode: 0,
-        placeLevel: 0,
+
     },
     properties: {
         uiPrefab: {
@@ -16,6 +16,7 @@ var GameManager = cc.Class({
             type: cc.Prefab
         },
         callbackGuankaFinish: null,
+        placeLevel: 0,
         //get 和 set 函数不能放在statics里
         gameLevel: {
             get: function () {
@@ -44,11 +45,7 @@ var GameManager = cc.Class({
         placeTotal:
         {
             get: function () {
-                var ret = 0;
-                var game = GameViewController.main().gameBase;
-                if (game != null) {
-                    ret = game.GetPlaceTotal();
-                }
+                var ret = cc.GameGuankaParse.main().GetPlaceTotal();
                 return ret;
             },
         },
@@ -56,10 +53,7 @@ var GameManager = cc.Class({
         maxGuankaNum:
         {
             get: function () {
-                var ret = 0;
-                if (GameViewController.main().gameBase != null) {
-                    ret = GameViewController.main().gameBase.GetGuankaTotal();
-                }
+                var ret = cc.GameGuankaParse.main().GetGuankaTotal();
                 return ret;
             },
         },
@@ -92,17 +86,19 @@ var GameManager = cc.Class({
         }
     },
     CleanGuankaList: function () {
-        GameViewController.main().gameBase.CleanGuankaList();
+        cc.GameGuankaParse.main().CleanGuankaList();
     },
     StartParseGuanka: function (callback) {
         this.CleanGuankaList();
         this.callbackGuankaFinish = callback;
-        GameViewController.main().gameBase.StartParseGuanka(callback);
+        // GameViewController.main().gameBase.StartParseGuanka(callback);
+        cc.GameGuankaParse.main().StartParseGuanka(callback);
     },
 
     //place 
     StartParsePlace: function (callback) {
-        GameViewController.main().gameBase.StartParsePlaceList(callback);
+        //GameViewController.main().gameBase.StartParsePlaceList(callback);
+        cc.GameGuankaParse.main().StartParsePlaceList(callback);
     },
 
     GotoPlayAgain: function () {
@@ -139,10 +135,10 @@ var GameManager = cc.Class({
 
     GotoNextPlace: function () {
 
-        GameManager.placeLevel++;
+        this.placeLevel++;
 
-        if (GameManager.placeLevel >= GameManager.placeTotal) {
-            GameManager.placeLevel = 0;
+        if (this.placeLevel >= this.placeTotal) {
+            this.placeLevel = 0;
 
         }
         //必须在placeLevel设置之后再设置gameLevel
@@ -155,9 +151,9 @@ var GameManager = cc.Class({
 
     GotoPrePlace: function () {
 
-        GameManager.placeLevel--;
-        if (GameManager.placeLevel < 0) {
-            GameManager.placeLevel = GameManager.placeTotal - 1;
+        this.placeLevel--;
+        if (this.placeLevel < 0) {
+            this.placeLevel = this.placeTotal - 1;
 
         }
         //必须在placeLevel设置之后再设置gameLevel
@@ -183,9 +179,9 @@ var GameManager = cc.Class({
     //return List<object>
     GetGuankaListOfAllPlace: function () {
         var listRet;// = new List<object>();
-        cc.Debug.Log("GetGuankaListOfAllPlace placeTotal=" + GameManager.placeTotal);
-        for (var i = 0; i < GameManager.placeTotal; i++) {
-            GameManager.placeLevel = i;
+        cc.Debug.Log("GetGuankaListOfAllPlace placeTotal=" + this.placeTotal);
+        for (var i = 0; i < this.placeTotal; i++) {
+            this.placeLevel = i;
             //必须在placeLevel设置之后再设置gameLevel
             this.gameLevel = 0;
             this.StartParseGuanka(this.callbackGuankaFinish);

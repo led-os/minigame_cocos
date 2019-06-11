@@ -4,6 +4,15 @@ var CloudRes = cc.Class({
         source: '',
     },
 
+    rootPath: {
+        get: function () {
+            var ret = cc.Common.CLOUD_RES_DIR;
+            if (cc.Common.main().isWeiXin) {
+                ret = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
+            }
+            return ret;
+        }
+    },
 
     StartDownload: function (obj) {
         cc.FileSystem.main().DownloadFile({

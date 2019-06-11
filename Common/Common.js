@@ -148,6 +148,28 @@ var Common = cc.Class({
             }
             return rdm;
         },
+
+        //从数组里随机抽取newsize个元素
+        RandomIndex: function (size, newsize) {
+            var listIndex = [];
+            var total = size;
+            for (var i = 0; i < total; i++) {
+                listIndex.push(i);
+            }
+
+            var idxTmp = [];//new int[newsize];
+            for (var i = 0; i < newsize; i++) {
+                total = listIndex.length;
+                var rdm = Math.floor((Math.random() * total));
+                var idx = listIndex[rdm];
+                idxTmp.push(idx);
+                //listIndex.RemoveAt(rdm);
+                listIndex.splice(rdm, 1);
+            }
+
+            return idxTmp;
+        },
+
         //防止超出Rect范围
         LimitNodePos: function (node, rc) {
             var bd = node.getBoundingBox();
@@ -424,7 +446,7 @@ var Common = cc.Class({
             },
 
         },
-        
+
         isFacebook: {
             get: function () {
                 return false;
