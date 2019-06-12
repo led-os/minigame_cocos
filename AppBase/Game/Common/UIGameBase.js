@@ -7,9 +7,6 @@ var UIGameBase = cc.Class({
     extends: UIView,
 
     statics: {
-        PLACE_ITEM_TYPE_NONE: "none",
-        PLACE_ITEM_TYPE_VIDEO: "video",
-        PLACE_ITEM_TYPE_LOCK: "lock",
         GAME_AD_INSERT_SHOW_STEP: 2
     },
 

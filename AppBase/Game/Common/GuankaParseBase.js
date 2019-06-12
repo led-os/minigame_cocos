@@ -32,10 +32,7 @@ var GuankaParseBase = cc.Class({
     },
     GetGuankaTotal: function () {
         // var count = this.ParseGuanka();
-        var count = 0;
-        if (this.listShape != null) {
-            count = GameShapeColor.GUANKA_NUM_PER_ITEM * this.listShape.length;
-        }
+        var count = 0; 
         return count;
     },
     //ItemInfo
@@ -103,11 +100,11 @@ var GuankaParseBase = cc.Class({
             info.isAd = false;
             //if (AppVersion.appCheckHasFinished && (!Common.noad)) 
             {
-                if (info.type == UIGameBase.PLACE_ITEM_TYPE_VIDEO) {
+                if (info.type == GuankaParseBase.PLACE_ITEM_TYPE_VIDEO) {
                     info.isAd = true;
                 }
                 {
-                    if (info.type == UIGameBase.FPLACE_ITEM_TYPE_LOCK) {
+                    if (info.type == GuankaParseBase.FPLACE_ITEM_TYPE_LOCK) {
                         info.isAd = true;
                     }
                 }

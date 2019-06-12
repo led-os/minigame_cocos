@@ -178,14 +178,13 @@ cc.Class({
             btn.node.runAction(seq.repeatForever());
         }
     },
-    GotoGameByMode: function (mode) {
-        cc.GameManager.gameMode = mode;
+    GotoGame: function () { 
         cc.GameManager.main().StartParsePlace(function () {
-            this.GotoGameByModeInteranl();
+            this.GotoGameInteranl();
         }.bind(this)
         );
     },
-    GotoGameByModeInteranl: function () {
+    GotoGameInteranl: function () {
         if (this.controller != null) {
             var navi = this.controller.naviController;
             var total = cc.GameManager.main().placeTotal;
@@ -203,26 +202,10 @@ cc.Class({
     },
 
     OnClickBtnPlay: function (event, customEventData) {
-
-        ////3.主动拉起分享接口
-        // cc.loader.loadRes(cc.AppRes.IMAGE_HOME_BG, function (err, data) {
-        //     console.log("share image=" + data.url);
-        //     wx.shareAppMessage({
-        //         title: "经典打飞机游戏始终好玩如初，来吧！一起回味经典的乐趣。",
-        //         imageUrl: data.url,
-        //         success(res) {
-        //             console.log(res)
-        //         },
-        //         fail(res) {
-        //             console.log(res)
-        //         }
-        //     })
-        // }); pp
-
         if (!this.isActionFinish) {
             return;
         }
-     //   this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE);
+      this.GotoGame();
 
     },
     OnClickBtnBoard: function (event, customEventData) {

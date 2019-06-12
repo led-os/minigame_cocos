@@ -13,6 +13,10 @@ var GameLianLianLe = cc.Class({
         GUANKA_NUM_PER_ITEM: 5,
         TAG_ITEM_LOCK: -1,
         TAG_ITEM_UNLOCK: 0,
+        KEY_GAME_STATUS: "KEY_GAME_STATUS_",
+        GAME_STATUS_UN_START: 0,//没有开始
+        GAME_STATUS_PLAY: 1,//进行中
+        GAME_STATUS_FINISH: 2,//完成
     },
 
     properties: {
@@ -297,11 +301,19 @@ var GameLianLianLe = cc.Class({
 
     },
 
-   
+
 
     OnGameWin: function () {
         this.OnGameWinBase();
         this.ShowGameWinAlert();
+
+        //记录游戏完成
+        var level = cc.GameManager.main().gameLevel;
+        var info = cc.GameGuankaParse.main().GetGuankaItemInfo(level);
+        var key = GameLianLianLe.KEY_GAME_STATUS + info.id;
+        if (key != null) {
+            cc.Common.SetItemOfKey(key, GameLianLianLe.GAME_STATUS_FINISH);
+        }
     },
 
 
@@ -401,16 +413,9 @@ var GameLianLianLe = cc.Class({
 
                 //记录游戏开始进行中
                 var level = cc.GameManager.main().gameLevel;
-                var idx = Math.floor(level / GameLianLianLe.GUANKA_NUM_PER_ITEM);
-                var idx_sub = level % GameLianLianLe.GUANKA_NUM_PER_ITEM;
-                if (idx_sub == 0) {
-                    var infoitem = this.GetItemInfoShapeColor(idx, this.listShape);
-                    var key = GameLianLianLe.STR_KEY_GAME_STATUS_SHAPE + infoitem.id;
-                    cc.Debug.Log("game play key=" + key + " this.gameMode=" + cc.GameManager.gameMode);
-                    if (key != null) {
-                        cc.Common.SetItemOfKey(key, GameLianLianLe.GAME_STATUS_PLAY);
-                    }
-
+                var key = GameLianLianLe.KEY_GAME_STATUS + info.id;
+                if (key != null) {
+                    cc.Common.SetItemOfKey(key, GameLianLianLe.GAME_STATUS_PLAY);
                 }
                 break;
             }

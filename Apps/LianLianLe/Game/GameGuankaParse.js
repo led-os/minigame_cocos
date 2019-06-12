@@ -15,19 +15,12 @@ var GameGuankaParse = cc.Class({
         if ((this.listGuanka != null) && (this.listGuanka.length != 0)) {
             return;
         }
+       
         var idx = cc.GameManager.main().placeLevel;
         var infoPlace = cc.GameManager.main().GetPlaceItemInfo(idx);
         var strPlace = infoPlace.id;
-        var items = json.items;
-        for (var i = 0; i < items.length; i++) {
-            var picdir = dirRoot + "/image/" + strPlace + "/" + info.id;
-            info.pic = picdir + "/" + info.id + ".png";
-
-
-
-        }
-
-
+     
+        var items = json.items;  
         for (var i = 0; i < items.length; i++) {
             var info = new cc.LianLianLeItemInfo();
             var item = items[i];
@@ -44,7 +37,7 @@ var GameGuankaParse = cc.Class({
                 var rdm = cc.Common.RandomRange(0, info.listPic0.length + 1);
                 //插入元素
                 info.listPic0.splice(rdm, 0, infopic);
-                if (Common.isBlankString(info.pic)) {
+                if (cc.Common.isBlankString(info.pic)) {
                     info.pic = infopic.pic;
                 }
 
@@ -64,6 +57,10 @@ var GameGuankaParse = cc.Class({
 
 
             this.listGuanka.push(info);
+        }
+        if(this.callbackGuankaFinish!=null)
+        {
+            this.callbackGuankaFinish();
         }
 
         cc.Debug.Log("config:this.listGuanka=" + this.listGuanka.length);
