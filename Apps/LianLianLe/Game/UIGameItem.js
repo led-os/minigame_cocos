@@ -21,6 +21,13 @@ var UIGameItem = cc.Class({
         // }
     },
 
+    LayOut() {
+        var lyscale = this.imageItem.node.getComponent(cc.LayoutScale);
+        if (lyscale) {
+            lyscale.LayOut();
+        }
+    },
+
     GetBoundingBox: function () {
         return this.imageItem.node.getBoundingBox();
     },
@@ -44,7 +51,11 @@ var UIGameItem = cc.Class({
 
         } else {
             cc.Debug.Log("body is null");
+            this.node.setPosition(pos);
         }
+
+
+
     },
 
     UpdateItemColor: function (sprite, color) {
@@ -107,31 +118,19 @@ var UIGameItem = cc.Class({
         if (!this.isBomb) {
             this.isMathShape = info.isMathShape;
         }
-
         var sprite = this.imageItem;
         sprite.name = info.id;
-        var isInner = info.isInner;
-        // RectTransform rcTran = obj.AddComponent<RectTransform>();
-        // SpriteRenderer objSR = obj.AddComponent<SpriteRenderer>();
-        var pic = info.picOuter;
-        if (isInner == true) {
-            pic = info.picInner;
-            if (!this.isMathShape) {
-                this.UpdateBoardItem(info);
-            }
-        }
-
-        //加载图片
-        // var strImage = cc.FileUtil.GetFileBeforeExtWithOutDot(cc.AppRes.URL_HTTP_HEAD+pic);
-        //cc.AppRes.main().URL_HTTP_HEAD + 
-        var strImage = pic;
-        if (this.isBomb) {
-            strImage = cc.AppRes.IMAGE_Game_Bomb;
-        }
-        if (isInner == true) {
-            // strImage = cc.AppRes.IMAGE_Game_Bomb;
-        }
-        cc.Debug.Log("isInner=" + isInner + " id=" + info.id + " pic=" + strImage);
+        //var isInner = info.isInner; 
+        // var pic = info.picOuter;
+        // if (isInner == true) {
+        //     pic = info.picInner;
+        //     if (!this.isMathShape) {
+        //         this.UpdateBoardItem(info);
+        //     }
+        // } 
+        //加载图片 
+        var strImage = info.pic;
+        cc.Debug.Log("UpdateItem strImage=" + strImage);
         var funcLoad = function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
@@ -145,25 +144,25 @@ var UIGameItem = cc.Class({
             cc.Debug.Log("setContentSize =" + this.node.getContentSize());
 
             //添加物理特性
-            if ((isInner == true) || (this.isBomb)) {
-                var body = this.node.addComponent(cc.RigidBody);
-                body.gravityScale = 0;//关闭重力
-                // // bd.useGravity = false;
-                body.fixedRotation = true;
+            // if ((isInner == true) || (this.isBomb)) {
+            //     var body = this.node.addComponent(cc.RigidBody);
+            //     body.gravityScale = 0;//关闭重力
+            //     // // bd.useGravity = false;
+            //     body.fixedRotation = true;
 
-                //防止刚体穿越
-                body.bullet = true;
+            //     //防止刚体穿越
+            //     body.bullet = true;
 
-                // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-                var collider = this.node.addComponent(cc.PhysicsBoxCollider);
-                if (collider != null) {
-                    collider.size = new cc.size(tex.width, tex.height);
-                    //修改之后需要apply
-                    collider.apply();
-                    //  cc.Debug.Log("collider=" + collider.size);
-                }
-                var mj = this.node.addComponent(cc.MouseJoint);
-            }
+            //     // bd.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            //     var collider = this.node.addComponent(cc.PhysicsBoxCollider);
+            //     if (collider != null) {
+            //         collider.size = new cc.size(tex.width, tex.height);
+            //         //修改之后需要apply
+            //         collider.apply();
+            //         //  cc.Debug.Log("collider=" + collider.size);
+            //     }
+            //     var mj = this.node.addComponent(cc.MouseJoint);
+            // }
 
 
 
@@ -181,45 +180,39 @@ var UIGameItem = cc.Class({
             // this.loadItemCount++;
 
             // }.bind(this).bind(sprite));
-        }.bind(this);
 
-        // if (cc.Common.main().isWeiXin) {
-        //     if (this.isBomb) {
-        //         cc.TextureCache.main.Load(strImage, funcLoad);
-        //     } else {
-        //         cc.TextureCache.main.LoadUrl(strImage, funcLoad);
-        //     }
-        // } else {
-        //     cc.TextureCache.main.Load(strImage, funcLoad);
-        // }
+
+            this.LayOut();
+
+        }.bind(this);
 
         cc.TextureCache.main.Load(strImage, funcLoad);
 
 
-        var z = this.itemPosZ;
-        if (isInner == true) {
-            z = this.itemPosZ - 1;
-        }
-        //obj.transform.position = new Vector3(0, 0, z);
-        this.node.setPosition(0, 0, z);
-        var color = info.color;
-        if (isInner == true) {
-            cc.Debug.Log("updateitem color =" + color);
-        }
-        var is_add_shader = true;
-        //color
-        if (!this.isMathShape) {
-            if (isInner == true) {
-                is_add_shader = false;
-                //ShapeHighlighterController hlc = AddHighLight(obj);
-                //hlc.UpdateColor(color);
-            }
-        }
-        if (is_add_shader == true) {
-            {
-                this.UpdateItemColor(sprite, color);
-            }
-        }
+        // var z = this.itemPosZ;
+        // if (isInner == true) {
+        //     z = this.itemPosZ - 1;
+        // }
+        // //obj.transform.position = new Vector3(0, 0, z);
+        // this.node.setPosition(0, 0, z);
+        // var color = info.color;
+        // if (isInner == true) {
+        //     cc.Debug.Log("updateitem color =" + color);
+        // }
+        // var is_add_shader = true;
+        // //color
+        // if (!this.isMathShape) {
+        //     if (isInner == true) {
+        //         is_add_shader = false;
+        //         //ShapeHighlighterController hlc = AddHighLight(obj);
+        //         //hlc.UpdateColor(color);
+        //     }
+        // }
+        // if (is_add_shader == true) {
+        //     {
+        //         this.UpdateItemColor(sprite, color);
+        //     }
+        // }
 
 
 

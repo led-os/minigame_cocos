@@ -135,6 +135,11 @@ var Common = cc.Class({
             }
             return null;
         },
+
+        String2Int(str) {
+            return parseInt(str);
+        },
+
         //without max
         RandomRange: function (min, max) {
             var count = max - min;

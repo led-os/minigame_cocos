@@ -1,14 +1,14 @@
 var UIViewController = require("UIViewController");
 var UIGameItem = require("UIGameItem");
-var UIBoard = require("UIBoard");
 var UIView = require("UIView");
+var GameBase = require("GameBase");
 
 //shu： wx621ff1107207384c
 //weixin小程序appid: heng: wx2c5d3abfad26e8b1
 //cocos: wx6ac3f5090a6b99c5
 //weixin test app：wx844d0aa648111acb
 var GameLianLianLe = cc.Class({
-    extends: UIView,
+    extends: GameBase,
     statics: {
         GUANKA_NUM_PER_ITEM: 5,
         TAG_ITEM_LOCK: -1,
@@ -46,6 +46,8 @@ var GameLianLianLe = cc.Class({
         this.node.setContentSize(this.node.parent.getContentSize());
         var ev = this.node.addComponent(cc.UITouchEvent);
         ev.callBackTouch = this.OnUITouchEvent.bind(this);
+        this.height_adbanner_canvas = 160;
+        this.height_topbar_canvas = 160;
 
     },
 
@@ -114,6 +116,7 @@ var GameLianLianLe = cc.Class({
 
     LoadGame: function () {
         this.ClearGame();
+        cc.Debug.Log("GameLianLianLe LoadGame=");
         this.LoadGameItemPrefab(function () {
             this.LoadGameInternal();
             //this.Layou();
@@ -121,7 +124,7 @@ var GameLianLianLe = cc.Class({
     },
 
     LoadGameInternal: function () {
-
+        cc.Debug.Log("GameLianLianLe LoadGameInternal=");
         var level = cc.GameManager.main().gameLevel;
         var info = cc.GameGuankaParse.main().GetGuankaItemInfo(level);
         if (info == null) {
@@ -129,11 +132,11 @@ var GameLianLianLe = cc.Class({
             return;
         }
 
-        var totalRow = 2;
-        var totalCol = info.listPic0.length;
+        this.totalRow = 2;
+        this.totalCol = info.listPic0.length;
         if (!cc.Device.main.isLandscape) {
-            totalRow = info.listPic0.length;
-            totalCol = 2;
+            this.totalRow = info.listPic0.length;
+            this.totalCol = 2;
         }
         var listPic = info.listPic0;
         for (let k = 0; k < listPic.length; k++) {
@@ -179,10 +182,15 @@ var GameLianLianLe = cc.Class({
         this.listItem.push(infoRet);
         node.parent = this.node;
         node.active = false;
-
+      
         var uiGameItem = node.getComponent(UIGameItem);
-        uiGameItem.isBomb = false;
         uiGameItem.UpdateItem(info, function (ui) {
+            var rc = this.GetRectItem(i, j, this.totalRow, this.totalCol);
+            var scale = 1;
+            var size = ui.imageItem.node.getContentSize();
+            scale = cc.Common.GetBestFitScale(size.width, size.height, rc.width, rc.height);
+            //cc.Debug.Log("size="+size+" rc="+rc+" scale="+scale);
+            node.setContentSize(cc.size(size.width*scale,size.height*scale));
             this.LoadItemImageFinish(infoRet);
             this.loadItemCount++;
         }.bind(this));
@@ -209,16 +217,13 @@ var GameLianLianLe = cc.Class({
         var rctran = node.getComponent(cc.RectTransform);
         rctran.width = rc.width;
         rctran.height = rc.height;
-        var offsetx = 0;
-        offsetx = 0;
-        var offsety = 0;
-        offsety = 0;
-        var pt = this.RandomPointOfRect(rc, offsetx, offsety);
+        var pt = rc.center;
         //cc.Debug.Log("LayOut:i=" + info.i + " j=" + info.j + " rc=" + rc + " pt=" + pt + " bd=" + bd.size);
         var z = node.getPosition().z;
         node.setPosition(pt.x, pt.y, z);
-
         var rc = this.GetRectDisplay();
+        //cc.Debug.Log("UpdateItemPosition:" + " pt=" + pt + " rc=" + rc);
+
         var pt_new = cc.Common.LimitNodePos(node, rc);
         if (isAnimate) {
             node.setPosition(0, 0, z);
@@ -261,25 +266,10 @@ var GameLianLianLe = cc.Class({
         x = rcDisplay.x + w * i;
         y = rcDisplay.y + h * j;
         var rc = new cc.Rect(x, y, w, h);
+        //cc.Debug.Log("GetRectItem:" + " j=" + j + " i=" + i + " col=" + col + " row=" + row);
         return rc;
     },
 
-    //return Vector2
-    RandomPointOfRect: function (rc, offsetx, offsety) {
-        var x, y, w, h;
-        w = rc.width - offsetx * 2;
-        h = rc.height - offsety * 2;
-        var rdx = cc.Common.RandomRange(0, 100);
-        //rdx = 50;
-        x = rc.x + (offsetx + w * rdx / 100);
-
-        rdx = cc.Common.RandomRange(0, 100);
-
-        //rdx = 50;
-        y = rc.y + (offsety + h * rdx / 100);
-
-        return new cc.Vec2(x, y);
-    },
 
     IsAllItemLock() {
         for (let info of this.listItem) {
@@ -293,8 +283,7 @@ var GameLianLianLe = cc.Class({
     },
 
     CheckGameWin() {
-        var isAllItemLock = this.IsAllItemLock();
-        if (isAllItemLock) {
+        if (this.IsAllItemLock()) {
             cc.AudioPlay.main().PlayFile(cc.AppRes.AUDIO_GAME_GuankaOk);
             this.OnGameWin();
         }
@@ -304,15 +293,16 @@ var GameLianLianLe = cc.Class({
 
 
     OnGameWin: function () {
-        this.OnGameWinBase();
-        this.ShowGameWinAlert();
-
         //记录游戏完成
         var level = cc.GameManager.main().gameLevel;
         var info = cc.GameGuankaParse.main().GetGuankaItemInfo(level);
         var key = GameLianLianLe.KEY_GAME_STATUS + info.id;
         if (key != null) {
             cc.Common.SetItemOfKey(key, GameLianLianLe.GAME_STATUS_FINISH);
+        }
+
+        if (this.callbackGameWin != null) {
+            this.callbackGameWin();
         }
     },
 
@@ -397,15 +387,14 @@ var GameLianLianLe = cc.Class({
             h = bd.height / 4;
             var rc = new cc.Rect(info.node.getPosition().x - w / 2, info.node.getPosition().y - h / 2, w, h);
             if ((rc.contains(positemNew)) && (this.itemInfoSel.category == info.category)) {
-                Debug.Log("合并正确");
+                cc.Debug.Log("合并正确");
                 //合并正确 
                 this.SetItemLock(info, true);
                 this.SetItemLock(this.itemInfoSel, true);
                 this.itemInfoSel.node.setPosition(info.node.getPosition());
-                this.RunDisapperAnimation(this.itemInfoSel);
+                //this.RunDisapperAnimation(this.itemInfoSel);
 
-                var isAllItemLock = IsAllItemLock();
-                if (!isAllItemLock) {
+                if (!this.IsAllItemLock()) {
                     // PlayAudioItem(audioClipItemFinish);
                     //.PlayAudioItemFinish(this.itemInfoSel);
                     cc.AudioPlay.main().PlayFile(cc.AppRes.AUDIO_GAME_DragOk);

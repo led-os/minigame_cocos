@@ -2,17 +2,20 @@ var CloudRes = cc.Class({
     extends: cc.Object,
     properties: {
         source: '',
+
+        rootPath: {
+            get: function () {
+                var ret = cc.Common.CLOUD_RES_DIR;
+                if (cc.Common.main().isWeiXin) {
+                    ret = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
+                }
+                return ret;
+            }
+        },
+        
     },
 
-    rootPath: {
-        get: function () {
-            var ret = cc.Common.CLOUD_RES_DIR;
-            if (cc.Common.main().isWeiXin) {
-                ret = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
-            }
-            return ret;
-        }
-    },
+  
 
     StartDownload: function (obj) {
         cc.FileSystem.main().DownloadFile({

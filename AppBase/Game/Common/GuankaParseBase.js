@@ -19,6 +19,8 @@ var GuankaParseBase = cc.Class({
         },
         callbackGuankaFinish: null,
         callbackPlaceFinish: null,
+        callbackGuankaIdFinish: null,
+        autoGuankaOneGroupCount: 5,
 
     },
     Init: function () {
@@ -32,7 +34,10 @@ var GuankaParseBase = cc.Class({
     },
     GetGuankaTotal: function () {
         // var count = this.ParseGuanka();
-        var count = 0; 
+        var count = 0;
+        if (this.listGuanka != null) {
+            count = this.listGuanka.length;
+        }
         return count;
     },
     //ItemInfo
@@ -133,6 +138,97 @@ var GuankaParseBase = cc.Class({
             }
         }.bind(this));
     },
+
+    ParseGuankaDidFinish() {
+        if (this.callbackGuankaFinish != null) {
+            this.callbackGuankaFinish();
+        }
+    },
+
+    LoadGuankaItemId(cbFinish) {
+        var idx = cc.GameManager.main().placeLevel;
+        var infoPlace = cc.GameManager.main().GetPlaceItemInfo(idx);
+        this.callbackGuankaIdFinish = cbFinish;
+        // var filepath = cc.CloudRes.main().rootPath + "/guanka/item_" + infoPlace.id + ".json";
+        var filepath = cc.Common.GAME_RES_DIR + "/guanka/item_" + infoPlace.id + ".json";
+
+        // cc.Debug.Log("LoadGuankaItemId  :this.listGuanka= filepath=" + filepath);
+        // if (cc.Common.main().isWeiXin) {
+        //     // 加载json文件
+        //     cc.loader.load({ url: filepath, type: "json" }, function (err, rootJson) {
+        //         this.LoadGuankaItemIdFinish(err, rootJson);
+        //     }.bind(this));
+        // } else 
+
+        {
+            //cc.JsonAsset   cc.loader.load
+            //去除后缀
+            filepath = cc.FileUtil.GetFileBeforeExtWithOutDot(filepath);
+            cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
+                this.LoadGuankaItemIdFinish(err, rootJson);
+            }.bind(this));
+        }
+    },
+
+    LoadGuankaItemIdFinish(err, rootJson) {
+        if (err) {
+            // return;
+            cc.Debug.Log("LoadGuankaItemIdFinish error:this.listGuanka=");
+        }
+        if (err == null) {
+            if (rootJson.json == null) {
+                this.ParseGuankaItemId(rootJson);
+            } else {
+                //resource里的json文件
+                this.ParseGuankaItemId(rootJson.json);
+            }
+        }
+    },
+
+    ParseGuankaItemId(rootJson) {
+        // cc.Debug.Log("ParseGuankaItemId:this.listGuanka=");
+        //         //search_items
+        var idx = cc.GameManager.main().placeLevel;
+        var infoPlace = cc.GameManager.main().GetPlaceItemInfo(idx);
+        var picRoot = cc.CloudRes.main().rootPath + "/image/" + infoPlace.id + "/";
+
+        //clear
+        if (this.listGuankaItemId != null) {
+            this.listGuankaItemId.length = 0;
+        }
+
+        var items = rootJson.items;
+
+        for (var i = 0; i < items.length; i++) {
+
+            var item = items[i];
+            var info = new cc.ItemInfo();
+            info.id = cc.JsonUtil.GetItem(item, "id", "");
+            info.pic = picRoot + info.id + ".png";
+            this.listGuankaItemId.push(info);
+        }
+
+
+        //让总数是count_one_group的整数倍
+        var count_one_group = this.autoGuankaOneGroupCount;
+        var tmp = (this.listGuankaItemId.length % count_one_group);
+        if (tmp > 0) {
+            for (var i = 0; i < (count_one_group - tmp); i++) {
+                var infoId = this.listGuankaItemId[i];
+                var info = new cc.ItemInfo();
+                info.id = infoId.id;
+                info.pic = infoId.pic;
+                this.listGuankaItemId.push(info);
+            }
+        }
+
+        //   cc.Debug.Log("ParseGuankaItemId:this.listGuanka=end");
+        if (this.callbackGuankaIdFinish != null) {
+            // cc.Debug.Log("ParseGuankaItemId:this.listGuanka=callbackGuankaIdFinish");
+            this.callbackGuankaIdFinish();
+        }
+    },
+
 });
 
 //单例对象 方法二

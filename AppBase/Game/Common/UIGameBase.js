@@ -31,7 +31,6 @@ var UIGameBase = cc.Class({
         textTitle: cc.Label,
         callbackGuankaFinish: null,
         callbackPlaceFinish: null,
-
     },
     Init: function () {
     },
@@ -110,7 +109,7 @@ var UIGameBase = cc.Class({
 
     LoadLanguageGame: function () {
         var info = cc.GameManager.main().GetPlaceItemInfo(cc.GameManager.main().placeLevel);
-        var filepath = cc.Common.GAME_RES_DIR + "/language/" + info.language + ".csv";
+        var filepath = cc.Common.GAME_RES_DIR + "/language/" + info.language;//+ ".csv";
         cc.Debug.Log("LoadLanguageGame::filepath=" + filepath);
         cc.Language._game = new cc.Language();
         cc.Language._game.Init2(filepath, this.LoadLanguageGameDidFinish.bind(this));
@@ -154,7 +153,7 @@ var UIGameBase = cc.Class({
         }
     },
 
-    OnGameWinBase() {
+    OnGameWinBase: function () {
         this.ShowAdInsert(UIGameBase.GAME_AD_INSERT_SHOW_STEP);
         if (cc.GameManager.main().gameLevelFinish < cc.GameManager.main().gameLevel) {
             cc.GameManager.main().gameLevelFinish = cc.GameManager.main().gameLevel;
@@ -166,7 +165,7 @@ var UIGameBase = cc.Class({
 
     },
 
-    ShowGameWinAlert() {
+    ShowGameWinAlert: function () {
         var title = cc.Language.main().GetString("STR_UIVIEWALERT_TITLE_GAME_FINISH");
         var msg = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_GAME_FINISH");
         var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_GAME_FINISH");

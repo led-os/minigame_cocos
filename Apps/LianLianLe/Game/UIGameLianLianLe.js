@@ -24,20 +24,42 @@ var UIGameLianLianLe = cc.Class({
         this.UnifyButtonSprite(this.btnBack);
         this.LoadLanguageGame();
         this.textTitle.node.active = false;
-        // this.LoadGamePrefab();
+        //this.LoadGamePrefab();
         //var ev = this.node.addComponent(cc.UITouchEvent);
         // ev.callBackTouch = this.OnUITouchEvent;
+
+
+        var dirRoot = cc.CloudRes.main().rootPath; 
+     
+        var url = dirRoot + "/ui/GuankaBg.jpg"; 
+        cc.TextureCache.main.Load(url, function (err, tex) {
+            if (err) {
+
+                cc.Debug.Log(err.message || err);
+                return;
+            }
+            // cc.Debug.Log("TextureCache loadRes ok");
+
+            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
+            lyscale.LayOut();
+
+           // this.ShowUserGuide();
+        }.bind(this));
+
     },
     start: function () {
 
     },
 
 
-    LoadLanguageDidFinish: function (p) {
+    LoadLanguageGameDidFinish: function (p) {
+        cc.Debug.Log("GameLianLianLe LoadLanguageDidFinish=");
         this.LoadGamePrefab();
     },
 
     CreateGame: function () {
+        cc.Debug.Log("GameLianLianLe CreateGame=");
         var node = cc.instantiate(this.gamePrefab);
         this.game = node.getComponent(GameLianLianLe);
         this.game.node.parent = this.node;
@@ -47,6 +69,8 @@ var UIGameLianLianLe = cc.Class({
         this.game.node.zIndex = -10;
         this.isShowGame = true;
         this.callbackGuankaFinish = null;
+        this.game.callbackGameWin = this.OnGameWin.bind(this);
+        
         this.UpdateGuankaLevel(cc.GameManager.main().gameLevel);
     },
 
@@ -54,16 +78,16 @@ var UIGameLianLianLe = cc.Class({
 
     UpdateGuankaLevel: function (level) {
         this._super();
-        this.game.listShape = this.listShape;
-        this.game.listColor = this.listColor;
         this.game.textTitle = this.textTitle;
         this.textTitle.node.active = false;
         this.game.LoadGame();
-        //必须在loadgame之后loadbg
-        this.LoadBg();
     },
 
-
+    OnGameWin: function () {
+        this.OnGameWinBase();
+        this.ShowGameWinAlert();
+ 
+    },
 
 
 });
