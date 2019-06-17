@@ -27,11 +27,8 @@ var UIGameLianLianLe = cc.Class({
         //this.LoadGamePrefab();
         //var ev = this.node.addComponent(cc.UITouchEvent);
         // ev.callBackTouch = this.OnUITouchEvent;
-
-
-        var dirRoot = cc.CloudRes.main().rootPath; 
-     
-        var url = dirRoot + "/ui/GuankaBg.jpg"; 
+ 
+        var url = cc.CloudRes.main().rootPath + "/" + cc.AppRes.Game_BG;
         cc.TextureCache.main.Load(url, function (err, tex) {
             if (err) {
 
@@ -44,7 +41,7 @@ var UIGameLianLianLe = cc.Class({
             var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
             lyscale.LayOut();
 
-           // this.ShowUserGuide();
+            // this.ShowUserGuide();
         }.bind(this));
 
     },
@@ -70,7 +67,7 @@ var UIGameLianLianLe = cc.Class({
         this.isShowGame = true;
         this.callbackGuankaFinish = null;
         this.game.callbackGameWin = this.OnGameWin.bind(this);
-        
+
         this.UpdateGuankaLevel(cc.GameManager.main().gameLevel);
     },
 
@@ -86,7 +83,7 @@ var UIGameLianLianLe = cc.Class({
     OnGameWin: function () {
         this.OnGameWinBase();
         this.ShowGameWinAlert();
- 
+
     },
 
 

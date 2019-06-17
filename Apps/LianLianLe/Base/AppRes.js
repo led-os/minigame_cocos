@@ -21,30 +21,25 @@ var AppRes = cc.Class({
         KEY_COMMENT_LAST_TIME: "key_comment_last_time",
         KEY_USER_GUIDE: "key_comment_user_guide_",
         KEY_DOWNLOAD_CLOUNDRES: "KEY_DOWNLOAD_CLOUNDRES",
-        KEY_GAME_LOCK: "KEY_GAME_LOCK22111222",
-
-        //share
-        SHARE_TITLE: "宝宝认形状学颜色快乐学习成长",
-        SHARE_IMAGE_URL: "https://6d6f-moonma-dbb297-1258816908.tcb.qcloud.la/ShapeColor/share/cn/share.png?sign=82765d195e432c741a29addcda9dd81d&t=1552968709",
-
-        //https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/GameRes/image/banyuan/banyuan.png?sign=6f70fe6cbbb02943d6b433348ce66ba8&t=1552029703
+        KEY_GAME_LOCK: "KEY_GAME_LOCK",
 
         //audio 
         AUDIO_BG: "audio/Bg",
         GUANKA_BG: "ui/GuankaBg.jpg",
-        PLACE_BG: "ui/LearnProgressBg.png",
-        HOME_BG: "ui/LearnProgressBg.png",
+        Game_BG: "ui/GameBg.jpg",
+        PLACE_BG: "ui/PlaceBg.jpg",
+        LearnProgress_Bg: "ui/LearnProgressBg.jpg",
+        HOME_BG: "ui/HomeBg.jpg",
         SETTING_BG: "ui/SettingBg.png",
-        AUDIO_GAME_DragOk: "GameRes/CloudRes/audio/DragOk.mp3",
-        AUDIO_GAME_DragFail: "GameRes/CloudRes/audio/DragFail.mp3",
-        AUDIO_GAME_GuankaOk: "GameRes/CloudRes/audio/GuankaOk.mp3", 
-        AUDIO_BtnClick: "GameRes/CloudRes/audio/BtnClick.mp3", 
-        
+        AUDIO_GAME_DragOk: "audio/DragOk.mp3",
+        AUDIO_GAME_DragFail: "audio/DragFail.mp3",
+        AUDIO_GAME_GuankaOk: "audio/GuankaOk.mp3",
+        AUDIO_BtnClick: "audio/BtnClick.mp3",
+
         //image
         IMAGE_BtnMusicOn: "App/UI/Home/BtnMusicOn",
         IMAGE_BtnMusicOff: "App/UI/Home/BtnMusicOff",
 
-        IMAGE_HOME_BG: "App/UI/Home/LearnProgressBg",
         IMAGE_BTN_SWITCH_UNSEL: "App/UI/Common/BtnSwitchUnSel",
         IMAGE_BTN_SWITCH_SEL: "App/UI/Common/BtnSwitchSel",
 
@@ -61,7 +56,12 @@ var AppRes = cc.Class({
         //game
         IMAGE_Game_Bomb: "App/UI/Game/Bomb",
 
-        URL_CLOUND_RES: "https://6d6f-moonma-dbb297-1258816908.tcb.qcloud.la/ShapeColor/CloudRes.zip?sign=e78a71df50918d8ee0e181886b20c12f&t=1555465442",
+        //share
+        SHARE_TITLE: "通过物品的连线快速学习事物",
+        SHARE_IMAGE_URL: "https://6c69-lianlianle-shkb3-1259451541.tcb.qcloud.la/Share/2.jpg?sign=a21483ceeee8c806804803ce2de6ff65&t=1560564896",
+
+        //clound
+        URL_CLOUND_RES: "https://6c69-lianlianle-shkb3-1259451541.tcb.qcloud.la/CloudRes.zip?sign=0763ef1a87ef54872f92151f308881d9&t=1560564859",
         URL_CLOUND_RES_HD: "https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/CloudRes.zip?sign=eab5b69e0643867ebccdb86b85b47759&t=1555923509",
     },
 

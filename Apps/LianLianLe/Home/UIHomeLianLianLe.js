@@ -5,7 +5,7 @@ var AppRes = require("AppRes");
 var PlaceViewController = require("PlaceViewController");
 var GuankaViewController = require("GuankaViewController");
 var GameViewController = require("GameViewController");
-var GameLianLianLe = require("GameLianLianLe"); 
+var GameLianLianLe = require("GameLianLianLe");
 var AlertLockViewController = require("AlertLockViewController");
 cc.Class({
     extends: UIHomeBase,
@@ -30,23 +30,22 @@ cc.Class({
     onLoad: function () {
         this._super();
         var x, y, w, h;
-  
+        //init shader
+        cc.ShaderManager.main().Add(require("ShaderShapeColor"));
+        cc.ShaderManager.main().Add(require("Glowing"));
 
         this.UnifyButtonSprite(this.btnPlay);
-        this.UnifyButtonSprite(this.btnBoard);
+        this.UnifyButtonSprite(this.btnFrendBoard);
 
+        this.btnFrendBoard.node.active = false;
+        
         this.listBtns.length = 0;
-        this.listBtns.push(this.btnPlay); 
-        this.listBtns.push(this.btnBoard);
+        this.listBtns.push(this.btnPlay);
+        //this.listBtns.push(this.btnFrendBoard);
 
         this.isActionFinish = false;
-
-
-        var dirRoot = cc.Common.CLOUD_RES_DIR;
-        if (cc.Common.main().isWeiXin) {
-            dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
-        }
-        var strbg = dirRoot + "/" + cc.AppRes.HOME_BG;
+ 
+        var strbg = cc.CloudRes.main().rootPath + "/" + cc.AppRes.HOME_BG;
         cc.TextureCache.main.Load(strbg, function (err, tex) {
             if (err) {
                 cc.Debug.Log(err.message || err);
@@ -178,7 +177,7 @@ cc.Class({
             btn.node.runAction(seq.repeatForever());
         }
     },
-    GotoGame: function () { 
+    GotoGame: function () {
         cc.GameManager.main().StartParsePlace(function () {
             this.GotoGameInteranl();
         }.bind(this)
@@ -205,11 +204,11 @@ cc.Class({
         if (!this.isActionFinish) {
             return;
         }
-      this.GotoGame();
+        this.GotoGame();
 
     },
     OnClickBtnBoard: function (event, customEventData) {
- 
+
 
     },
 });

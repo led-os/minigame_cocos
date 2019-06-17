@@ -47,13 +47,14 @@ var CloudRes = cc.Class({
 
     UnzipFile: function (filePath) {
         var dir = cc.FileSystem.main().GetRootDirPath();
+        this.tmp_filepath = filePath;
         cc.FileSystem.main().UnzipFile({
             zipFilePath: filePath,
             targetPath: dir,
             success: function (res) {
-                console.log("unzip success=" + filePath);
+                console.log("unzip success=" + this.tmp_filepath);
                 // this.readFile(dir + "/CloudRes/image/Bird/Albatross.png");
-                cc.FileSystem.main().DeleteFile(filePath);
+                cc.FileSystem.main().DeleteFile(this.tmp_filepath);
             }.bind(this),
             fail: function (res) {
 

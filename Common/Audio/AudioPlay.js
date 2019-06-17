@@ -31,6 +31,16 @@ var AudioPlay = cc.Class({
         }.bind(this));
     },
 
+
+    PlayCloudAudio: function (file) {
+        var filepath = cc.CloudRes.main().rootPath + "/" + file;
+        if (cc.Common.main().isWeiXin) {
+            cc.AudioPlay.main().PlayUrl(filepath);
+        } else {
+            cc.AudioPlay.main().PlayFile(filepath);
+        }
+    },
+
     //播放resource资源以外的本地文件
     PlayRawFile: function (file) {
         cc.audioEngine.uncacheAll();

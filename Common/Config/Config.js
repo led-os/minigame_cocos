@@ -41,6 +41,21 @@ var Config = cc.Class({
             },
         },
 
+        appId:
+        {
+            get: function () {
+                var key_store = cc.Source.APPSTORE;
+                if (cc.Common.main().isAndroid) {
+                    key_store = this.channel;
+                }
+                if (cc.Common.main().isWeiXin) {
+                    key_store = cc.Source.WEIXIN;
+                }
+                var strid = this.GetAppIdOfStore(key_store);
+                return strid;
+            }
+        },
+
         channel:
         {
             get: function () {
@@ -73,7 +88,15 @@ var Config = cc.Class({
                 }
                 return ret;
             },
-        }, 
+        },
+
+        APP_FOR_KIDS:
+        {
+            get: function () {
+                var ret = this.rootJsonCommon.APP_FOR_KIDS;
+                return ret;
+            }
+        },
     },
 
     SetLoadFinishCallBack: function (callback, info) {
@@ -108,28 +131,26 @@ var Config = cc.Class({
         var fileName = "";
         if (this == Config._main) {
             loadInfoId = Config.MAIN;
-            //Defualt
-            fileName = "config_" + this.osDefault;
-            if (this.osDefault == cc.Source.ANDROID) {
-                fileName = "config_android";
-            }
-            if (this.osDefault == cc.Source.IOS) {
-                fileName = "config_ios";
-            }
-            if (this.osDefault == cc.Source.WIN) {
+            //Defualt 
 
-            }
             if (cc.Common.main().isAndroid) {
                 fileName = "config_android";
             }
+            if (cc.Common.main().isiOS) {
+                fileName = "config_ios";
+            }
+
             if (cc.Common.isWin) {
                 fileName = "config_" + cc.Source.WIN;
                 fileName = "config_android";
             }
-            // if (ishd == true)//AppVersion.appForPad
-            // {
-            //     fileName += "_hd";
-            // }
+
+            if (cc.Common.main().isWeiXin) {
+                fileName = "config_weixin";
+            }
+            if (cc.Device.main.isLandscape) {
+                fileName += "_hd";
+            }
         }
 
         if (this == Config._common) {
@@ -209,6 +230,14 @@ var Config = cc.Class({
     },
     GetString: function (key, def) {
         return this.GetStringJson(this.rootJson, key, def);
+    },
+    GetAppIdOfStore(store) {
+        var appid = this.rootJson.APPID;
+        var strid = "0";
+        if (appid.store != null) {
+            strid = appid.store;
+        }
+        return strid;
     },
 
     IsHaveKey(key) {

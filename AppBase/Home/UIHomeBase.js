@@ -1,7 +1,7 @@
 var UIView = require("UIView");
 // var Common = require("Common"); 
 //var LayoutScale = require("LayoutScale");
-//var Language = require("Language");
+var UIHomeAppCenter = require("UIHomeAppCenter");
 var GameViewController = require("GameViewController");
 
 cc.Class({
@@ -23,6 +23,7 @@ cc.Class({
         imageBg: cc.Sprite,
         imageNameBg: cc.Sprite,
         textName: cc.Label,
+        uiPrefabAppCenter: cc.Prefab,
 
     },
 
@@ -47,7 +48,7 @@ cc.Class({
             cc.Tts.Speak(name);
         }
 
-        var strImage = cc.AppRes.IMAGE_HOME_BG;
+        var strImage = cc.AppRes.HOME_BG;
         cc.TextureCache.main.Load(strImage, function (err, tex) {
             //cc.url.raw('res/textures/content.png')
             if (err) {
@@ -82,10 +83,31 @@ cc.Class({
             wx.showShareMenu();
             cc.Share.main().SetWeiXinMPShareMenu(cc.AppRes.SHARE_TITLE, cc.AppRes.SHARE_IMAGE_URL);
         }
+
+
+        //home app center
+        this.LoadPrefabAppCenter();
+
     },
 
     start() {
         var hteXT = cc.Common.GetTextHeight(this.textName.string, this.textName.fontSize);
+    },
+
+    LoadPrefabAppCenter: function () {
+        var strPrefab = "Common/Prefab/Home/UIHomeAppCenter";
+        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
+            if (err) {
+                cc.Debug.Log("LoadPrefab err:" + err.message || err);
+                return;
+            }
+            this.uiPrefabAppCenter = prefab;
+            var node = cc.instantiate(this.uiPrefabAppCenter);
+            var ui = node.getComponent(UIHomeAppCenter);
+            node.parent = this.node;
+
+        }.bind(this)
+        );
     },
 
     GetPosOfImageName: function () {
@@ -147,7 +169,7 @@ cc.Class({
     },
 
     OnClickBtnFrendBoard: function (event, customEventData) {
-        cc.FrendBoard.main().Show(); 
+        cc.FrendBoard.main().Show();
     },
 });
 

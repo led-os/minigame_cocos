@@ -404,6 +404,20 @@ var Common = cc.Class({
             return h;
         },
 
+        OpenApp: function (appid) {
+            if (cc.Common.main().isWeiXin) {
+                wx.navigateToMiniProgram({
+                    appId: appid,
+                    success(res) {
+                        // 打开其他小程序成功同步触发
+                        // wx.showToast({
+                        //     title: '跳转成功'
+                        // })
+                    }
+                })
+            }
+        },
+
         appSceneMain: null,
 
         // _appSceneBase: null,

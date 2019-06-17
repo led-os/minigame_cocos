@@ -68,7 +68,7 @@ var GameGuankaParse = cc.Class({
                 var infopic = new cc.LianLianLeItemInfo();
                 var itempic = jsonPic0[j];
                 infopic.pic = picdir + "/" + itempic.name;
-                infopic.category = itempic.type;
+                infopic.id = itempic.type;
                 //随机打乱
                 var rdm = cc.Common.RandomRange(0, info.listPic0.length + 1);
                 //插入元素
@@ -84,7 +84,7 @@ var GameGuankaParse = cc.Class({
                 var infopic = new cc.LianLianLeItemInfo();
                 var itempic = jsonPic1[j];
                 infopic.pic = picdir + "/" + itempic.name;
-                infopic.category = itempic.type;
+                infopic.id = itempic.type;
                 //随机打乱 
                 var rdm = cc.Common.RandomRange(0, info.listPic1.length + 1);
                 //插入元素

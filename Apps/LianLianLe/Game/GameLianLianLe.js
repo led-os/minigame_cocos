@@ -179,10 +179,11 @@ var GameLianLianLe = cc.Class({
         infoRet.node = node;
         infoRet.id = info.id;
         infoRet.pic = info.pic;
+        infoRet.category = info.category;
         this.listItem.push(infoRet);
         node.parent = this.node;
         node.active = false;
-      
+
         var uiGameItem = node.getComponent(UIGameItem);
         uiGameItem.UpdateItem(info, function (ui) {
             var rc = this.GetRectItem(i, j, this.totalRow, this.totalCol);
@@ -190,7 +191,7 @@ var GameLianLianLe = cc.Class({
             var size = ui.imageItem.node.getContentSize();
             scale = cc.Common.GetBestFitScale(size.width, size.height, rc.width, rc.height);
             //cc.Debug.Log("size="+size+" rc="+rc+" scale="+scale);
-            node.setContentSize(cc.size(size.width*scale,size.height*scale));
+            node.setContentSize(cc.size(size.width * scale, size.height * scale));
             this.LoadItemImageFinish(infoRet);
             this.loadItemCount++;
         }.bind(this));
@@ -206,6 +207,11 @@ var GameLianLianLe = cc.Class({
         }
     },
 
+    GetItemPositionNormal: function (info) {
+        var rc = this.GetRectItem(info.i, info.j, this.totalRow, this.totalCol);
+        return rc.center;
+    },
+
     UpdateItemPosition: function (info, isAnimate) {
         var x, y, w, h;
         var node = info.node;
@@ -217,7 +223,7 @@ var GameLianLianLe = cc.Class({
         var rctran = node.getComponent(cc.RectTransform);
         rctran.width = rc.width;
         rctran.height = rc.height;
-        var pt = rc.center;
+        var pt = this.GetItemPositionNormal(info);
         //cc.Debug.Log("LayOut:i=" + info.i + " j=" + info.j + " rc=" + rc + " pt=" + pt + " bd=" + bd.size);
         var z = node.getPosition().z;
         node.setPosition(pt.x, pt.y, z);
@@ -247,6 +253,20 @@ var GameLianLianLe = cc.Class({
         var seq = cc.sequence([action, fun]);
         node.runAction(seq);
     },
+
+    //复位动画
+    RunActionItemReset: function (info) {
+        var duration = 0.5;
+        var pt = this.GetItemPositionNormal(info);
+        var action = cc.moveTo(duration, pt).easing(cc.easeOut(3.0));
+        //delay延时
+        var time = cc.delayTime(0.1);
+        var fun = cc.callFunc(function () {
+        }.bind(this));
+        var seq = cc.sequence([action, fun]);
+        info.node.runAction(seq);
+    },
+
 
     GetRectDisplay: function () {
         var x, y, w, h;
@@ -284,7 +304,7 @@ var GameLianLianLe = cc.Class({
 
     CheckGameWin() {
         if (this.IsAllItemLock()) {
-            cc.AudioPlay.main().PlayFile(cc.AppRes.AUDIO_GAME_GuankaOk);
+            cc.AudioPlay.main().PlayCloudAudio(cc.AppRes.AUDIO_GAME_GuankaOk);
             this.OnGameWin();
         }
 
@@ -364,6 +384,7 @@ var GameLianLianLe = cc.Class({
         //this.itemInfoSel.node.setPosition(positemNew);
 
         //将选中item暂时置顶
+        this.itemInfoSel.node.zIndex = 1000;
         //posword.z = this.itemPosZ - 2; 
         //var body = this.itemInfoSel.node.getComponent(cc.RigidBody);
         var uiGameItemSel = this.itemInfoSel.node.getComponent(UIGameItem);
@@ -386,8 +407,8 @@ var GameLianLianLe = cc.Class({
             w = bd.width / 4;
             h = bd.height / 4;
             var rc = new cc.Rect(info.node.getPosition().x - w / 2, info.node.getPosition().y - h / 2, w, h);
-            if ((rc.contains(positemNew)) && (this.itemInfoSel.category == info.category)) {
-                cc.Debug.Log("合并正确");
+            if ((rc.contains(positemNew)) && (this.itemInfoSel.id == info.id)) {
+                cc.Debug.Log("合并正确" + " info.id=" + info.id + " this.itemInfoSel.id=" + this.itemInfoSel.id);
                 //合并正确 
                 this.SetItemLock(info, true);
                 this.SetItemLock(this.itemInfoSel, true);
@@ -396,8 +417,9 @@ var GameLianLianLe = cc.Class({
 
                 if (!this.IsAllItemLock()) {
                     // PlayAudioItem(audioClipItemFinish);
-                    //.PlayAudioItemFinish(this.itemInfoSel);
-                    cc.AudioPlay.main().PlayFile(cc.AppRes.AUDIO_GAME_DragOk);
+                    //.PlayAudioItemFinish(this.itemInfoSel); 
+                    cc.AudioPlay.main().PlayCloudAudio(cc.AppRes.AUDIO_GAME_DragOk);
+
                 }
 
                 //记录游戏开始进行中
@@ -418,6 +440,9 @@ var GameLianLianLe = cc.Class({
         if (!this.isItemHasSel) {
             return;
         }
+        //将选中item清除置顶
+        this.itemInfoSel.node.zIndex = 0;
+
         var isLock = this.IsItemLock(this.itemInfoSel);
         if (isLock) {
             return;
@@ -426,10 +451,9 @@ var GameLianLianLe = cc.Class({
         var rc = this.GetRectDisplay();
         cc.Common.LimitNodePos(this.itemInfoSel.node, rc);
 
-        //将选中item清除置顶
-        // var pos = itemInfoSel.node.getPosition();
-        // itemInfoSel.node.transform.position = pos;
-        cc.AudioPlay.main().PlayFile(cc.AppRes.AUDIO_GAME_DragFail);
+        this.RunActionItemReset(this.itemInfoSel);
+        cc.AudioPlay.main().PlayCloudAudio(cc.AppRes.AUDIO_GAME_DragFail);
+
     },
 
     OnUITouchEvent: function (ev, status, event) {

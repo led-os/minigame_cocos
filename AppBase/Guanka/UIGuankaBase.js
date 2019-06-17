@@ -10,7 +10,7 @@ cc.Class({
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
 
-        cc.TextureCache.main.Load(cc.AppRes.IMAGE_HOME_BG, function (err, tex) {
+        cc.TextureCache.main.Load(cc.AppRes.HOME_BG, function (err, tex) {
             if (err) {
                 cc.Debug.Log(err.message || err);
                 return;

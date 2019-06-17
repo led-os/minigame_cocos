@@ -50,7 +50,7 @@ var UIGameItem = cc.Class({
             // uiGameItemSel.node.setPosition(positemNew);
 
         } else {
-            cc.Debug.Log("body is null");
+            //cc.Debug.Log("body is null");
             this.node.setPosition(pos);
         }
 
@@ -187,7 +187,9 @@ var UIGameItem = cc.Class({
         }.bind(this);
 
         cc.TextureCache.main.Load(strImage, funcLoad);
-
+        if (info.isColor) {
+            this.UpdateItemColor(sprite, cc.Color.RED);
+        }
 
         // var z = this.itemPosZ;
         // if (isInner == true) {

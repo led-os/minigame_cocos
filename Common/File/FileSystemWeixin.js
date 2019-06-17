@@ -116,7 +116,7 @@ var FileSystemWeixin = cc.Class({
     DeleteFile: function (filepath) {
         const fs = wx.getFileSystemManager()
         fs.removeSavedFile({
-            filePath: filePath,
+            filePath: filepath,
             success: function (res) {
 
             }.bind(this),
