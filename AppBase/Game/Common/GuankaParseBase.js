@@ -60,7 +60,7 @@ var GuankaParseBase = cc.Class({
         if (callback != null) {
             this.callbackPlaceFinish = callback;
         }
-        var filepath = cc.Common.GAME_RES_DIR + "/place/place_list.json";
+        var filepath = cc.Common.GAME_RES_DIR + "/place/place_list";
         cc.Debug.Log("StartParsePlaceList ");
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
             if (err) {

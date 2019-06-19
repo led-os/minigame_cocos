@@ -68,7 +68,7 @@ var GameViewController = cc.Class({
     },
 
     LoadPrefab: function () {
-        var strPrefab = "App/Prefab/Game/UIGame" + cc.Config.main().appType;
+        var strPrefab = "AppCommon/Prefab/Game/UIGame" + cc.Config.main().appType;
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
                 cc.Debug.Log("Game LoadPrefab fail");

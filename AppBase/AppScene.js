@@ -34,7 +34,7 @@ cc.Class({
             var info = new TabBarItemInfo();
             info.controller = MainViewController.main();
             info.title = "main";
-            info.pic = "App/UI/Home/BtnHome";
+            info.pic = "AppCommon/UI/Home/BtnHome";
             controller.AddItem(info);
         }
 

@@ -23,11 +23,11 @@ var UIGameLianLianLe = cc.Class({
         this._super();
         this.UnifyButtonSprite(this.btnBack);
         this.LoadLanguageGame();
-        this.textTitle.node.active = false;
+        //this.textTitle.node.active = false;
         //this.LoadGamePrefab();
         //var ev = this.node.addComponent(cc.UITouchEvent);
         // ev.callBackTouch = this.OnUITouchEvent;
- 
+
         var url = cc.CloudRes.main().rootPath + "/" + cc.AppRes.Game_BG;
         cc.TextureCache.main.Load(url, function (err, tex) {
             if (err) {
@@ -75,8 +75,8 @@ var UIGameLianLianLe = cc.Class({
 
     UpdateGuankaLevel: function (level) {
         this._super();
-        this.game.textTitle = this.textTitle;
-        this.textTitle.node.active = false;
+        //this.textTitle.node.active = false;
+        this.UpdateTitle();
         this.game.LoadGame();
     },
 
@@ -85,6 +85,12 @@ var UIGameLianLianLe = cc.Class({
         this.ShowGameWinAlert();
 
     },
-
-
+    UpdateTitle() {
+        var idx = cc.GameManager.main().placeLevel;
+        var infoPlace = cc.GameManager.main().GetPlaceItemInfo(idx);
+        var key =  cc.GameGuankaParse.main().keyGameGuide;
+        var str = cc.Language.game().GetString(key);
+        this.textTitle.string = str;
+        // this.textTitle.color = cc.Color.BLACK;
+    },
 });

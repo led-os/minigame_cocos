@@ -14,6 +14,7 @@ var GameGuankaParse = cc.Class({
             default: [],
             type: cc.Object
         },
+        keyGameGuide: "0",
     },
 
     AddItemImage(list, infoId, enable_color) {
@@ -43,11 +44,14 @@ var GameGuankaParse = cc.Class({
 
     ParseGuanka: function (json) {
         var idx = cc.GameManager.main().placeLevel;
+        var infoPlace = cc.GameManager.main().GetPlaceItemInfo(idx);
         if (idx > 5) {
+            this.keyGameGuide = "STR_GAME_GUIDE_" + infoPlace.id;
             this.StartParseAutoGuanka();
             return;
         }
-        var infoPlace = cc.GameManager.main().GetPlaceItemInfo(idx);
+
+        this.keyGameGuide = "STR_PLACE_" + infoPlace.id + "_GUANKA" + cc.GameManager.main().gameLevel;
 
         if ((this.listGuanka != null) && (this.listGuanka.length != 0)) {
             return;
@@ -94,8 +98,8 @@ var GameGuankaParse = cc.Class({
 
             this.listGuanka.push(info);
         }
-       
-        this.ParseGuankaDidFinish(); 
+
+        this.ParseGuankaDidFinish();
         cc.Debug.Log("config:this.listGuanka=" + this.listGuanka.length);
         //  this.CheckAllLoad();
     },
@@ -157,8 +161,9 @@ var GameGuankaParse = cc.Class({
         }
 
         cc.Debug.Log("LoadAutoGuankaFinish:this.listGuanka=" + this.listGuanka.length);
-        this.ParseGuankaDidFinish(); 
+        this.ParseGuankaDidFinish();
     },
+
 
 
 

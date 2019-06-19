@@ -1,38 +1,44 @@
 var UIView = require("UIView");
-var SettingViewController = require("SettingViewController");
-var HomeViewController = require("HomeViewController");
 
 var UIHomeAppCenter = cc.Class({
     extends: UIView,
     statics: {
-        // 声明静态变量
-        AD_JSON_FILE_KIDS: "applist_home_kids.json",
-        AD_JSON_FILE_SMALL_GAME: "applist_home_minigame.json",
-
-        //http://www.mooncore.cn/moonma/app_center/applist_home_smallgame.json
-        APPCENTER_HTTP_URL_HOME_SMALL_GAME: "http://www.mooncore.cn/moonma/app_center/" + UIHomeAppCenter.AD_JSON_FILE_SMALL_GAME,
-
-        //http://www.mooncore.cn/moonma/app_center/applist_home_kids.json
-        APPCENTER_HTTP_URL_HOME_KIDS_GAME: "http://www.mooncore.cn/moonma/app_center/" + UIHomeAppCenter.AD_JSON_FILE_KIDS,
+        APPCENTER_HTTP_URL_HOME_KIDS_GAME: "",
+        APPCENTER_HTTP_URL_HOME_SMALL_GAME: "",
     },
 
     properties: {
-        tableView: {
-            default: null,
-            type: cc.TableView
-        },
-        oneCellNum: 0,
+        tableView: cc.TableView,
         listItem: {
             default: [],
             type: cc.Object
         },
+
+        oneCellNum: 0,
     },
 
     onLoad: function () {
         this.oneCellNum = 1;
         this.UnifyButtonSprite(this.btnNoAd);
+        this.listItem.length = 0;
+        // for (var i = 0; i < 10; i++) {
+        //     var info = new cc.ItemInfo();
+        //     info.title = "title";
+        //     info.pic = "https://is5-ssl.mzstatic.com/image/thumb/Purple128/v4/e6/c3/25/e6c325c8-afe0-5a52-1f59-0e432d8f8651/AppIcon-1x_U007emarketing-85-220-9.png/230x0w.jpg";
+        //     var store = cc.Source.WEIXIN;
+        //     var appid = "wx2c5d3abfad26e8b1";
+        //     if (appid != null) {
+        //         this.listItem.push(info);
+        //     }
+        //     this.UpdateList();
+        // }
         this.StartParserAppList();
+
         this.LayOut();
+    },
+    start: function () {
+
+        // 
     },
 
     LayOut: function () {
@@ -46,39 +52,55 @@ var UIHomeAppCenter = cc.Class({
 
 
     UpdateList: function () {
-        this.tableView.uiViewParent = this;
-        this.tableView.cellHeight = 256;
         var size = this.node.getContentSize();
-       // this.oneCellNum = Math.floor(size.width / this.tableView.cellHeight);
+        this.tableView.uiViewParent = this;
+        this.tableView.cellHeight = size.width / 4;
+
+        // this.oneCellNum = Math.floor(size.width / this.tableView.cellHeight);
         this.tableView.oneCellNum = this.oneCellNum;
 
         this.tableView.initTableView(this.listItem.length, { array: this.listItem, target: this });
     },
 
-    StartParserAppList() {
-        this.listItem.length = 0;
-        var url = UIHomeAppCenter.APPCENTER_HTTP_URL_HOME_KIDS_GAME;
+    StartParserAppList: function () {
+
+        var urljson = UIHomeAppCenter.APPCENTER_HTTP_URL_HOME_KIDS_GAME;
         if (!cc.Config.main().APP_FOR_KIDS) {
-            url = UIHomeAppCenter.APPCENTER_HTTP_URL_HOME_SMALL_GAME;
+            urljson = UIHomeAppCenter.APPCENTER_HTTP_URL_HOME_SMALL_GAME;
         }
+        urljson = "https://6c69-lianlianle-shkb3-1259451541.tcb.qcloud.la/AppCenter/applist_home_kids.json";
+        //  urljson = "https://6c69-lianlianle-shkb3-1259451541.tcb.qcloud.la/AppCenter/version.json?sign=a746e91337cac8983dde5d48e37c493e&t=1560913771";
+        var filepath = cc.Common.RES_CONFIG_DATA + "/app_center/applist_home_kids";
+        //
         // 加载json文件
-        cc.loader.load({ url: url, type: "json" }, function (err, rootJson) {
-            if (err == null) {
-                this.ParseJsonData(err, rootJson);
+        // cc.loader.load({ url: urljson, type: "json" }, function (err, rootJson)
+        // cc.loader.load(urljson, function (err, rootJson)
+        cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
+            if (err) {
+                cc.Debug.Log("HomeAppCenter error url=" + urljson);
+                cc.Debug.Log("HomeAppCenter err:" + err.message || err);
+            } else {
+                this.ParseJsonData(rootJson.json);
             }
         }.bind(this));
     },
 
     ParseJsonData: function (json) {
+        if (json == null) {
+            cc.Debug.Log("HomeAppCenter:ParseJsonDatatest=null");
+            return;
+        }
         var applist = json.app;
         for (var i = 0; i < applist.length; i++) {
             var item = applist[i];
             var info = new cc.ItemInfo();
             info.title = cc.JsonUtil.GetItem(item, "title", "");
             info.pic = cc.JsonUtil.GetItem(item, "pic", "");
-            var store = cc.Source.WEIXIN;
-            var appid = item.APPID.store;
-            appid = "wx2c5d3abfad26e8b1";
+            var appid = item.APPID.appstore;
+            if (cc.Common.main().isWeiXin) {
+                appid = item.APPID.weixin;
+            }
+            //appid = "wx2c5d3abfad26e8b1";
             if (appid != null) {
                 info.id = appid;
                 if (cc.Config.main().appid == appid) {
@@ -96,9 +118,10 @@ var UIHomeAppCenter = cc.Class({
             }
 
         }
+        // cc.Debug.Log("HomeAppCenter applist=" + applist.length);
         this.UpdateList();
     },
- 
+
     OnClickBtnNoAd: function (event, customEventData) {
     },
 

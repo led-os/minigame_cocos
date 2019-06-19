@@ -41,10 +41,10 @@ var UIGameBase = cc.Class({
         this.UpdateBtnMusic();
     },
     LoadGamePrefab: function () {
-        var strPrefab = "App/Prefab/Game/Game" + cc.Config.main().appType;
+        var strPrefab = "AppCommon/Prefab/Game/Game" + cc.Config.main().appType;
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.Debug.Log(err.message || err);
+                cc.Debug.Log("LoadGamePrefab err="+err.message || err);
                 return;
             }
             this.gamePrefab = prefab;

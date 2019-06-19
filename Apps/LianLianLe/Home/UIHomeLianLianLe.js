@@ -38,13 +38,13 @@ cc.Class({
         this.UnifyButtonSprite(this.btnFrendBoard);
 
         this.btnFrendBoard.node.active = false;
-        
+
         this.listBtns.length = 0;
         this.listBtns.push(this.btnPlay);
         //this.listBtns.push(this.btnFrendBoard);
 
         this.isActionFinish = false;
- 
+
         var strbg = cc.CloudRes.main().rootPath + "/" + cc.AppRes.HOME_BG;
         cc.TextureCache.main.Load(strbg, function (err, tex) {
             if (err) {
@@ -70,8 +70,7 @@ cc.Class({
 
     },
 
-    start: function () {
-
+    start: function () { 
     },
 
     LayOut: function () {
@@ -178,12 +177,14 @@ cc.Class({
         }
     },
     GotoGame: function () {
+        cc.Debug.Log("HomeLianlianle GotoGame");
         cc.GameManager.main().StartParsePlace(function () {
             this.GotoGameInteranl();
         }.bind(this)
         );
     },
     GotoGameInteranl: function () {
+        cc.Debug.Log("HomeLianlianle GotoGameInteranl");
         if (this.controller != null) {
             var navi = this.controller.naviController;
             var total = cc.GameManager.main().placeTotal;
@@ -201,6 +202,7 @@ cc.Class({
     },
 
     OnClickBtnPlay: function (event, customEventData) {
+        cc.Debug.Log("HomeLianlianle OnClickBtnPlay");
         if (!this.isActionFinish) {
             return;
         }
@@ -210,6 +212,7 @@ cc.Class({
     OnClickBtnBoard: function (event, customEventData) {
 
 
-    },
+    }, 
+ 
 });
 

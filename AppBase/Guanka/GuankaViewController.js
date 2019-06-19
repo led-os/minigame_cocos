@@ -39,7 +39,7 @@ var GuankaViewController = cc.Class({
     },
 
     LoadPrefab: function () {
-        var strPrefab = "App/Prefab/Guanka/UIGuanka" + cc.Config.main().appType;
+        var strPrefab = "AppCommon/Prefab/Guanka/UIGuanka" + cc.Config.main().appType;
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
                 cc.Debug.Log("UIGuanka err:" + err.message || err);

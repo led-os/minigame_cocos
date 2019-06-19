@@ -44,7 +44,7 @@ var PlaceViewController = cc.Class({
 
 
     LoadPrefab: function () {
-        var strPrefab = "App/Prefab/Place/UIPlace" + cc.Config.main().appType;
+        var strPrefab = "AppCommon/Prefab/Place/UIPlace" + cc.Config.main().appType;
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
                 cc.Debug.Log("UIPlace err:" + err.message || err);

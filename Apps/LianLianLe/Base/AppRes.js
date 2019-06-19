@@ -37,11 +37,11 @@ var AppRes = cc.Class({
         AUDIO_BtnClick: "audio/BtnClick.mp3",
 
         //image
-        IMAGE_BtnMusicOn: "App/UI/Home/BtnMusicOn",
-        IMAGE_BtnMusicOff: "App/UI/Home/BtnMusicOff",
+        IMAGE_BtnMusicOn: "AppCommon/UI/Home/BtnMusicOn",
+        IMAGE_BtnMusicOff: "AppCommon/UI/Home/BtnMusicOff",
 
-        IMAGE_BTN_SWITCH_UNSEL: "App/UI/Common/BtnSwitchUnSel",
-        IMAGE_BTN_SWITCH_SEL: "App/UI/Common/BtnSwitchSel",
+        IMAGE_BTN_SWITCH_UNSEL: "AppCommon/UI/Common/BtnSwitchUnSel",
+        IMAGE_BTN_SWITCH_SEL: "AppCommon/UI/Common/BtnSwitchSel",
 
 
         IMAGE_GUANKA_CELL_ITEM_BG_UNLOCK: "App/UI/Guanka/guanka_item_unlock",
@@ -49,12 +49,12 @@ var AppRes = cc.Class({
         IMAGE_GUANKA_CELL_ITEM_BG_PLAY: "App/UI/Guanka/guanka_item_playing",
 
 
-        IMAGE_CELL_BG_BLUE: "App/UI/Setting/SettingCellBgBlue",
-        IMAGE_CELL_BG_ORINGE: "App/UI/Setting/SettingCellBgOringe",
-        IMAGE_CELL_BG_YELLOW: "App/UI/Setting/SettingCellBgYellow",
+        IMAGE_CELL_BG_BLUE: "AppCommon/UI/Setting/SettingCellBgBlue",
+        IMAGE_CELL_BG_ORINGE: "AppCommon/UI/Setting/SettingCellBgOringe",
+        IMAGE_CELL_BG_YELLOW: "AppCommon/UI/Setting/SettingCellBgYellow",
 
         //game
-        IMAGE_Game_Bomb: "App/UI/Game/Bomb",
+        IMAGE_Game_Bomb: "AppCommon/UI/Game/Bomb",
 
         //share
         SHARE_TITLE: "通过物品的连线快速学习事物",

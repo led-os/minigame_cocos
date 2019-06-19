@@ -19,9 +19,7 @@ var GameLianLianLe = cc.Class({
         GAME_STATUS_FINISH: 2,//完成
     },
 
-    properties: {
-        imageBg: cc.Sprite,
-        textTitle: cc.Label,
+    properties: {  
         gameItemPrefab: {
             default: null,
             type: cc.Prefab
@@ -99,7 +97,7 @@ var GameLianLianLe = cc.Class({
     },
 
     LoadGameItemPrefab: function (cbFinish) {
-        var strPrefab = "App/Prefab/Game/UIGameItem";
+        var strPrefab = "AppCommon/Prefab/Game/UIGameItem";
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
                 cc.Debug.Log(err.message || err);
