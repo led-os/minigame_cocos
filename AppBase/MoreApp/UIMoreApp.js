@@ -1,11 +1,9 @@
 var UIView = require("UIView");
-// var Common = require("Common");
-var UIGuankaBase = require("UIGuankaBase");
+var UIPlaceBase = require("UIPlaceBase");
 var GameViewController = require("GameViewController");
-//var Language = require("Language");
 
 cc.Class({
-    extends: UIGuankaBase,
+    extends: UIView,
     properties: {
         tableView: cc.TableView,
         btnBack: {
@@ -13,27 +11,21 @@ cc.Class({
             type: cc.Button
         },
         textTitle: cc.Label,
-        oneCellNum: 3,
+        oneCellNum: 4,
         listItem: null,
     },
 
     onLoad: function () {
         this._super();
         this.UnifyButtonSprite(this.btnBack);
-
-        this.textTitle.string = cc.Language.main().GetString("STR_GUANKA");
-        cc.LevelManager.main().StartParseGuanka(function () {
-            cc.Debug.Log("UIGuanka::UpdateItem");
+        this.textTitle.string = cc.Language.main().GetString("STR_PLACE");
+        cc.LevelManager.main().StartParsePlace(function () {
             this.UpdateItem();
         }.bind(this)
         );
-
-
-        // this.tableView.node.active = false;
-        var ev = this.node.addComponent(cc.UITouchEvent);
-        var strbg = cc.CloudRes.main().rootPath + "/" + cc.AppRes.GUANKA_BG;
+        var strbg = cc.CloudRes.main().rootPath + "/" + cc.AppRes.PLACE_BG; 
         cc.TextureCache.main.Load(strbg, function (err, tex) {
-            if (err) {
+            if (err) { 
                 cc.Debug.Log(err.message || err);
                 return;
             }
@@ -43,13 +35,16 @@ cc.Class({
                 lyscale.LayOut();
             }
         }.bind(this));
-        // this.UpdateItem();
+
     },
 
+    start: function () {
+
+    },
 
     InitList: function () {
         this.tableView.uiViewParent = this;
-        this.tableView.cellHeight = 256;
+        this.tableView.cellHeight = 512;
         var size = this.node.getContentSize();
         this.oneCellNum = Math.floor(size.width / this.tableView.cellHeight);
         this.tableView.oneCellNum = this.oneCellNum;
@@ -58,15 +53,10 @@ cc.Class({
     },
 
     UpdateItem: function () {
-       // var game = GameViewController.main().gameBase;
-        this.listItem = cc.GameGuankaParse.main().listGuanka;
-        cc.Debug.Log("UIGuanka::this.listItem=" + this.listItem.length);
+        var game = GameViewController.main().gameBase;
+        this.listItem = cc.LevelManager.main().listPlace;
+        cc.Debug.Log("UIPlace UpdateItem this.listItem=" + this.listItem.length);
         this.InitList();
-    },
-
-    GotoGame: function (idx) {
-        cc.LevelManager.main().gameLevel = idx;
-        cc.GameManager.main().GotoGame(this.controller);
     },
 });
 

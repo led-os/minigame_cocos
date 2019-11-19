@@ -89,7 +89,7 @@ var UIGameBase = cc.Class({
 
 
     UpdateGuankaLevel: function (level) {
-        var idx = cc.GameManager.main().gameLevel;
+        var idx = cc.LevelManager.main().gameLevel;
         cc.Debug.Log("UIGameBase::UpdateGuankaLevel idx=" + idx);
         if (idx >= 3) {
             var isLock = cc.Common.GetBoolOfKey(cc.AppRes.KEY_GAME_LOCK, true);
@@ -108,7 +108,7 @@ var UIGameBase = cc.Class({
     },
 
     LoadLanguageGame: function () {
-        var info = cc.GameManager.main().GetPlaceItemInfo(cc.GameManager.main().placeLevel);
+        var info = cc.LevelManager.main().GetPlaceItemInfo(cc.LevelManager.main().placeLevel);
         var filepath = cc.Common.GAME_RES_DIR + "/language/" + info.language;//+ ".csv";
         cc.Debug.Log("LoadLanguageGame::filepath=" + filepath);
         cc.Language._game = new cc.Language();
@@ -146,7 +146,7 @@ var UIGameBase = cc.Class({
         }
         //cc.GameManager.main().isShowGameAdInsert = false;
         // if ((GameManager.gameLevel != 0) && ((GameManager.gameLevel % _step) == 0))
-        if ((cc.GameManager.main().gameLevel % _step) == 0) {
+        if ((cc.LevelManager.main().gameLevel % _step) == 0) {
             cc.AdKitCommon.main.InitAdInsert();
             cc.AdKitCommon.main.ShowAdInsert(100);
             //GameManager.main.isShowGameAdInsert = true;
@@ -155,10 +155,10 @@ var UIGameBase = cc.Class({
 
     OnGameWinBase: function () {
         this.ShowAdInsert(UIGameBase.GAME_AD_INSERT_SHOW_STEP);
-        if (cc.GameManager.main().gameLevelFinish < cc.GameManager.main().gameLevel) {
-            cc.GameManager.main().gameLevelFinish = cc.GameManager.main().gameLevel;
+        if (cc.LevelManager.main().gameLevelFinish < cc.LevelManager.main().gameLevel) {
+            cc.LevelManager.main().gameLevelFinish = cc.LevelManager.main().gameLevel;
             //好友排行榜
-            let score = cc.GameManager.placeLevel + "-" + cc.GameManager.main().gameLevel;
+            let score = cc.LevelManager.main().placeLevel + "-" + cc.LevelManager.main().gameLevel;
             cc.Debug.Log("OnGameWin score=" + score);
             cc.FrendBoard.main().SaveData(score);
         }
@@ -174,7 +174,7 @@ var UIGameBase = cc.Class({
         cc.ViewAlertManager.main().ShowFull(title, msg, yes, no, true, "STR_KEYNAME_VIEWALERT_GAME_FINISH",
             function (alert, isYes) {
                 if (isYes) {
-                    cc.GameManager.main().GotoNextLevelWithoutPlace();
+                    cc.LevelManager.main().GotoNextLevelWithoutPlace();
                 } else {
                     //replay
                     cc.GameManager.main().GotoPlayAgain();

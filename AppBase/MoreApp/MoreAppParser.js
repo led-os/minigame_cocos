@@ -1,15 +1,8 @@
-var UIView = require("UIView");
-
-var UIHomeAppCenter = cc.Class({
-    extends: UIView,
+ 
+var MoreAppParser = cc.Class({
+    extends: cc.Object,
     statics: {
-        AD_JSON_FILE_KIDS: "applist_home_kids.json",
-        AD_JSON_FILE_SMALL_GAME: "applist_home_minigame.json",
-        APPCENTER_HTTP_URL_HEAD: "",
-        APPCENTER_HTTP_URL_HOME_SMALL_GAME: "https://6d6f-moonma-dbb297-1258816908.tcb.qcloud.la/Unity/app_center/applist_home_minigame.json?sign=4b79dab72806704c30be94312351cacd&t=1561688564",
-        APPCENTER_HTTP_URL_HOME_KIDS_GAME: "https://6d6f-moonma-dbb297-1258816908.tcb.qcloud.la/Unity/app_center/applist_home_kids.json?sign=0dc2a5bf8e85d12b9515afb3cf87cfe1&t=1561688516",
-
-
+        
     },
 
     properties: {
@@ -18,53 +11,9 @@ var UIHomeAppCenter = cc.Class({
             type: cc.Object
         },
 
-        btnAppIcon0: cc.Button,
-        btnAppIcon1: cc.Button,
-        btnAppIcon2: cc.Button,
+     
     },
- 
-    onLoad: function() { 
-        this.UnifyButtonSprite(this.btnAppIcon0);
-        this.UnifyButtonSprite(this.btnAppIcon1);
-        this.UnifyButtonSprite(this.btnAppIcon2);
-
-        this.listItem.length = 0;
-        // for (var i = 0; i < 10; i++) {
-        //     var info = new cc.ItemInfo();
-        //     info.title = "title";
-        //     info.pic = "https://is5-ssl.mzstatic.com/image/thumb/Purple128/v4/e6/c3/25/e6c325c8-afe0-5a52-1f59-0e432d8f8651/AppIcon-1x_U007emarketing-85-220-9.png/230x0w.jpg";
-        //     var store = cc.Source.WEIXIN;
-        //     var appid = "wx2c5d3abfad26e8b1";
-        //     if (appid != null) {
-        //         this.listItem.push(info);
-        //     }
-        //     this.UpdateList();
-        // }
-        this.StartParserAppList();
-
-        this.LayOut();
-    },
-    start: function () {
-
-        // 
-    },
-
-    LayOut: function () {
-        var ly = this.node.getComponent(cc.Layout);
-        if (ly != null) {
-            //有些按钮隐藏后重新布局
-            ly._doLayout();
-        }
-
-    },
-
-
-    UpdateList: function () {
-        if (this.listItem.length == 0) {
-            return;
-        }
-        var size = this.node.getContentSize(); 
-    },
+    
 
     StartParserAppList: function () {
 
@@ -126,7 +75,6 @@ var UIHomeAppCenter = cc.Class({
         this.UpdateList();
     },
 
-    OnClickBtnNoAd: function (event, customEventData) {
-    },
+    
 
 }); 

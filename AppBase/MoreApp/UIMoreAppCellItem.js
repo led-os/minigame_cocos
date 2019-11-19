@@ -1,7 +1,5 @@
 var UIView = require("UIView");
 var UICellItemBase = require("UICellItemBase");
-var GameViewController = require("GameViewController");
-
 cc.Class({
     extends: UICellItemBase,
     //extends: require('viewCell'),
@@ -15,7 +13,8 @@ cc.Class({
 
     },
 
-    init: function init(index, data, reload, group) {
+    //init: function init(index, data, reload, group) 
+    init: function (index, data, reload, group) {
         this.node.active = true;
         this.index = index;
         if (index >= data.array.length) {
@@ -26,28 +25,15 @@ cc.Class({
         }
         this.target = data.target;
         this.info = data.array[index];
-        this.textTitle.string = index + 1;
-        var idx_playing = cc.LevelManager.main().gameLevelFinish + 1;
-        if (index > idx_playing) {
-            this.textTitle.node.active = false;
-            this.UpdateImage(cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_LOCK);
-        }
-        else if (index == idx_playing) {
-            this.textTitle.node.active = false;
-            this.UpdateImage(cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_PLAY);
-        } else {
-            this.textTitle.node.active = true;
-            this.UpdateImage(cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_UNLOCK);
-        }
-    },
-    clicked: function clicked() {
-        this.target.GotoGame(this.index);
+        this.textTitle.node.active = false;
+        this.UpdateImage(this.info.pic);
+
     },
 
     UpdateImage: function (pic) {
         cc.TextureCache.main.Load(pic, function (err, tex) {
             if (err) {
-                cc.Debug.Log(err.message || err);
+                cc.Debug.Log("UpdateImage:" + err.message || err);
                 return;
             }
             this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
@@ -57,5 +43,20 @@ cc.Class({
             }
         }.bind(this));
     },
+
+    clicked: function () {
+        cc.Debug.Log('下标:' + this.textTitle.string);
+        // if(this.onClickCallBack!=null)
+        // {
+        //     this.onClickCallBack(this);
+        // }
+        cc.LevelManager.main().placeLevel = this.index;
+
+        if (this.target.controller != null) {
+            var navi = this.target.controller.naviController;
+            cc.Debug.Log('goto GuankaViewController');
+            // navi.Push(GuankaViewController.main());
+        }
+    }
 });
 

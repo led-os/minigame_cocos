@@ -30,8 +30,8 @@ var HomeViewController = cc.Class({
         var node = cc.instantiate(this.uiPrefab);
         this.ui = node.getComponent(UIHomeBase);
         this.ui.SetController(this);
-        cc.GameManager.main().StartParsePlace(function () {
-            cc.GameManager.main().StartParseGuanka(null);
+        cc.LevelManager.main().StartParsePlace(function () {
+            cc.LevelManager.main().StartParseGuanka(null);
         }.bind(this)
         );
 

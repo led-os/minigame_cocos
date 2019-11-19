@@ -54,7 +54,7 @@ var GuankaParseBase = cc.Class({
 
     //place 
     GetPlaceTotal: function () {
-        return cc.GameManager.main().listPlace.length;
+        return cc.LevelManager.main().listPlace.length;
     },
     StartParsePlaceList: function (callback) {
         if (callback != null) {
@@ -73,10 +73,10 @@ var GuankaParseBase = cc.Class({
     },
     ParsePlaceList: function (json) {
         cc.Debug.Log("StartParsePlaceList ParsePlaceList");
-        if ((cc.GameManager.main().listPlace != null) && (cc.GameManager.main().listPlace.length != 0)) {
+        if ((cc.LevelManager.main().listPlace != null) && (cc.LevelManager.main().listPlace.length != 0)) {
             cc.Debug.Log("StartParsePlaceList not 0");
             if (this.callbackPlaceFinish != null) {
-                cc.Debug.Log("StartParsePlaceList callbackPlaceFinish length = " + cc.GameManager.main().listPlace.length);
+                cc.Debug.Log("StartParsePlaceList callbackPlaceFinish length = " + cc.LevelManager.main().listPlace.length);
                 this.callbackPlaceFinish();
             }
             return;
@@ -115,18 +115,18 @@ var GuankaParseBase = cc.Class({
                 }
             }
 
-            cc.GameManager.main().listPlace.push(info);
+            cc.LevelManager.main().listPlace.push(info);
         }
 
         if (this.callbackPlaceFinish != null) {
-            cc.Debug.Log("StartParsePlaceList callbackPlaceFinish length = " + cc.GameManager.main().listPlace.length);
+            cc.Debug.Log("StartParsePlaceList callbackPlaceFinish length = " + cc.LevelManager.main().listPlace.length);
             this.callbackPlaceFinish();
         }
     },
     StartParseGuanka(callback) {
         this.callbackGuankaFinish = callback;
-        var idx = cc.GameManager.main().placeLevel;
-        var infoPlace = cc.GameManager.main().GetPlaceItemInfo(idx);
+        var idx = cc.LevelManager.main().placeLevel;
+        var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(idx);
         //var filepath = cc.Common.GAME_RES_DIR + "/guanka/item_Bird" + ".json";//+ infoPlace.id 
         var filepath = cc.Common.GAME_RES_DIR + "/guanka/item_" + infoPlace.id + ".json";//
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
@@ -146,8 +146,8 @@ var GuankaParseBase = cc.Class({
     },
 
     LoadGuankaItemId(cbFinish) {
-        var idx = cc.GameManager.main().placeLevel;
-        var infoPlace = cc.GameManager.main().GetPlaceItemInfo(idx);
+        var idx = cc.LevelManager.main().placeLevel;
+        var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(idx);
         this.callbackGuankaIdFinish = cbFinish;
         // var filepath = cc.CloudRes.main().rootPath + "/guanka/item_" + infoPlace.id + ".json";
         var filepath = cc.Common.GAME_RES_DIR + "/guanka/item_" + infoPlace.id + ".json";
@@ -188,8 +188,8 @@ var GuankaParseBase = cc.Class({
     ParseGuankaItemId(rootJson) {
         // cc.Debug.Log("ParseGuankaItemId:this.listGuanka=");
         //         //search_items
-        var idx = cc.GameManager.main().placeLevel;
-        var infoPlace = cc.GameManager.main().GetPlaceItemInfo(idx);
+        var idx = cc.LevelManager.main().placeLevel;
+        var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(idx);
         var picRoot = cc.CloudRes.main().rootPath + "/image/" + infoPlace.id + "/";
 
         //clear

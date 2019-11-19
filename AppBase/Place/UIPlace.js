@@ -19,7 +19,7 @@ cc.Class({
         this._super();
         this.UnifyButtonSprite(this.btnBack);
         this.textTitle.string = cc.Language.main().GetString("STR_PLACE");
-        cc.GameManager.main().StartParsePlace(function () {
+        cc.LevelManager.main().StartParsePlace(function () {
             this.UpdateItem();
         }.bind(this)
         );
@@ -54,7 +54,7 @@ cc.Class({
 
     UpdateItem: function () {
         var game = GameViewController.main().gameBase;
-        this.listItem = cc.GameManager.main().listPlace;
+        this.listItem = cc.LevelManager.main().listPlace;
         cc.Debug.Log("UIPlace UpdateItem this.listItem=" + this.listItem.length);
         this.InitList();
     },
