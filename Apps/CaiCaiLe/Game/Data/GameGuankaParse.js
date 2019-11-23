@@ -45,6 +45,7 @@ var GameGuankaParse = cc.Class({
     ParseGuanka: function (json) {
         var idx = cc.LevelManager.main().placeLevel;
         var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(idx);
+        cc.Debug.Log("GameGuankaParse ParseGuanka 0");
         // if (idx > 5)
         {
             this.keyGameGuide = "STR_GAME_GUIDE_" + infoPlace.id;
@@ -100,8 +101,8 @@ var GameGuankaParse = cc.Class({
             this.listGuanka.push(info);
         }
 
-        this.ParseGuankaDidFinish();
-        cc.Debug.Log("config:this.listGuanka=" + this.listGuanka.length);
+        this.ParseGuankaDidFinish(); 
+        cc.Debug.Log("GameGuankaParse:this.listGuanka=" + this.listGuanka.length);
         //  this.CheckAllLoad();
     },
 

@@ -21,4 +21,4 @@ var LayOutVertical = cc.Class({
 
 });
 
-cc.LayOutHorizontal = module.export = LayOutHorizontal; 
+cc.LayOutVertical = module.export = LayOutVertical; 

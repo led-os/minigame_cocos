@@ -110,8 +110,16 @@ cc.Class({
         );
     },
 
+    GetTopBarHeight: function () {
+        var h = 0;
+        if (this.topBar != null) {
+            h = this.topBar.getContentSize().height;
+        }
+        return h;
+    },
+
     GetPosOfImageName: function () {
-        var topbar_h = this.topBar.getContentSize().height;
+        var topbar_h = this.GetTopBarHeight();
         var size = this.node.getContentSize();
         var x, y;
         //layoutbtn:
@@ -122,8 +130,7 @@ cc.Class({
 
     LayOut: function () {
         //  LayoutScale.ScaleImage(this.imageBg,true);
-        var topbar_h = this.topBar.getContentSize().height;
-
+        var topbar_h = this.GetTopBarHeight();
         var size = this.node.getContentSize();
         var x, y, w, h;
         //layoutbtn:

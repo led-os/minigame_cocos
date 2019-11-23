@@ -69,7 +69,7 @@ var LayoutScale = cc.Class({
         },
 
 
-        scaleRatio: 1,
+        ratio: 1,
     },
 
     onLoad: function () {
@@ -125,7 +125,7 @@ var LayoutScale = cc.Class({
         } else {
             scale = cc.Common.GetBestFitScale(w, h, w_parent, h_parent);
         }
-        scale = scale*this.scaleRatio;
+        scale = scale*this.ratio;
         node.scaleX = scale;
         node.scaleY = scale;
     },

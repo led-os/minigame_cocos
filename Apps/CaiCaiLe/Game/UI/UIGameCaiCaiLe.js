@@ -1,6 +1,6 @@
 var UIViewController = require("UIViewController");
 var UIGameBase = require("UIGameBase");
-var GameLianLianLe = require("GameLianLianLe");
+var GameCaiCaiLe = require("GameCaiCaiLe");
 var AppType = require("AppType");
 //var LoadItemInfo = require("LoadItemInfo");
 

@@ -51,16 +51,17 @@ var LayOutGrid = cc.Class({
             // }
 
             //  LayoutElement
-            r = idx / this.col;
-            c = idx - r * this.col;
+            //floor 小于等于 x，且与 x 最接近的整数。
+            r = Math.floor(idx / this.col);
+            c = idx -  Math.floor(r * this.col);
 
             //从顶部往底部显示
-            if (this.dispLayVertical == DispLayVertical.TOP_TO_BOTTOM) {
+            if (this.dispLayVertical == cc.LayOutBase.DispLayVertical.TOP_TO_BOTTOM) {
                 r = this.row - 1 - r;
             }
 
             //从右往左显示
-            if (this.dispLayHorizontal == DispLayHorizontal.RIGHT_TO_LEFT) {
+            if (this.dispLayHorizontal == cc.LayOutBase.DispLayHorizontal.RIGHT_TO_LEFT) {
                 c = this.col - 1 - c;
             }
 
@@ -82,12 +83,20 @@ var LayOutGrid = cc.Class({
     GetItemPostion: function (r, c) {
         var x, y, w, h;
         var rctran = this.node.getComponent(cc.RectTransform);
+        if (rctran == null) {
+            cc.Debug.Log("GetItemPostion  rctran= null");
+            return cc.Vec2.ZERO;
+        }
+
         w = rctran.width;
         h = rctran.height;
+
+
         var item_w = (w - (this.space.x * (this.col - 1))) / this.col;
         var item_h = (h - (this.space.y * (this.row - 1))) / this.row;
-        x = -w / 2 + item_w * c + item_w / 2 + space.x * c;
-        y = -h / 2 + item_h * r + item_h / 2 + space.y * r;
+        x = -w / 2 + item_w * c + item_w / 2 + this.space.x * c;
+        y = -h / 2 + item_h * r + item_h / 2 + this.space.y * r;
+        cc.Debug.Log("GetItemPostion w=" + w + " h=" + h + " x=" + x + " y=" + y + " r=" + r + " c=" + c + " row=" + this.row + " col=" + this.col);
         return new cc.Vec2(x, y);
 
     },

@@ -170,7 +170,11 @@ var RectTransform = cc.Class({
 
     },
 
-    LayOut: function () { 
+    start: function () {
+        this.LayOut();
+    },
+
+    LayOut: function () {
         this.UpdateType(this.sizeTypeX, true);
         this.UpdateType(this.sizeTypeY, false);
 
@@ -196,12 +200,12 @@ var RectTransform = cc.Class({
             lA.UpdateType(lA.alignType);
         }
         this.UpdateAlign(this.alignType);
-        
+
         var view = this.node.getComponent(UIView);
         if (view != null) {
             // cc.Debug.Log("OnResize child");
             view.LayOutDidFinish();
-        } 
+        }
     },
 
     UpdateType: function (type, isX) {

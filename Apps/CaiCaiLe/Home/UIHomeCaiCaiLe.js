@@ -1,12 +1,12 @@
 var UIHomeBase = require("UIHomeBase");
 var AppRes = require("AppRes");
-//var LayoutScale = require("LayoutScale");
-// var Common = require("Common");
+var UIHomeSideBar = require("UIHomeSideBar");
+var UIHomeCenterBar = require("UIHomeCenterBar");
 var PlaceViewController = require("PlaceViewController");
 var GuankaViewController = require("GuankaViewController");
 var GameViewController = require("GameViewController");
-var GameCaiCaiLe = require("GameCaiCaiLe");
-var AlertLockViewController = require("AlertLockViewController");
+// var GameCaiCaiLe = require("GameCaiCaiLe");
+// var AlertLockViewController = require("AlertLockViewController");
 cc.Class({
     extends: UIHomeBase,
     properties: {
@@ -27,19 +27,14 @@ cc.Class({
         timeAction: 0.3,
         isActionFinish: false,
         objLogo: cc.Node,
-        layoutBtn: cc.LayOutGrid,
-        layoutBtnSide: cc.LayOutGrid,
-
-        btnSetting: cc.Button,
-        btnMore: cc.Button,
-        btnShare: cc.Button,
-        btnNoAd: cc.Button,
-        btnLearn: cc.Button,
-        btnAddLove: cc.Button,
+        uiHomeCenterBar: UIHomeCenterBar, 
+        uiHomeSideBar: UIHomeSideBar,  
     },
     onLoad: function () {
         this._super();
         var x, y, w, h;
+
+        /*
         //init shader
         cc.ShaderManager.main().Add(require("ShaderShapeColor"));
         cc.ShaderManager.main().Add(require("Glowing"));
@@ -77,26 +72,28 @@ cc.Class({
             this.RunActionBtn();
         }.bind(this)
         );
+        */
 
     },
 
     start: function () {
+        this.LayOut();
     },
 
     LayOut: function () {
         this._super();
         var size = this.node.getContentSize();
         var x, y, w, h;
-
-        var pt = this.imageNameBg.node.getPosition();
-        var y_top = pt.y - this.imageNameBg.node.getContentSize().height / 2;
-        var y_bottom = -size.height / 2;
-
-        //layoutbtn:
-        // x = 0;
-        // y = (y_top + y_bottom) / 2;
-        // this.layoutBtn.setPosition(x, y);
-
+        /*
+                var pt = this.imageNameBg.node.getPosition();
+                var y_top = pt.y - this.imageNameBg.node.getContentSize().height / 2;
+                var y_bottom = -size.height / 2;
+        
+                //layoutbtn:
+                // x = 0;
+                // y = (y_top + y_bottom) / 2;
+                // this.layoutBtn.setPosition(x, y);
+      */
     },
 
     GetPosOfBtn: function (btn, idx) {

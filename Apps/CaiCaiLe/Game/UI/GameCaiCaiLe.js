@@ -1,5 +1,5 @@
 var UIViewController = require("UIViewController");
-var UIGameItem = require("UIGameItem");
+// var UIGameItem = require("UIGameItem");
 var UIView = require("UIView");
 var GameBase = require("GameBase");
 
