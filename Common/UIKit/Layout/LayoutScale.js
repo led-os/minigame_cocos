@@ -28,7 +28,7 @@ var LayoutScale = cc.Class({
         _scaleType: LayoutScaleType.MIN,
         scaleType: {
             //default 和 get set 不能同时存在
-            // default:AlignType.UP, 
+            // default:cc.AlignUP, 
             type: LayoutScaleType,
             get: function () {
                 return this._scaleType;

@@ -3,8 +3,6 @@
 //对齐
 var LayOutVertical = cc.Class({
     extends: cc.HorizontalOrVerticalLayoutBase,
-
-
     properties: {
 
     },

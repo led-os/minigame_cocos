@@ -1,10 +1,8 @@
-// var Common = require("Common");
-
+var LayOutBase = require("LayOutBase");
 
 //对齐
 var HorizontalOrVerticalLayoutBase = cc.Class({
-    extends: cc.LayOutBase,
-
+    extends: LayOutBase,//cc.LayOutBase = module.export = LayOutBase;  的方式 继承 层数多的时候会出现问题 改用require的方式
 
     properties: {
 
@@ -22,10 +20,7 @@ var HorizontalOrVerticalLayoutBase = cc.Class({
         row: 1,//行
         col: 1,//列  
 
-
-
     },
-
 
     LayOut: function () {
 
@@ -65,16 +60,16 @@ var HorizontalOrVerticalLayoutBase = cc.Class({
             c = idx - Math.floor(r * this.col);
 
             //从顶部往底部显示
-            if (this.dispLayVertical == cc.LayOutBase.DispLayVertical.TOP_TO_BOTTOM) {
-                r = this.row - 1 - r;
-            }
+            // if (this.dispLayVertical == cc.LayOutBase.DispLayVertical.TOP_TO_BOTTOM) {
+            //     r = this.row - 1 - r;
+            // }
 
             //从右往左显示
-            if (this.dispLayHorizontal == cc.LayOutBase.DispLayHorizontal.RIGHT_TO_LEFT) {
-                c = this.col - 1 - c;
-            }
+            // if (this.dispLayHorizontal == cc.LayOutBase.DispLayHorizontal.RIGHT_TO_LEFT) {
+            //     c = this.col - 1 - c;
+            // }
 
-            var pt = this.GetItemPostion(child.node, r, c);
+            var pt = this.GetItemPostion(child, r, c);
             var rctran = child.getComponent(cc.RectTransform);
             if (rctran != null) {
                 // rctran.anchoredPosition = pt;
@@ -124,38 +119,37 @@ var HorizontalOrVerticalLayoutBase = cc.Class({
             x_left = -w / 2;
         }
         else {
-            if (this.align == cc.LayOutBase.AlignType.LEFT) {
+            if (this.align == cc.Align.LEFT) {
                 x_left = -w / 2;
             }
-            else if (this.align == cc.LayOutBase.AlignType.RIGHT) {
+            else if (this.align == cc.Align.RIGHT) {
                 x_left = w / 2 - w_total;
             }
-            else if (this.align == cc.LayOutBase.AlignType.CENTER) {
+            else {
+                //CENTER
                 x_left = -w_total / 2;
             }
-
         }
 
         x = x_left + item_w * c + item_w / 2 + this.space.x * c;
-
+        cc.Debug.Log("x_left=" + " item_w=" + item_w);
 
         if (this.childForceExpandHeight) {
             y_bottom = -h / 2;
         }
         else {
-            if (this.align == cc.LayOutBase.AlignType.DOWN) {
+            if (this.align == cc.Align.DOWN) {
                 y_bottom = -h / 2;
             }
-            else if (this.align == cc.LayOutBase.AlignType.UP) {
+            else if (this.align == cc.Align.UP) {
                 y_bottom = h / 2 - h_total;
             }
-            else if (this.align == cc.LayOutBase.AlignType.CENTER) {
+            else {
+                //CENTER
                 y_bottom = -h_total / 2;
             }
         }
         y = y_bottom + item_h * r + item_h / 2 + this.space.y * r;
-
-
         return new cc.Vec2(x, y);
 
     },

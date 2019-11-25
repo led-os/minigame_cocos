@@ -128,11 +128,11 @@ var RectTransform = cc.Class({
         },
 
 
-        _alignType: LayoutAlign.AlignType.NONE,
+        _alignType: cc.Align.NONE,
         alignType: {
             //default 和 get set 不能同时存在
             // default:AlignType.UP, 
-            type: LayoutAlign.AlignType,
+            type: cc.Align,
             get: function () {
                 return this._alignType;
             },
@@ -274,7 +274,7 @@ var RectTransform = cc.Class({
 
     UpdateAlign: function (type) {
         this._alignType = type;
-        if (type == LayoutAlign.AlignType.NONE) {
+        if (type == cc.Align.NONE) {
             return;
         }
         var x, y, w, h;
@@ -301,28 +301,28 @@ var RectTransform = cc.Class({
         //cc.Debug.Log("UpdateType this.alignType=" + this._alignType + " w=" + w + " h=" + h + " x=" + x + " y=" + y + " w_parent=" + w_parent + " h_parent=" + h_parent);
         //Common.appSceneMain.sizeCanvas.height 
         switch (this._alignType) {
-            case LayoutAlign.AlignType.UP:
+            case cc.Align.UP:
                 {
                     x = this.node.getPosition().x;
                     y = h_parent / 2 - h / 2 - this.offsetMax.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
-            case LayoutAlign.AlignType.DOWN:
+            case cc.Align.DOWN:
                 {
                     x = this.node.getPosition().x;
                     y = -h_parent / 2 + h / 2 + this.offsetMin.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
-            case LayoutAlign.AlignType.LEFT:
+            case cc.Align.LEFT:
                 {
                     x = -w_parent / 2 + w / 2 + this.offsetMin.x;
                     y = this.node.getPosition().y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
-            case LayoutAlign.AlignType.RIGHT:
+            case cc.Align.RIGHT:
                 {
                     x = w_parent / 2 - w / 2 - this.offsetMax.x;
                     y = this.node.getPosition().y;
@@ -330,7 +330,7 @@ var RectTransform = cc.Class({
                 }
                 break;
 
-            case LayoutAlign.AlignType.UP_LEFT:
+            case cc.Align.UP_LEFT:
                 {
                     //x = this.node.getPosition().x;
                     x = -w_parent / 2 + w / 2 + this.offsetMin.x;
@@ -338,21 +338,21 @@ var RectTransform = cc.Class({
                     this.node.setPosition(x, y, 0);
                 }
                 break;
-            case LayoutAlign.AlignType.UP_RIGHT:
+            case cc.Align.UP_RIGHT:
                 {
                     x = w_parent / 2 - w / 2 - this.offsetMax.x;
                     y = h_parent / 2 - h / 2 - this.offsetMax.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
-            case LayoutAlign.AlignType.DOWN_LEFT:
+            case cc.Align.DOWN_LEFT:
                 {
                     x = -w_parent / 2 + w / 2 + this.offsetMin.x;
                     y = -h_parent / 2 + h / 2 + this.offsetMin.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
-            case LayoutAlign.AlignType.DOWN_RIGHT:
+            case cc.Align.DOWN_RIGHT:
                 {
                     x = w_parent / 2 - w / 2 - this.offsetMax.x;
                     y = -h_parent / 2 + h / 2 + this.offsetMin.y;

@@ -1,35 +1,34 @@
 // var Common = require("Common");
 
-var AlignType = cc.Enum({
-    //区分大小写
-    NONE: 0,
-    UP: 1,
-    DOWN: 2,
-    LEFT: 3,
-    RIGHT: 4,
-    UP_LEFT: 5,
-    UP_RIGHT: 6,
-    DOWN_LEFT: 7,
-    DOWN_RIGHT: 8,
+// var AlignType = cc.Enum({
+//     //区分大小写
+//     NONE: 0,
+//     UP: 1,
+//     DOWN: 2,
+//     LEFT: 3,
+//     RIGHT: 4,
+//     UP_LEFT: 5,
+//     UP_RIGHT: 6,
+//     DOWN_LEFT: 7,
+//     DOWN_RIGHT: 8,
 
-});
+// });
 
 //对齐
 var LayoutAlign = cc.Class({
     extends: cc.Component,
 
     statics: {
-        //enum
-        AlignType: AlignType,
+        //enum 
 
     },
 
     properties: {
-        _alignType: AlignType.NONE,
+        _alignType: cc.Align.NONE,
         alignType: {
             //default 和 get set 不能同时存在
             // default:AlignType.UP, 
-            type: AlignType,
+            type: cc.Align,
             get: function () {
                 return this._alignType;
             },
@@ -86,7 +85,7 @@ var LayoutAlign = cc.Class({
     },
     UpdateType: function (type) {
         this._alignType = type;
-        if (type == AlignType.NONE) {
+        if (type == cc.Align.NONE) {
             return;
         }
         var x, y, w, h;
@@ -117,28 +116,28 @@ var LayoutAlign = cc.Class({
         cc.Debug.Log("UpdateType this.alignType=" + this._alignType + " w=" + w + " h=" + h + " x=" + x + " y=" + y + " w_parent=" + w_parent + " h_parent=" + h_parent);
         //Common.appSceneMain.sizeCanvas.height 
         switch (this._alignType) {
-            case AlignType.UP:
+            case cc.AlignUP:
                 {
                     x = this.node.getPosition().x;
                     y = h_parent / 2 - h / 2 - this.offsetMax.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
-            case AlignType.DOWN:
+            case cc.AlignDOWN:
                 {
                     x = this.node.getPosition().x;
                     y = -h_parent / 2 + h / 2 + this.offsetMin.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
-            case AlignType.LEFT:
+            case cc.AlignLEFT:
                 {
                     x = -w_parent / 2 + w / 2 + this.offsetMin.x;
                     y = this.node.getPosition().y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
-            case AlignType.RIGHT:
+            case cc.AlignRIGHT:
                 {
                     x = w_parent / 2 - w / 2 - this.offsetMax.x;
                     y = this.node.getPosition().y;
@@ -146,7 +145,7 @@ var LayoutAlign = cc.Class({
                 }
                 break;
 
-            case AlignType.UP_LEFT:
+            case cc.AlignUP_LEFT:
                 {
                     //x = this.node.getPosition().x;
                     x = -w_parent / 2 + w / 2 + this.offsetMin.x;
@@ -154,21 +153,21 @@ var LayoutAlign = cc.Class({
                     this.node.setPosition(x, y, 0);
                 }
                 break;
-            case AlignType.UP_RIGHT:
+            case cc.AlignUP_RIGHT:
                 {
                     x = w_parent / 2 - w / 2 - this.offsetMax.x;
                     y = h_parent / 2 - h / 2 - this.offsetMax.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
-            case AlignType.DOWN_LEFT:
+            case cc.AlignDOWN_LEFT:
                 {
                     x = -w_parent / 2 + w / 2 + this.offsetMin.x;
                     y = -h_parent / 2 + h / 2 + this.offsetMin.y;
                     this.node.setPosition(x, y, 0);
                 }
                 break;
-            case AlignType.DOWN_RIGHT:
+            case cc.AlignDOWN_RIGHT:
                 {
                     x = w_parent / 2 - w / 2 - this.offsetMax.x;
                     y = -h_parent / 2 + h / 2 + this.offsetMin.y;
