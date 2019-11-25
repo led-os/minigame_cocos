@@ -18,6 +18,11 @@ var LayOutGrid = cc.Class({
         this.LayOut();
 
     },
+
+    start: function () {
+        this.LayOut();
+    },
+
     LayOut: function () {
 
         var idx = 0;
@@ -53,7 +58,7 @@ var LayOutGrid = cc.Class({
             //  LayoutElement
             //floor 小于等于 x，且与 x 最接近的整数。
             r = Math.floor(idx / this.col);
-            c = idx -  Math.floor(r * this.col);
+            c = idx - Math.floor(r * this.col);
 
             //从顶部往底部显示
             if (this.dispLayVertical == cc.LayOutBase.DispLayVertical.TOP_TO_BOTTOM) {

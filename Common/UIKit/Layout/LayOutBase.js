@@ -11,7 +11,7 @@ var AlignType = cc.Enum({
     UP_RIGHT: 6,
     DOWN_LEFT: 7,
     DOWN_RIGHT: 8,
-
+    CENTER: 9,
 });
 
 var DispLayVertical = cc.Enum({
@@ -90,6 +90,12 @@ var LayOutBase = cc.Class({
         enableLayout: true,
         enableHide: true,//是否过虑Hide
         space: cc.Vec2,
+        // align: AlignType.NONE,
+        align: {
+            default: AlignType.CENTER,
+            type: AlignType
+        },
+
     },
 
 
@@ -127,7 +133,7 @@ var LayOutBase = cc.Class({
             if (le != null && le.ignoreLayout) {
                 continue;
             }
- 
+
             //     if (objtmp.transform.parent != this.gameObject.transform) {
             //         //只找第一层子物体
             //         continue;

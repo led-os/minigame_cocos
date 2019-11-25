@@ -2,7 +2,7 @@
 
 //对齐
 var LayOutVertical = cc.Class({
-    extends: cc.LayOutGrid,
+    extends: cc.HorizontalOrVerticalLayoutBase,
 
 
     properties: {

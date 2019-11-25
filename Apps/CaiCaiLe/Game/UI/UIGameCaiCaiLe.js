@@ -21,28 +21,23 @@ var UIGameCaiCaiLe = cc.Class({
     },
     onLoad: function () {
         this._super();
-        this.UnifyButtonSprite(this.btnBack);
-        this.LoadLanguageGame();
-        //this.textTitle.node.active = false;
-        //this.LoadGamePrefab();
-        //var ev = this.node.addComponent(cc.UITouchEvent);
-        // ev.callBackTouch = this.OnUITouchEvent;
+       // this.LoadLanguageGame();
 
-        var url = cc.CloudRes.main().rootPath + "/" + cc.AppRes.Game_BG;
-        cc.TextureCache.main.Load(url, function (err, tex) {
-            if (err) {
+        // var url = cc.CloudRes.main().rootPath + "/" + cc.AppRes.Game_BG;
+        // cc.TextureCache.main.Load(url, function (err, tex) {
+        //     if (err) {
 
-                cc.Debug.Log(err.message || err);
-                return;
-            }
-            // cc.Debug.Log("TextureCache loadRes ok");
+        //         cc.Debug.Log(err.message || err);
+        //         return;
+        //     }
+        //     // cc.Debug.Log("TextureCache loadRes ok");
 
-            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
-            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
-            lyscale.LayOut();
+        //     this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
+        //     var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
+        //     lyscale.LayOut();
 
-            // this.ShowUserGuide();
-        }.bind(this));
+        //     // this.ShowUserGuide();
+        // }.bind(this));
 
     },
     start: function () {
@@ -57,8 +52,9 @@ var UIGameCaiCaiLe = cc.Class({
 
     CreateGame: function () {
         cc.Debug.Log("GameLianLianLe CreateGame=");
+        /*
         var node = cc.instantiate(this.gamePrefab);
-        this.game = node.getComponent(GameLianLianLe);
+        this.game = node.getComponent(GameCaiCaiLe);
         this.game.node.parent = this.node;
         this.game.languageColor = this.languageColor;
         //zorder 让imageBg 显示在最底层，game显示在UI下面
@@ -69,6 +65,8 @@ var UIGameCaiCaiLe = cc.Class({
         this.game.callbackGameWin = this.OnGameWin.bind(this);
 
         this.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
+        */
+
     },
 
 

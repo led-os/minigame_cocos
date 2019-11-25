@@ -37,8 +37,8 @@ var UIGameBase = cc.Class({
     onLoad: function () {
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
-        this.UnifyButtonSprite(this.btnMusic);
-        this.UpdateBtnMusic();
+        //this.UnifyButtonSprite(this.btnMusic);
+        //this.UpdateBtnMusic();
     },
     LoadGamePrefab: function () {
         var strPrefab = "AppCommon/Prefab/Game/Game" + cc.Config.main().appType;

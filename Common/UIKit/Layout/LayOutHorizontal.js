@@ -3,7 +3,7 @@
 
 //对齐
 var LayOutHorizontal = cc.Class({
-    extends: cc.LayOutGrid,
+    extends: cc.HorizontalOrVerticalLayoutBase,
 
 
     properties: {
@@ -15,6 +15,9 @@ var LayOutHorizontal = cc.Class({
         this.col = this.GetChildCount();
         this.LayOut();
 
+    },
+    start: function () {
+        this.LayOut();
     },
     LayOut: function () {
         this.col = this.GetChildCount();

@@ -27,8 +27,8 @@ cc.Class({
         timeAction: 0.3,
         isActionFinish: false,
         objLogo: cc.Node,
-        uiHomeCenterBar: UIHomeCenterBar, 
-        uiHomeSideBar: UIHomeSideBar,  
+        uiHomeCenterBar: UIHomeCenterBar,
+        uiHomeSideBar: UIHomeSideBar,
     },
     onLoad: function () {
         this._super();
@@ -74,6 +74,9 @@ cc.Class({
         );
         */
 
+        var rctran = this.uiHomeSideBar.node.getComponent(cc.RectTransform);
+        cc.Debug.Log("uiHomeSideBar w=" + rctran.width + " h=" + rctran.height);
+        //   rctran.LayOut();
     },
 
     start: function () {
@@ -94,6 +97,11 @@ cc.Class({
                 // y = (y_top + y_bottom) / 2;
                 // this.layoutBtn.setPosition(x, y);
       */
+        var rctran = this.uiHomeSideBar.node.getComponent(cc.RectTransform);
+        // rctran.width = 160;
+        // rctran.height = 1024;
+        cc.Debug.Log("uiHomeSideBar 2 w=" + rctran.width + " h=" + rctran.height);
+        //  rctran.LayOut();
     },
 
     GetPosOfBtn: function (btn, idx) {
@@ -209,10 +217,10 @@ cc.Class({
     },
 
     OnClickBtnPlay: function (event, customEventData) {
-        cc.Debug.Log("HomeLianlianle OnClickBtnPlay");
-        if (!this.isActionFinish) {
-            return;
-        }
+        // cc.Debug.Log("HomeLianlianle OnClickBtnPlay");
+        // if (!this.isActionFinish) {
+        //     return;
+        // }
         this.GotoGame();
 
     },

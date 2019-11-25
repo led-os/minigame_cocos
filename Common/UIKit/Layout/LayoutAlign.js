@@ -74,10 +74,13 @@ var LayoutAlign = cc.Class({
 
 
     onLoad: function () {
-        // cc.Debug.Log("onLoad this.alignType=" + this.alignType);
         this.LayOut();
-
     },
+
+    start: function () {
+        this.LayOut();
+    },
+
     LayOut: function () {
         this.UpdateType(this.alignType);
     },
@@ -87,12 +90,15 @@ var LayoutAlign = cc.Class({
             return;
         }
         var x, y, w, h;
-        var rectParent = this.node.parent.getBoundingBox();
-        var sizeParent = this.node.parent.getContentSize();
-        var w_parent = rectParent.width;
-        var h_parent = rectParent.height;
-        w_parent = sizeParent.width;
-        h_parent = sizeParent.height;
+        //var rectParent = this.node.parent.getBoundingBox();
+        //var sizeParent = this.node.parent.getContentSize();
+        var rctranParent = this.node.getComponent(cc.RectTransform);
+        var w_parent = 0;
+        var h_parent = 0;
+        if (rctranParent != null) {
+            w_parent = rctranParent.width;
+            h_parent = rctranParent.height;
+        }
         var sizeCanvas = cc.Common.GetSizeCanvas(null);//屏幕分辨率
         if (w_parent == 0) {
             w_parent = sizeCanvas.width;
@@ -102,9 +108,10 @@ var LayoutAlign = cc.Class({
         }
 
 
-        var size = this.node.getContentSize();
+        var size = this.node.getContentSize(); 
         w = size.width;
         h = size.height;
+
         x = this.node.getPosition().x;
         y = this.node.getPosition().y;
         cc.Debug.Log("UpdateType this.alignType=" + this._alignType + " w=" + w + " h=" + h + " x=" + x + " y=" + y + " w_parent=" + w_parent + " h_parent=" + h_parent);

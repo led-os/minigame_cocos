@@ -166,6 +166,8 @@ var RectTransform = cc.Class({
 
     },
     onLoad: function () {
+        this.width = this._width;
+        this.height = this._height;
         this.LayOut();
 
     },
