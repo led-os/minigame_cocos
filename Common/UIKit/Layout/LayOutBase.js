@@ -41,20 +41,6 @@ var LayOutBase = cc.Class({
     },
 
     properties: {
-        _alignType: cc.Align.NONE,
-        alignType: {
-            //default 和 get set 不能同时存在
-            // default:cc.AlignUP, 
-            type: cc.Align,
-            get: function () {
-                return this._alignType;
-            },
-            set: function (value) {
-                return this.UpdateType(value);
-            },
-        },
-
-
         //     The offset of the lower left corner of the rectangle relative to the lower left
         //     anchor.
         _offsetMin: cc.Vec2,

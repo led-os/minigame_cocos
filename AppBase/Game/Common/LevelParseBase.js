@@ -3,7 +3,7 @@ var UIViewController = require("UIViewController");
 var AlertLockViewController = require("AlertLockViewController");
 var UIView = require("UIView");
 
-var GuankaParseBase = cc.Class({
+var LevelParseBase = cc.Class({
     extends: cc.Object,
 
     statics: {
@@ -41,7 +41,7 @@ var GuankaParseBase = cc.Class({
         return count;
     },
     //ItemInfo
-    GetGuankaItemInfo: function (idx) {
+    GetLevelItemInfo: function (idx) {
         if (this.listGuanka == null) {
             return null;
         }
@@ -50,6 +50,12 @@ var GuankaParseBase = cc.Class({
         }
         var info = this.listGuanka[idx];
         return info;
+    },
+
+
+    GetLevelItemInfoCur: function () {
+        var level = cc.LevelManager.main().gameLevel;
+        this.GetLevelItemInfo(level);
     },
 
     //place 
@@ -87,7 +93,7 @@ var GuankaParseBase = cc.Class({
             var item = items[i];
 
             info.id = cc.JsonUtil.GetItem(item, "id", "");
-            info.game = cc.JsonUtil.GetItem(item, "game", "");
+            info.gameType = cc.JsonUtil.GetItem(item, "game", "");
             cc.Debug.Log("place id = " + info.id);
             info.type = cc.JsonUtil.GetItem(item, "type", "");
 
@@ -105,11 +111,11 @@ var GuankaParseBase = cc.Class({
             info.isAd = false;
             //if (AppVersion.appCheckHasFinished && (!Common.noad)) 
             {
-                if (info.type == GuankaParseBase.PLACE_ITEM_TYPE_VIDEO) {
+                if (info.type == LevelParseBase.PLACE_ITEM_TYPE_VIDEO) {
                     info.isAd = true;
                 }
                 {
-                    if (info.type == GuankaParseBase.FPLACE_ITEM_TYPE_LOCK) {
+                    if (info.type == LevelParseBase.FPLACE_ITEM_TYPE_LOCK) {
                         info.isAd = true;
                     }
                 }
@@ -232,15 +238,15 @@ var GuankaParseBase = cc.Class({
 });
 
 //单例对象 方法二
-GuankaParseBase._main = null;
-GuankaParseBase.main = function () {
+LevelParseBase._main = null;
+LevelParseBase.main = function () {
     // 
-    if (!GuankaParseBase._main) {
-        GuankaParseBase._main = new GuankaParseBase();
-        GuankaParseBase._main.Init();
+    if (!LevelParseBase._main) {
+        LevelParseBase._main = new LevelParseBase();
+        LevelParseBase._main.Init();
     }
 
-    return GuankaParseBase._main;
+    return LevelParseBase._main;
 }
 
-cc.GuankaParseBase = module.export = GuankaParseBase; 
+cc.LevelParseBase = module.export = LevelParseBase; 

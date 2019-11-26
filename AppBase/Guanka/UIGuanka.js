@@ -59,7 +59,7 @@ cc.Class({
 
     UpdateItem: function () {
        // var game = GameViewController.main().gameBase;
-        this.listItem = cc.GameGuankaParse.main().listGuanka;
+        this.listItem = cc.GameLevelParse.main().listGuanka;
         cc.Debug.Log("UIGuanka::this.listItem=" + this.listItem.length);
         this.InitList();
     },

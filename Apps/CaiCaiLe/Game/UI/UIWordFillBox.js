@@ -1,8 +1,8 @@
-var UIView = require("UIView");
+var UIWordContentBase = require("UIWordContentBase");
 var UIWordFillBox = cc.Class({
-    extends: UIView,// cc.ItemInfo, 
+    extends: UIWordContentBase,// cc.ItemInfo, 
     properties: {
-     
+      
     },
 
     onLoad: function () {

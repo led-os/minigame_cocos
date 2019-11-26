@@ -2,7 +2,10 @@ var UIViewController = require("UIViewController");
 var UIGameBase = require("UIGameBase");
 var GameCaiCaiLe = require("GameCaiCaiLe");
 var AppType = require("AppType");
-//var LoadItemInfo = require("LoadItemInfo");
+var UIWordBoard = require("UIWordBoard");
+var UIWordContentBase = require("UIWordContentBase");
+var UIWordImageText = require("UIWordImageText");
+
 
 var UIGameCaiCaiLe = cc.Class({
     extends: UIGameBase,
@@ -17,11 +20,20 @@ var UIGameCaiCaiLe = cc.Class({
             type: GameCaiCaiLe
         },
 
+        uiWordContentPrefab: {
+            default: null,
+            type: cc.Prefab
+        },
+
+        uiWordBoard: UIWordBoard,
         isShowGame: false,
+        uiWordContent: UIWordContentBase,
+
     },
     onLoad: function () {
         this._super();
-       // this.LoadLanguageGame();
+        // this.LoadLanguageGame();
+        this.LoadUIPrefab();
 
         // var url = cc.CloudRes.main().rootPath + "/" + cc.AppRes.Game_BG;
         // cc.TextureCache.main.Load(url, function (err, tex) {
@@ -44,10 +56,54 @@ var UIGameCaiCaiLe = cc.Class({
 
     },
 
+    LoadUIPrefab: function () {
+        var info = cc.GameLevelParse.main().GetLevelItemInfoCur();
+        var idx = cc.LevelManager.main().placeLevel;
+        var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(idx);
+
+        var strPrefab = "";
+        // switch (infoPlace.gameType) {
+        //     case cc.GameRes.GAME_TYPE_IMAGE:
+        //     case cc.GameRes.GAME_TYPE_TEXT:
+        //     case cc.GameRes.GAME_TYPE_IMAGE_TEXT:
+        //         {
+        //             strPrefab = "AppCommon/Prefab/Game/UIWordImageText";
+        //         }
+        //         break;
+        //     case cc.GameRes.GAME_TYPE_CONNECT:
+        //         {
+        //             strPrefab = "AppCommon/Prefab/Game/UIWordFillBox";
+        //         }
+        //         break;
+        // }
+        // if (infoPlace.gameType == cc.GameRes.GAME_TYPE_IMAGE)
+        {
+            strPrefab = "AppCommon/Prefab/Game/UIWordImageText";
+        }
+
+        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
+            if (err) {
+                cc.Debug.Log("LoadUIPrefab err=" + err.message || err);
+                return;
+            }
+            this.uiWordContentPrefab = prefab;
+            this.OnInitUI();
+        }.bind(this)
+        );
+    },
+
 
     LoadLanguageGameDidFinish: function (p) {
         cc.Debug.Log("GameLianLianLe LoadLanguageDidFinish=");
         this.LoadGamePrefab();
+    },
+
+    OnInitUI: function () {
+        var node = cc.instantiate(this.uiWordContentPrefab);
+        this.uiWordContent = node.getComponent(UIWordContentBase);
+        this.uiWordContent.node.parent = this.node;
+        this.uiWordContent.node.setPosition(0, 512);
+
     },
 
     CreateGame: function () {
@@ -86,7 +142,7 @@ var UIGameCaiCaiLe = cc.Class({
     UpdateTitle() {
         var idx = cc.LevelManager.main().placeLevel;
         var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(idx);
-        var key = cc.GameGuankaParse.main().keyGameGuide;
+        var key = cc.GameLevelParse.main().keyGameGuide;
         var str = cc.Language.game().GetString(key);
         this.textTitle.string = str;
         cc.Tts.Speak(str);

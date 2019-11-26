@@ -3,6 +3,13 @@
 //对齐
 var LayOutVertical = cc.Class({
     extends: cc.HorizontalOrVerticalLayoutBase,
+
+    editor: CC_EDITOR && {
+        menu: "UIKit/Layout/LayOutVertical",
+        help: " ",
+        // inspector: ' ',
+    },
+
     properties: {
 
     },

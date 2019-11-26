@@ -4,7 +4,11 @@
 //对齐
 var LayOutGrid = cc.Class({
     extends: cc.LayOutBase,
-
+    editor: CC_EDITOR && {
+        menu: "UIKit/Layout/LayOutGrid",
+        help: " ",
+        // inspector: ' ',
+    },
 
     properties: {
         row: 1,//行
@@ -70,7 +74,7 @@ var LayOutGrid = cc.Class({
             //     c = this.col - 1 - c;
             // }
 
-            var pt = this.GetItemPostion(r, c);
+            var pt = this.GetItemPostion(child, r, c);
             var rctran = child.getComponent(cc.RectTransform);
             if (rctran != null) {
                 // rctran.anchoredPosition = pt;
@@ -85,7 +89,7 @@ var LayOutGrid = cc.Class({
     },
 
     // r 行 ; c 列  返回中心位置 Vector2
-    GetItemPostion: function (r, c) {
+    GetItemPostion: function (nodeItem, r, c) {
         var x, y, w, h;
         var rctran = this.node.getComponent(cc.RectTransform);
         if (rctran == null) {

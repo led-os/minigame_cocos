@@ -11,6 +11,7 @@ var Align = cc.Enum({
     UP_RIGHT: 6,
     DOWN_LEFT: 7,
     DOWN_RIGHT: 8,
+    CENTER: 9,
 
 });
 

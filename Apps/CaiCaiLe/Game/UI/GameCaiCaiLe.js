@@ -124,7 +124,7 @@ var GameCaiCaiLe = cc.Class({
     LoadGameInternal: function () {
         cc.Debug.Log("GameLianLianLe LoadGameInternal=");
         var level = cc.LevelManager.main().gameLevel;
-        var info = cc.GameGuankaParse.main().GetGuankaItemInfo(level);
+        var info = cc.GameLevelParse.main().GetLevelItemInfo(level);
         if (info == null) {
             cc.Debug.Log("LoadGame null");
             return;
@@ -313,7 +313,7 @@ var GameCaiCaiLe = cc.Class({
     OnGameWin: function () {
         //记录游戏完成
         var level = cc.LevelManager.main().gameLevel;
-        var info = cc.GameGuankaParse.main().GetGuankaItemInfo(level);
+        var info = cc.GameLevelParse.main().GetLevelItemInfo(level);
         var key = GameLianLianLe.KEY_GAME_STATUS + info.id;
         if (key != null) {
             cc.Common.SetItemOfKey(key, GameLianLianLe.GAME_STATUS_FINISH);

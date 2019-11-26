@@ -20,6 +20,7 @@ var ItemInfo = cc.Class({
         node: cc.Node,
         time: '',
         game: '',
+        gameType: '',
     },
 });
 

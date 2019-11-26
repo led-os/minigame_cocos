@@ -39,7 +39,7 @@ var LevelManager = cc.Class({
         placeTotal:
         {
             get: function () {
-                var ret = cc.GameGuankaParse.main().GetPlaceTotal();
+                var ret = cc.GameLevelParse.main().GetPlaceTotal();
                 return ret;
             },
         },
@@ -47,7 +47,7 @@ var LevelManager = cc.Class({
         maxGuankaNum:
         {
             get: function () {
-                var ret = cc.GameGuankaParse.main().GetGuankaTotal();
+                var ret = cc.GameLevelParse.main().GetGuankaTotal();
                 return ret;
             },
         },
@@ -70,19 +70,19 @@ var LevelManager = cc.Class({
     },
  
     CleanGuankaList: function () {
-        cc.GameGuankaParse.main().CleanGuankaList();
+        cc.GameLevelParse.main().CleanGuankaList();
     },
     StartParseGuanka: function (callback) {
         this.CleanGuankaList();
         this.callbackGuankaFinish = callback;
         // GameViewController.main().gameBase.StartParseGuanka(callback);
-        cc.GameGuankaParse.main().StartParseGuanka(callback);
+        cc.GameLevelParse.main().StartParseGuanka(callback);
     },
 
     //place 
     StartParsePlace: function (callback) {
         //GameViewController.main().gameBase.StartParsePlaceList(callback);
-        cc.GameGuankaParse.main().StartParsePlaceList(callback);
+        cc.GameLevelParse.main().StartParsePlaceList(callback);
     },
 
   

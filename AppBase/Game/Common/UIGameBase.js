@@ -38,13 +38,13 @@ var UIGameBase = cc.Class({
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
         //this.UnifyButtonSprite(this.btnMusic);
-        //this.UpdateBtnMusic();
+        this.UpdateBtnMusic();
     },
     LoadGamePrefab: function () {
         var strPrefab = "AppCommon/Prefab/Game/Game" + cc.Config.main().appType;
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
             if (err) {
-                cc.Debug.Log("LoadGamePrefab err="+err.message || err);
+                cc.Debug.Log("LoadGamePrefab err=" + err.message || err);
                 return;
             }
             this.gamePrefab = prefab;
@@ -65,8 +65,12 @@ var UIGameBase = cc.Class({
     },
 
     UpdateBtnMusic: function () {
+        if (this.btnMusic == null) {
+            return;
+        }
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
-        cc.TextureUtil.UpdateButtonTexture(this.btnMusic, ret ? cc.AppRes.IMAGE_BtnMusicOn : cc.AppRes.IMAGE_BtnMusicOff, false);
+        var image = this.btnMusic.node.getComponent(cc.UITypeButton).imageIcon;
+        cc.TextureUtil.UpdateImage(image, ret ? cc.AppRes.IMAGE_BtnMusicOn : cc.AppRes.IMAGE_BtnMusicOff, false);
     },
 
 

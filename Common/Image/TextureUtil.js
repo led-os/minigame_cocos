@@ -6,7 +6,11 @@ var TextureUtil = cc.Class({
     statics: {
         UpdateButtonTexture: function (btn, filepath, isUpdateSize) {
             var sp = btn.node.getComponent(cc.Sprite);
-
+            this.UpdateImage(sp, filepath, isUpdateSize);
+        },
+        UpdateImage: function (image, filepath, isUpdateSize) {
+            // var sp = btn.node.getComponent(cc.Sprite);
+            var sp = image;
             cc.TextureCache.main.Load2(filepath, false, function (err, tex) {
                 if (err) {
                     cc.Debug.Log("UpdateBtnSwitch err");

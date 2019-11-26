@@ -4,6 +4,13 @@
 //对齐
 var LayOutHorizontal = cc.Class({
     extends: cc.HorizontalOrVerticalLayoutBase,//HorizontalOrVerticalLayoutBase
+
+    editor: CC_EDITOR && {
+        menu: "UIKit/Layout/LayOutHorizontal",
+        help: " ",
+        // inspector: ' ',
+    },
+
     properties: {
 
     },
@@ -11,7 +18,7 @@ var LayOutHorizontal = cc.Class({
     onLoad: function () {
         //  this.row = 1;
         //  this.col = this.GetChildCount();
-        cc.Debug.Log("LayOutHorizontal onLoad"); 
+        cc.Debug.Log("LayOutHorizontal onLoad");
         this.LayOut();
 
     },

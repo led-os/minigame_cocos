@@ -10,6 +10,12 @@ var RectSizeType = cc.Enum({
 
 var RectTransform = cc.Class({
     extends: cc.Component,
+    editor: CC_EDITOR && {
+        menu: "UIKit/Layout/RectTransform",
+        help: " ",
+        // inspector: ' ',
+    },
+
     statics: {
         //enum
         RectSizeType: RectSizeType,

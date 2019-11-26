@@ -34,11 +34,12 @@ var AppRes = cc.Class({
         AUDIO_GAME_DragOk: "audio/DragOk.mp3",
         AUDIO_GAME_DragFail: "audio/DragFail.mp3",
         AUDIO_GAME_GuankaOk: "audio/GuankaOk.mp3",
-        AUDIO_BtnClick: "audio/BtnClick.mp3",
-
+        AUDIO_BtnClick: "audio/BtnClick.mp3", 
         //image
-        IMAGE_BtnMusicOn: "AppCommon/UI/Home/BtnMusicOn",
-        IMAGE_BtnMusicOff: "AppCommon/UI/Home/BtnMusicOff",
+        IMAGE_BtnMusicOn: "App/UI/Common/Button/BtnIconMusic",
+        IMAGE_BtnMusicOff: "App/UI/Common/Button/BtnIconMusic",
+        IMAGE_BtnSoundOn: "App/UI/Common/Button/BtnIconMusic",
+        IMAGE_BtnSoundOff: "App/UI/Common/Button/BtnIconMusic",
 
         IMAGE_BTN_SWITCH_UNSEL: "AppCommon/UI/Common/BtnSwitchUnSel",
         IMAGE_BTN_SWITCH_SEL: "AppCommon/UI/Common/BtnSwitchSel",
