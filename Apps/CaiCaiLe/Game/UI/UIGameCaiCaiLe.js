@@ -62,23 +62,20 @@ var UIGameCaiCaiLe = cc.Class({
         var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(idx);
 
         var strPrefab = "";
-        // switch (infoPlace.gameType) {
-        //     case cc.GameRes.GAME_TYPE_IMAGE:
-        //     case cc.GameRes.GAME_TYPE_TEXT:
-        //     case cc.GameRes.GAME_TYPE_IMAGE_TEXT:
-        //         {
-        //             strPrefab = "AppCommon/Prefab/Game/UIWordImageText";
-        //         }
-        //         break;
-        //     case cc.GameRes.GAME_TYPE_CONNECT:
-        //         {
-        //             strPrefab = "AppCommon/Prefab/Game/UIWordFillBox";
-        //         }
-        //         break;
-        // }
-        // if (infoPlace.gameType == cc.GameRes.GAME_TYPE_IMAGE)
-        {
-            strPrefab = "AppCommon/Prefab/Game/UIWordImageText";
+        infoPlace.gameType = cc.GameRes.GAME_TYPE_IMAGE;
+        switch (infoPlace.gameType) {
+            case cc.GameRes.GAME_TYPE_IMAGE:
+            case cc.GameRes.GAME_TYPE_TEXT:
+            case cc.GameRes.GAME_TYPE_IMAGE_TEXT:
+                {
+                    strPrefab = "AppCommon/Prefab/Game/UIWordImageText";
+                }
+                break;
+            case cc.GameRes.GAME_TYPE_CONNECT:
+                {
+                    strPrefab = "AppCommon/Prefab/Game/UIWordFillBox";
+                }
+                break;
         }
 
         cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
@@ -103,6 +100,8 @@ var UIGameCaiCaiLe = cc.Class({
         this.uiWordContent = node.getComponent(UIWordContentBase);
         this.uiWordContent.node.parent = this.node;
         this.uiWordContent.node.setPosition(0, 512);
+        this.UpdateWord();
+        this.LayOut();
 
     },
 
@@ -125,7 +124,10 @@ var UIGameCaiCaiLe = cc.Class({
 
     },
 
+    LayOut: function () {
 
+
+    },
 
     UpdateGuankaLevel: function (level) {
         this._super();
@@ -146,5 +148,17 @@ var UIGameCaiCaiLe = cc.Class({
         var str = cc.Language.game().GetString(key);
         this.textTitle.string = str;
         cc.Tts.Speak(str);
+    },
+    UpdateWord() {
+        var info = cc.GameLevelParse.main().GetItemInfo();
+        if (this.uiWordContent != null) {
+            //this.uiWordContent.UpdateWord();
+        }
+        //先计算行列数
+        this.LayOut();
+        this.uiWordBoard.InitItem();//ok
+        var strBoard = cc.GameAnswer.main().GetWordBoardString(info, this.uiWordBoard.row, this.uiWordBoard.col);//ok
+        this.uiWordBoard.UpadteItem(info, strBoard);//ng
+        // this.uiWordBar.UpadteItem(info);
     },
 });

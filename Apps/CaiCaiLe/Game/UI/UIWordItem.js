@@ -28,7 +28,55 @@ var UIWordItem = cc.Class({
     UpdateTitle(str) {
         this.textTitle.string = str;
     },
+    ShowContent(isShow) {
+        this.isShowContent = isShow;
+        this.imageBg.node.active = isShow;
+        this.textTitle.node.active = isShow;
+    },
+    //是否答对
+    IsAnswer() {
+        var ret = false;
+        if (this.wordDisplay == this.wordAnswer) {
+            ret = true;
+        }
+        return ret;
+    },
+    ClearWord() {
+        this.UpdateTitle("");
+    },
+    SetWordColor(color) {
+        this.textTitle.node.color = color;
+    },
+
+    SetFontSize(size) {
+        // this.textTitle.fontSize = size;
+    },
+    OnClickItem() {
+        if (this.isWordTips) {
+            //提示字  不响应
+            return;
+        }
+        // if (_delegate != null) {
+        //     Debug.Log("UIWordItem OnClickItem index=" + index);
+        //     _delegate.WordItemDidClick(this);
+        // }
+    },
 
 
+    StartAnimateError() {
+        // enableAnimate = true;
+        // countTemp = 0;
+        // timerAnimate = TIME_ANIMATE_ERROR / COUNT_ANIMATE_ERROR;
+    },
+
+    StopAnimateError() {
+        // if (enableAnimate)
+        // {
+        //     enableAnimate = false;
+        //     StartCoroutine(TimerDidStop());
+        //     Debug.Log("StopAnimateError");
+        // }
+
+    },
 });
 

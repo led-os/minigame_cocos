@@ -175,6 +175,18 @@ var Common = cc.Class({
             return idxTmp;
         },
 
+        //随机打乱string
+        RandomString(str) {
+            var ret = "";
+            var indexSel = this.RandomIndex(str.length, str.length);
+            for (var i = 0; i < indexSel.length; i++) {
+                var idx = indexSel[i];
+                var strtmp = str.substr(idx, 1);
+                ret += strtmp;
+            }
+            return ret;
+        },
+
         //防止超出Rect范围
         LimitNodePos: function (node, rc) {
             var bd = node.getBoundingBox();

@@ -17,6 +17,10 @@ var LevelParseBase = cc.Class({
             default: [],
             type: cc.Object
         },
+        listGuankaItemId: {
+            default: [],
+            type: cc.Object
+        },
         callbackGuankaFinish: null,
         callbackPlaceFinish: null,
         callbackGuankaIdFinish: null,
@@ -52,6 +56,10 @@ var LevelParseBase = cc.Class({
         return info;
     },
 
+    GetItemInfo: function () {
+        var level = cc.LevelManager.main().gameLevel;
+        this.GetLevelItemInfo(level);
+    },
 
     GetLevelItemInfoCur: function () {
         var level = cc.LevelManager.main().gameLevel;

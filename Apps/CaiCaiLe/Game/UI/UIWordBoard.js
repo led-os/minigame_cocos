@@ -28,6 +28,24 @@ var UIWordBoard = cc.Class({
             // ly.LayOut();
         }
     },
+    GetItemCount() {
+        var count = 0;
+        if (this.listItem != null) {
+            count = this.listItem.length;
+        }
+        return count; var
+    },
+    GetItem(idx) {
+        this.listItem.forEach(function (item, index) {
+            if (item != null) {
+                if (idx == item.index) {
+                    return item;
+                }
+            }
+        }.bind(this));
+        return null;
+    },
+
     InitItem() {
         this.row = 4;
         this.col = 6;
@@ -75,8 +93,77 @@ var UIWordBoard = cc.Class({
         this.LayOut();
     },
 
+    UpadteItem(info, strBoard) {
+        // foreach (UIWordItem item in listItem)
+        // {
+        //     item.ShowContent(true);
+        // }
 
 
+        this.listItem.forEach(function (item, index) {
+            if (item != null) {
+                item.ShowContent(true);
+            }
+        }.bind(this));
 
+        var idx = 0;
+        //ok
+        // return;
+
+        for (var i = 0; i < strBoard.length; i++) {
+            var word = strBoard.substr(i, 1);
+            if (idx >= this.listItem.length) {
+                cc.Debug.Log("UIWordBoard idx:" + idx);
+                continue;
+            }
+            var item = this.listItem[idx];//as UIWordItem;
+            item.UpdateTitle(word);
+            idx++;
+        }
+    },
+
+    //退回字符
+    BackWord(word) {
+        this.listItem.forEach(function (item, index) {
+            if (item != null) {
+                if (word == item.wordDisplay) {
+                    item.ShowContent(true);
+                    break;
+                }
+            }
+        }.bind(this));
+    },
+
+    HideWord(word) {
+        this.listItem.forEach(function (item, index) {
+            if (item != null) {
+                if (word == item.wordDisplay) {
+                    item.ShowContent(false);
+                    break;
+                }
+            }
+        }.bind(this));
+    },
+
+    OnReset() {
+        this.listItem.forEach(function (item, index) {
+            if (item != null) {
+                item.ShowContent(true);
+            }
+        }.bind(this));
+    },
+
+    WordItemDidClick(item) {
+        // if (!item.isShowContent) {
+        //     return;
+        // }
+
+
+        // if (_delegate != null) {
+        //     _delegate.UIWordBoardDidClick(this, item);
+        // }
+
+
+    },
 });
 

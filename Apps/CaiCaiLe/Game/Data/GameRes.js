@@ -12,6 +12,7 @@ var GameRes = cc.Class({
         GAME_Guess: "Guess",
         GAME_RIDDLE: "Riddle",
         GAME_IdiomConnect: "IdiomConnect",
+        GAME_ANIMAL: "animal",
         //type 
         GAME_TYPE_IMAGE: "Image",
         GAME_TYPE_TEXT: "Text",
