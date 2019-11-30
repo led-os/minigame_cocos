@@ -1,5 +1,5 @@
 var UIView = require("UIView");
-var LayoutAlign = require("LayoutAlign");
+//var LayoutAlign = require("LayoutAlign");
 
 var RectSizeType = cc.Enum({
     //区分大小写
@@ -203,10 +203,11 @@ var RectTransform = cc.Class({
         }
 
         //align
-        var lA = this.node.getComponent(LayoutAlign);
-        if (lA != null) {
-            lA.UpdateType(lA.alignType);
-        }
+        // var lA = this.node.getComponent(LayoutAlign);
+        // if (lA != null) {
+        //     lA.UpdateType(lA.alignType);
+        // }
+
         this.UpdateAlign(this.alignType);
 
         var view = this.node.getComponent(UIView);

@@ -61,7 +61,8 @@ var GameLevelParse = cc.Class({
                 info.type = item.type;
             }
 
-            info.gameType = infoPlace.game;
+            info.gameType = infoPlace.gameType;
+            cc.Debug.Log("UpdateWord ParseGuanka gameType=" + info.gameType);
             this.listGuanka.push(info);
         }
 

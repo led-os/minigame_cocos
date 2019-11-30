@@ -38,7 +38,7 @@ cc.Class({
         var rctran = this.node.getComponent(cc.RectTransform);
         cc.Debug.Log("UIHomeCenterBar  w=  " + rctran.width + " h=" + rctran.height);
         if (ly != null) {
-            ly.col = ly.GetChildCount(false);
+            ly.col = cc.LayoutUtil.main().GetChildCount(this.node,false);
             cc.Debug.Log("GetItemPostion ly.col =" + ly.col);
             //有些按钮隐藏后重新布局
             ly.LayOut();

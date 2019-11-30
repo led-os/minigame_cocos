@@ -30,12 +30,23 @@ cc.Class({
         this.textTitle.node.active = false;
         this.UpdateImage(this.info.pic);
 
+        this.textTitle.node.active = true;
+        cc.ColorConfig.main().GetColor({
+            key: cc.GameRes.KEY_COLOR_PlaceItemTitle,
+            def: cc.Color.YELLOW,
+            success: function (color) {
+                this.textTitle.node.color = color;
+            }.bind(this),
+        });
     },
 
     UpdateImage: function (pic) {
         cc.TextureCache.main.Load(pic, function (err, tex) {
             if (err) {
-                cc.Debug.Log("UpdateImage:"+err.message || err);
+                cc.Debug.Log("UpdateImage:" + err.message || err);
+                var dirRoot = cc.CloudRes.main().rootPath;
+                this.info.pic = dirRoot + "/place/image/PlaceItemBg.png";
+                this.UpdateImage(this.info.pic);
                 return;
             }
             this.imageBg.spriteFrame = new cc.SpriteFrame(tex);

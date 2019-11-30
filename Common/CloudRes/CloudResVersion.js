@@ -51,10 +51,11 @@ var CloudResVersion = cc.Class({
             }
             return;
         }
-        var dirRoot = cc.Common.CLOUD_RES_DIR;
-        if (cc.Common.main().isWeiXin) {
-            dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
-        }
+        // var dirRoot = cc.Common.CLOUD_RES_DIR;
+        // if (cc.Common.main().isWeiXin) {
+        //     dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
+        // }
+        var dirRoot = cc.CloudRes.main().rootPath;
         var filepath = dirRoot + "/version.json";
 
         if (cc.Common.main().isWeiXin) {

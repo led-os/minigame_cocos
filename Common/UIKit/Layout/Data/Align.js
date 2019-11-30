@@ -12,8 +12,10 @@ var Align = cc.Enum({
     DOWN_LEFT: 7,
     DOWN_RIGHT: 8,
     CENTER: 9,
-
+    Horizontal: 10,
+    Vertical: 11,
 });
+
 
 //对齐
 // var Align = cc.Class({
@@ -25,4 +27,6 @@ var Align = cc.Enum({
 
 // });
 
-cc.Align = module.export = Align; 
+cc.Align = module.export = Align;
+//cc.LayoutDirection = module.export = LayoutDirection;
+

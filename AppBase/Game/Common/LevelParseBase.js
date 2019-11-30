@@ -105,10 +105,11 @@ var LevelParseBase = cc.Class({
             cc.Debug.Log("place id = " + info.id);
             info.type = cc.JsonUtil.GetItem(item, "type", "");
 
-            var dirRoot = cc.Common.CLOUD_RES_DIR;
-            if (cc.Common.main().isWeiXin) {
-                dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
-            }
+            // var dirRoot = cc.Common.CLOUD_RES_DIR;
+            // if (cc.Common.main().isWeiXin) {
+            //     dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
+            // }
+            var dirRoot = cc.CloudRes.main().rootPath;
             info.pic = dirRoot + "/place/image/" + info.id + ".png";
 
             info.title = cc.JsonUtil.GetItem(item, "title", "STR_PLACE_" + info.id);

@@ -27,7 +27,7 @@ var LayOutHorizontal = cc.Class({
         this.LayOut();
     },
     LayOut: function () {
-        this.col = this.GetChildCount();
+        this.col = cc.LayoutUtil.main().GetChildCount(this.node);
         cc.Debug.Log("LayOutHorizontal LayOut");
         this._super();
     },

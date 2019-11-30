@@ -15,12 +15,12 @@ var LayOutVertical = cc.Class({
     },
     onLoad: function () {
         this.col = 1;
-        this.row = this.GetChildCount();
+        this.row = cc.LayoutUtil.main().GetChildCount(this.node);
         this.LayOut();
 
     },
     LayOut: function () {
-        this.row = this.GetChildCount();
+        this.row = cc.LayoutUtil.main().GetChildCount(this.node);
         this._super();
     },
 

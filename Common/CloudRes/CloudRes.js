@@ -12,10 +12,21 @@ var CloudRes = cc.Class({
                 return ret;
             }
         },
-        
+
     },
 
-  
+
+    /*
+        {
+            url:"",
+            success: function (res) {
+            },
+            fail: function (res) {
+            },
+            progress: function (res) {
+            } ,
+        }
+        */
 
     StartDownload: function (obj) {
         cc.FileSystem.main().DownloadFile({

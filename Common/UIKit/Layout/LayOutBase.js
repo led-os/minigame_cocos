@@ -95,44 +95,7 @@ var LayOutBase = cc.Class({
     LayOut: function () {
     },
 
-    GetChildCount: function (includeHide = true) {
-        var count = 0;
-        for (var i = 0; i < this.node.children.length; i++) {
-            var child = this.node.children[i];
-            if (child == null) {
-                // 过滤已经销毁的嵌套子对象 
-                continue;
-            }
-            //     GameObject objtmp = child.gameObject;
-            //     if (this.gameObject == objtmp) {
-            //         continue;
-            //     }
-
-            if (!includeHide) {
-                if (!child.active) {
-                    //过虑隐藏的
-                    continue;
-                }
-            }
-
-            var le = child.getComponent(cc.LayOutElement);
-            if (le != null && le.ignoreLayout) {
-                continue;
-            }
-
-            //     if (objtmp.transform.parent != this.gameObject.transform) {
-            //         //只找第一层子物体
-            //         continue;
-            //     }
-            count++;
-
-
-        }
-
-        return count;
-    },
-
-
+     
 });
 
 cc.LayOutBase = module.export = LayOutBase; 

@@ -47,7 +47,7 @@ cc.Class({
        // rctran.LayOut();
         cc.Debug.Log("UIHomeSideBar  w=  " + rctran.width + " h=" + rctran.height);
         if (ly != null) {
-            ly.row = ly.GetChildCount(false);
+            ly.row = cc.LayoutUtil.main().GetChildCount(this.node,false);
             cc.Debug.Log("GetChildCount ly.row=" + ly.row);
             //有些按钮隐藏后重新布局
             ly.LayOut();

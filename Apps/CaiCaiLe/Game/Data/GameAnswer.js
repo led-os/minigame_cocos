@@ -37,7 +37,7 @@ var GameAnswer = cc.Class({
         if ((info.gameType == cc.GameRes.GAME_TYPE_IMAGE) || (info.gameType == cc.GameRes.GAME_TYPE_IMAGE_TEXT)) {
             //
             str = info.id;
-            if (Common.appKeyName == cc.GameRes.GAME_ANIMAL) {
+            if (cc.Config.main().appKeyName == cc.GameRes.GAME_ANIMAL) {
                 str = this.languageWord.GetString(info.id);
             }
             //歇后语

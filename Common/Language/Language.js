@@ -62,13 +62,16 @@ var Language = cc.Class({
         Language.callbackFinish = callback;
         Language.loadInfo = info;
     },
-    Init: function (file) {
+    Init: function (filepath) {
         this.ltLocalization = new LTLocalization();
-        //cc.Debug.Log("isLoadAll=loadRes start");
-        cc.loader.loadRes(file, function (err, file) {
-            //cc.Debug.Log(file.text);
-            this.ltLocalization.ReadData(file.text);
-            // cc.Debug.Log("isLoadAll=loadRes finish callback");
+        cc.loader.loadRes(filepath, function (err, file) {
+            cc.Debug.Log("LanguageInit::err =" + err + " filepath=" + filepath);
+            if (err == null) {
+                cc.Debug.Log("LanguageInit::ReadData no err");
+                this.ltLocalization.ReadData(file.text);
+                // cc.Debug.Log("isLoadAll=loadRes finish callback");
+            }
+
             var id = "";
             if (this == Language._common) {
                 id = Language.LANGUAGE_COMMON;

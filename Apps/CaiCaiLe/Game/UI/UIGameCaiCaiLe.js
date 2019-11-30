@@ -98,8 +98,8 @@ var UIGameCaiCaiLe = cc.Class({
     OnInitUI: function () {
         var node = cc.instantiate(this.uiWordContentPrefab);
         this.uiWordContent = node.getComponent(UIWordContentBase);
-        this.uiWordContent.node.parent = this.node;
-        this.uiWordContent.node.setPosition(0, 512);
+        node.parent = this.node;
+        node.setPosition(0, 512);
         this.UpdateWord();
         this.LayOut();
 
@@ -151,14 +151,16 @@ var UIGameCaiCaiLe = cc.Class({
     },
     UpdateWord() {
         var info = cc.GameLevelParse.main().GetItemInfo();
+        // cc.Debug.Log("UpdateWord gameType=" + info.gameType);
+
         if (this.uiWordContent != null) {
             //this.uiWordContent.UpdateWord();
         }
         //先计算行列数
         this.LayOut();
         this.uiWordBoard.InitItem();//ok
-        var strBoard = cc.GameAnswer.main().GetWordBoardString(info, this.uiWordBoard.row, this.uiWordBoard.col);//ok
-        this.uiWordBoard.UpadteItem(info, strBoard);//ng
+        //  var strBoard = cc.GameAnswer.main().GetWordBoardString(info, this.uiWordBoard.row, this.uiWordBoard.col);//ok
+        // this.uiWordBoard.UpadteItem(info, strBoard);//ng
         // this.uiWordBar.UpadteItem(info);
     },
 });

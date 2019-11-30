@@ -89,10 +89,11 @@ var AudioPlay = cc.Class({
     PlayBgMusic: function () {
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
         if (ret) {
-            var dirRoot = cc.Common.CLOUD_RES_DIR;
-            if (cc.Common.main().isWeiXin) {
-                dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
-            }
+            // var dirRoot = cc.Common.CLOUD_RES_DIR;
+            // if (cc.Common.main().isWeiXin) {
+            //     dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
+            // }
+            var dirRoot = cc.CloudRes.main().rootPath;
             var url = dirRoot + "/" + cc.AppRes.AUDIO_BG;
 
             if (cc.Common.main().isWeiXin) {

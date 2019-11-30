@@ -77,6 +77,8 @@ cc.Class({
         var rctran = this.uiHomeSideBar.node.getComponent(cc.RectTransform);
         cc.Debug.Log("uiHomeSideBar w=" + rctran.width + " h=" + rctran.height);
         //   rctran.LayOut();
+ 
+        
     },
 
     start: function () {
