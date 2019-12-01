@@ -87,42 +87,64 @@ var UIWordImageText = cc.Class({
     UpdateGuankaLevel(level) {
         this.UpdateItem();
     },
-
+    UpdateImage: function (pic) {
+        cc.Debug.Log("UpdateImage pic=" + pic);
+        cc.TextureCache.main.Load(pic, function (err, tex) {
+            if (err) {
+                return;
+            }
+            this.imagePic.spriteFrame = new cc.SpriteFrame(tex);
+            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
+            if (lyscale) {
+                lyscale.LayOut();
+            }
+        }.bind(this));
+    },
     UpdateItem() {
-        //             var info = cc.GameLevelParse.main().GetItemInfo();
-        //             if (info.gameType == cc.GameRes.GAME_TYPE_TEXT) {
+        var info = cc.GameLevelParse.main().GetItemInfo();
+        this.textTitle.node.active = true;
+        if (info.gameType == cc.GameRes.GAME_TYPE_TEXT) {
 
-        //                             if (Common.appKeyName == GameRes.GAME_POEM) {
+            //             if (Common.appKeyName == GameRes.GAME_POEM) {
 
-        //                                 PoemContentInfo infopoem0 = info.listPoemContent[0];
-        //                                 string strPoem = infopoem0.content;
-        //                                 //过虑标点符号
-        //                                 List < int > listIndexGuanka = GameLevelParse.main.IndexListNotPunctuation(strPoem);
-        //                                 //GUANKA_GROUP_ITEM_NUM
-        //                                 int[] fillWordNum = { 1, 1, 2, 2, 3 };
-        //                                 int idxfill = LevelManager.main.gameLevel % GUANKA_GROUP_ITEM_NUM;
-        //                                 //
-        //                                 listIndexAnswer = Util.main.RandomIndex(listIndexGuanka.Count, fillWordNum[idxfill]);
-        //                                 ListSorter.EbullitionSort(listIndexAnswer);
+            //                 PoemContentInfo infopoem0 = info.listPoemContent[0];
+            //                 string strPoem = infopoem0.content;
+            //                 //过虑标点符号
+            //                 List < int > listIndexGuanka = GameLevelParse.main.IndexListNotPunctuation(strPoem);
+            //                 //GUANKA_GROUP_ITEM_NUM
+            //                 int[] fillWordNum = { 1, 1, 2, 2, 3 };
+            //                 int idxfill = LevelManager.main.gameLevel % GUANKA_GROUP_ITEM_NUM;
+            //                 //
+            //                 listIndexAnswer = Util.main.RandomIndex(listIndexGuanka.Count, fillWordNum[idxfill]);
+            //                 ListSorter.EbullitionSort(listIndexAnswer);
 
-        //                                 listAnswerInfo = new List<AnswerInfo>();
-        //                                 GameAnswer.main.strWordAnswer = "";
-        //                                 for (int i = 0; i < listIndexAnswer.Length; i++)
-        //                 {
-        //                     int idx = listIndexGuanka[listIndexAnswer[i]];
-        //                     string word_answer = strPoem.Substring(idx, 1);
-        //                     GameAnswer.main.strWordAnswer += word_answer;
+            //                 listAnswerInfo = new List<AnswerInfo>();
+            //                 GameAnswer.main.strWordAnswer = "";
+            //                 for (int i = 0; i < listIndexAnswer.Length; i++)
+            // {
+            //     int idx = listIndexGuanka[listIndexAnswer[i]];
+            //     string word_answer = strPoem.Substring(idx, 1);
+            //     GameAnswer.main.strWordAnswer += word_answer;
 
-        //                     AnswerInfo infoanswer = new AnswerInfo();
-        //                     infoanswer.word = word_answer;
-        //                     infoanswer.index = idx;
-        //                     infoanswer.isFinish = false;
-        //                     infoanswer.isFillWord = false;
-        //                     listAnswerInfo.Add(infoanswer);
-        //                     Debug.Log("listAnswerInfo add " + word_answer);
-        //                 }
+            //     AnswerInfo infoanswer = new AnswerInfo();
+            //     infoanswer.word = word_answer;
+            //     infoanswer.index = idx;
+            //     infoanswer.isFinish = false;
+            //     infoanswer.isFillWord = false;
+            //     listAnswerInfo.Add(infoanswer);
+            //     Debug.Log("listAnswerInfo add " + word_answer);
+            // }
+            //             }
+        }
 
-
+        else if (info.gameType == cc.GameRes.GAME_TYPE_IMAGE) {
+            this.textTitle.node.active = false;
+            this.UpdateImage(info.pic);
+        }
+        else if (info.gameType == cc.GameRes.GAME_TYPE_IMAGE_TEXT) {
+            this.textTitle.node.active = true;
+            this.UpdateImage(info.pic);
+        }
 
         //         if (cc.Config.main().appKeyName == cc.GameRes.GAME_RIDDLE) {
 
@@ -143,10 +165,7 @@ var UIWordImageText = cc.Class({
 
 
         // }
-        // else {
 
-        //        TextureUtil.UpdateRawImageTexture(imagePic, info.pic, true);
-        // }
     },
 
 

@@ -1,12 +1,17 @@
 // var Common = require("Common");
 
 
-//相对布局 在target1和target2的中心位置
+/*相对布局 
+在target1和target2的中心位置 Horizontal  Vertical
+在target1和屏幕边界的中心位置cc.Align.LEFT cc.Align.RIGHT cc.Align.UP cc.Align.DOWN
+
+*/
+
 var LayOutBetween = cc.Class({
     extends: cc.LayOutBase,//HorizontalOrVerticalLayoutBase
 
     editor: CC_EDITOR && {
-        menu: "UIKit/Layout/LayOutRelation",
+        menu: "UIKit/Layout/LayOutBetween",
         help: " ",
         // inspector: ' ',
     },
@@ -41,14 +46,11 @@ var LayOutBetween = cc.Class({
         /// this.col = this.GetChildCount(); 
         this._super();
         var x, y, w, h;
+        cc.Debug.Log("LayOutBetween LayOut");
         var pt = this.node.getPosition();
         x = pt.x;
         y = pt.y;
         if (this.target1 == null) {
-            return;
-        }
-
-        if (this.target2 == null) {
             return;
         }
 
@@ -71,7 +73,7 @@ var LayOutBetween = cc.Class({
         if ((this.align == cc.Align.UP) || (this.align == cc.Align.DOWN)) {
             y = cc.LayoutUtil.main().GetBetweenScreenCenter(this.target1, this.align);
         }
-
+        cc.Debug.Log("LayOutBetween x=" + x + " y=" + y + " align=" + this.align);
         this.node.setPosition(x, y);
 
     },

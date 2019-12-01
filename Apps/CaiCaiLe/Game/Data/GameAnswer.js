@@ -114,12 +114,13 @@ var GameAnswer = cc.Class({
         var answer = this.GetInsertToBoardAnswer(info);
         var len = answer.length;
         var total = row * col;
-        cc.Debug.Log("UIWordBoard GetWordBoardString:" + answer + " answer.len=" + len);
+        cc.Debug.Log("UIWordBoard GetWordBoGetAllWordWithoutAnswerardString:" + answer + " answer.len=" + len);
         var strAllWord = this.GetAllWordWithoutAnswer(answer);
         var strRandom = this.GetRandomWordFromAllWord(total - len, strAllWord);
         ret = answer + strRandom;
+        //ret = answer;
         ret = cc.Common.RandomString(ret);
-        cc.Debug.Log("UIWordBoard GetWordBoardString:" + " total=" + total + " ret=" + ret + " ret.count=" + ret.Length);
+        cc.Debug.Log("UIWordBoard GetWordBoardString:" + " total=" + total + " ret=" + ret + " ret.length=" + ret.length);
         return ret;
     },
 
@@ -128,7 +129,7 @@ var GameAnswer = cc.Class({
         var ret = "";
         var strAllWord = cc.GameLevelParse.main().strWord3500;
         if (this.IsEnglshString(answer)) {
-            strAllWord = cc.GameLevelParse.main().strWordEnglish;
+            // strAllWord = cc.GameLevelParse.main().strWordEnglish;
         }
 
         for (var i = 0; i < strAllWord.length; i++) {
@@ -159,7 +160,8 @@ var GameAnswer = cc.Class({
     GetInsertToBoardAnswer(info) {
         //真正的答案
         var str = this.GetGuankaAnswer(info);
-        Debug.Log("UIWordBoard GetGuankaAnswer:" + str);
+        // return str;
+        cc.Debug.Log("UIWordBoard GetGuankaAnswer:" + str);
         switch (info.gameType) {
             case cc.GameRes.GAME_TYPE_TEXT:
                 {

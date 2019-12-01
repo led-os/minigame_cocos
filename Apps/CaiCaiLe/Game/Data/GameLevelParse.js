@@ -66,26 +66,30 @@ var GameLevelParse = cc.Class({
             this.listGuanka.push(info);
         }
 
-
+        cc.Debug.Log("UIGameCaiCaiLe  ParseGuanka gameType=" + info.gameType);
         //  this.CheckAllLoad();   
         this.StartParseWord3500();
 
     },
 
-
     StartParseWord3500() {
-        var filepath = cc.CloudRes.main().rootPath + "/words_3500.json";
+        var filepath = cc.CloudRes.main().rootPath + "/words_3500.json"; 
         if (cc.Common.main().isWeiXin) {
             // 加载json文件
             cc.loader.load({ url: filepath, type: "json" }, function (err, rootJson) {
-                this.ParseWord3500(err, rootJson);
+                this.ParseWord3500(err, rootJson.json);
             }.bind(this));
         } else {
             //cc.JsonAsset   cc.loader.load
             //去除后缀
             filepath = cc.FileUtil.GetFileBeforeExtWithOutDot(filepath);
             cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
-                this.ParseWord3500(rootJson);
+                if (err) {
+                    cc.Debug.Log("GameLevelParse StartParseWord3500:err=" + err);
+                }
+                if (err == null) {
+                    this.ParseWord3500(rootJson.json);
+                }
             }.bind(this));
         }
 
@@ -93,8 +97,8 @@ var GameLevelParse = cc.Class({
     },
     ParseWord3500(json) {
         this.strWord3500 = json.words;
+        cc.Debug.Log("GameLevelParse:this.listGuanka=" + this.listGuanka.length + "json.strWord3500=" + this.strWord3500);
         this.ParseGuankaDidFinish();
-        cc.Debug.Log("GameLevelParse:this.listGuanka=" + this.listGuanka.length);
     },
 
 

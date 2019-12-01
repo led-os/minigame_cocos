@@ -5,7 +5,7 @@ var AppType = require("AppType");
 var UIWordBoard = require("UIWordBoard");
 var UIWordContentBase = require("UIWordContentBase");
 var UIWordImageText = require("UIWordImageText");
-
+var UIWordBar = require("UIWordBar");
 
 var UIGameCaiCaiLe = cc.Class({
     extends: UIGameBase,
@@ -28,7 +28,8 @@ var UIGameCaiCaiLe = cc.Class({
         uiWordBoard: UIWordBoard,
         isShowGame: false,
         uiWordContent: UIWordContentBase,
-
+        uiWordBar: UIWordBar,
+        nodeTopBar: cc.Node,
     },
     onLoad: function () {
         this._super();
@@ -49,11 +50,10 @@ var UIGameCaiCaiLe = cc.Class({
         //     lyscale.LayOut();
 
         //     // this.ShowUserGuide();
-        // }.bind(this));
-
+        // }.bind(this)); 
     },
     start: function () {
-
+        this.LayOut();
     },
 
     LoadUIPrefab: function () {
@@ -99,8 +99,8 @@ var UIGameCaiCaiLe = cc.Class({
         var node = cc.instantiate(this.uiWordContentPrefab);
         this.uiWordContent = node.getComponent(UIWordContentBase);
         node.parent = this.node;
-        node.setPosition(0, 512);
         this.UpdateWord();
+        this.uiWordContent.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
         this.LayOut();
 
     },
@@ -125,6 +125,15 @@ var UIGameCaiCaiLe = cc.Class({
     },
 
     LayOut: function () {
+        if (this.uiWordContent != null) {
+            var ly = this.uiWordContent.node.getComponent(cc.LayOutBetween);
+            if (ly != null) {
+                ly.target1 = this.uiWordBar.node;
+                ly.target2 = this.nodeTopBar;
+                ly.LayOut();
+            }
+        }
+
 
 
     },
@@ -159,8 +168,9 @@ var UIGameCaiCaiLe = cc.Class({
         //先计算行列数
         this.LayOut();
         this.uiWordBoard.InitItem();//ok
-        //  var strBoard = cc.GameAnswer.main().GetWordBoardString(info, this.uiWordBoard.row, this.uiWordBoard.col);//ok
-        // this.uiWordBoard.UpadteItem(info, strBoard);//ng
+        var strBoard = cc.GameAnswer.main().GetWordBoardString(info, this.uiWordBoard.row, this.uiWordBoard.col);//ok
+        this.uiWordBoard.UpadteItem(info, strBoard);//ng
         // this.uiWordBar.UpadteItem(info);
+
     },
 });

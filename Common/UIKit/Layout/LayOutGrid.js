@@ -27,6 +27,10 @@ var LayOutGrid = cc.Class({
         this.LayOut();
     },
 
+    // update: function () {
+    //     this.LayOut();
+    // },
+
     LayOut: function () {
 
         var idx = 0;
@@ -97,14 +101,14 @@ var LayOutGrid = cc.Class({
             return cc.Vec2.ZERO;
         }
 
-        w = rctran.width;
-        h = rctran.height;
-
+        w = rctran.width - (this.offsetMin.x + this.offsetMax.x);
+        h = rctran.height - (this.offsetMin.y + this.offsetMax.y);
 
         var item_w = (w - (this.space.x * (this.col - 1))) / this.col;
         var item_h = (h - (this.space.y * (this.row - 1))) / this.row;
-        x = -w / 2 + item_w * c + item_w / 2 + this.space.x * c;
-        y = -h / 2 + item_h * r + item_h / 2 + this.space.y * r;
+        x = (-rctran.width / 2 + this.offsetMin.x) + item_w * c + item_w / 2 + this.space.x * c;
+        y = (-rctran.height / 2 + this.offsetMin.y) + item_h * r + item_h / 2 + this.space.y * r;
+        //  y=-192;
         cc.Debug.Log("GetItemPostion w=" + w + " h=" + h + " x=" + x + " y=" + y + " r=" + r + " c=" + c + " row=" + this.row + " col=" + this.col);
         return new cc.Vec2(x, y);
 

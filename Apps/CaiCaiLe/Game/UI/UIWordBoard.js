@@ -21,11 +21,21 @@ var UIWordBoard = cc.Class({
     onLoad: function () {
         this.InitItem();
     },
-
+    start: function () {
+        this.LayOut();
+    },
+    update: function () {
+        //this.LayOut();
+    },
     LayOut() {
-        var ly = this.node.getComponent(cc.LayOutGrid);
-        if (ly != null) {
-            // ly.LayOut();
+        this.scheduleOnce(this.LayOutInternal, 0.25);
+    },
+    LayOutInternal() {
+        {
+            var ly = this.node.getComponent(cc.LayOutGrid);
+            if (ly != null) {
+                ly.LayOut();
+            }
         }
     },
     GetItemCount() {
@@ -33,22 +43,22 @@ var UIWordBoard = cc.Class({
         if (this.listItem != null) {
             count = this.listItem.length;
         }
-        return count; var
+        return count;
     },
     GetItem(idx) {
-        this.listItem.forEach(function (item, index) {
-            if (item != null) {
-                if (idx == item.index) {
-                    return item;
-                }
-            }
-        }.bind(this));
+        // this.listItem.forEach(function (item, index) {
+        //     if (item != null) {
+        //         if (idx == item.index) {
+        //             return item;
+        //         }
+        //     }
+        // }.bind(this));
         return null;
     },
 
     InitItem() {
-        this.row = 4;
-        this.col = 6;
+        this.row = 3;
+        this.col = 8;
 
         this.listItem.forEach(function (value, index) {
             if (value != null) {
@@ -124,25 +134,25 @@ var UIWordBoard = cc.Class({
 
     //退回字符
     BackWord(word) {
-        this.listItem.forEach(function (item, index) {
-            if (item != null) {
-                if (word == item.wordDisplay) {
-                    item.ShowContent(true);
-                    break;
-                }
-            }
-        }.bind(this));
+        // this.listItem.forEach(function (item, index) {
+        //     if (item != null) {
+        //         if (word == item.wordDisplay) {
+        //             item.ShowContent(true);
+        //             break;
+        //         }
+        //     }
+        // }.bind(this));
     },
 
     HideWord(word) {
-        this.listItem.forEach(function (item, index) {
-            if (item != null) {
-                if (word == item.wordDisplay) {
-                    item.ShowContent(false);
-                    break;
-                }
-            }
-        }.bind(this));
+        // this.listItem.forEach(function (item, index) {
+        //     if (item != null) {
+        //         if (word == item.wordDisplay) {
+        //             item.ShowContent(false);
+        //             break;
+        //         }
+        //     }
+        // }.bind(this));
     },
 
     OnReset() {

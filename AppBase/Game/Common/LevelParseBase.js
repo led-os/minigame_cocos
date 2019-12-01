@@ -49,21 +49,23 @@ var LevelParseBase = cc.Class({
         if (this.listGuanka == null) {
             return null;
         }
-        if (idx >= this.listGuanka.Count) {
+        if (idx >= this.listGuanka.length) {
             return null;
         }
         var info = this.listGuanka[idx];
+        // cc.Debug.Log("UIGameCaiCaiLe GetLevelItemInfo idx=" + idx + " info=" + info);
         return info;
     },
 
     GetItemInfo: function () {
         var level = cc.LevelManager.main().gameLevel;
-        this.GetLevelItemInfo(level);
+        //cc.Debug.Log("UIGameCaiCaiLe GetItemInfo level=" + level);
+        return this.GetLevelItemInfo(level);
     },
 
     GetLevelItemInfoCur: function () {
         var level = cc.LevelManager.main().gameLevel;
-        this.GetLevelItemInfo(level);
+        return this.GetLevelItemInfo(level);
     },
 
     //place 

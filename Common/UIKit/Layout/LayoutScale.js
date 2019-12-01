@@ -9,8 +9,11 @@ var LayoutScaleType = cc.Enum({
 
 var LayoutScale = cc.Class({
     extends: cc.Component,
-
-
+    editor: CC_EDITOR && {
+        menu: "UIKit/Layout/LayoutScale",
+        help: " ",
+        // inspector: ' ',
+    },
     statics: {
         //enum
         LayoutScaleType: LayoutScaleType,

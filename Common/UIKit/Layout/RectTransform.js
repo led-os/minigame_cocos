@@ -275,7 +275,7 @@ var RectTransform = cc.Class({
             }
         }
 
-        this.node.setPosition(x, y, 0);
+        //  this.node.setPosition(x, y, 0);
     },
 
 
