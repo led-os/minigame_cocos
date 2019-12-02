@@ -15,6 +15,13 @@ var UIWordItem = cc.Class({
         countTemp: 0,
 
         isWordTips: false,
+        /* 
+           { 
+           OnItemDidClick: function (ui) {
+           }, 
+           }
+           */
+        objCallBack: null,
     },
 
     onLoad: function () {
@@ -26,6 +33,7 @@ var UIWordItem = cc.Class({
     },
 
     UpdateTitle(str) {
+        this.wordDisplay = str;
         this.textTitle.string = str;
     },
     ShowContent(isShow) {
@@ -49,19 +57,20 @@ var UIWordItem = cc.Class({
     },
 
     SetFontSize(size) {
-        // this.textTitle.fontSize = size;
+        this.textTitle.fontSize = size;
     },
-    OnClickItem() {
+
+    OnClickItem: function (event, customEventData) {
         if (this.isWordTips) {
             //提示字  不响应
             return;
         }
-        // if (_delegate != null) {
-        //     Debug.Log("UIWordItem OnClickItem index=" + index);
-        //     _delegate.WordItemDidClick(this);
-        // }
-    },
+        if (this.objCallBack != null) {
+            this.objCallBack.OnItemDidClick(this);
+        }
 
+
+    },
 
     StartAnimateError() {
         // enableAnimate = true;

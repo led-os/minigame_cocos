@@ -51,9 +51,26 @@ var UIGameCaiCaiLe = cc.Class({
 
         //     // this.ShowUserGuide();
         // }.bind(this)); 
+
+        this.uiWordBar.objCallBack = {
+            OnGameFinish: function (ui, isFail) {
+                this.OnGameWinFinish(ui, isFail);
+            }.bind(this),
+            OnDidBackWord: function (ui, item) {
+                this.OnUIWordBarDidBackWord(ui, item);
+            }.bind(this),
+        };
+
+        this.uiWordBoard.objCallBack = {
+            OnBoardDidClick: function (uiBorad, uiItem) {
+                this.OnUIWordBoardDidClick(uiBorad, uiItem);
+            }.bind(this),
+        };
+
     },
     start: function () {
         this.LayOut();
+        // this.ShowGameWinAlert();
     },
 
     LoadUIPrefab: function () {
@@ -99,10 +116,7 @@ var UIGameCaiCaiLe = cc.Class({
         var node = cc.instantiate(this.uiWordContentPrefab);
         this.uiWordContent = node.getComponent(UIWordContentBase);
         node.parent = this.node;
-        this.UpdateWord();
-        this.uiWordContent.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
-        this.LayOut();
-
+        this.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
     },
 
     CreateGame: function () {
@@ -142,14 +156,13 @@ var UIGameCaiCaiLe = cc.Class({
         this._super();
         //this.textTitle.node.active = false;
         this.UpdateTitle();
-        this.game.LoadGame();
-    },
-
-    OnGameWin: function () {
-        this.OnGameWinBase();
-        this.ShowGameWinAlert();
+        //this.game.LoadGame();
+        this.UpdateWord();
+        this.uiWordContent.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
+        this.LayOut();
 
     },
+
     UpdateTitle() {
         var idx = cc.LevelManager.main().placeLevel;
         var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(idx);
@@ -170,7 +183,79 @@ var UIGameCaiCaiLe = cc.Class({
         this.uiWordBoard.InitItem();//ok
         var strBoard = cc.GameAnswer.main().GetWordBoardString(info, this.uiWordBoard.row, this.uiWordBoard.col);//ok
         this.uiWordBoard.UpadteItem(info, strBoard);//ng
-        // this.uiWordBar.UpadteItem(info);
+        this.uiWordBar.UpadteItem(info);
 
     },
+
+
+    //interface
+    OnGameWinFinish(ui, isFail) {
+        var info = cc.GameLevelParse.main().GetItemInfo();
+        //show game win
+        if (isFail) {
+            //PopUpManager.main.Show<UIGameFail>("App/Prefab/Game/UIGameFail");
+        }
+        else {
+            cc.Debug.Log("caicaile OnGameWin");
+            // LevelManager.main.gameLevelFinish = LevelManager.main.gameLevel;
+            this.OnGameWinBase();
+            this.ShowGameWinAlert();
+            // if (gameBase != null) {
+            //     Debug.Log("caicaile OnGameWin GAME_STATUS_FINISH+info.id=" + info.id);
+            //     gameBase.SetGameItemStatus(info, GameBase.GAME_STATUS_FINISH);
+            // }
+
+            if (info.gameType == cc.GameRes.GAME_TYPE_CONNECT) {
+                //PopUpManager.main.Show<UIGameWinIdiomConnect>("App/Prefab/Game/UIGameWinIdiomConnect");
+            }
+            else {
+                //PopUpManager.main.Show<UIGameWin>("App/Prefab/Game/UIGameWin");
+            }
+
+
+        }
+
+    },
+
+    OnUIWordBoardDidClick: function (uiBorad, item) {
+
+        cc.Debug.Log("UIWordBoardDidClick");
+        var infoGuanka = cc.GameLevelParse.main().GetItemInfo();
+        if (infoGuanka.gameType == cc.GameRes.GAME_TYPE_TEXT) {
+            if (this.uiWordContent.CheckAllFill()) {
+                this.uiWordContent.OnAddWord(item.wordDisplay);
+                item.ShowContent(false);
+                if (CheckAllAnswerFinish()) {
+                    this.OnGameWinFinish(this.uiWordBar, false);
+                }
+                else {
+                    this.OnGameWinFinish(this.uiWordBar, true);
+                }
+            }
+        }
+        if (this.uiWordBar.node.active) {
+            if (!this.uiWordBar.CheckAllFill()) {
+                this.uiWordBar.AddWord(item.wordDisplay);
+                item.ShowContent(false);
+            }
+        }
+        else {
+            if (this.uiWordContent != null) {
+                this.uiWordContent.OnAddWord(item.wordDisplay);
+                item.ShowContent(false);
+                var ret = this.uiWordContent.CheckAllAnswerFinish();
+                cc.Debug.Log("CheckAllAnswer ret=" + ret);
+                if (ret) {
+                    this.OnGameWinFinish(this.uiWordBar, false);
+                }
+            }
+
+        }
+    },
+
+    OnUIWordBarDidBackWord: function (ui, item) {
+        this.uiWordBoard.BackWord(item.wordDisplay);
+    }
+
+
 });

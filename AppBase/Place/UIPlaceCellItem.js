@@ -33,7 +33,7 @@ cc.Class({
         this.textTitle.node.active = true;
         cc.ColorConfig.main().GetColor({
             key: cc.GameRes.KEY_COLOR_PlaceItemTitle,
-            def: cc.Color.YELLOW,
+            def: cc.Color.BLACK,
             success: function (color) {
                 this.textTitle.node.color = color;
             }.bind(this),

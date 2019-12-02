@@ -26,6 +26,37 @@ var TextureUtil = cc.Class({
             }.bind(this));
 
         },
+        /*
+         {
+             sprite:cc.Sprite,
+             pic: "",
+             def: "",
+             success: function () {
+             },
+             fail: function () {
+             }, 
+         }
+     */
+        UpdateSpriteImage: function (obj) {
+            var pic = obj.pic;
+            cc.Debug.Log("UpdateSpriteImage pic=" + pic);
+            cc.TextureCache.main.Load(pic, function (err, tex) {
+                if (err) {
+                    if (obj.fail != null) {
+                        obj.fail();
+                    }
+                    return;
+                }
+                obj.sprite.spriteFrame = new cc.SpriteFrame(tex);
+                var lyscale = obj.sprite.node.getComponent(cc.LayoutScale);
+                if (lyscale) {
+                    lyscale.LayOut();
+                }
+                if (obj.success != null) {
+                    obj.success();
+                }
+            }.bind(this));
+        },
 
     },
 });

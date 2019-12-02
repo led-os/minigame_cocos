@@ -31,15 +31,20 @@ var UIWordImageText = cc.Class({
     },
 
     onLoad: function () {
-        // var info = cc.GameLevelParse.main().GetItemInfo();
-        // if (info.gameType == cc.GameRes.GAME_TYPE_TEXT) {
-        //     this.imagePic.node.active = false;
-        // }
-        // else {
-        //     this.imagePic.node.active = true;
-        // }
-
-        //this.textTitle.color = ColorConfig.main.GetColor(GameRes.KEY_COLOR_GameText);
+        var info = cc.GameLevelParse.main().GetItemInfo();
+        if (info.gameType == cc.GameRes.GAME_TYPE_TEXT) {
+            this.imagePic.node.active = false;
+        }
+        else {
+            this.imagePic.node.active = true;
+        }
+        cc.ColorConfig.main().GetColor({
+            key: cc.GameRes.KEY_COLOR_GameText,
+            def: cc.Color.BLACK,
+            success: function (color) {
+                this.textTitle.node.color = color;
+            }.bind(this),
+        });
     },
 
     LayOut() {
@@ -89,16 +94,12 @@ var UIWordImageText = cc.Class({
     },
     UpdateImage: function (pic) {
         cc.Debug.Log("UpdateImage pic=" + pic);
-        cc.TextureCache.main.Load(pic, function (err, tex) {
-            if (err) {
-                return;
-            }
-            this.imagePic.spriteFrame = new cc.SpriteFrame(tex);
-            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
-            if (lyscale) {
-                lyscale.LayOut();
-            }
-        }.bind(this));
+        cc.TextureUtil.UpdateSpriteImage({
+            sprite: this.imagePic,
+            pic: pic,
+            success: function () {
+            }.bind(this),
+        });
     },
     UpdateItem() {
         var info = cc.GameLevelParse.main().GetItemInfo();
@@ -171,27 +172,29 @@ var UIWordImageText = cc.Class({
 
     GetFirstUnFillAnswer() {
         var idx = 0;
-        // this.listAnswerInfo.forEach(function (info, index) {
-        //     if (info != null) {
-        //         if (info.isFillWord == false) {
-        //             break;
-        //         }
-        //         idx++;
-        //     }
-        // }.bind(this));
+        for (var i = 0; i < this.listAnswerInfo.length; i++) {
+            var info = this.listAnswerInfo[i];
+            if (info != null) {
+                if (info.isFillWord == false) {
+                    break;
+                }
+                idx++;
+            }
+        }
         return idx;
     },
 
     GetFirstUnFinishAnswer() {
         var idx = 0;
-        // this.listAnswerInfo.forEach(function (info, index) {
-        //     if (info != null) {
-        //         if (info.isFinish == false) {
-        //             break;
-        //         }
-        //         idx++;
-        //     }
-        // }.bind(this));
+        for (var i = 0; i < this.listAnswerInfo.length; i++) {
+            var info = this.listAnswerInfo[i];
+            if (info != null) {
+                if (info.isFinish == false) {
+                    break;
+                }
+                idx++;
+            }
+        }
         return idx;
     },
 
@@ -208,25 +211,27 @@ var UIWordImageText = cc.Class({
     },
     CheckAllAnswerFinish() {
         var ret = true;
-        // this.listAnswerInfo.forEach(function (info, index) {
-        //     if (info != null) {
-        //         if (info.isFinish == false) {
-        //             ret = false;
-        //             break;
-        //         }
-        //     }
-        // }.bind(this));
+        for (var i = 0; i < this.listAnswerInfo.length; i++) {
+            var info = this.listAnswerInfo[i];
+            if (info != null) {
+                if (info.isFinish == false) {
+                    ret = false;
+                    break;
+                }
+            }
+        }
         return ret;
     },
 
-    UpdateGameWordString(str) {
+    UpdateTitle(str) {
         this.textTitle.string = str;
     },
     UpdateWord() {
         var info = cc.GameLevelParse.main().GetItemInfo();
 
         if (info.gameType == cc.GameRes.GAME_TYPE_TEXT) {
-            this.textTitle.string = this.GetDisplayText(false, false, 0, "");
+            this.UpdateTitle(this.GetDisplayText(false, false, 0, ""));
+
             // PoemContentInfo infopoem1 = info.listPoemContent[1];  
             // textLine1.text = infopoem1.content;
         }
@@ -350,41 +355,40 @@ var UIWordImageText = cc.Class({
     },
 
     SetFontSize(size) {
-        // textTitle.fontSize = size;
+        this.textTitle.fontSize = size;
     },
 
     OnTips() {
         var index = this.GetFirstUnFinishAnswer();
         var info = this.listAnswerInfo[index];
-        this.UpdateGameWordString(this.GetDisplayText(true, true, index, ""));
+        this.UpdateTitle(this.GetDisplayText(true, true, index, ""));
         info.isFinish = true;
     },
 
     OnAddWord(word) {
         var isInAnswerList = false;
         var index = 0;
+        for (var i = 0; i < this.listAnswerInfo.length; i++) {
+            var info = this.listAnswerInfo[i];
+            if (info != null) {
+                if (info.word == word) {
+                    //回答正确
+                    cc.Debug.Log("GetDisplayText ok index =" + index);
+                    this.UpdateTitle(this.GetDisplayText(true, true, index, ""));
+                    info.isFinish = true;
+                    isInAnswerList = true;
+                    break;
 
-        // this.listAnswerInfo.forEach(function (info, idx) {
-        //     if (info != null) {
-        //         if (info.word == word) {
-        //             //回答正确
-        //             cc.Debug.Log("GetDisplayText ok index =" + index);
-        //             this.UpdateGameWordString(this.GetDisplayText(true, true, index, ""));
-        //             info.isFinish = true;
-        //             isInAnswerList = true;
-        //             break;
-
-        //         }
-        //         index++;
-        //     }
-        // }.bind(this));
-
+                }
+                index++;
+            }
+        }
 
         if (!isInAnswerList) {
             //回答错误
             index = this.GetFirstUnFillAnswer();
             cc.Debug.Log("GetDisplayText error index=" + index);
-            this.UpdateGameWordString(this.GetDisplayText(true, false, index, word));
+            this.UpdateTitle(this.GetDisplayText(true, false, index, word));
         }
     },
 

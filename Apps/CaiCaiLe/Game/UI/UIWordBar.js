@@ -15,28 +15,56 @@ var UIWordBar = cc.Class({
         wordNumMax: 0,
         wordNumCur: 0,
         isAllAnswer: false,
-        colorNormal: cc.color.white,
-        colorFail: cc.color.red,
-        colorTips: cc.color.white,//new Color(107 / 255.0f, 1f, 1.0f, 1.0f);
+        colorNormal: cc.Color.WHITE,
+        colorFail: cc.Color.RED,
+        colorTips: cc.Color.WHITE,//new Color(107 / 255.0f, 1f, 1.0f, 1.0f);
+
+        /*
+        { 
+        OnGameFinish: function (ui,isFail) {
+        }, 
+        OnDidBackWord: function (ui,item) {
+        }, 
+
+        
+        }
+        */
+        objCallBack: null,
+
+
     },
     onLoad: function () {
-        this.UpadteItem(null);
     },
 
     LayOut() {
-
+        this._super();
+        this.scheduleOnce(this.LayOutInternal, 0.25);
     },
+    LayOutInternal() {
+        this._super();
+    },
+
+
     UpadteItem(info) {
+        if (this.listItem.length) {
+            //return;
+        }
+        var strAnswer = cc.GameAnswer.main().GetGuankaAnswer(info);
+        var len = strAnswer.length;
+        this.wordNumMax = len;
+        this.wordNumCur = 0;
+        cc.Debug.Log("UpadteItem strAnswer=" + strAnswer);
         this.listItem.forEach(function (value, index) {
             if (value != null) {
                 value.node.destroy();
                 //value= null;
             }
         }.bind(this));
+
         this.listItem.length = 0;
-        var len = 4;
+
         for (var i = 0; i < len; i++) {
-            var word = i.toString();
+            var word = strAnswer.substr(i, 1);
             //     //Debug.Log(word);
             //     UIWordItem item = GameObject.Instantiate(wordItemPrefab);
 
@@ -44,15 +72,23 @@ var UIWordBar = cc.Class({
             var item = node.getComponent(UIWordItem);
 
             node.setParent(this.node);
-
+            item.wordAnswer = word;
             item.index = i;
-            //     item.iDelegate = this;
-            //     item.transform.SetParent(this.transform);
-            //     item.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            item.UpdateTitle(word);
-            //     item.imageBg.sprite = spriteBg;
-            //     item.SetWordColor(ColorConfig.main.GetColor(GameRes.KEY_COLOR_BoardTitle));
-            //     //item.SetFontSize(80);
+            item.ClearWord();
+            cc.ColorConfig.main().GetColor({
+                key: cc.GameRes.KEY_COLOR_BoardTitle,
+                def: cc.Color.BLACK,
+                success: function (color) {
+                    item.SetWordColor(color);
+                }.bind(this),
+            });
+            item.SetFontSize(64);
+
+            item.objCallBack = {
+                OnItemDidClick: function (ui) {
+                    this.OnWordItemDidClick(ui);
+                }.bind(this),
+            };
 
             this.listItem.push(item);
 
@@ -63,7 +99,8 @@ var UIWordBar = cc.Class({
         this.LayOut();
     },
     AddWord(word) {
-        this.listItem.forEach(function (item, index) {
+        for (var i = 0; i < this.listItem.length; i++) {
+            var item = this.listItem[i];
             if (item != null) {
                 if (cc.Common.isBlankString(item.wordDisplay)) {
                     item.UpdateTitle(word);
@@ -71,7 +108,7 @@ var UIWordBar = cc.Class({
                     break;
                 }
             }
-        }.bind(this));
+        }
 
         if (this.CheckAllFill()) {
             this.CheckAnswer();
@@ -80,29 +117,29 @@ var UIWordBar = cc.Class({
 
     CheckAllFill() {
         var ret = true;
-        this.listItem.forEach(function (item, index) {
+        for (var i = 0; i < this.listItem.length; i++) {
+            var item = this.listItem[i];
             if (item != null) {
                 if (cc.Common.isBlankString(item.wordDisplay)) {
                     ret = false;
                 }
             }
-        }.bind(this));
-
+        }
         return ret;
     },
 
     //判断答案是否正确
     CheckAnswer() {
         this.isAllAnswer = true;
-        this.listItem.forEach(function (item, index) {
+        for (var i = 0; i < this.listItem.length; i++) {
+            var item = this.listItem[i];
             if (item != null) {
                 if (!item.IsAnswer()) {
                     this.isAllAnswer = false;
                     break;
                 }
             }
-        }.bind(this));
-
+        }
 
         if (this.isAllAnswer) {
             //全部猜对 game win
@@ -119,31 +156,30 @@ var UIWordBar = cc.Class({
         this.listItem.forEach(function (item, index) {
             if (item != null) {
                 if (!item.isWordTips) {
-                    item.SetWordColor(colorFail);
+                    item.SetWordColor(this.colorFail);
                     item.StartAnimateError();
                 }
             }
         }.bind(this));
-        if (this.callbackGameFinish != null) {
-            this.callbackGameFinish(this, true);
+        if (this.objCallBack != null) {
+            this.objCallBack.OnGameFinish(this, true);
         }
 
     },
     OnGameWin() {
-        if (this.callbackGameFinish != null) {
-            this.callbackGameFinish(this, false);
+        if (this.objCallBack != null) {
+            this.objCallBack.OnGameFinish(this, false);
         }
 
     },
 
-    WordItemDidClick(item) {
-
+    OnWordItemDidClick(item) {
         if (!this.isAllAnswer) {
             if (!cc.Common.isBlankString(item.wordDisplay)) {
                 cc.Debug.Log("WordItemDidClick 3");
-                //字符退回 
-                if (iDelegate != null) {
-                    iDelegate.UIWordBarDidBackWord(this, item.wordDisplay);
+                //字符退回  
+                if (this.objCallBack != null) {
+                    this.objCallBack.OnDidBackWord(this, item);
                 }
                 item.ClearWord();
                 //item.StopAnimateError();

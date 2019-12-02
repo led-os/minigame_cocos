@@ -45,7 +45,15 @@ cc.Class({
         this.node.parent = node;
     },
 
-    LayOut: function () {
+    LayOut() {
+        this.LayOutInternal();
+    },
+
+    LayOutInternal() {
+        var ly = this.node.getComponent(cc.LayOutBase);
+        if (ly) {
+            ly.LayOut();
+        }
     },
 
     LayOutDidFinish: function () {

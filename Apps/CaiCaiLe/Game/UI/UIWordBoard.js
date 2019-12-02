@@ -16,6 +16,14 @@ var UIWordBoard = cc.Class({
         row: 4,
         col: 6,
         imageBg: cc.Sprite,
+
+        /* 
+        { 
+        OnBoardDidClick: function (uiBorad,uiItem) {
+        }, 
+        }
+        */
+        objCallBack: null,
     },
 
     onLoad: function () {
@@ -46,13 +54,14 @@ var UIWordBoard = cc.Class({
         return count;
     },
     GetItem(idx) {
-        // this.listItem.forEach(function (item, index) {
-        //     if (item != null) {
-        //         if (idx == item.index) {
-        //             return item;
-        //         }
-        //     }
-        // }.bind(this));
+        for (var i = 0; i < this.listItem.length; i++) {
+            var item = this.listItem[i];
+            if (item != null) {
+                if (i == item.index) {
+                    return item;
+                }
+            }
+        }
         return null;
     },
 
@@ -92,7 +101,13 @@ var UIWordBoard = cc.Class({
             item.UpdateTitle(word);
             //     item.imageBg.sprite = spriteBg;
             //     item.SetWordColor(ColorConfig.main.GetColor(GameRes.KEY_COLOR_BoardTitle));
-            //     //item.SetFontSize(80);
+            item.SetFontSize(56);
+
+            item.objCallBack = {
+                OnItemDidClick: function (ui) {
+                    this.OnWordItemDidClick(ui);
+                }.bind(this),
+            };
 
             this.listItem.push(item);
 
@@ -134,25 +149,27 @@ var UIWordBoard = cc.Class({
 
     //退回字符
     BackWord(word) {
-        // this.listItem.forEach(function (item, index) {
-        //     if (item != null) {
-        //         if (word == item.wordDisplay) {
-        //             item.ShowContent(true);
-        //             break;
-        //         }
-        //     }
-        // }.bind(this));
+        for (var i = 0; i < this.listItem.length; i++) {
+            var item = this.listItem[i];
+            if (item != null) {
+                if (word == item.wordDisplay) {
+                    item.ShowContent(true);
+                    break;
+                }
+            }
+        }
     },
 
     HideWord(word) {
-        // this.listItem.forEach(function (item, index) {
-        //     if (item != null) {
-        //         if (word == item.wordDisplay) {
-        //             item.ShowContent(false);
-        //             break;
-        //         }
-        //     }
-        // }.bind(this));
+        for (var i = 0; i < this.listItem.length; i++) {
+            var item = this.listItem[i];
+            if (item != null) {
+                if (word == item.wordDisplay) {
+                    item.ShowContent(false);
+                    break;
+                }
+            }
+        }
     },
 
     OnReset() {
@@ -163,15 +180,13 @@ var UIWordBoard = cc.Class({
         }.bind(this));
     },
 
-    WordItemDidClick(item) {
-        // if (!item.isShowContent) {
-        //     return;
-        // }
-
-
-        // if (_delegate != null) {
-        //     _delegate.UIWordBoardDidClick(this, item);
-        // }
+    OnWordItemDidClick(item) {
+        if (!item.isShowContent) {
+            return;
+        }
+        if (this.objCallBack != null) {
+            this.objCallBack.OnBoardDidClick(this, item);
+        }
 
 
     },
