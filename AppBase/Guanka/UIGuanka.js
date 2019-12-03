@@ -18,8 +18,7 @@ cc.Class({
     },
 
     onLoad: function () {
-        this._super();
-        this.UnifyButtonSprite(this.btnBack);
+        this._super(); 
 
         this.textTitle.string = cc.Language.main().GetString("STR_GUANKA");
         cc.LevelManager.main().StartParseGuanka(function () {
@@ -28,6 +27,13 @@ cc.Class({
         }.bind(this)
         );
 
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnBack,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
+            success: function () {
+            }.bind(this),
+        });
 
         // this.tableView.node.active = false;
         var ev = this.node.addComponent(cc.UITouchEvent);

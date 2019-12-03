@@ -41,31 +41,26 @@ var UISetting = cc.Class({
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
 
-        this.UnifyButtonSprite(this.btnBack);
+
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnBack,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
+            success: function () {
+            }.bind(this),
+        });
+
         this.UpdateItem();
 
         this.textTitle.string = cc.Language.main().GetString("STR_SETTING");
 
-        // var dirRoot = cc.Common.CLOUD_RES_DIR;
-        // if (cc.Common.main().isWeiXin) {
-        //     dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
-        // }
-        var dirRoot = cc.CloudRes.main().rootPath;
+        cc.TextureUtil.UpdateSpriteImage({
+            sprite: this.imageBg,
+            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.SETTING_BG,
+            success: function () {
+            }.bind(this),
+        });
 
-        var strbg = dirRoot + "/" + cc.AppRes.SETTING_BG;
-        cc.Debug.Log(" setting strbg=" + strbg);
-        cc.TextureCache.main.Load(strbg, function (err, tex) {
-            if (err) {
-                cc.Debug.Log(" setting strbg error");
-                cc.Debug.Log(err.message || err);
-                return;
-            }
-            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
-            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
-            if (lyscale) {
-                lyscale.LayOut();
-            }
-        }.bind(this));
     },
 
     UpdateItem: function () {

@@ -31,11 +31,16 @@ var TextureUtil = cc.Class({
              sprite:cc.Sprite,
              pic: "",
              def: "",
+             type:cc.Sprite.Type.SIMPLE,//SLICED
+             left:0,
+             right:0,
+             top:0,
+             bottom:0,
              success: function () {
              },
              fail: function () {
              }, 
-         }
+         }p
      */
         UpdateSpriteImage: function (obj) {
             var pic = obj.pic;
@@ -48,6 +53,16 @@ var TextureUtil = cc.Class({
                     return;
                 }
                 obj.sprite.spriteFrame = new cc.SpriteFrame(tex);
+                var spf = obj.sprite.spriteFrame;
+                if (obj.type) {
+                    spf.type = obj.type;
+                    // 纹理的四个边距
+                    spf.insetBottom = obj.bottom;
+                    spf.insetTop = obj.top;
+                    spf.insetLeft = obj.left;
+                    spf.insetRight = obj.right;
+                }
+
                 var lyscale = obj.sprite.node.getComponent(cc.LayoutScale);
                 if (lyscale) {
                     lyscale.LayOut();
@@ -57,8 +72,45 @@ var TextureUtil = cc.Class({
                 }
             }.bind(this));
         },
+        /*
+               {
+                   btn:cc.Button,
+                   bg: "",
+                   icon:"",
+                   def: "",
+                   isUpdateSize:true,
+                   success: function () {
+                   },
+                   fail: function () {
+                   }, 
+               }
+           */
+        UpdateTypeButtonImage: function (obj) {
+            var typebtn = obj.btn.node.getComponent(cc.UITypeButton);
+            var objBg = {
+                sprite: typebtn.imageBg,
+                pic: obj.bg,
+                def: obj.def,
+                success: obj.success,
+                fail: obj.fail,
+            };
+            this.UpdateSpriteImage(objBg);
+
+            if (obj.icon) {
+                var objIcon = {
+                    sprite: typebtn.imageIcon,
+                    pic: obj.icon,
+                    def: obj.def,
+                    success: obj.success,
+                    fail: obj.fail,
+                };
+                this.UpdateSpriteImage(objIcon);
+            }
+        },
 
     },
+
+
 });
 
 cc.TextureUtil = module.export = TextureUtil; 

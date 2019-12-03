@@ -17,8 +17,27 @@ var UIViewAlert = cc.Class({
     },
     onLoad: function () {
         this._super();
-        this.UnifyButtonSprite(this.btnYes);
-        this.UnifyButtonSprite(this.btnNo);
+      
+        cc.TextureUtil.UpdateSpriteImage({
+            sprite: this.imageBoard,
+            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_ALERT_BG,
+            success: function () {
+            }.bind(this),
+        });
+
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnYes,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_COMMON, 
+            success: function () {
+            }.bind(this),
+        });
+
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnNo,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_COMMON, 
+            success: function () {
+            }.bind(this),
+        });
         //this.imageBg.node.addComponent(cc.UITouchEvent);
         this.LayOut();
     },

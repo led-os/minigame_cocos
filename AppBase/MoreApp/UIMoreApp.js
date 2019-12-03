@@ -17,7 +17,15 @@ cc.Class({
 
     onLoad: function () {
         this._super();
-        this.UnifyButtonSprite(this.btnBack);
+        
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnBack,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
+            success: function () {
+            }.bind(this),
+        });
+        
         this.textTitle.string = cc.Language.main().GetString("STR_PLACE");
         cc.LevelManager.main().StartParsePlace(function () {
             this.UpdateItem();

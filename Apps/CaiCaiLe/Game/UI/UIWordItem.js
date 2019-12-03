@@ -24,8 +24,14 @@ var UIWordItem = cc.Class({
         objCallBack: null,
     },
 
-    onLoad: function () {
+    onLoad: function () { 
 
+        cc.TextureUtil.UpdateSpriteImage({
+            sprite: this.imageBg,
+            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_WORD_BG,
+            success: function () {
+            }.bind(this),
+        });
     },
 
     LayOut() {

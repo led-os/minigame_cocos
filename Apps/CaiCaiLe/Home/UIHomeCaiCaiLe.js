@@ -33,52 +33,20 @@ cc.Class({
     onLoad: function () {
         this._super();
         var x, y, w, h;
+    
 
-        /*
-        //init shader
-        cc.ShaderManager.main().Add(require("ShaderShapeColor"));
-        cc.ShaderManager.main().Add(require("Glowing"));
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnPlay,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_PLAY,
+            success: function () {
+            }.bind(this),
+        });
 
-        this.UnifyButtonSprite(this.btnPlay);
-        this.UnifyButtonSprite(this.btnFrendBoard);
-
-        this.btnFrendBoard.node.active = false;
-
-        this.listBtns.length = 0;
-        this.listBtns.push(this.btnPlay);
-        //this.listBtns.push(this.btnFrendBoard);
-
-        this.isActionFinish = false;
-
-        var strbg = cc.CloudRes.main().rootPath + "/" + cc.AppRes.HOME_BG;
-        cc.TextureCache.main.Load(strbg, function (err, tex) {
-            if (err) {
-                cc.Debug.Log(err.message || err);
-                return;
-            }
-            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
-            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
-            if (lyscale) {
-                lyscale.LayOut();
-            }
-        }.bind(this));
-
-
-        this.LayOut();
-        this.InitBtnPos();
-        this.indexAction = 0;
-
-        this.RunActionImageName(this.timeAction, function () {
-            this.RunActionBtn();
-        }.bind(this)
-        );
-        */
-
-        var rctran = this.uiHomeSideBar.node.getComponent(cc.RectTransform);
-        cc.Debug.Log("uiHomeSideBar w=" + rctran.width + " h=" + rctran.height);
-        //   rctran.LayOut();
  
-        
+       
+
+
     },
 
     start: function () {

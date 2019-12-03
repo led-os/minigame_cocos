@@ -29,10 +29,31 @@ cc.Class({
     onLoad: function () {
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
-        this.oneCellNum =1;
-        this.UnifyButtonSprite(this.btnBack);
+        this.oneCellNum = 1; 
         this.textTitle.string = cc.Language.main().GetString("STR_LANGUAGE");
         this.UpdateItem();
+
+        var oft = 64;
+        cc.TextureUtil.UpdateSpriteImage({
+            sprite: this.imageBoard,
+            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_Language_Bg,
+            type: cc.Sprite.Type.SLICED,//SLICED
+            left: oft,
+            right: oft,
+            top: oft,
+            bottom: oft,
+            success: function () {
+            }.bind(this),
+        });
+
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnBack,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_CLOSE,
+            success: function () {
+            }.bind(this),
+        });
+
         this.LayOut();
     },
 
@@ -47,13 +68,13 @@ cc.Class({
     },
 
 
-    LayOut: function () { 
+    LayOut: function () {
         var size = this.node.getContentSize();
         var ratio = 0.8;
         var x, y, w, h;
         w = size.width * ratio;
         h = size.height * ratio;
-        this.nodeContent.setContentSize(w,h);
+        this.nodeContent.setContentSize(w, h);
 
     },
 
@@ -73,7 +94,7 @@ cc.Class({
             this.listItem.push(info);
         }
 
-      this.InitList();
+        this.InitList();
     },
     InitList: function () {
         this.tableView.oneCellNum = this.oneCellNum;

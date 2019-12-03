@@ -15,13 +15,30 @@ cc.Class({
         this._super();
         var x, y, w, h;
 
-        // this.UnifyButtonSprite(this.btnNoAd);
-        // this.UnifyButtonSprite(this.btnRestoreIAP);
-        // this.UnifyButtonSprite(this.btnMore);
-        // this.UnifyButtonSprite(this.btnSetting);
-        // this.UnifyButtonSprite(this.btnShare);
-        // this.UnifyButtonSprite(this.btnAdVideo);
-        // this.UnifyButtonSprite(this.btnMusic);
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnLearn,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_LEARN,
+            success: function () {
+            }.bind(this),
+        });
+
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnAdVideo,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_VIDEO,
+            success: function () {
+            }.bind(this),
+        });
+
+
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnAddLove,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_LOVE,
+            success: function () {
+            }.bind(this),
+        });
 
         this.LayOut();
 
@@ -38,7 +55,7 @@ cc.Class({
         var rctran = this.node.getComponent(cc.RectTransform);
         cc.Debug.Log("UIHomeCenterBar  w=  " + rctran.width + " h=" + rctran.height);
         if (ly != null) {
-            ly.col = cc.LayoutUtil.main().GetChildCount(this.node,false);
+            ly.col = cc.LayoutUtil.main().GetChildCount(this.node, false);
             cc.Debug.Log("GetItemPostion ly.col =" + ly.col);
             //有些按钮隐藏后重新布局
             ly.LayOut();

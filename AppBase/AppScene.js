@@ -27,16 +27,16 @@ cc.Class({
     },
     RunApp: function () {
         cc.Debug.Log("AppScene RunApp");
-        // base.RunApp(); 
+        this._super();
         // InitAd();
-        var controller = TabBarViewController.main();
-        {
-            var info = new TabBarItemInfo();
-            info.controller = MainViewController.main();
-            info.title = "main";
-            info.pic = "AppCommon/UI/Home/BtnHome";
-            controller.AddItem(info);
-        }
+        // var controller = TabBarViewController.main();
+        // {
+        //     var info = new TabBarItemInfo();
+        //     info.controller = MainViewController.main();
+        //     info.title = "main";
+        //     info.pic = "AppCommon/UI/Home/BtnHome";
+        //     controller.AddItem(info);
+        // }
 
         //   {
         //     var info = new TabBarItemInfo();

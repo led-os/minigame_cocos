@@ -29,33 +29,60 @@ var AppRes = cc.Class({
         Game_BG: "UI/Bg/GameBg.jpg",
         PLACE_BG: "UI/Bg/PlaceBg.jpg",
         LearnProgress_Bg: "UI/Bg/LearnBg.jpg",
-        HOME_BG: "UI/Bg/HomeBg.jpg",
+        HOME_BG: "UI/Bg/startup.jpg",
         SETTING_BG: "UI/Bg/SettingBg.png",
         AUDIO_GAME_DragOk: "audio/DragOk.mp3",
         AUDIO_GAME_DragFail: "audio/DragFail.mp3",
         AUDIO_GAME_GuankaOk: "audio/GuankaOk.mp3",
-        AUDIO_BtnClick: "audio/BtnClick.mp3", 
+        AUDIO_BtnClick: "audio/BtnClick.mp3",
         //image
         IMAGE_BtnMusicOn: "App/UI/Common/Button/BtnIconMusic",
         IMAGE_BtnMusicOff: "App/UI/Common/Button/BtnIconMusic",
         IMAGE_BtnSoundOn: "App/UI/Common/Button/BtnIconMusic",
         IMAGE_BtnSoundOff: "App/UI/Common/Button/BtnIconMusic",
 
-        IMAGE_BTN_SWITCH_UNSEL: "AppCommon/UI/Common/BtnSwitchUnSel",
-        IMAGE_BTN_SWITCH_SEL: "AppCommon/UI/Common/BtnSwitchSel",
+        IMAGE_BTN_SWITCH_UNSEL: "UI/Common/BtnSwitchUnSel",
+        IMAGE_BTN_SWITCH_SEL: "UI/Common/BtnSwitchSel",
 
 
-        IMAGE_GUANKA_CELL_ITEM_BG_UNLOCK: "App/UI/Guanka/guanka_item_unlock",
-        IMAGE_GUANKA_CELL_ITEM_BG_LOCK: "App/UI/Guanka/guanka_item_lock",
-        IMAGE_GUANKA_CELL_ITEM_BG_PLAY: "App/UI/Guanka/guanka_item_playing",
+        IMAGE_BTN_COMMON: "UI/Common/BtnCommon",
+        IMAGE_ALERT_BG: "UI/Common/AlertBg",
+        IMAGE_HOME_NAME_BG: "UI/Home/NameBg.png",
+
+        IMAGE_CELL_BG_BLUE: "UI/Setting/SettingCellBgBlue",
+        IMAGE_CELL_BG_ORINGE: "UI/Setting/SettingCellBgOringe",
+        IMAGE_CELL_BG_YELLOW: "UI/Setting/SettingCellBgYellow",
+        IMAGE_Language_Bg: "UI/Setting/Language/LanguageBoxBg",
 
 
-        IMAGE_CELL_BG_BLUE: "AppCommon/UI/Setting/SettingCellBgBlue",
-        IMAGE_CELL_BG_ORINGE: "AppCommon/UI/Setting/SettingCellBgOringe",
-        IMAGE_CELL_BG_YELLOW: "AppCommon/UI/Setting/SettingCellBgYellow",
+
+
+        // CloundRes btn
+        IMAGE_BTN_BG: "UI/Common/Button/BtnBg.png",
+        IMAGE_BTN_ICON_PLAY: "UI/Common/Button/BtnIconPlay.png",
+        IMAGE_BTN_ICON_LOVE: "UI/Common/Button/BtnIconLove.png",
+        IMAGE_BTN_ICON_TIPS: "UI/Common/Button/BtnIconTips.png",
+        IMAGE_BTN_ICON_MUSIC: "UI/Common/Button/BtnIconMusic.png",
+        IMAGE_BTN_ICON_HOME: "UI/Common/Button/BtnIconHome.png",
+        IMAGE_BTN_ICON_HELP: "UI/Common/Button/BtnIconHelp.png",
+        IMAGE_BTN_ICON_NOAD: "UI/Common/Button/BtnIconNoAd.png",
+        IMAGE_BTN_ICON_CLOSE: "UI/Common/Button/BtnIconClose.png",
+        IMAGE_BTN_ICON_BACK: "UI/Common/Button/BtnIconBack.png",
+        IMAGE_BTN_ICON_LEARN: "UI/Common/Button/BtnIconLearn.png",
+        IMAGE_BTN_ICON_MORE: "UI/Common/Button/BtnIconMore.png",
+        IMAGE_BTN_ICON_SETTING: "UI/Common/Button/BtnIconSetting.png",
+        IMAGE_BTN_ICON_RETRY: "UI/Common/Button/BtnIconRetry.png",
+        IMAGE_BTN_ICON_SHARE: "UI/Common/Button/BtnIconShare.png",
+        IMAGE_BTN_ICON_SOUND: "UI/Common/Button/BtnIconSound.png",
+        IMAGE_BTN_ICON_VIDEO: "UI/Common/Button/BtnIconVideo.png",
+
+        //guanka
+        IMAGE_GUANKA_CELL_ITEM_BG_UNLOCK: "UI/Guanka/guanka_item_unlock",
+        IMAGE_GUANKA_CELL_ITEM_BG_LOCK: "UI/Guanka/guanka_item_lock",
+        IMAGE_GUANKA_CELL_ITEM_BG_PLAY: "UI/Guanka/guanka_item_playing",
 
         //game
-        IMAGE_Game_Bomb: "AppCommon/UI/Game/Bomb",
+        IMAGE_WORD_BG: "UI/Common/word.png",
 
         //share
         SHARE_TITLE: "通过物品的连线快速学习事物",

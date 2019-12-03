@@ -28,34 +28,30 @@ cc.Class({
         this.info = data.array[index];
         this.textTitle.string = index + 1;
         var idx_playing = cc.LevelManager.main().gameLevelFinish + 1;
+        var strPic = "";
         if (index > idx_playing) {
             this.textTitle.node.active = false;
-            this.UpdateImage(cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_LOCK);
+            strPic = cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_LOCK;
         }
         else if (index == idx_playing) {
             this.textTitle.node.active = false;
-            this.UpdateImage(cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_PLAY);
+            strPic = cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_PLAY;
         } else {
             this.textTitle.node.active = true;
-            this.UpdateImage(cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_UNLOCK);
+            strPic = cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_UNLOCK;
         }
+
+        cc.TextureUtil.UpdateSpriteImage({
+            sprite: this.imageBg,
+            pic: cc.CloudRes.main().rootPath + "/" + strPic,
+            success: function () {
+            }.bind(this),
+        });
+
     },
     clicked: function clicked() {
         this.target.GotoGame(this.index);
     },
 
-    UpdateImage: function (pic) {
-        cc.TextureCache.main.Load(pic, function (err, tex) {
-            if (err) {
-                cc.Debug.Log(err.message || err);
-                return;
-            }
-            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
-            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
-            if (lyscale) {
-                lyscale.LayOut();
-            }
-        }.bind(this));
-    },
 });
 

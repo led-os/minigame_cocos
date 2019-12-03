@@ -14,9 +14,9 @@ cc.Class({
 
     onLoad: function () {
         this._super();
-        this.UnifyButtonSprite(this.btnSwitch);
-        this.btnSwitch.pressedSprite = null;
-        this.btnSwitch.hoverSprite = null;
+        //this.UnifyButtonSprite(this.btnSwitch);
+        //this.btnSwitch.pressedSprite = null;
+        // this.btnSwitch.hoverSprite = null;
     },
 
     init: function init(index, data, reload, group) {
@@ -88,20 +88,12 @@ cc.Class({
         if (isSel) {
             strImage = cc.AppRes.IMAGE_BTN_SWITCH_SEL;
         }
-        // cc.Debug.Log("UpdateBtnSwitch issel=" + isSel + " strImage=" + strImage);
-        cc.TextureCache.main.Load2(strImage, false, function (err, tex) {
-            if (err) {
-                cc.Debug.Log("UpdateBtnSwitch err");
-                cc.Debug.Log(err.message || err);
-                return;
-            }
-            //cc.Debug.Log("UpdateBtnSwitch spriteFrame");
-            if (tex == null) {
-                cc.Debug.Log("UpdateBtnSwitch spriteFrame=null");
-            }
-            this.btnSwitch.node.getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(tex);
-        }.bind(this));
-
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnSwitch,
+            bg: cc.CloudRes.main().rootPath + "/" + strImage,
+            success: function () {
+            }.bind(this),
+        });
     },
 
     UpdateImageBg: function (pic) {
@@ -119,13 +111,27 @@ cc.Class({
         // }.bind(this));
 
         //ok  会保留图片的sliced参数
-        cc.loader.loadRes(pic, cc.SpriteFrame, function (err, frame) {
-            if (err) {
-                cc.Debug.Log(err.message || err);
-            }else{
-                this.imageBg.spriteFrame = frame;
-            }
-        }.bind(this));
+        // cc.loader.loadRes(pic, cc.SpriteFrame, function (err, frame) {
+        //     if (err) {
+        //         cc.Debug.Log(err.message || err);
+        //     } else {
+        //         this.imageBg.spriteFrame = frame;
+        //     }
+        // }.bind(this));
+
+        var oft = 20;
+        cc.TextureUtil.UpdateSpriteImage({
+            sprite: this.imageBg,
+            pic: cc.CloudRes.main().rootPath + "/" + pic,
+            type: cc.Sprite.Type.SLICED,//SLICED
+            left: oft,
+            right: oft,
+            top: oft,
+            bottom: oft,
+            success: function () {
+            }.bind(this),
+        });
+
     },
 
     OnClickBtnSwitch: function (event, customEventData) {

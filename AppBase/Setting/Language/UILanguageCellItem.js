@@ -51,13 +51,26 @@ cc.Class({
         // }.bind(this));
 
         //ok  会保留图片的sliced参数
-        cc.loader.loadRes(pic, cc.SpriteFrame, function (err, frame) {
-            if (err) {
-                cc.Debug.Log(err.message || err);
-            } else {
-                this.imageBg.spriteFrame = frame;
-            }
-        }.bind(this));
+        // cc.loader.loadRes(pic, cc.SpriteFrame, function (err, frame) {
+        //     if (err) {
+        //         cc.Debug.Log(err.message || err);
+        //     } else {
+        //         this.imageBg.spriteFrame = frame;
+        //     }
+        // }.bind(this));
+
+        var oft = 20;
+        cc.TextureUtil.UpdateSpriteImage({
+            sprite: this.imageBg,
+            pic: cc.CloudRes.main().rootPath + "/" + pic,
+            type: cc.Sprite.Type.SLICED,//SLICED
+            left: oft,
+            right: oft,
+            top: oft,
+            bottom: oft,
+            success: function () {
+            }.bind(this),
+        });
     },
 });
 

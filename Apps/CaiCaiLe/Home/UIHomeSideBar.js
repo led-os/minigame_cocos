@@ -15,7 +15,6 @@ cc.Class({
         btnShare: cc.Button,
         btnNoAd: cc.Button,
 
-        btnAdVideo: cc.Button,
         btnRestoreIAP: cc.Button,
         btnMusic: cc.Button,
         btnSound: cc.Button,
@@ -24,13 +23,65 @@ cc.Class({
         this._super();
         var x, y, w, h;
 
-        // this.UnifyButtonSprite(this.btnSetting);
-        // this.UnifyButtonSprite(this.btnRestoreIAP);
-        // this.UnifyButtonSprite(this.btnMore);
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnSetting,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_SETTING,
+            success: function () {
+            }.bind(this),
+        });
 
-        // this.UnifyButtonSprite(this.btnShare);
-        // this.UnifyButtonSprite(this.btnAdVideo);
-        // this.UnifyButtonSprite(this.btnMusic);
+
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnSetting,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_SETTING,
+            success: function () {
+            }.bind(this),
+        });
+
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnMore,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_MORE,
+            success: function () {
+            }.bind(this),
+        });
+
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnShare,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_SHARE,
+            success: function () {
+            }.bind(this),
+        });
+
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnNoAd,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_NOAD,
+            success: function () {
+            }.bind(this),
+        });
+
+
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnMusic,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_MUSIC,
+            success: function () {
+            }.bind(this),
+        });
+
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnSound,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_SOUND,
+            success: function () {
+            }.bind(this),
+        });
+
+
 
         this.LayOut();
 
@@ -44,10 +95,10 @@ cc.Class({
         var x, y, w, h;
         var ly = this.node.getComponent(cc.LayOutGrid);
         var rctran = this.node.getComponent(cc.RectTransform);
-       // rctran.LayOut();
+        // rctran.LayOut();
         cc.Debug.Log("UIHomeSideBar  w=  " + rctran.width + " h=" + rctran.height);
         if (ly != null) {
-            ly.row = cc.LayoutUtil.main().GetChildCount(this.node,false);
+            ly.row = cc.LayoutUtil.main().GetChildCount(this.node, false);
             cc.Debug.Log("GetChildCount ly.row=" + ly.row);
             //有些按钮隐藏后重新布局
             ly.LayOut();
@@ -57,7 +108,16 @@ cc.Class({
 
     UpdateBtnMusic: function () {
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
-        cc.TextureUtil.UpdateButtonTexture(this.btnMusic, ret ? cc.AppRes.IMAGE_BtnMusicOn : cc.AppRes.IMAGE_BtnMusicOff, false);
+
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnMusic,
+            bg: cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.AppRes.IMAGE_BTN_ICON_MUSIC,
+            success: function () {
+            }.bind(this),
+        });
+
+        // cc.TextureUtil.UpdateButtonTexture(this.btnMusic, ret ? cc.AppRes.IMAGE_BtnMusicOn : cc.AppRes.IMAGE_BtnMusicOff, false);
     },
 
     OnClickBtnMusic: function (event, customEventData) {

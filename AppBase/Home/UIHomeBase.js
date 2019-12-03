@@ -48,33 +48,39 @@ cc.Class({
             cc.Tts.Speak(name);
         }
 
-        var strImage = cc.AppRes.HOME_BG;
-        cc.TextureCache.main.Load(strImage, function (err, tex) {
-            //cc.url.raw('res/textures/content.png')
-            if (err) {
-                cc.Debug.Log(err.message || err);
-                return;
-            }
-            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
-
-
-            //this.LayOut();
-        }.bind(this));
-
+        cc.TextureUtil.UpdateSpriteImage({
+            sprite: this.imageBg,
+            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.HOME_BG,
+            success: function () {
+            }.bind(this),
+        });
 
         //w = 1024;
         var fontsize = this.textName.fontSize;
         w = cc.Common.GetTextWidth(name, this.textName.fontSize) + fontsize;
-        h = this.imageNameBg.node.getContentSize().height;
-        this.imageNameBg.node.setContentSize(w, h);
+        var oft = 32;
+        cc.TextureUtil.UpdateSpriteImage({
+            sprite: this.imageNameBg,
+            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_HOME_NAME_BG,//IMAGE_HOME_NAME_BG
+            type: cc.Sprite.Type.SLICED,//SLICED
+            left: oft,
+            right: oft,
+            top: oft,
+            bottom: oft,
+            success: function () {
+                h = this.imageNameBg.node.getContentSize().height;
+                this.imageNameBg.node.setContentSize(w, h);
+            }.bind(this),
+        });
+
 
         // this.LayOut();
         var x_start, y_start;
 
         h = this.imageNameBg.node.getContentSize().height;
         x_start = 0;
-        y_start = size.height / 2 + h;
-        //this.imageNameBg.node.setPosition(x_start, y_start);
+        y_start = size.height / 4;
+        this.imageNameBg.node.setPosition(x_start, y_start);
 
         cc.AudioPlay.main().PlayBgMusic();
 
@@ -135,7 +141,7 @@ cc.Class({
         var x, y, w, h;
         //layoutbtn:
         var pt = this.GetPosOfImageName();
-        this.imageNameBg.node.setPosition(pt.x, pt.y);
+        //  this.imageNameBg.node.setPosition(pt.x, pt.y);
 
         //TextName
         size = this.textName.node.getContentSize();
