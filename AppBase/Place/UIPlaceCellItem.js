@@ -31,6 +31,9 @@ cc.Class({
         this.UpdateImage(this.info.pic);
 
         this.textTitle.node.active = true;
+
+        var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(index);
+        this.textTitle.string = infoPlace.id;
         cc.ColorConfig.main().GetColor({
             key: cc.GameRes.KEY_COLOR_PlaceItemTitle,
             def: cc.Color.BLACK,

@@ -36,22 +36,6 @@ var UIGameCaiCaiLe = cc.Class({
         // this.LoadLanguageGame();
         this.LoadUIPrefab();
 
-        // var url = cc.CloudRes.main().rootPath + "/" + cc.AppRes.Game_BG;
-        // cc.TextureCache.main.Load(url, function (err, tex) {
-        //     if (err) {
-
-        //         cc.Debug.Log(err.message || err);
-        //         return;
-        //     }
-        //     // cc.Debug.Log("TextureCache loadRes ok");
-
-        //     this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
-        //     var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
-        //     lyscale.LayOut();
-
-        //     // this.ShowUserGuide();
-        // }.bind(this)); 
-
         this.uiWordBar.objCallBack = {
             OnGameFinish: function (ui, isFail) {
                 this.OnGameWinFinish(ui, isFail);
@@ -139,10 +123,11 @@ var UIGameCaiCaiLe = cc.Class({
     },
 
     LayOut: function () {
+        this._super();
         if (this.uiWordContent != null) {
             var ly = this.uiWordContent.node.getComponent(cc.LayOutBetween);
             if (ly != null) {
-                ly.target1 = this.uiWordBar.node;
+                ly.targetMain = this.uiWordBar.node;
                 ly.target2 = this.nodeTopBar;
                 ly.LayOut();
             }

@@ -50,9 +50,21 @@ cc.Class({
     },
 
     LayOutInternal() {
-        var ly = this.node.getComponent(cc.LayOutBase);
-        if (ly) {
-            ly.LayOut();
+        var children = this.node._children;
+        for (var i = 0; i < children.length; i++) {
+            var child = children[i];
+            var list = child.getComponents(cc.LayOutBase);
+            for (let ly of list) {
+                if (ly) {
+                    ly.LayOut();
+                }
+            }
+
+
+            var rctran = child.getComponent(cc.RectTransform);
+            if (rctran) {
+                rctran.LayOut();
+            }
         }
     },
 

@@ -58,7 +58,7 @@ cc.Class({
         //w = 1024;
         var fontsize = this.textName.fontSize;
         w = cc.Common.GetTextWidth(name, this.textName.fontSize) + fontsize;
-        var oft = 32;
+        var oft = 50;
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageNameBg,
             pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_HOME_NAME_BG,//IMAGE_HOME_NAME_BG
@@ -68,8 +68,9 @@ cc.Class({
             top: oft,
             bottom: oft,
             success: function () {
-                h = this.imageNameBg.node.getContentSize().height;
+                h = fontsize * 2;//this.imageNameBg.node.getContentSize().height;
                 this.imageNameBg.node.setContentSize(w, h);
+                this.LayOut();
             }.bind(this),
         });
 
@@ -135,6 +136,7 @@ cc.Class({
     },
 
     LayOut: function () {
+        this._super();
         //  LayoutScale.ScaleImage(this.imageBg,true);
         var topbar_h = this.GetTopBarHeight();
         var size = this.node.getContentSize();
@@ -143,6 +145,11 @@ cc.Class({
         var pt = this.GetPosOfImageName();
         //  this.imageNameBg.node.setPosition(pt.x, pt.y);
 
+
+        var rctran = this.textName.getComponent(cc.RectTransform);
+        if (rctran) {
+            rctran.LayOut();
+        }
         //TextName
         size = this.textName.node.getContentSize();
         cc.Debug.Log("size TextName= " + size);

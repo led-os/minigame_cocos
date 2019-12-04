@@ -20,10 +20,10 @@ var GameRes = cc.Class({
         GAME_TYPE_CONNECT: "Connect",//接龙
 
         //image  
-        IMAGE_LetterBgNormal: "App/UI/Game/UILetter/LetterBgNormal",
-        IMAGE_LetterBgLock: "App/UI/Game/UILetter/LetterBgLock",
-        IMAGE_LetterBgRightAnswer: "App/UI/Game/UILetter/LetterBgRightAnswer",
-        IMAGE_LetterBgAddWord: "App/UI/Game/UILetter/LetterBgAddWord",
+        IMAGE_LetterBgNormal: "UI/Game/UILetter/LetterBgNormal",
+        IMAGE_LetterBgLock: "UI/Game/UILetter/LetterBgLock",
+        IMAGE_LetterBgRightAnswer: "UI/Game/UILetter/LetterBgRightAnswer",
+        IMAGE_LetterBgAddWord: "UI/Game/UILetter/LetterBgAddWord",
 
 
         //color

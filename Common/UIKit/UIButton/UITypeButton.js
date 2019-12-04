@@ -10,6 +10,11 @@ var Type = cc.Enum({
 
 var UITypeButton = cc.Class({
     extends: UIView,//cc.Component,
+    editor: CC_EDITOR && {
+        menu: "UIKit/UIButton/UITypeButton",
+        help: " ",
+        // inspector: ' ',
+    },
     statics: {
         Type: Type,
     },

@@ -83,6 +83,8 @@ var AppRes = cc.Class({
 
         //game
         IMAGE_WORD_BG: "UI/Common/word.png",
+        IMAGE_BoardPic: "UI/Game/BoardPic.png",
+
 
         //share
         SHARE_TITLE: "通过物品的连线快速学习事物",

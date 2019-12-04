@@ -45,6 +45,20 @@ var UIWordImageText = cc.Class({
                 this.textTitle.node.color = color;
             }.bind(this),
         });
+
+        var oft = 32;
+        cc.TextureUtil.UpdateSpriteImage({
+            sprite: this.imagePicBoard,
+            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BoardPic,//IMAGE_HOME_NAME_BG
+            type: cc.Sprite.Type.SLICED,//SLICED
+            left: oft,
+            right: oft,
+            top: oft,
+            bottom: oft,
+            success: function () { 
+            }.bind(this),
+        });
+
     },
 
     LayOut() {
