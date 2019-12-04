@@ -33,7 +33,19 @@ cc.Class({
         this.textTitle.node.active = true;
 
         var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(index);
-        this.textTitle.string = infoPlace.id;
+
+        cc.LanguageManager.main().GetStringPlace({
+            key: cc.LanguageManager.main().LanguageKeyOfPlaceItem(infoPlace),//cc.sys.LANGUAGE_CHINESE
+            def: "",
+            file: "",
+            success: function (str) {
+                this.textTitle.string = str;
+            }.bind(this),
+            fail: function () {
+            }.bind(this),
+        });
+
+
         cc.ColorConfig.main().GetColor({
             key: cc.GameRes.KEY_COLOR_PlaceItemTitle,
             def: cc.Color.BLACK,

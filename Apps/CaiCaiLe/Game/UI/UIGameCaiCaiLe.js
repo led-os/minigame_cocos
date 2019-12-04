@@ -151,10 +151,17 @@ var UIGameCaiCaiLe = cc.Class({
     UpdateTitle() {
         var idx = cc.LevelManager.main().placeLevel;
         var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(idx);
-        var key = cc.GameLevelParse.main().keyGameGuide;
-        var str = cc.Language.game().GetString(key);
-        this.textTitle.string = str;
-        cc.Tts.Speak(str);
+        cc.LanguageManager.main().GetStringGame({
+            key: cc.GameLevelParse.main().keyGameGuide,
+            def: "",
+            file: "",
+            success: function (str) {
+                this.textTitle.string = str;
+                cc.Tts.Speak(str);
+            }.bind(this),
+            fail: function () {
+            }.bind(this),
+        });
     },
     UpdateWord() {
         var info = cc.GameLevelParse.main().GetItemInfo();

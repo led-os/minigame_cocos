@@ -21,8 +21,8 @@ cc.Class({
         },
         btnFrendBoard: cc.Button,
         imageBg: cc.Sprite,
-        imageNameBg: cc.Sprite,
-        textName: cc.Label,
+        imageNameBg: cc.UIImage,// cc.Sprite,
+        textName: cc.UIText,//cc.Label,
         uiPrefabAppCenter: cc.Prefab,
 
     },
@@ -40,7 +40,7 @@ cc.Class({
         if (cc.Device.main.isLandscape) {
             name = cc.Language.main().GetString("APP_NAME_HD");
         }
-        this.textName.string = name;
+        this.textName.text = name;
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
         cc.Debug.Log("KEY_BACKGROUND_MUSIC home=" + ret);
@@ -60,7 +60,7 @@ cc.Class({
         w = cc.Common.GetTextWidth(name, this.textName.fontSize) + fontsize;
         var oft = 50;
         cc.TextureUtil.UpdateSpriteImage({
-            sprite: this.imageNameBg,
+            sprite: this.imageNameBg.image,
             pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_HOME_NAME_BG,//IMAGE_HOME_NAME_BG
             type: cc.Sprite.Type.SLICED,//SLICED
             left: oft,
@@ -98,7 +98,7 @@ cc.Class({
     },
 
     start() {
-        var hteXT = cc.Common.GetTextHeight(this.textName.string, this.textName.fontSize);
+        var hteXT = cc.Common.GetTextHeight(this.textName.text, this.textName.fontSize);
     },
 
     LoadPrefabAppCenter: function () {
@@ -145,6 +145,7 @@ cc.Class({
         var pt = this.GetPosOfImageName();
         //  this.imageNameBg.node.setPosition(pt.x, pt.y);
 
+        this.textName.node.setPosition(this.imageNameBg.node.getPosition());
 
         var rctran = this.textName.getComponent(cc.RectTransform);
         if (rctran) {

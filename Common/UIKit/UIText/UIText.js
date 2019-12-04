@@ -10,7 +10,30 @@ var UIText = cc.Class({
 
     },
     properties: {
-        text: cc.Label,
+        label: cc.Label,
+
+        text:
+        {
+            get: function () {
+                return this.label.string;
+            },
+            set: function (value) {
+                //this._text = value;
+                this.label.string = value;
+                this.LayOut();
+            },
+        },
+
+        fontSize: {
+            get: function () {
+                return this.label.fontSize;
+            },
+            set: function (value) {
+                this.label.fontSize = value;
+                this.LayOut();
+            },
+        },
+
     },
 
 
