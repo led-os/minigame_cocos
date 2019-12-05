@@ -1,8 +1,8 @@
 var UIView = require("UIView");
-var UIText = cc.Class({
+var UISegmentItem = cc.Class({
     extends: UIView,//cc.Component,
     editor: CC_EDITOR && {
-        menu: "UIKit/UIText/UIText",
+        menu: "UIKit/UISegment/UISegmentItem",
         help: " ",
         // inspector: ' ',
     },
@@ -10,8 +10,7 @@ var UIText = cc.Class({
 
     },
     properties: {
-        label: cc.Label,
-
+        textTitle: cc.UIText,
         text:
         {
             get: function () {
@@ -46,19 +45,16 @@ var UIText = cc.Class({
 
 
     onLoad: function () {
-
-        this.Init();
+        this._super();
     },
 
-    Init: function () {
-
+    LayOut: function () {
+        this._super();
     },
-
-
 
 });
 
-cc.UIText = module.export = UIText;
+cc.UISegmentItem = module.export = UISegmentItem;
 
 
 
