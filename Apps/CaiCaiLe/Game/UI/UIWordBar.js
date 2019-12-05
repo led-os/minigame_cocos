@@ -82,7 +82,7 @@ var UIWordBar = cc.Class({
                     item.SetWordColor(color);
                 }.bind(this),
             });
-            item.SetFontSize(64);
+            item.SetFontSize(80);
 
             item.objCallBack = {
                 OnItemDidClick: function (ui) {

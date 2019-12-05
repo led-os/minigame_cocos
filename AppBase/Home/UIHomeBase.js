@@ -45,7 +45,10 @@ cc.Class({
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
         cc.Debug.Log("KEY_BACKGROUND_MUSIC home=" + ret);
         if (ret) {
-            cc.Tts.Speak(name);
+            if (cc.Config.main().APP_FOR_KIDS) {
+                cc.Tts.Speak(name);
+            }
+
         }
 
         cc.TextureUtil.UpdateSpriteImage({
@@ -145,12 +148,12 @@ cc.Class({
         var pt = this.GetPosOfImageName();
         //  this.imageNameBg.node.setPosition(pt.x, pt.y);
 
-        this.textName.node.setPosition(this.imageNameBg.node.getPosition());
+        // this.textName.node.setPosition(this.imageNameBg.node.getPosition());
 
-        var rctran = this.textName.getComponent(cc.RectTransform);
-        if (rctran) {
-            rctran.LayOut();
-        }
+        // var rctran = this.textName.getComponent(cc.RectTransform);
+        // if (rctran) {
+        //     rctran.LayOut();
+        // }
         //TextName
         size = this.textName.node.getContentSize();
         cc.Debug.Log("size TextName= " + size);

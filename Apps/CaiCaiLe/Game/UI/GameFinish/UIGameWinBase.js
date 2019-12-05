@@ -1,6 +1,6 @@
 var UIView = require("UIView");
-var UIGameWin = cc.Class({
-    extends: UIView,// cc.ItemInfo, 
+var UIGameWinBase = cc.Class({
+    extends: cc.UIViewPop,// cc.ItemInfo, 
     properties: {
      
     },

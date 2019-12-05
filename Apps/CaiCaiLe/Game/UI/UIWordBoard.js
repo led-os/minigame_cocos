@@ -101,7 +101,7 @@ var UIWordBoard = cc.Class({
             item.UpdateTitle(word);
             //     item.imageBg.sprite = spriteBg;
             //     item.SetWordColor(ColorConfig.main.GetColor(GameRes.KEY_COLOR_BoardTitle));
-            item.SetFontSize(56);
+            item.SetFontSize(64);
 
             item.objCallBack = {
                 OnItemDidClick: function (ui) {

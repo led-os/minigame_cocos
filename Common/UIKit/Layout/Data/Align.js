@@ -14,6 +14,7 @@ var Align = cc.Enum({
     CENTER: 9,
     Horizontal: 10,
     Vertical: 11,
+    SAME_POSTION: 12,
 });
 
 

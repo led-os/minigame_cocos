@@ -156,12 +156,14 @@ var UIGameCaiCaiLe = cc.Class({
             def: "",
             file: "",
             success: function (str) {
-                this.textTitle.string = str;
-                cc.Tts.Speak(str);
+                // this.textTitle.text = str;
+                // cc.Tts.Speak(str);
             }.bind(this),
             fail: function () {
             }.bind(this),
         });
+
+        this.textTitle.text = cc.LevelManager.main().gameLevel + 1;
     },
     UpdateWord() {
         var info = cc.GameLevelParse.main().GetItemInfo();

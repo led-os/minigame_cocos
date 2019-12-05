@@ -28,7 +28,7 @@ var UIGameBase = cc.Class({
             type: cc.Button
         },
         imageBg: cc.Sprite,
-        textTitle: cc.Label,
+        textTitle: cc.UIText,
         callbackGuankaFinish: null,
         callbackPlaceFinish: null,
     },
@@ -43,6 +43,15 @@ var UIGameBase = cc.Class({
             success: function () {
             }.bind(this),
         });
+
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnBack,
+            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
+            success: function () {
+            }.bind(this),
+        });
+
         this.UpdateBtnMusic();
     },
     LoadGamePrefab: function () {
@@ -73,9 +82,17 @@ var UIGameBase = cc.Class({
         if (this.btnMusic == null) {
             return;
         }
+
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
-        var image = this.btnMusic.node.getComponent(cc.UITypeButton).imageIcon;
-        cc.TextureUtil.UpdateImage(image, ret ? cc.AppRes.IMAGE_BtnMusicOn : cc.AppRes.IMAGE_BtnMusicOff, false);
+        var bg = ret ? cc.AppRes.IMAGE_BTN_BG : cc.AppRes.IMAGE_BTN_BG_GREY;
+        cc.TextureUtil.UpdateTypeButtonImage({
+            btn: this.btnMusic,
+            bg: cc.CloudRes.main().rootPath + "/" + bg,
+            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_MUSIC,
+            success: function () {
+            }.bind(this),
+        });
+
     },
 
 

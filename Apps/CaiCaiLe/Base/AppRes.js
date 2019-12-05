@@ -59,6 +59,7 @@ var AppRes = cc.Class({
 
         // CloundRes btn
         IMAGE_BTN_BG: "UI/Common/Button/BtnBg.png",
+        IMAGE_BTN_BG_GREY: "UI/Common/Button/BtnBgGrey.png",
         IMAGE_BTN_ICON_PLAY: "UI/Common/Button/BtnIconPlay.png",
         IMAGE_BTN_ICON_LOVE: "UI/Common/Button/BtnIconLove.png",
         IMAGE_BTN_ICON_TIPS: "UI/Common/Button/BtnIconTips.png",

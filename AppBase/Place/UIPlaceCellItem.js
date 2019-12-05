@@ -7,7 +7,7 @@ cc.Class({
     //extends: require('viewCell'),
     properties: {
         imageBg: cc.Sprite,
-        textTitle: cc.Label,
+        textTitle: cc.UIText,
     },
 
     onLoad: function () {
@@ -31,7 +31,7 @@ cc.Class({
         this.UpdateImage(this.info.pic);
 
         this.textTitle.node.active = true;
-
+        this.textTitle.fontSize = 128;
         var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(index);
 
         cc.LanguageManager.main().GetStringPlace({
@@ -39,7 +39,7 @@ cc.Class({
             def: "",
             file: "",
             success: function (str) {
-                this.textTitle.string = str;
+                this.textTitle.text = str;
             }.bind(this),
             fail: function () {
             }.bind(this),
@@ -50,7 +50,7 @@ cc.Class({
             key: cc.GameRes.KEY_COLOR_PlaceItemTitle,
             def: cc.Color.BLACK,
             success: function (color) {
-                this.textTitle.node.color = color;
+                this.textTitle.color = color;
             }.bind(this),
         });
     },

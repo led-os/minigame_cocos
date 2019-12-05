@@ -5,7 +5,7 @@ var UIWordItem = cc.Class({
         // public const float TIME_ANIMATE_ERROR = 2.0f;
         // public const int COUNT_ANIMATE_ERROR = 10;
         imageBg: cc.Sprite,
-        textTitle: cc.Label,
+        textTitle: cc.UIText,
         index: 0,
         wordDisplay: "",
         wordAnswer: "",//答案字符
@@ -40,7 +40,7 @@ var UIWordItem = cc.Class({
 
     UpdateTitle(str) {
         this.wordDisplay = str;
-        this.textTitle.string = str;
+        this.textTitle.text = str;
     },
     ShowContent(isShow) {
         this.isShowContent = isShow;

@@ -73,6 +73,13 @@ var LayOutRelation = cc.Class({
             y = ptTarget.y - rctranTarget.height / 2 - h / 2 - this.offset.y;
         }
 
+        //相同位置
+        if (this.align == cc.Align.SAME_POSTION) {
+            x = ptTarget.x;
+            y = ptTarget.y;
+        }
+
+
         this.node.setPosition(x, y);
 
     },
