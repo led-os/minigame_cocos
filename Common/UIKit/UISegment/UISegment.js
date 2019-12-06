@@ -11,29 +11,25 @@ var UISegment = cc.Class({
     },
     properties: {
         scrollView: cc.ScrollView,
+        scrollContent: cc.Node,
+        colorSel: cc.Color.RED,
+        colorUnSel: cc.Color.WHITE,
+
         listItem: {
             default: [],
             type: cc.Object
         },
-
-        fontSize: {
-            get: function () {
-                return this.label.fontSize;
-            },
-            set: function (value) {
-                this.label.fontSize = value;
-                this.label.lineHeight = value;
-                this.LayOut();
-            },
+        itemPrefab: {
+            default: null,
+            type: cc.Prefab
         },
-        color: {
-            get: function () {
-                return this.label.node.color;
-            },
-            set: function (value) {
-                this.label.node.color = value;
-            },
-        },
+        /*
+            { 
+                OnUISegmentDidClickItem: function (ui,item) {
+                },  
+            }
+            */
+        objCallBack: null,
     },
 
 
@@ -55,21 +51,25 @@ var UISegment = cc.Class({
         // if (listItem.Count == 0) {
         //     totalStringWidth = 0;
         // }
-        // if (scrollRect == null) {
-        //     scrollRect = GetComponent<ScrollRect>();
-        // }
+
 
         // //横向滑动
-        // int space_x = 10;
-        // SegmentItem item = (SegmentItem)GameObject.Instantiate(segmentItem);
-        // item.iDelegate = this;
-        // item.index = listItem.Count;
-        // listItem.Add(item);
-        // item.transform.parent = objContent.transform;
-        // item.colorSel = colorSel;
-        // item.colorUnSel = colorUnSel;
+        // int space_x = 10; 
+        var node = cc.instantiate(this.itemPrefab);
+        node.setParent(this.scrollContent);
+        var item = node.getComponent(cc.UISegmentItem);
+        item.objCallBack = {
+            OnDidClickItem: function (ui) {
+                if (this.objCallBack != null) {
+                    this.objCallBack.OnUISegmentDidClickItem(this, item);
+                }
+            }.bind(this),
+        };
+        item.index = this.listItem.length;
+        item.colorSel = this.colorSel;
+        item.colorUnSel = this.colorUnSel;
         // item.textTitle.fontSize = itemFontSize;
-        // item.UpdateInfo(info);
+
         // int str_width = Common.GetStringLength(info.title, AppString.STR_FONT_NAME, itemFontSize);
         // int offsetx = space_x * listItem.Count + totalStringWidth;
         // totalStringWidth += str_width;
@@ -83,8 +83,8 @@ var UISegment = cc.Class({
         // //item.transform.position = pos;
 
         // rctran.localScale = new Vector3(1f, 1f, 1f);
-
-
+        item.UpdateItem(info);
+        this.listItem.push(item);
     },
 
     UpdateList() {
@@ -92,31 +92,24 @@ var UISegment = cc.Class({
         //numRows = totalItem; 
     },
     GetItem(idx) {
-        // SegmentItem item_ret = null;
-        // foreach(SegmentItem item in listItem)
-        // {
-        //     if (idx == item.index) {
-        //         item_ret = item;
-        //         break;
-        //     }
-        // }
-        // return item_ret;
+        var item = this.listItem[idx];
+        return item;
     },
     Select(idx, isClick = false) {
-        // foreach(SegmentItem item in listItem)
-        // {
-        //     if (idx == item.index) {
-        //         item.SetSelect(true);
-        //         if (isClick) {
-        //             item.OnClick();
-        //         }
-        //         //break;
-        //     }
-        //     else {
-        //         item.SetSelect(false);
-        //     }
-        // }
+        for (var i = 0; i < this.listItem.length; i++) {
+            var item = this.listItem[i];
+            if (idx == item.index) {
+                item.SetSelect(true);
+                if (isClick) {
+                    item.OnClick();
+                }
+            }
+            else {
+                item.SetSelect(false);
+            }
+        }
     },
+
 
 });
 

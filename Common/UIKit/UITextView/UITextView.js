@@ -16,16 +16,21 @@ var UITextView = cc.Class({
         text:
         {
             get: function () {
+                if (this.textContent == null) {
+                    return "text";
+                }
                 return this.textContent.text;
             },
             set: function (value) {
-                //this._text = value;
                 this.textContent.text = value;
                 this.LayOut();
             },
         },
         color: {
             get: function () {
+                if (this.textContent == null) {
+                    return cc.Color.BLACK;
+                }
                 return this.textContent.color;
             },
             set: function (value) {
@@ -34,6 +39,9 @@ var UITextView = cc.Class({
         },
         fontSize: {
             get: function () {
+                if (this.textContent == null) {
+                    return 64;
+                }
                 return this.textContent.fontSize;
             },
             set: function (value) {
@@ -45,7 +53,7 @@ var UITextView = cc.Class({
 
 
     onLoad: function () {
-
+        this._super();
     },
 
     SetContentHeight(h) {

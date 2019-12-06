@@ -10,37 +10,58 @@ var UISegmentItem = cc.Class({
 
     },
     properties: {
+        imageBg: cc.UIImage,
         textTitle: cc.UIText,
+
+        colorSel: cc.Color.RED,
+        colorUnSel: cc.Color.WHITE,
+
         text:
         {
             get: function () {
-                return this.label.string;
+                if (this.textTitle == null) {
+                    return "text";
+                }
+                return this.textTitle.text;
             },
             set: function (value) {
                 //this._text = value;
-                this.label.string = value;
+                this.textTitle.text = value;
                 this.LayOut();
             },
         },
 
         fontSize: {
             get: function () {
-                return this.label.fontSize;
+                if (this.textTitle == null) {
+                    return 12;
+                }
+                return this.textTitle.fontSize;
             },
             set: function (value) {
-                this.label.fontSize = value;
-                this.label.lineHeight = value;
+                this.textTitle.fontSize = value;
                 this.LayOut();
             },
         },
         color: {
             get: function () {
-                return this.label.node.color;
+                if (this.textTitle == null) {
+                    return cc.Color.BLACK;
+                }
+                return this.textTitle.color;
             },
             set: function (value) {
-                this.label.node.color = value;
+                this.textTitle.color = value;
             },
         },
+
+        /*
+        { 
+            OnDidClickItem: function (ui) {
+            },  
+        }
+        */
+        objCallBack: null,
     },
 
 
@@ -52,9 +73,27 @@ var UISegmentItem = cc.Class({
         this._super();
     },
 
+    UpdateItem(info) {
+        // infoItem = info;
+        this.textTitle.color = this.colorUnSel;
+        this.textTitle.text = info.title;
+    }
+    , SetSelect(isSel) {
+        if (isSel) {
+            this.textTitle.color = this.colorSel;
+        }
+        else {
+            this.textTitle.color = this.colorUnSel;
+        }
+    }
+    ,
+    OnClickItem: function (event, customEventData) {
+        if (this.objCallBack != null) {
+            this.objCallBack.OnDidClickItem(this);
+        }
+    },
+
 });
 
 cc.UISegmentItem = module.export = UISegmentItem;
-
-
 
