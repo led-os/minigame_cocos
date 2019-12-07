@@ -336,7 +336,8 @@ var Common = cc.Class({
         },
 
         GetButtonText: function (btn) {
-            return btn.node.getChildByName("Label").getComponent(cc.Label);
+            return "btn";
+          //  return btn.node.getChildByName("Label").getComponent(cc.Label);
         },
 
         //字符串显示大小

@@ -2,7 +2,7 @@ var UIGameWinBase = require("UIGameWinBase");
 var UIGameWinIdiom = cc.Class({
     extends: UIGameWinBase,// cc.ItemInfo, 
     properties: {
-
+        textPinyin: cc.UIText,
     },
 
     onLoad: function () {
@@ -12,6 +12,8 @@ var UIGameWinIdiom = cc.Class({
     LayOut() {
         this._super();
     },
+    UpdateItem(info) {
 
+    },
 });
 
