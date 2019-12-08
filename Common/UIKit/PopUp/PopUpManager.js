@@ -1,5 +1,6 @@
 
-
+var UIGameWinIdiom = require("UIGameWinIdiom");
+var UIViewPop = require("UIViewPop");
 var PopUpManager = cc.Class({
     extends: cc.Object,
     properties: {
@@ -19,11 +20,10 @@ var PopUpManager = cc.Class({
       }
     */
 
-    Show(obj)// (  bool darkenBackground = true) where T: UIViewPop
-    {
+    Show(obj) {
         cc.PrefabCache.main.Load(obj.prefab, function (err, prefab) {
             if (err) {
-                cc.Debug.Log(err.message || err);
+                cc.Debug.Log("PopUpManager err=" + err.message || err);
                 return;
             }
             this.OpenPopup(obj, prefab);
@@ -31,17 +31,8 @@ var PopUpManager = cc.Class({
         );
     },
 
-
-    /// <summary>
-    /// Utility coroutine to open a popup asynchronously.
-    /// </summary>
-    /// <param name="popupName">The name of the popup prefab located in the Resources folder.</param>
-    /// <param name="onOpened">The callback to invoke when the popup has finished loading.</param>
-    /// <param name="darkenBackground">True if the popup should have a dark background; false otherwise.</param>
-    /// <typeparam name="T">The type of the popup.</typeparam>
-    /// <returns>The coroutine.</returns>
-    OpenPopup(obj, prefab)//(string popupName, Action < T > onOpened, Action < UIViewPop > onClose, bool darkenBackground) where T: UIViewPop
-    {
+    OpenPopup(obj, prefab) {
+        cc.Debug.Log("OpenPopup");
         var nodeRoot = cc.Common.appSceneMain.rootNode;
         var panel = new cc.Node("Panel");
         panel.setParent(nodeRoot);
@@ -49,7 +40,13 @@ var PopUpManager = cc.Class({
 
         var nodePop = cc.instantiate(prefab);
         nodePop.setParent(nodeRoot);
-        var ui = nodePop.getComponent(cc.UIViewPop);
+        var ui = nodePop.getComponent(UIViewPop);
+        if (nodePop == null) {
+            cc.Debug.Log("OpenPopup nodePop is null");
+        }
+        if (ui == null) {
+            cc.Debug.Log("OpenPopup ui is null");
+        }
         this.listItem.push(ui);
 
         if (obj.open != null) {
@@ -118,7 +115,7 @@ var PopUpManager = cc.Class({
         //删除index为0的元素
         this.listItem.splice(0, 1);
 
-        ui.Close();
+        // ui.Close();
         /*
     
     

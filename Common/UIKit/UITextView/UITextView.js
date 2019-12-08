@@ -22,8 +22,10 @@ var UITextView = cc.Class({
                 return this.textContent.text;
             },
             set: function (value) {
-                this.textContent.text = value;
-                this.LayOut();
+                if (this.textContent != null) {
+                    this.textContent.text = value;
+                    this.LayOut();
+                }
             },
         },
         color: {

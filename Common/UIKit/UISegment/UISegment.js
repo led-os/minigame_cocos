@@ -14,7 +14,7 @@ var UISegment = cc.Class({
         scrollContent: cc.Node,
         colorSel: cc.Color.RED,
         colorUnSel: cc.Color.WHITE,
-
+        fontsize: 0,
         listItem: {
             default: [],
             type: cc.Object
@@ -30,6 +30,10 @@ var UISegment = cc.Class({
             }
             */
         objCallBack: null,
+        align: {
+            default: cc.Align.CENTER,
+            type: cc.Align
+        },
     },
 
 
@@ -41,10 +45,18 @@ var UISegment = cc.Class({
         this._super();
     },
 
-    InitValue(fontsize, sel, unsel) {
-        // itemFontSize = fontsize;
-        // colorSel = sel;
-        // colorUnSel = unsel;
+    InitValue(font, sel, unsel) {
+        this.fontsize = font;
+        this.colorSel = sel;
+        this.colorUnSel = unsel;
+        var lyH = this.node.getComponent(cc.LayOutHorizontal);
+        var lyV = this.node.getComponent(cc.LayOutVertical);
+        if (this.align == cc.Align.Horizontal) {
+            lyH.enableLayout = true;
+        }
+        if (this.align == cc.Align.Vertical) {
+            lyV.enableLayout = true;
+        }
     },
     AddItem(info) {
 
@@ -68,7 +80,7 @@ var UISegment = cc.Class({
         item.index = this.listItem.length;
         item.colorSel = this.colorSel;
         item.colorUnSel = this.colorUnSel;
-        // item.textTitle.fontSize = itemFontSize;
+        item.fontSize = this.fontSize;
 
         // int str_width = Common.GetStringLength(info.title, AppString.STR_FONT_NAME, itemFontSize);
         // int offsetx = space_x * listItem.Count + totalStringWidth;
@@ -85,6 +97,7 @@ var UISegment = cc.Class({
         // rctran.localScale = new Vector3(1f, 1f, 1f);
         item.UpdateItem(info);
         this.listItem.push(item);
+        this.LayOut();
     },
 
     UpdateList() {
@@ -101,13 +114,15 @@ var UISegment = cc.Class({
             if (idx == item.index) {
                 item.SetSelect(true);
                 if (isClick) {
-                    item.OnClick();
+                    item.OnClickItem(null, null);
                 }
             }
             else {
                 item.SetSelect(false);
             }
         }
+
+        this.LayOut();
     },
 
 

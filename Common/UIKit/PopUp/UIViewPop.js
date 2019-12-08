@@ -30,12 +30,16 @@ var UIViewPop = cc.Class({
         // else {
         //     DoClose();
         // }
+
+        cc.PopUpManager.main().ClosePopup(); 
+        this.DoClose();
     },
 
 
     DoClose() {
         // PopUpManager.main.OnClose();
         // DestroyImmediate(gameObject);
+        this.node.destroy();
     },
 
     /// <summary>
@@ -50,6 +54,6 @@ var UIViewPop = cc.Class({
 
 });
 
-cc.UIViewPop = module.export = UIViewPop;
+//cc.UIViewPop = module.export = UIViewPop;
 
 

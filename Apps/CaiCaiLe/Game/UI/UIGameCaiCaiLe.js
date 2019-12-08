@@ -102,7 +102,7 @@ var UIGameCaiCaiLe = cc.Class({
         node.parent = this.node;
         this.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
 
-        //this.OnGameWinFinish(this.uiWordBar, false);
+        this.OnGameWinFinish(this.uiWordBar, false);
     },
 
     CreateGame: function () {
@@ -197,7 +197,7 @@ var UIGameCaiCaiLe = cc.Class({
             cc.Debug.Log("caicaile OnGameWin");
             // LevelManager.main.gameLevelFinish = LevelManager.main.gameLevel;
             this.OnGameWinBase();
-            this.ShowGameWinAlert();
+            // this.ShowGameWinAlert();
             // if (gameBase != null) {
             //     Debug.Log("caicaile OnGameWin GAME_STATUS_FINISH+info.id=" + info.id);
             //     gameBase.SetGameItemStatus(info, GameBase.GAME_STATUS_FINISH);
@@ -213,7 +213,8 @@ var UIGameCaiCaiLe = cc.Class({
 
         }
 
-        if (cc.Config.main().appKeyName == cc.GameRes.GAME_IDIOM) {
+        // if (cc.Config.main().appKeyName == cc.GameRes.GAME_IDIOM) 
+        {
             strPrefab = "App/Prefab/Game/UIGameWinIdiom";
         }
         cc.PopUpManager.main().Show({

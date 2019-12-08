@@ -12,10 +12,9 @@ var UISegmentItem = cc.Class({
     properties: {
         imageBg: cc.UIImage,
         textTitle: cc.UIText,
-
         colorSel: cc.Color.RED,
         colorUnSel: cc.Color.WHITE,
-
+        infoItem:null,
         text:
         {
             get: function () {
@@ -74,7 +73,7 @@ var UISegmentItem = cc.Class({
     },
 
     UpdateItem(info) {
-        // infoItem = info;
+        this.infoItem = info;
         this.textTitle.color = this.colorUnSel;
         this.textTitle.text = info.title;
     }

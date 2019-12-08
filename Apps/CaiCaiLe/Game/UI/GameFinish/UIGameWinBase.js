@@ -1,6 +1,7 @@
 var UIView = require("UIView");
+var UIViewPop = require("UIViewPop");
 var UIGameWinBase = cc.Class({
-    extends: cc.UIViewPop,// cc.ItemInfo, 
+    extends: UIViewPop,// cc.ItemInfo, 
     statics: {
         KEY_GAMEWIN_INFO_INTRO: "KEY_GAMEWIN_INFO_INTRO",
         KEY_GAMEWIN_INFO_YUANWEN: "KEY_GAMEWIN_INFO_YUANWEN",
@@ -49,6 +50,7 @@ var UIGameWinBase = cc.Class({
     },
 
     OnClickBtnClose() {
+        cc.Debug.Log("OnClickBtnClose UIGameWinBase");
         this.Close();
         cc.GameManager.main().GotoPlayAgain();
     },

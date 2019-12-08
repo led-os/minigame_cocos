@@ -78,7 +78,7 @@ var LayOutBase = cc.Class({
         space: cc.Vec2,
         // align: cc.AlignNONE,
         align: {
-            default: cc.Align.CENTER,
+            default: cc.Align.Horizontal,
             type: cc.Align
         },
 
