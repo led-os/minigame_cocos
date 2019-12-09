@@ -78,7 +78,10 @@ var UISegmentItem = cc.Class({
         this.textTitle.text = info.title;
     }
     , SetSelect(isSel) {
+
+       
         if (isSel) {
+            cc.Debug.Log("UIText SetSelect set color=" + this.colorSel);
             this.textTitle.color = this.colorSel;
         }
         else {

@@ -246,7 +246,8 @@ var RectTransform = cc.Class({
                         this.height = h;
                         this.node.setContentSize(new cc.size(w, h));
                         x = this.offsetMin.x / 2 - this.offsetMax.x / 2;
-                        y += this.offsetMin.y / 2 - this.offsetMax.y / 2;
+                        // y += this.offsetMin.y / 2 - this.offsetMax.y / 2;
+                        this.node.setPosition(x, y, 0);
                     }
                     break;
 
@@ -267,15 +268,16 @@ var RectTransform = cc.Class({
                         this.width = w;
                         this.height = h;
                         this.node.setContentSize(new cc.size(w, h));
-                        x += this.offsetMin.x / 2 - this.offsetMax.x / 2;
+                        //x += this.offsetMin.x / 2 - this.offsetMax.x / 2;
                         y = this.offsetMin.y / 2 - this.offsetMax.y / 2;
+                        this.node.setPosition(x, y, 0);
                     }
                     break;
 
             }
         }
 
-        //  this.node.setPosition(x, y, 0);
+        //this.node.setPosition(x, y, 0);
     },
 
 

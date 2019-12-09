@@ -39,6 +39,7 @@ var UIText = cc.Class({
                 return this.label.node.color;
             },
             set: function (value) {
+                cc.Debug.Log("UIText set color=" + value);
                 this.label.node.color = value;
             },
         },

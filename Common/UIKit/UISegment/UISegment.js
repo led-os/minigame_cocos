@@ -31,7 +31,7 @@ var UISegment = cc.Class({
             */
         objCallBack: null,
         align: {
-            default: cc.Align.CENTER,
+            default: cc.Align.Horizontal,
             type: cc.Align
         },
     },
@@ -39,10 +39,33 @@ var UISegment = cc.Class({
 
     onLoad: function () {
         this._super();
+        if (this.align == cc.Align.Horizontal) {
+            this.scrollView.horizontal = true;
+            this.scrollView.vertical = false;
+        }
+        if (this.align == cc.Align.Vertical) {
+            this.scrollView.vertical = true;
+            this.scrollView.horizontal = false;
+        }
+        this.LayOut();
     },
 
     LayOut: function () {
         this._super();
+        var rctran = this.node.getComponent(cc.RectTransform);
+        var w, h;
+        var rctranScrollContent = this.scrollContent.getComponent(cc.RectTransform);
+        if (this.align == cc.Align.Horizontal) {
+            w = rctran.width;
+            h = rctran.height;
+        }
+        if (this.align == cc.Align.Vertical) {
+            w = rctran.width;
+            h = rctran.height;
+        }
+
+        this.scrollContent.setContentSize(new cc.size(w, h));
+        rctranScrollContent.LayOut();
     },
 
     InitValue(font, sel, unsel) {
@@ -52,10 +75,14 @@ var UISegment = cc.Class({
         var lyH = this.node.getComponent(cc.LayOutHorizontal);
         var lyV = this.node.getComponent(cc.LayOutVertical);
         if (this.align == cc.Align.Horizontal) {
-            lyH.enableLayout = true;
+            if (lyH != null) {
+                lyH.enableLayout = true;
+            }
         }
         if (this.align == cc.Align.Vertical) {
-            lyV.enableLayout = true;
+            if (lyV != null) {
+                lyV.enableLayout = true;
+            }
         }
     },
     AddItem(info) {
@@ -72,6 +99,7 @@ var UISegment = cc.Class({
         var item = node.getComponent(cc.UISegmentItem);
         item.objCallBack = {
             OnDidClickItem: function (ui) {
+                this.Select(item.index);
                 if (this.objCallBack != null) {
                     this.objCallBack.OnUISegmentDidClickItem(this, item);
                 }
@@ -109,6 +137,7 @@ var UISegment = cc.Class({
         return item;
     },
     Select(idx, isClick = false) {
+        cc.Debug.Log("UISegment Select idx=" + idx);
         for (var i = 0; i < this.listItem.length; i++) {
             var item = this.listItem[i];
             if (idx == item.index) {

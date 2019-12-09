@@ -12,6 +12,10 @@ var UIGameWinIdiom = cc.Class({
     },
 
     onLoad: function () {
+
+
+        this.textView.color = cc.Color.BLUE;
+
         this.indexSegment = 0;
         this.uiSegment.InitValue(64, cc.Color.RED, cc.Color.BLACK);
         this.UpdateSegment();
@@ -70,7 +74,6 @@ var UIGameWinIdiom = cc.Class({
         // }
 
         this.textView.text = "textView";
-        this.textView.color = cc.Color.BLUE;
     },
 
     UpdateSegment() {
