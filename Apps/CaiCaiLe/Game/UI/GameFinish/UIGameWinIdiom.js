@@ -91,7 +91,6 @@ var UIGameWinIdiom = cc.Class({
             info.title = cc.Language.main().GetString(info.id);
             this.uiSegment.AddItem(info);
         }
-        this.uiSegment.UpdateList();
         this.uiSegment.objCallBack = {
             OnUISegmentDidClickItem: function (ui, item) {
                 this.indexSegment = item.index;

@@ -1,4 +1,5 @@
 var UIView = require("UIView");
+var UIText = require("UIText");
 var UISegmentItem = cc.Class({
     extends: UIView,//cc.Component,
     editor: CC_EDITOR && {
@@ -11,10 +12,10 @@ var UISegmentItem = cc.Class({
     },
     properties: {
         imageBg: cc.UIImage,
-        textTitle: cc.UIText,
+        textTitle: UIText,
         colorSel: cc.Color.RED,
         colorUnSel: cc.Color.WHITE,
-        infoItem:null,
+        infoItem: null,
         text:
         {
             get: function () {
@@ -38,21 +39,24 @@ var UISegmentItem = cc.Class({
                 return this.textTitle.fontSize;
             },
             set: function (value) {
+                if (this.textTitle == null) {
+                    return;
+                }
                 this.textTitle.fontSize = value;
                 this.LayOut();
             },
         },
-        color: {
-            get: function () {
-                if (this.textTitle == null) {
-                    return cc.Color.BLACK;
-                }
-                return this.textTitle.color;
-            },
-            set: function (value) {
-                this.textTitle.color = value;
-            },
-        },
+        // color: {
+        //     get: function () {
+        //         if (this.textTitle == null) {
+        //             return cc.Color.BLACK;
+        //         }
+        //         return this.textTitle.color;
+        //     },
+        //     set: function (value) {
+        //         this.textTitle.color = value;
+        //     },
+        // },
 
         /*
         { 
@@ -66,6 +70,7 @@ var UISegmentItem = cc.Class({
 
     onLoad: function () {
         this._super();
+        //this.textTitle.color = cc.Color.BLUE;
     },
 
     LayOut: function () {
@@ -73,15 +78,18 @@ var UISegmentItem = cc.Class({
     },
 
     UpdateItem(info) {
+       // this.fontSize = 64;
         this.infoItem = info;
         this.textTitle.color = this.colorUnSel;
         this.textTitle.text = info.title;
-    }
-    , SetSelect(isSel) {
 
-       
+        cc.Debug.Log("UISegmentItem UpdateItem title=" + info.title);
+        // this.scheduleOnce(this.LayOutInternal, 0.25);
+    },
+
+    SetSelect(isSel) {
         if (isSel) {
-            cc.Debug.Log("UIText SetSelect set color=" + this.colorSel);
+            cc.Debug.Log("UISegmentItem SetSelect set color=" + this.colorSel);
             this.textTitle.color = this.colorSel;
         }
         else {
@@ -93,9 +101,10 @@ var UISegmentItem = cc.Class({
         if (this.objCallBack != null) {
             this.objCallBack.OnDidClickItem(this);
         }
+        // this.SetSelect(true);
     },
 
 });
 
-cc.UISegmentItem = module.export = UISegmentItem;
+//cc.UISegmentItem = module.export = UISegmentItem;
 

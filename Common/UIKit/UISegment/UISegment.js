@@ -1,4 +1,6 @@
 var UIView = require("UIView");
+var UISegmentItem = require("UISegmentItem");
+
 var UISegment = cc.Class({
     extends: UIView,//cc.Component,
     editor: CC_EDITOR && {
@@ -14,12 +16,16 @@ var UISegment = cc.Class({
         scrollContent: cc.Node,
         colorSel: cc.Color.RED,
         colorUnSel: cc.Color.WHITE,
-        fontsize: 0,
+        fontSize: 0,
         listItem: {
             default: [],
             type: cc.Object
         },
         itemPrefab: {
+            default: null,
+            type: cc.Prefab
+        },
+        itemPrefab2: {
             default: null,
             type: cc.Prefab
         },
@@ -47,6 +53,8 @@ var UISegment = cc.Class({
             this.scrollView.vertical = true;
             this.scrollView.horizontal = false;
         }
+
+
         this.LayOut();
     },
 
@@ -69,7 +77,8 @@ var UISegment = cc.Class({
     },
 
     InitValue(font, sel, unsel) {
-        this.fontsize = font;
+        this.fontSize = font;
+        cc.Debug.Log("item.fontSize InitValue=" + this.fontSize + " font=" + font);
         this.colorSel = sel;
         this.colorUnSel = unsel;
         var lyH = this.node.getComponent(cc.LayOutHorizontal);
@@ -85,7 +94,23 @@ var UISegment = cc.Class({
             }
         }
     },
+
     AddItem(info) {
+        // var strPrefab = "Common/Prefab/UIKit/UISegment/UISegmentItem";
+        // cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
+        //     if (err) {
+        //         cc.Debug.Log("LoadGamePrefab err=" + err.message || err);
+        //         return;
+        //     }
+        //     this.itemPrefab2 = prefab;
+        //     this.AddItemInternal(info);
+        // }.bind(this)
+        // );
+        //  this.scheduleOnce(this.LayOutInternal, 0.25);
+        this.AddItemInternal(info);
+    },
+
+    AddItemInternal(info) {
 
         // if (listItem.Count == 0) {
         //     totalStringWidth = 0;
@@ -94,9 +119,9 @@ var UISegment = cc.Class({
 
         // //横向滑动
         // int space_x = 10; 
-        var node = cc.instantiate(this.itemPrefab);
-        node.setParent(this.scrollContent);
-        var item = node.getComponent(cc.UISegmentItem);
+        var nodeItem = cc.instantiate(this.itemPrefab);
+        nodeItem.setParent(this.scrollContent);
+        var item = nodeItem.getComponent(UISegmentItem);
         item.objCallBack = {
             OnDidClickItem: function (ui) {
                 this.Select(item.index);
@@ -109,7 +134,7 @@ var UISegment = cc.Class({
         item.colorSel = this.colorSel;
         item.colorUnSel = this.colorUnSel;
         item.fontSize = this.fontSize;
-
+        cc.Debug.Log("item.fontSize =" + item.fontSize);
         // int str_width = Common.GetStringLength(info.title, AppString.STR_FONT_NAME, itemFontSize);
         // int offsetx = space_x * listItem.Count + totalStringWidth;
         // totalStringWidth += str_width;
