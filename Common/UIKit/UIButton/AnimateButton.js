@@ -24,19 +24,24 @@ var AnimateButton = cc.Class({
         }
     },
 
-
     onLoad: function () {
+        if (this.clickEvents.length) {
+            var ev = this.clickEvents[0];
+            ev.target = this.node;
+            ev.component = "AnimateButton";
+            ev.handler = "OnClickItem";
+        }
 
     },
 
     OnClickItem: function (event, customEventData) {
         cc.Debug.Log("AnimateButton OnClickItem");
-        var duration = 0.2;
+        var duration = 0.1;
 
-        var actionTo1 = cc.scaleTo(duration, 0.5);
+        var actionTo1 = cc.scaleTo(duration, 1.2);
         var actionTo2 = cc.scaleTo(duration, 1);
         //delay延时
-        var time = cc.delayTime(0.1);
+        var time = cc.delayTime(0.01);
         var seq = cc.sequence([time, actionTo1, actionTo2, cc.callFunc(function () {
             this.DoClickItem(event, customEventData);
         }.bind(this))]);
