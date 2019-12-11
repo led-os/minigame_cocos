@@ -66,6 +66,18 @@ var UIButton = cc.Class({
                 }
             },
         },
+
+
+        text:
+        {
+            get: function () {
+                return this.textTitle.string;
+            },
+            set: function (value) {
+                this.textTitle.string = value;
+                this.LayOut();
+            },
+        },
     },
 
 

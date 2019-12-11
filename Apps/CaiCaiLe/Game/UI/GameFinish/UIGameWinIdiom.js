@@ -14,8 +14,22 @@ var UIGameWinIdiom = cc.Class({
 
     onLoad: function () {
 
+        cc.ColorConfig.main().GetColor({
+            key: cc.GameRes.KEY_COLOR_GameWinTitle,
+            def: cc.Color.BLACK,
+            success: function (color) {
+                this.textTitle.color = color;
+            }.bind(this),
+        });
 
-        this.textView.color = cc.Color.BLUE;
+        cc.ColorConfig.main().GetColor({
+            key: cc.GameRes.KEY_COLOR_GameWinTextView,
+            def: cc.Color.BLACK,
+            success: function (color) {
+                this.textView.color = color;
+            }.bind(this),
+        });
+
 
         this.indexSegment = 0;
         this.uiSegment.InitValue(64, cc.Color.RED, cc.Color.BLACK);
@@ -52,6 +66,7 @@ var UIGameWinIdiom = cc.Class({
             success: function () {
             }.bind(this),
         });
+        this.btnNext.text = cc.Language.main().GetString("STR_GameWin_BtnNext");
     },
 
     LayOut() {

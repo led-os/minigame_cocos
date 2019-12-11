@@ -10,6 +10,7 @@ var Language = cc.Class({
     statics: {
         // 声明静态变量
         LANGUAGE_COMMON: "language_common",
+        LANGUAGE_APPCOMMON: "language_appcommon",
         LANGUAGE_MAIN: "language_main",
         LANGUAGE_GAME: "language_game",
         callbackFinish: null,
@@ -39,6 +40,12 @@ var Language = cc.Class({
         {
             var info = new cc.LoadItemInfo();
             info.id = Language.LANGUAGE_COMMON;
+            info.isLoad = false;
+            Language.listLoad.push(info);
+        }
+        {
+            var info = new cc.LoadItemInfo();
+            info.id = Language.LANGUAGE_APPCOMMON;
             info.isLoad = false;
             Language.listLoad.push(info);
         }
@@ -75,6 +82,9 @@ var Language = cc.Class({
             var id = "";
             if (this == Language._common) {
                 id = Language.LANGUAGE_COMMON;
+            }
+            if (this == Language._appcommon) {
+                id = Language.LANGUAGE_APPCOMMON;
             }
             if (this == Language._main) {
                 id = Language.LANGUAGE_MAIN;
@@ -146,6 +156,9 @@ var Language = cc.Class({
         if (Language._common != null) {
             Language._common.ltLocalization.SetLanguage(lan);
         }
+        if (Language._appcommon != null) {
+            Language._appcommon.ltLocalization.SetLanguage(lan);
+        }
         if (Language._game != null) {
             Language._game.ltLocalization.SetLanguage(lan);
         }
@@ -156,7 +169,6 @@ var Language = cc.Class({
 
     },
     GetString: function (key) {
-
         var str = "0";
         if (this.IsContainsKey(key)) {
             // cc.Debug.Log("GetString: IsContainsKey key=" + key);
@@ -164,8 +176,14 @@ var Language = cc.Class({
         }
         else {
             // cc.Debug.Log("GetString: IsContainsKey not key=" + key);
-            if (Language._common != null) {
-                str = Language._common.ltLocalization.GetText(key);
+            if (Language._appcommon != null) {
+                if (Language._appcommon.IsContainsKey(key)) {
+                    str = Language._appcommon.ltLocalization.GetText(key);
+                } else {
+                    if (Language._common != null) {
+                        str = Language._common.ltLocalization.GetText(key);
+                    }
+                }
             }
         }
         return str;
@@ -191,6 +209,7 @@ var Language = cc.Class({
 
 //单例对象 方法二
 Language._common = null;
+Language._appcommon = null;
 Language._main = null;
 Language.main = function () {
     if (!Language._main) {
@@ -208,6 +227,12 @@ Language.main = function () {
         fileName = cc.Common.RES_CONFIG_DATA_COMMON + "/language/language.csv";
         Language._common = new Language();
         Language._common.Init(fileName);
+
+        //appcommon
+        fileName = "AppCommon/language/language.csv";
+        Language._appcommon = new Language();
+        Language._appcommon.Init(fileName);
+
 
         //game
         fileName = cc.Common.GAME_RES_DIR + "/language/language.csv";

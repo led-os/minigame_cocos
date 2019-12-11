@@ -14,6 +14,15 @@ var UIGameFail = cc.Class({
         btnRetry: cc.UIButton,
     },
     onLoad: function () {
+
+        cc.ColorConfig.main().GetColor({
+            key: cc.GameRes.KEY_COLOR_GameWinTitle,
+            def: cc.Color.BLACK,
+            success: function (color) {
+                this.textTitle.color = color;
+            }.bind(this),
+        });
+
         var oft = 32;
         this.imageBg.UpdateImage({
             pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BoardPic,//IMAGE_HOME_NAME_BG
@@ -37,6 +46,8 @@ var UIGameFail = cc.Class({
             success: function () {
             }.bind(this),
         });
+
+        this.btnRetry.text = cc.Language.main().GetString("STR_GameFail_btnRestart");
     },
     LayOut() {
         this._super();
