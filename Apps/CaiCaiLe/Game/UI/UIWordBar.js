@@ -44,6 +44,7 @@ var UIWordBar = cc.Class({
     LayOut() {
         this._super();
         this.scheduleOnce(this.LayOutInternal, 0.25);
+        // this.LayOutInternal();
     },
     LayOutInternal() {
         this._super();

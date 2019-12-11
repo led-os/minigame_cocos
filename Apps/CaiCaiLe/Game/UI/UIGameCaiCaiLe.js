@@ -57,6 +57,13 @@ var UIGameCaiCaiLe = cc.Class({
         // this.ShowGameWinAlert();
     },
 
+    onDestroy: function () {
+        if (this.uiWordContent != null) {
+            // this.uiWordContent.node.destroy();
+        }
+    },
+
+
     LoadUIPrefab: function () {
         var info = cc.GameLevelParse.main().GetLevelItemInfoCur();
         var idx = cc.LevelManager.main().placeLevel;
@@ -100,9 +107,10 @@ var UIGameCaiCaiLe = cc.Class({
         var node = cc.instantiate(this.uiWordContentPrefab);
         this.uiWordContent = node.getComponent(UIWordContentBase);
         node.parent = this.node;
+
         this.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
 
-        //  this.OnGameWinFinish(this.uiWordBar, false);
+        // this.OnGameWinFinish(this.uiWordBar, false);
     },
 
     CreateGame: function () {
@@ -135,9 +143,9 @@ var UIGameCaiCaiLe = cc.Class({
             }
         }
 
-        if (this.uiWordBar != null) {
-            this.uiWordBar.LayOut();
-        }
+        // if (this.uiWordBar != null) {
+        //       this.uiWordBar.LayOut();
+        // }
 
     },
 
@@ -147,7 +155,9 @@ var UIGameCaiCaiLe = cc.Class({
         this.UpdateTitle();
         //this.game.LoadGame();
         this.UpdateWord();
-        this.uiWordContent.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
+        if(this.uiWordContent!=null){
+            this.uiWordContent.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
+        }
         this.LayOut();
 
     },
@@ -192,13 +202,13 @@ var UIGameCaiCaiLe = cc.Class({
         var strPrefab = "";
         //show game win
         if (isFail) {
-
+            strPrefab = "App/Prefab/Game/UIGameFail";
 
         }
         else {
             cc.Debug.Log("caicaile OnGameWin");
             // LevelManager.main.gameLevelFinish = LevelManager.main.gameLevel;
-            this.OnGameWinBase();
+            //   this.OnGameWinBase();
             // this.ShowGameWinAlert();
             // if (gameBase != null) {
             //     Debug.Log("caicaile OnGameWin GAME_STATUS_FINISH+info.id=" + info.id);
@@ -211,14 +221,15 @@ var UIGameCaiCaiLe = cc.Class({
             else {
                 //PopUpManager.main.Show<UIGameWin>("App/Prefab/Game/UIGameWin");
             }
+            // if (cc.Config.main().appKeyName == cc.GameRes.GAME_IDIOM) 
+            {
+                strPrefab = "App/Prefab/Game/UIGameWinIdiom";
+            }
 
 
         }
 
-        // if (cc.Config.main().appKeyName == cc.GameRes.GAME_IDIOM) 
-        {
-            strPrefab = "App/Prefab/Game/UIGameWinIdiom";
-        }
+
         cc.PopUpManager.main().Show({
             prefab: strPrefab,
             open: function (ui) {
@@ -227,7 +238,6 @@ var UIGameCaiCaiLe = cc.Class({
             close: function (ui) {
             }.bind(this),
         });
-
 
     },
 

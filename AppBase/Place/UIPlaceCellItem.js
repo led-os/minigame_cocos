@@ -73,6 +73,9 @@ cc.Class({
     },
 
     clicked: function () {
+
+    },
+    OnClickItem: function () {
         cc.Debug.Log('下标:' + this.textTitle.string);
         // if(this.onClickCallBack!=null)
         // {
@@ -85,6 +88,7 @@ cc.Class({
             cc.Debug.Log('goto GuankaViewController');
             navi.Push(GuankaViewController.main());
         }
-    }
+    },
+
 });
 

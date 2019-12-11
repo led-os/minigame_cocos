@@ -96,6 +96,7 @@ var GameViewController = cc.Class({
     ViewDidUnLoad: function () {
         cc.Debug.Log("GameViewController ViewDidUnLoad");
         this._super();
+        this.ui.node.destroy();
         this.ui = null;
 
     },

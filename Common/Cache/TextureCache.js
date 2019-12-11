@@ -46,13 +46,15 @@ var TextureCache = cc.Class({
         }
         this.Init();
         //cc.Debug.Log("TextureCache  Load  key="+key);
-        if (this.dicItem.Contains(key) == true) {
-            ret = this.dicItem.Get(key);
-            cc.Debug.Log("TextureCache  load  from cache");
-            if (completeCallback) {
-                completeCallback(null, ret);
-            }
-        } else {
+        // if (this.dicItem.Contains(key) == true) {
+        //     ret = this.dicItem.Get(key);
+        //     cc.Debug.Log("TextureCache  load  from cache");
+        //     if (completeCallback) {
+        //         completeCallback(null, ret);
+        //     }
+        // } else 
+
+        {
             // //加载图片： https://www.jianshu.com/p/8bd1eb0240d7
             // cc.loader.loadRes(filepath, cc.Texture2D, function (err, tex) {
             //     //cc.url.raw('res/textures/content.png')
@@ -144,7 +146,7 @@ var TextureCache = cc.Class({
                     return ret;
                 }
                 if (tex != null) {
-                    this.dicItem.Add(key, tex);
+                    // this.dicItem.Add(key, tex);
                 }
                 if (completeCallback) {
                     completeCallback(err, tex);

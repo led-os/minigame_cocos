@@ -13,19 +13,11 @@ var AppRes = cc.Class({
         GOLD_GUANKA_STEP: 4,
 
         //key
-        KEY_LANGUAGE: "KEY_LANGUAGE",
-        KEY_FIRST_RUN: "KEY_FIRST_RUN",
-        KEY_BACKGROUND_MUSIC: "KEY_BACKGROUND_MUSIC",
-        KEY_BTN_SOUND: "KEY_BTN_SOUND",
-        KEY_LANGUAGE: "STR_KEY_LANGUAGE",
-        KEY_COMMENT_VERSION: "key_comment_",
-        KEY_COMMENT_LAST_TIME: "key_comment_last_time",
-        KEY_USER_GUIDE: "key_comment_user_guide_",
-        KEY_DOWNLOAD_CLOUNDRES: "KEY_DOWNLOAD_CLOUNDRES",
+     
         KEY_GAME_LOCK: "KEY_GAME_LOCK",
 
         //audio 
-        AUDIO_BG: "audio/Bg",
+        AUDIO_BG: "Bg",
         GUANKA_BG: "UI/Bg/GuankaBg.jpg",
         Game_BG: "UI/Bg/GameBg.jpg",
         PLACE_BG: "UI/Bg/PlaceBg.jpg",

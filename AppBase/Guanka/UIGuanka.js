@@ -10,7 +10,7 @@ cc.Class({
         tableView: cc.TableView,
         btnBack: {
             default: null,
-            type: cc.Button
+            type: cc.UIButton
         },
         textTitle: cc.Label,
         oneCellNum: 3,
@@ -18,7 +18,7 @@ cc.Class({
     },
 
     onLoad: function () {
-        this._super(); 
+        this._super();
 
         this.textTitle.string = cc.Language.main().GetString("STR_GUANKA");
         cc.LevelManager.main().StartParseGuanka(function () {
@@ -27,17 +27,16 @@ cc.Class({
         }.bind(this)
         );
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnBack,
-            bg: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
+        this.btnBack.UpdateImage({
+            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
             success: function () {
             }.bind(this),
         });
 
         // this.tableView.node.active = false;
         var ev = this.node.addComponent(cc.UITouchEvent);
-        var strbg = cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.GUANKA_BG;
+        var strbg = cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.GUANKA_BG;
         cc.TextureCache.main.Load(strbg, function (err, tex) {
             if (err) {
                 cc.Debug.Log(err.message || err);
@@ -64,7 +63,7 @@ cc.Class({
     },
 
     UpdateItem: function () {
-       // var game = GameViewController.main().gameBase;
+        // var game = GameViewController.main().gameBase;
         this.listItem = cc.GameLevelParse.main().listGuanka;
         cc.Debug.Log("UIGuanka::this.listItem=" + this.listItem.length);
         this.InitList();

@@ -8,10 +8,10 @@ var Type = cc.Enum({
 
 });
 
-var UITypeButton = cc.Class({
+var UIButton = cc.Class({
     extends: UIView,//cc.Component,
     editor: CC_EDITOR && {
-        menu: "UIKit/UIButton/UITypeButton",
+        menu: "UIKit/UIButton/UIButton",
         help: " ",
         // inspector: ' ',
     },
@@ -30,8 +30,18 @@ var UITypeButton = cc.Class({
             },
             set: function (value) {
                 this._type = value;
+                if (this.imageBg == null) {
+                    return;
+                }
+                if (this.textTitle == null) {
+                    return;
+                }
+                if (this.imageIcon == null) {
+                    return;
+                }
                 this.imageBg.node.active = true;
                 cc.log("this._type=" + this._type);
+
                 switch (this._type) {
                     case Type.IMAGE:
                         {
@@ -60,19 +70,20 @@ var UITypeButton = cc.Class({
 
 
     onLoad: function () {
-        //cc.Button
-        var btn = this.node.getComponent(cc.Button);
-        this.UnifyButtonSprite(btn);
+        this._super();
         this.type = this._type;
-
     },
-
 
     /*
             { 
                 bg: "",
                 icon:"",
                 def: "",
+                type:cc.Sprite.Type.SIMPLE,//SLICED
+                left:0,
+                right:0,
+                top:0,
+                bottom:0,
                 isUpdateSize:true,
                 success: function () {
                 },
@@ -85,7 +96,17 @@ var UITypeButton = cc.Class({
             sprite: this.imageBg,
             pic: obj.bg,
             def: obj.def,
-            success: obj.success,
+            type: obj.type,
+            left: obj.left,
+            right: obj.right,
+            top: obj.top,
+            bottom: obj.bottom,
+            success: function () {
+                this.LayOut();
+                if (obj.success != null) {
+                    obj.success();
+                }
+            }.bind(this),
             fail: obj.fail,
         };
         cc.TextureUtil.UpdateSpriteImage(objBg);
@@ -95,7 +116,12 @@ var UITypeButton = cc.Class({
                 sprite: this.imageIcon,
                 pic: obj.icon,
                 def: obj.def,
-                success: obj.success,
+                success: function () {
+                    this.LayOut();
+                    if (obj.success != null) {
+                        obj.success();
+                    }
+                }.bind(this),
                 fail: obj.fail,
             };
             cc.TextureUtil.UpdateSpriteImage(objIcon);
@@ -105,7 +131,7 @@ var UITypeButton = cc.Class({
 
 });
 
-cc.UITypeButton = module.export = UITypeButton;
+cc.UIButton = module.export = UIButton;
 
 
 

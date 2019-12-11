@@ -16,7 +16,7 @@ var MainViewController = cc.Class({
 
         var isShowClound = false;
         if (cc.Common.main().isWeiXin) {
-            var isDownload = cc.Common.GetBoolOfKey(cc.AppRes.KEY_DOWNLOAD_CLOUNDRES, false);
+            var isDownload = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_DOWNLOAD_CLOUNDRES, false);
             if (!isDownload) {
                 //第一次 下载资源
                 isShowClound = true;

@@ -10,11 +10,7 @@ var GameViewController = require("GameViewController");
 cc.Class({
     extends: UIHomeBase,
     properties: {
-        btnPlay: cc.UITypeButton,
-        btnBoard: {
-            default: null,
-            type: cc.Button
-        },
+        btnPlay: cc.UIButton,
 
         indexAction: 0,
         listBtns: {
@@ -30,8 +26,10 @@ cc.Class({
     onLoad: function () {
         this._super();
         var x, y, w, h;
+        if (this.uiHomeCenterBar != null) {
+            this.uiHomeCenterBar.node.active = false;
+        }
 
-        this.uiHomeCenterBar.node.active = false;
 
         this.btnPlay.UpdateImage({
             bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
@@ -39,10 +37,6 @@ cc.Class({
             success: function () {
             }.bind(this),
         });
-
-
-
-
 
     },
 
@@ -64,10 +58,10 @@ cc.Class({
                 // y = (y_top + y_bottom) / 2;
                 // this.layoutBtn.setPosition(x, y);
       */
-        var rctran = this.uiHomeSideBar.node.getComponent(cc.RectTransform);
+        //  var rctran = this.uiHomeSideBar.node.getComponent(cc.RectTransform);
         // rctran.width = 160;
         // rctran.height = 1024;
-        cc.Debug.Log("uiHomeSideBar 2 w=" + rctran.width + " h=" + rctran.height);
+        // cc.Debug.Log("uiHomeSideBar 2 w=" + rctran.width + " h=" + rctran.height);
         //  rctran.LayOut();
     },
 

@@ -47,10 +47,10 @@ var AnimateButton = cc.Class({
         }.bind(this))]);
         this.node.runAction(seq);
 
-        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BTN_SOUND, false);
+        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, false);
         if (ret) {
             //play sound click
-            cc.AudioPlay.main().PlayCloudAudio("BtnClick.wav");
+            cc.AudioPlay.main().PlayCloudAudio("BtnClick");
         }
 
     },

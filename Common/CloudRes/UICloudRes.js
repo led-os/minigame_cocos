@@ -57,7 +57,7 @@ var UICloudRes = cc.Class({
 
     },
     OnCloudResDidFinish: function () {
-        cc.Common.SetBoolOfKey(cc.AppRes.KEY_DOWNLOAD_CLOUNDRES, true);
+        cc.Common.SetBoolOfKey(cc.CommonRes.KEY_DOWNLOAD_CLOUNDRES, true);
         if (this.controller != null) {
             this.controller.Close();
         }

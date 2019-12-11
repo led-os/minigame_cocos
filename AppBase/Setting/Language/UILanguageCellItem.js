@@ -27,12 +27,13 @@ cc.Class({
         this.info = data.array[index];
         this.UpdateItem(this.info);
     },
-    clicked: function () {
+    
+    OnClickItem: function () {
         var uiViewParent = this.GetUIViewParent();// 
         var lan = cc.Language.main();
         cc.Debug.Log("language id= " + this.info.id);
         lan.SetLanguage(this.info.id);
-        cc.Common.SetItemOfKey(cc.AppRes.KEY_LANGUAGE, this.info.id);
+        cc.Common.SetItemOfKey(cc.CommonRes.KEY_LANGUAGE, this.info.id);
         this.target.OnClickBtnBack();
     },
     UpdateItem: function (info) {

@@ -23,7 +23,7 @@ var UISetting = cc.Class({
     properties: {
         btnBack: {
             default: null,
-            type: cc.Button
+            type: cc.UIButton
         },
         tableView: cc.TableView,
         textTitle: cc.Label,
@@ -43,8 +43,7 @@ var UISetting = cc.Class({
         this.node.setContentSize(this.node.parent.getContentSize());
 
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnBack,
+        this.btnBack.UpdateImage({
             bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
             icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
             success: function () {

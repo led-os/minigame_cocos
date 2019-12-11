@@ -43,13 +43,17 @@ cc.Class({
 
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageBg,
-            pic: cc.CloudRes.main().uiRootPath+ "/" + strPic,
+            pic: cc.CloudRes.main().uiRootPath + "/" + strPic,
             success: function () {
             }.bind(this),
         });
 
     },
     clicked: function clicked() {
+
+    },
+
+    OnClickItem: function () {
         this.target.GotoGame(this.index);
     },
 

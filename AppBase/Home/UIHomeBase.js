@@ -31,18 +31,19 @@ cc.Class({
         this._super();
         // this.node.setContentSize(Common.appSceneMain.sizeCanvas); 
         this.node.setContentSize(this.node.parent.getContentSize());
-        this.UnifyButtonSprite(this.btnFrendBoard);
         var x, y, w, h;
 
         var size = this.node.getContentSize();
-
+        if (this.textName == null) {
+            return;
+        }
         var name = cc.Language.main().GetString("APP_NAME");
         if (cc.Device.main.isLandscape) {
             name = cc.Language.main().GetString("APP_NAME_HD");
         }
         this.textName.text = name;
-        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
-        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);
+        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);
         cc.Debug.Log("KEY_BACKGROUND_MUSIC home=" + ret);
         if (ret) {
             if (cc.Config.main().APP_FOR_KIDS) {
@@ -53,7 +54,7 @@ cc.Class({
 
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageBg,
-            pic: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.HOME_BG,
+            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.HOME_BG,
             success: function () {
             }.bind(this),
         });
@@ -64,7 +65,7 @@ cc.Class({
         var oft = 50;
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageNameBg.image,
-            pic: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_HOME_NAME_BG,//IMAGE_HOME_NAME_BG
+            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_HOME_NAME_BG,//IMAGE_HOME_NAME_BG
             type: cc.Sprite.Type.SLICED,//SLICED
             left: oft,
             right: oft,
@@ -155,8 +156,8 @@ cc.Class({
         //     rctran.LayOut();
         // }
         //TextName
-        size = this.textName.node.getContentSize();
-        cc.Debug.Log("size TextName= " + size);
+        //   size = this.textName.node.getContentSize();
+        //  cc.Debug.Log("size TextName= " + size);
 
 
     },

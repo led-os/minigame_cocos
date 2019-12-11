@@ -73,15 +73,15 @@ cc.Class({
     },
 
     UpdateBtnMusic: function () {
-        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);
         cc.TextureUtil.UpdateButtonTexture(this.btnMusic, ret ? cc.AppRes.IMAGE_BtnMusicOn : cc.AppRes.IMAGE_BtnMusicOff, false);
     },
 
     OnClickBtnMusic: function (event, customEventData) {
-        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
+        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
         var v = !ret;
         cc.Debug.Log("UpdateBtnSwitch value=" + v);
-        cc.Common.SetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, v);
+        cc.Common.SetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, v);
         this.UpdateBtnMusic();
         if (v) {
             cc.AudioPlay.main().PlayBgMusic();

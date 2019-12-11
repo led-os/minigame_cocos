@@ -23,7 +23,7 @@ var UIGameWinIdiom = cc.Class({
 
         var oft = 32;
         this.imageBg.UpdateImage({
-            pic: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BoardPic,//IMAGE_HOME_NAME_BG
+            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BoardPic,//IMAGE_HOME_NAME_BG
             type: cc.Sprite.Type.SLICED,//SLICED
             left: oft,
             right: oft,
@@ -33,15 +33,22 @@ var UIGameWinIdiom = cc.Class({
             }.bind(this),
         });
 
+
+        oft = 20;
         this.btnNext.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_BG,
+            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_COMMON,
+            type: cc.Sprite.Type.SLICED,//SLICED
+            left: oft,
+            right: oft,
+            top: oft,
+            bottom: oft,
             success: function () {
             }.bind(this),
         });
 
         this.btnClose.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_ICON_CLOSE,
+            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_CLOSE,
             success: function () {
             }.bind(this),
         });

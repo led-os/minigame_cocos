@@ -31,7 +31,7 @@ var UIViewPop = cc.Class({
         //     DoClose();
         // }
 
-        cc.PopUpManager.main().ClosePopup(); 
+        cc.PopUpManager.main().ClosePopup();
         this.DoClose();
     },
 
@@ -54,6 +54,6 @@ var UIViewPop = cc.Class({
 
 });
 
-//cc.UIViewPop = module.export = UIViewPop;
+cc.UIViewPop = module.export = UIViewPop;
 
 

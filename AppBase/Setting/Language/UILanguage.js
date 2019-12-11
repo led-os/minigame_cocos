@@ -8,10 +8,7 @@ var AppRes = require("AppRes");
 cc.Class({
     extends: UIView,
     properties: {
-        btnBack: {
-            default: null,
-            type: cc.Button
-        },
+        btnBack: cc.UIButton,
         tableView: cc.TableView,
 
         imageBg: cc.Sprite,
@@ -29,14 +26,14 @@ cc.Class({
     onLoad: function () {
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
-        this.oneCellNum = 1; 
+        this.oneCellNum = 1;
         this.textTitle.string = cc.Language.main().GetString("STR_LANGUAGE");
         this.UpdateItem();
 
         var oft = 64;
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageBoard,
-            pic: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_Language_Bg,
+            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_Language_Bg,
             type: cc.Sprite.Type.SLICED,//SLICED
             left: oft,
             right: oft,
@@ -46,10 +43,9 @@ cc.Class({
             }.bind(this),
         });
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnBack,
-            bg: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_ICON_CLOSE,
+        this.btnBack.UpdateImage({
+            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_CLOSE,
             success: function () {
             }.bind(this),
         });

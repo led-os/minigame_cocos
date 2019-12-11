@@ -1,4 +1,6 @@
 ﻿//var http = require("http.js")
+//cocos 播放wav没有声音 统一MP3
+//在线格式转换 https://www.aconvert.com/cn/audio/wav-to-mp3/
 var AudioPlay = cc.Class({
     extends: cc.Object,
     statics: {
@@ -18,6 +20,8 @@ var AudioPlay = cc.Class({
         if (clip == null) {
             return;
         }
+
+        cc.Debug.Log(" audio filepath playEffect");
         cc.audioEngine.playEffect(clip, false);
     },
 
@@ -25,8 +29,10 @@ var AudioPlay = cc.Class({
         cc.AudioCache.main.Load(file, function (err, audioClip) {
             if (err) {
                 cc.Debug.Log(err.message || err);
+                cc.Debug.Log(" audio filepath PlayFile fail=" + err.message || err);
                 return ret;
             }
+            cc.Debug.Log(" audio filepath PlayFile ok");
             this.PlayAudioClip(audioClip);
         }.bind(this));
     },
@@ -87,15 +93,9 @@ var AudioPlay = cc.Class({
 
     //背景音乐
     PlayBgMusic: function () {
-        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);
         if (ret) {
-            // var dirRoot = cc.Common.CLOUD_RES_DIR;
-            // if (cc.Common.main().isWeiXin) {
-            //     dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
-            // }
-            var dirRoot = cc.CloudRes.main().rootPath;
-            var url = dirRoot + "/" + cc.AppRes.AUDIO_BG;
-
+            var url = cc.CloudRes.main().audioRootPath + "/" + cc.AppRes.AUDIO_BG;
             if (cc.Common.main().isWeiXin) {
                 this.PlayUrl(url + ".mp3");
                 return;

@@ -6,9 +6,9 @@ cc.Class({
         indexAction: 0,
         timeAction: 0.3,
         isActionFinish: false,
-        btnLearn: cc.UITypeButton,
-        btnAdVideo: cc.UITypeButton,
-        btnAddLove: cc.UITypeButton,
+        btnLearn: cc.UIButton,
+        btnAdVideo: cc.UIButton,
+        btnAddLove: cc.UIButton,
 
     },
     onLoad: function () {

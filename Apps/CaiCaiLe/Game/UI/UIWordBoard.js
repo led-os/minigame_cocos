@@ -15,7 +15,7 @@ var UIWordBoard = cc.Class({
 
         row: 4,
         col: 6,
-        imageBg: cc.Sprite,
+        imageBg: cc.UIImage,
 
         /* 
         { 
@@ -27,25 +27,35 @@ var UIWordBoard = cc.Class({
     },
 
     onLoad: function () {
-        this.InitItem();
+        // this.InitItem();//crash
+        var oft = 32;
+        this.imageBg.UpdateImage({
+            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BoardPic,//IMAGE_HOME_NAME_BG
+            type: cc.Sprite.Type.SLICED,//SLICED
+            left: oft,
+            right: oft,
+            top: oft,
+            bottom: oft,
+            success: function () {
+            }.bind(this),
+        });
     },
     start: function () {
         this.LayOut();
     },
     update: function () {
-        //this.LayOut();
+        // this.LayOut();
     },
+
     LayOut() {
-        this.scheduleOnce(this.LayOutInternal, 0.25);
+        this._super();
+        this.scheduleOnce(this.LayOutInternal, 0.2);//0.5
+        // this.LayOutInternal();
     },
     LayOutInternal() {
-        {
-            var ly = this.node.getComponent(cc.LayOutGrid);
-            if (ly != null) {
-                ly.LayOut();
-            }
-        }
+        this._super();
     },
+
     GetItemCount() {
         var count = 0;
         if (this.listItem != null) {

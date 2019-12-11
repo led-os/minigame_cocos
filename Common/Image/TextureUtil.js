@@ -86,7 +86,7 @@ var TextureUtil = cc.Class({
                }
            */
         UpdateTypeButtonImage: function (obj) {
-            var typebtn = obj.btn.node.getComponent(cc.UITypeButton);
+            var typebtn = obj.btn.node.getComponent(cc.UIButton);
             var objBg = {
                 sprite: typebtn.imageBg,
                 pic: obj.bg,

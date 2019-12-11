@@ -9,7 +9,7 @@ cc.Class({
     properties: {
         imageBg: cc.Sprite,
         textTitle: cc.Label,
-        btnSwitch: cc.Button,
+        btnSwitch: cc.UIButton,
     },
 
     onLoad: function () {
@@ -33,8 +33,7 @@ cc.Class({
         this.UpdateItem(this.info);
         //KEY_BACKGROUND_MUSIC
     },
-
-    clicked: function () {
+    OnClickItem: function () {
         var uiViewParent = this.GetUIViewParent();//  
         cc.Debug.Log("tag = " + this.info.tag);
         switch (this.info.tag) {
@@ -78,7 +77,7 @@ cc.Class({
         this.btnSwitch.node.active = false;
         if ((info.tag == UISetting.TAG_SETTING_BACKGROUND_MUSIC) || (info.tag == UISetting.TAG_SETTING_BTN_SOUND)) {
             this.btnSwitch.node.active = true;
-            var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+            var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);
             this.UpdateBtnSwitch(ret);
         }
         this.UpdateImageBg(UISetting.listImage[this.index % 3]);
@@ -88,8 +87,7 @@ cc.Class({
         if (isSel) {
             strImage = cc.AppRes.IMAGE_BTN_SWITCH_SEL;
         }
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnSwitch,
+        this.btnSwitch.UpdateImage({ 
             bg: cc.CloudRes.main().uiRootPath + "/" + strImage,
             success: function () {
             }.bind(this),
@@ -136,7 +134,7 @@ cc.Class({
 
     OnClickBtnSwitch: function (event, customEventData) {
         if (this.info.tag == UISetting.TAG_SETTING_BACKGROUND_MUSIC) {
-            var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
+            var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
             cc.Debug.Log("UpdateBtnSwitch read ret=" + ret);
             var v = !ret;
             // var v = true;
@@ -148,7 +146,7 @@ cc.Class({
 
             cc.Debug.Log("UpdateBtnSwitch value=" + v);
 
-            cc.Common.SetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, v);
+            cc.Common.SetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, v);
 
             this.UpdateBtnSwitch(v);
             if (v) {
@@ -160,9 +158,9 @@ cc.Class({
         }
 
         if (this.info.tag == UISetting.TAG_SETTING_BTN_SOUND) {
-            var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BTN_SOUND, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
+            var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
             var v = !ret;
-            cc.Common.SetBoolOfKey(cc.AppRes.KEY_BTN_SOUND, v);
+            cc.Common.SetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, v);
             this.UpdateBtnSwitch(v);
         }
 

@@ -14,13 +14,13 @@ var LayOutVertical = cc.Class({
 
     },
     onLoad: function () {
-        this.col = 1;
-        this.row = cc.LayoutUtil.main().GetChildCount(this.node);
+        this.col = 1; 
         this.LayOut();
 
     },
+ 
     LayOut: function () {
-        this.row = cc.LayoutUtil.main().GetChildCount(this.node);
+        this.row = cc.LayoutUtil.main().GetChildCount(this.node,false);
         this._super();
     },
 

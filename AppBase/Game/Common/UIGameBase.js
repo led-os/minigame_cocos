@@ -19,14 +19,8 @@ var UIGameBase = cc.Class({
             default: [],
             type: cc.LoadItemInfo
         },
-        btnMusic: {
-            default: null,
-            type: cc.UITypeButton
-        },
-        btnBack: {
-            default: null,
-            type: cc.UITypeButton
-        },
+        btnMusic: cc.UIButton,
+        btnBack: cc.UIButton,
         imageBg: cc.Sprite,
         textTitle: cc.UIText,
         callbackGuankaFinish: null,
@@ -39,14 +33,15 @@ var UIGameBase = cc.Class({
         this.node.setContentSize(this.node.parent.getContentSize());
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageBg,
-            pic: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.Game_BG,
+            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.Game_BG,
             success: function () {
             }.bind(this),
         });
 
-        this.btnBack.UpdateImage({ 
-            bg: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
+
+        this.btnBack.UpdateImage({
+            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
             success: function () {
             }.bind(this),
         });
@@ -77,23 +72,23 @@ var UIGameBase = cc.Class({
         }
     },
     UpdateBtnMusic: function () {
-        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);
         var bg = ret ? cc.AppRes.IMAGE_BTN_BG : cc.AppRes.IMAGE_BTN_BG_GREY;
 
         this.btnMusic.UpdateImage({
             bg: cc.CloudRes.main().uiRootPath + "/" + bg,
             icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_MUSIC,
-            success: function () {
+            success: function () { 
             }.bind(this),
         });
 
     },
 
     OnClickBtnMusic: function (event, customEventData) {
-        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
+        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
         var v = !ret;
         cc.Debug.Log("UpdateBtnSwitch value=" + v);
-        cc.Common.SetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, v);
+        cc.Common.SetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, v);
         this.UpdateBtnMusic();
         if (v) {
             cc.AudioPlay.main().PlayBgMusic();
@@ -136,7 +131,7 @@ var UIGameBase = cc.Class({
     },
 
     ShowUserGuide: function () {
-        var key = cc.AppRes.KEY_USER_GUIDE + cc.Common.main().GetAppVersion();
+        var key = cc.CommonRes.KEY_USER_GUIDE + cc.Common.main().GetAppVersion();
         var isshowplay = cc.Common.GetBoolOfKey(key, false);
         if (isshowplay == true) {
             return;

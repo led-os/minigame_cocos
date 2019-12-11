@@ -10,14 +10,14 @@ cc.Class({
         indexAction: 0,
         timeAction: 0.3,
         isActionFinish: false,
-        btnSetting: cc.UITypeButton,
-        btnMore: cc.UITypeButton,
-        btnShare: cc.UITypeButton,
-        btnNoAd: cc.UITypeButton,
+        btnSetting: cc.UIButton,
+        btnMore: cc.UIButton,
+        btnShare: cc.UIButton,
+        btnNoAd: cc.UIButton,
 
-        btnRestoreIAP: cc.UITypeButton,
-        btnMusic: cc.UITypeButton,
-        btnSound: cc.UITypeButton,
+        btnRestoreIAP: cc.UIButton,
+        btnMusic: cc.UIButton,
+        btnSound: cc.UIButton,
     },
     onLoad: function () {
         this._super();
@@ -83,7 +83,7 @@ cc.Class({
     },
 
     UpdateBtnMusic: function () {
-        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);
         var bg = ret ? cc.AppRes.IMAGE_BTN_BG : cc.AppRes.IMAGE_BTN_BG_GREY;
 
         this.btnMusic.UpdateImage({
@@ -97,7 +97,7 @@ cc.Class({
 
 
     UpdateBtnSound: function () {
-        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BTN_SOUND, false);
+        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, false);
         var bg = ret ? cc.AppRes.IMAGE_BTN_BG : cc.AppRes.IMAGE_BTN_BG_GREY;
 
         this.btnSound.UpdateImage({
@@ -110,10 +110,10 @@ cc.Class({
     },
 
     OnClickBtnMusic: function (event, customEventData) {
-        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
+        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
         var v = !ret;
         cc.Debug.Log("UpdateBtnSwitch value=" + v);
-        cc.Common.SetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, v);
+        cc.Common.SetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, v);
         this.UpdateBtnMusic();
         if (v) {
             cc.AudioPlay.main().PlayBgMusic();
@@ -124,9 +124,9 @@ cc.Class({
     },
 
     OnClickBtnSound: function (event, customEventData) {
-        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BTN_SOUND, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
+        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
         var v = !ret;
-        cc.Common.SetBoolOfKey(cc.AppRes.KEY_BTN_SOUND, v);
+        cc.Common.SetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, v);
         this.UpdateBtnSound();
     },
 

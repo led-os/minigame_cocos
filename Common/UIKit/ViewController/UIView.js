@@ -49,22 +49,30 @@ cc.Class({
         this.LayOutInternal();
     },
 
-    LayOutInternal() {
-        var children = this.node._children;
-        for (var i = 0; i < children.length; i++) {
-            var child = children[i];
-            var list = child.getComponents(cc.LayOutBase);
+    LayOutNode(node) {
+        {
+            var list = node.getComponents(cc.LayOutBase);
             for (let ly of list) {
                 if (ly) {
                     ly.LayOut();
                 }
             }
-
-
-            var rctran = child.getComponent(cc.RectTransform);
+            var rctran = node.getComponent(cc.RectTransform);
             if (rctran) {
                 rctran.LayOut();
             }
+        }
+    },
+
+    LayOutInternal() {
+        //self 
+        this.LayOutNode(this.node);
+
+        //child
+        var children = this.node._children;
+        for (var i = 0; i < children.length; i++) {
+            var child = children[i];
+            this.LayOutNode(child);
         }
     },
 

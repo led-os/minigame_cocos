@@ -8,7 +8,7 @@ cc.Class({
         tableView: cc.TableView,
         btnBack: {
             default: null,
-            type: cc.Button
+            type: cc.UIButton
         },
         textTitle: cc.Label,
         oneCellNum: 4,
@@ -18,10 +18,9 @@ cc.Class({
     onLoad: function () {
         this._super(); 
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnBack,
-            bg: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
+        this.btnBack.UpdateImage({
+            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
             success: function () {
             }.bind(this),
         });
