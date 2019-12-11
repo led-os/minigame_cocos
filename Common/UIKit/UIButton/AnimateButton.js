@@ -36,16 +36,22 @@ var AnimateButton = cc.Class({
 
     OnClickItem: function (event, customEventData) {
         cc.Debug.Log("AnimateButton OnClickItem");
-        var duration = 0.1;
+        var duration = 0.2;
 
-        var actionTo1 = cc.scaleTo(duration, 1.2);
-        var actionTo2 = cc.scaleTo(duration, 1);
+        var actionTo1 = cc.scaleTo(duration / 2, 1.2);
+        var actionTo2 = cc.scaleTo(duration / 2, 1);
         //delay延时
         var time = cc.delayTime(0.01);
         var seq = cc.sequence([time, actionTo1, actionTo2, cc.callFunc(function () {
             this.DoClickItem(event, customEventData);
         }.bind(this))]);
         this.node.runAction(seq);
+
+        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BTN_SOUND, false);
+        if (ret) {
+            //play sound click
+            cc.AudioPlay.main().PlayCloudAudio("BtnClick.wav");
+        }
 
     },
 

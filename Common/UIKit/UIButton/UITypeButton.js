@@ -31,7 +31,7 @@ var UITypeButton = cc.Class({
             set: function (value) {
                 this._type = value;
                 this.imageBg.node.active = true;
-                cc.log("this._type="+this._type);
+                cc.log("this._type=" + this._type);
                 switch (this._type) {
                     case Type.IMAGE:
                         {
@@ -53,7 +53,7 @@ var UITypeButton = cc.Class({
                         }
                         break;
 
-                } 
+                }
             },
         },
     },
@@ -64,14 +64,43 @@ var UITypeButton = cc.Class({
         var btn = this.node.getComponent(cc.Button);
         this.UnifyButtonSprite(btn);
         this.type = this._type;
-     
-        this.Init();
-    },
-
-    Init: function () {
 
     },
 
+
+    /*
+            { 
+                bg: "",
+                icon:"",
+                def: "",
+                isUpdateSize:true,
+                success: function () {
+                },
+                fail: function () {
+                }, 
+            }
+        */
+    UpdateImage: function (obj) {
+        var objBg = {
+            sprite: this.imageBg,
+            pic: obj.bg,
+            def: obj.def,
+            success: obj.success,
+            fail: obj.fail,
+        };
+        cc.TextureUtil.UpdateSpriteImage(objBg);
+
+        if (obj.icon) {
+            var objIcon = {
+                sprite: this.imageIcon,
+                pic: obj.icon,
+                def: obj.def,
+                success: obj.success,
+                fail: obj.fail,
+            };
+            cc.TextureUtil.UpdateSpriteImage(objIcon);
+        }
+    },
 
 
 });

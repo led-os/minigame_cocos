@@ -13,9 +13,10 @@ var UISetting = cc.Class({
         TAG_SETTING_VERSION: 1,
         TAG_SETTING_LANGUAGE: 2,
         TAG_SETTING_BACKGROUND_MUSIC: 3,
-        TAG_SETTING_NOAD: 4,
-        TAG_SETTING_RESTORE_IAP: 5,
-        TAG_SETTING_LAST: 6,
+        TAG_SETTING_BTN_SOUND: 4,
+        TAG_SETTING_NOAD: 5,
+        TAG_SETTING_RESTORE_IAP: 6,
+        TAG_SETTING_LAST: 7,
 
         listImage: [cc.AppRes.IMAGE_CELL_BG_BLUE, cc.AppRes.IMAGE_CELL_BG_ORINGE, cc.AppRes.IMAGE_CELL_BG_YELLOW],
     },
@@ -44,8 +45,8 @@ var UISetting = cc.Class({
 
         cc.TextureUtil.UpdateTypeButtonImage({
             btn: this.btnBack,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
+            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
             success: function () {
             }.bind(this),
         });
@@ -56,7 +57,7 @@ var UISetting = cc.Class({
 
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageBg,
-            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.SETTING_BG,
+            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.SETTING_BG,
             success: function () {
             }.bind(this),
         });
@@ -97,6 +98,13 @@ var UISetting = cc.Class({
             var info = new cc.ItemInfo();
             info.title = cc.Language.main().GetString("STR_SETTING_BACKGROUND_MUSIC");
             info.tag = UISetting.TAG_SETTING_BACKGROUND_MUSIC;
+            this.listItem.push(info);
+        }
+
+        {
+            var info = new cc.ItemInfo();
+            info.title = cc.Language.main().GetString("STR_SETTING_BTN_SOUND");
+            info.tag = UISetting.TAG_SETTING_BTN_SOUND;
             this.listItem.push(info);
         }
 

@@ -62,7 +62,7 @@ cc.Class({
         var oft = 20;
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageBg,
-            pic: cc.CloudRes.main().rootPath + "/" + pic,
+            pic: cc.CloudRes.main().uiRootPath+ "/" + pic,
             type: cc.Sprite.Type.SLICED,//SLICED
             left: oft,
             right: oft,

@@ -28,7 +28,7 @@ var UIWordItem = cc.Class({
 
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageBg,
-            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_WORD_BG,
+            pic: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_WORD_BG,
             success: function () {
             }.bind(this),
         });

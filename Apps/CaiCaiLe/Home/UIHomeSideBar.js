@@ -10,77 +10,53 @@ cc.Class({
         indexAction: 0,
         timeAction: 0.3,
         isActionFinish: false,
-        btnSetting: cc.Button,
-        btnMore: cc.Button,
-        btnShare: cc.Button,
-        btnNoAd: cc.Button,
+        btnSetting: cc.UITypeButton,
+        btnMore: cc.UITypeButton,
+        btnShare: cc.UITypeButton,
+        btnNoAd: cc.UITypeButton,
 
-        btnRestoreIAP: cc.Button,
-        btnMusic: cc.Button,
-        btnSound: cc.Button,
+        btnRestoreIAP: cc.UITypeButton,
+        btnMusic: cc.UITypeButton,
+        btnSound: cc.UITypeButton,
     },
     onLoad: function () {
         this._super();
         var x, y, w, h;
+        this.btnMore.node.active = false;
+        this.btnNoAd.node.active = false;
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnSetting,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_SETTING,
+        this.btnSetting.UpdateImage({
+            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_SETTING,
             success: function () {
             }.bind(this),
         });
 
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnSetting,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_SETTING,
+        this.btnMore.UpdateImage({
+            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_MORE,
             success: function () {
             }.bind(this),
         });
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnMore,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_MORE,
+        this.btnShare.UpdateImage({
+            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_SHARE,
             success: function () {
             }.bind(this),
         });
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnShare,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_SHARE,
-            success: function () {
-            }.bind(this),
-        });
-
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnNoAd,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_NOAD,
+        this.btnNoAd.UpdateImage({
+            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_NOAD,
             success: function () {
             }.bind(this),
         });
 
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnMusic,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_MUSIC,
-            success: function () {
-            }.bind(this),
-        });
-
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnSound,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_SOUND,
-            success: function () {
-            }.bind(this),
-        });
-
+        this.UpdateBtnMusic();
+        this.UpdateBtnSound();
 
 
         this.LayOut();
@@ -108,16 +84,29 @@ cc.Class({
 
     UpdateBtnMusic: function () {
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
+        var bg = ret ? cc.AppRes.IMAGE_BTN_BG : cc.AppRes.IMAGE_BTN_BG_GREY;
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnMusic,
-            bg: cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.AppRes.IMAGE_BTN_ICON_MUSIC,
+        this.btnMusic.UpdateImage({
+            bg: cc.CloudRes.main().uiRootPath + "/" + bg,
+            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_MUSIC,
             success: function () {
             }.bind(this),
         });
 
-        // cc.TextureUtil.UpdateButtonTexture(this.btnMusic, ret ? cc.AppRes.IMAGE_BtnMusicOn : cc.AppRes.IMAGE_BtnMusicOff, false);
+    },
+
+
+    UpdateBtnSound: function () {
+        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BTN_SOUND, false);
+        var bg = ret ? cc.AppRes.IMAGE_BTN_BG : cc.AppRes.IMAGE_BTN_BG_GREY;
+
+        this.btnSound.UpdateImage({
+            bg: cc.CloudRes.main().uiRootPath + "/" + bg,
+            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_SOUND,
+            success: function () {
+            }.bind(this),
+        });
+
     },
 
     OnClickBtnMusic: function (event, customEventData) {
@@ -135,6 +124,10 @@ cc.Class({
     },
 
     OnClickBtnSound: function (event, customEventData) {
+        var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BTN_SOUND, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
+        var v = !ret;
+        cc.Common.SetBoolOfKey(cc.AppRes.KEY_BTN_SOUND, v);
+        this.UpdateBtnSound();
     },
 
     OnClickBtnNoAd: function (event, customEventData) {

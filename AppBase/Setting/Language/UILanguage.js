@@ -36,7 +36,7 @@ cc.Class({
         var oft = 64;
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageBoard,
-            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_Language_Bg,
+            pic: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_Language_Bg,
             type: cc.Sprite.Type.SLICED,//SLICED
             left: oft,
             right: oft,
@@ -48,8 +48,8 @@ cc.Class({
 
         cc.TextureUtil.UpdateTypeButtonImage({
             btn: this.btnBack,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_CLOSE,
+            bg: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_ICON_CLOSE,
             success: function () {
             }.bind(this),
         });

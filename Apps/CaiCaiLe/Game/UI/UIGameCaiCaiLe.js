@@ -102,7 +102,7 @@ var UIGameCaiCaiLe = cc.Class({
         node.parent = this.node;
         this.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
 
-        this.OnGameWinFinish(this.uiWordBar, false);
+        //  this.OnGameWinFinish(this.uiWordBar, false);
     },
 
     CreateGame: function () {
@@ -135,7 +135,9 @@ var UIGameCaiCaiLe = cc.Class({
             }
         }
 
-
+        if (this.uiWordBar != null) {
+            this.uiWordBar.LayOut();
+        }
 
     },
 

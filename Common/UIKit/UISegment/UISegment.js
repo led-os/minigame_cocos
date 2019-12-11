@@ -154,7 +154,7 @@ var UISegment = cc.Class({
     },
 
     UpdateList() {
-        this.Select(0);
+        this.Select(0,true);
         //numRows = totalItem; 
     },
     GetItem(idx) {

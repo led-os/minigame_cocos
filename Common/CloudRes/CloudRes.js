@@ -13,6 +13,19 @@ var CloudRes = cc.Class({
             }
         },
 
+        uiRootPath: {
+            get: function () {
+                var ret = this.rootPath;
+                return ret;
+            }
+        },
+
+        audioRootPath: {
+            get: function () {
+                var ret = this.rootPath + "/audio";
+                return ret;
+            }
+        },
     },
 
 

@@ -108,8 +108,8 @@ var AppSceneBase = cc.Class({
             // this.sizeCanvas = cc.size(0, 0);
             // this.sizeCanvas.height = size.height;
             // cc.Debug.Log("canvasMain size=" + size);
-             let screenSize = cc.view.getVisibleSize();//屏幕分辨率
-             cc.Debug.Log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
+            let screenSize = cc.view.getVisibleSize();//屏幕分辨率
+            cc.Debug.Log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
 
             // this.sizeCanvas.width = screenSize.width * this.sizeCanvas.height / screenSize.height;
             // cc.Debug.Log("sizeCanvas size=" + this.sizeCanvas);
@@ -182,6 +182,8 @@ var AppSceneBase = cc.Class({
                 cc.Common.SetItemOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, true);
                 var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
                 cc.Debug.Log("KEY_BACKGROUND_MUSIC=" + ret);
+
+                cc.Common.SetItemOfKey(cc.AppRes.KEY_BTN_SOUND, true);
             }
 
             var lan = cc.Language.main();

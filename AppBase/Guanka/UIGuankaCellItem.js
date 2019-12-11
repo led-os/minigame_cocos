@@ -43,7 +43,7 @@ cc.Class({
 
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageBg,
-            pic: cc.CloudRes.main().rootPath + "/" + strPic,
+            pic: cc.CloudRes.main().uiRootPath+ "/" + strPic,
             success: function () {
             }.bind(this),
         });

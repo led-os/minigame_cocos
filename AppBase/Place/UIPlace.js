@@ -20,8 +20,8 @@ cc.Class({
 
         cc.TextureUtil.UpdateTypeButtonImage({
             btn: this.btnBack,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
+            bg: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
             success: function () {
             }.bind(this),
         });
@@ -31,7 +31,7 @@ cc.Class({
             this.UpdateItem();
         }.bind(this)
         );
-        var strbg = cc.CloudRes.main().rootPath + "/" + cc.AppRes.PLACE_BG; 
+        var strbg = cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.PLACE_BG; 
         cc.TextureCache.main.Load(strbg, function (err, tex) {
             if (err) { 
                 cc.Debug.Log(err.message || err);

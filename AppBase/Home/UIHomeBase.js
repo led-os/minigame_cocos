@@ -53,7 +53,7 @@ cc.Class({
 
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageBg,
-            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.HOME_BG,
+            pic: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.HOME_BG,
             success: function () {
             }.bind(this),
         });
@@ -64,7 +64,7 @@ cc.Class({
         var oft = 50;
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageNameBg.image,
-            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_HOME_NAME_BG,//IMAGE_HOME_NAME_BG
+            pic: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_HOME_NAME_BG,//IMAGE_HOME_NAME_BG
             type: cc.Sprite.Type.SLICED,//SLICED
             left: oft,
             right: oft,

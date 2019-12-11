@@ -21,11 +21,11 @@ var UIGameBase = cc.Class({
         },
         btnMusic: {
             default: null,
-            type: cc.Button
+            type: cc.UITypeButton
         },
         btnBack: {
             default: null,
-            type: cc.Button
+            type: cc.UITypeButton
         },
         imageBg: cc.Sprite,
         textTitle: cc.UIText,
@@ -39,15 +39,14 @@ var UIGameBase = cc.Class({
         this.node.setContentSize(this.node.parent.getContentSize());
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageBg,
-            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.Game_BG,
+            pic: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.Game_BG,
             success: function () {
             }.bind(this),
         });
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnBack,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
+        this.btnBack.UpdateImage({ 
+            bg: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
             success: function () {
             }.bind(this),
         });
@@ -77,24 +76,18 @@ var UIGameBase = cc.Class({
             }
         }
     },
-
     UpdateBtnMusic: function () {
-        if (this.btnMusic == null) {
-            return;
-        }
-
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
         var bg = ret ? cc.AppRes.IMAGE_BTN_BG : cc.AppRes.IMAGE_BTN_BG_GREY;
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnMusic,
-            bg: cc.CloudRes.main().rootPath + "/" + bg,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_MUSIC,
+
+        this.btnMusic.UpdateImage({
+            bg: cc.CloudRes.main().uiRootPath + "/" + bg,
+            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_MUSIC,
             success: function () {
             }.bind(this),
         });
 
     },
-
 
     OnClickBtnMusic: function (event, customEventData) {
         var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);

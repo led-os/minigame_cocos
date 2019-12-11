@@ -49,7 +49,7 @@ var UIWordImageText = cc.Class({
         var oft = 32;
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imagePicBoard,
-            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BoardPic,//IMAGE_HOME_NAME_BG
+            pic: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BoardPic,//IMAGE_HOME_NAME_BG
             type: cc.Sprite.Type.SLICED,//SLICED
             left: oft,
             right: oft,

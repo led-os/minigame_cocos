@@ -32,9 +32,14 @@ var GameLevelParse = cc.Class({
             var info = new cc.CaiCaiLeItemInfo();
             var item = items[i];
             info.id = item.id;
+            info.title = item.title;
+            info.pronunciation = item.pronunciation;
+            info.translation = item.translation;
+            info.album = item.album;
+
             var dirRoot = cc.CloudRes.main().rootPath;
             var picdir = dirRoot + "/image/" + strPlace;
-            info.pic = picdir + "/" + info.id + ".png";
+            info.pic = picdir + "/" + info.title + ".png";
 
             //歇后语
             var key = "xiehouyu";
@@ -73,7 +78,7 @@ var GameLevelParse = cc.Class({
     },
 
     StartParseWord3500() {
-        var filepath = cc.CloudRes.main().rootPath + "/words_3500.json"; 
+        var filepath = cc.CloudRes.main().rootPath + "/words_3500.json";
         if (cc.Common.main().isWeiXin) {
             // 加载json文件
             cc.loader.load({ url: filepath, type: "json" }, function (err, rootJson) {

@@ -33,7 +33,7 @@ var AudioPlay = cc.Class({
 
 
     PlayCloudAudio: function (file) {
-        var filepath = cc.CloudRes.main().rootPath + "/" + file;
+        var filepath = cc.CloudRes.main().audioRootPath + "/" + file;
         if (cc.Common.main().isWeiXin) {
             cc.AudioPlay.main().PlayUrl(filepath);
         } else {

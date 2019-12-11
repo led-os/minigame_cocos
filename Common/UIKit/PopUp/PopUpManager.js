@@ -8,6 +8,8 @@ var PopUpManager = cc.Class({
             default: [],
             type: cc.UIViewPop
         },
+        nodePannel: cc.Node,
+        objPop: null,
     },
 
     /*
@@ -21,23 +23,47 @@ var PopUpManager = cc.Class({
     */
 
     Show(obj) {
-        cc.PrefabCache.main.Load(obj.prefab, function (err, prefab) {
+        this.objPop = obj;
+        this.LoadBg();
+    },
+
+
+    LoadBg() {
+        var strPrefab = "Common/Prefab/UIKit/UIPopUp/PopUpBgPannel";
+        cc.PrefabCache.main.Load(strPrefab, function (err, prefab) {
+            if (err) {
+                cc.Debug.Log("PopUpManager  LoadBg err=" + err.message || err);
+                return;
+            }
+            this.LoadBgInternal(prefab);
+        }.bind(this)
+        );
+    },
+    LoadBgInternal(prefab) {
+        var nodeRoot = cc.Common.appSceneMain.rootNode;
+        var node = cc.instantiate(prefab);
+        // var panel = new cc.Node("Panel");
+        node.setParent(nodeRoot);
+        node.setContentSize(cc.Common.appSceneMain.sizeCanvas);
+        node.color =  new cc.Color(52, 52, 52,50);
+        //拦截点击
+        //  panel.addComponent(cc.BlockInputEvents);
+        this.nodePannel = node;
+
+
+        cc.PrefabCache.main.Load(this.objPop.prefab, function (err, prefab) {
             if (err) {
                 cc.Debug.Log("PopUpManager err=" + err.message || err);
                 return;
             }
-            this.OpenPopup(obj, prefab);
+            this.OpenPopup(prefab);
         }.bind(this)
         );
     },
 
-    OpenPopup(obj, prefab) {
+    OpenPopup(prefab) {
         cc.Debug.Log("OpenPopup");
         var nodeRoot = cc.Common.appSceneMain.rootNode;
-        var panel = new cc.Node("Panel");
-        panel.setParent(nodeRoot);
-        panel.setContentSize(cc.Common.appSceneMain.sizeCanvas);
-
         var nodePop = cc.instantiate(prefab);
         nodePop.setParent(nodeRoot);
         var ui = nodePop.getComponent(UIViewPop);
@@ -49,8 +75,8 @@ var PopUpManager = cc.Class({
         }
         this.listItem.push(ui);
 
-        if (obj.open != null) {
-            obj.open(ui);
+        if (this.objPop.open != null) {
+            this.objPop.open(ui);
         }
         /* 
         Canvas canvas = AppSceneBase.main.canvasMain;
@@ -104,6 +130,11 @@ var PopUpManager = cc.Class({
     /// Closes the topmost popup.
     /// </summary>
     ClosePopup() {
+
+        if (this.nodePannel != null) {
+            this.nodePannel.destroy();
+            this.nodePannel = null;
+        }
         if (this.listItem.length == 0) {
             return;
         }

@@ -6,36 +6,33 @@ cc.Class({
         indexAction: 0,
         timeAction: 0.3,
         isActionFinish: false,
-        btnLearn: cc.Button,
-        btnAdVideo: cc.Button,
-        btnAddLove: cc.Button,
+        btnLearn: cc.UITypeButton,
+        btnAdVideo: cc.UITypeButton,
+        btnAddLove: cc.UITypeButton,
 
     },
     onLoad: function () {
         this._super();
         var x, y, w, h;
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnLearn,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_LEARN,
+        this.btnLearn.UpdateImage({ 
+            bg: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_ICON_LEARN,
             success: function () {
             }.bind(this),
         });
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnAdVideo,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_VIDEO,
+        this.btnAdVideo.UpdateImage({ 
+            bg: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_ICON_VIDEO,
             success: function () {
             }.bind(this),
         });
 
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnAddLove,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_LOVE,
+        this.btnAddLove.UpdateImage({ 
+            bg: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_ICON_LOVE,
             success: function () {
             }.bind(this),
         });

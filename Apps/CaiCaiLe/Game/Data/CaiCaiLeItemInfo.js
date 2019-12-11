@@ -8,7 +8,7 @@ var CaiCaiLeItemInfo = cc.Class({
         intro: "",
         translation: "",
         appreciation: "",
-        pinyin: "",
+        pronunciation: "",
         head: "",
         end: "",
         tips: "",

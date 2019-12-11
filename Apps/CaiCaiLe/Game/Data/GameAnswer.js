@@ -36,7 +36,7 @@ var GameAnswer = cc.Class({
         //真正的答案
         if ((info.gameType == cc.GameRes.GAME_TYPE_IMAGE) || (info.gameType == cc.GameRes.GAME_TYPE_IMAGE_TEXT)) {
             //
-            str = info.id;
+            str = info.title;
             if (cc.Config.main().appKeyName == cc.GameRes.GAME_ANIMAL) {
                 str = this.languageWord.GetString(info.id);
             }

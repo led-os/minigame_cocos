@@ -20,21 +20,21 @@ var UIViewAlert = cc.Class({
       
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageBoard,
-            pic: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_ALERT_BG,
+            pic: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_ALERT_BG,
             success: function () {
             }.bind(this),
         });
 
         cc.TextureUtil.UpdateTypeButtonImage({
             btn: this.btnYes,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_COMMON, 
+            bg: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_COMMON, 
             success: function () {
             }.bind(this),
         });
 
         cc.TextureUtil.UpdateTypeButtonImage({
             btn: this.btnNo,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_COMMON, 
+            bg: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BTN_COMMON, 
             success: function () {
             }.bind(this),
         });

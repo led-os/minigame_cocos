@@ -36,6 +36,11 @@ var UIWordBar = cc.Class({
     onLoad: function () {
     },
 
+    update: function () {
+        //  this.LayOutInternal();
+    },
+
+
     LayOut() {
         this._super();
         this.scheduleOnce(this.LayOutInternal, 0.25);

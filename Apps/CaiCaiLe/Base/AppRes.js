@@ -16,6 +16,7 @@ var AppRes = cc.Class({
         KEY_LANGUAGE: "KEY_LANGUAGE",
         KEY_FIRST_RUN: "KEY_FIRST_RUN",
         KEY_BACKGROUND_MUSIC: "KEY_BACKGROUND_MUSIC",
+        KEY_BTN_SOUND: "KEY_BTN_SOUND",
         KEY_LANGUAGE: "STR_KEY_LANGUAGE",
         KEY_COMMENT_VERSION: "key_comment_",
         KEY_COMMENT_LAST_TIME: "key_comment_last_time",

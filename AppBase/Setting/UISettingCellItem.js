@@ -76,7 +76,7 @@ cc.Class({
     UpdateItem: function (info) {
         this.textTitle.string = info.title;
         this.btnSwitch.node.active = false;
-        if (info.tag == UISetting.TAG_SETTING_BACKGROUND_MUSIC) {
+        if ((info.tag == UISetting.TAG_SETTING_BACKGROUND_MUSIC) || (info.tag == UISetting.TAG_SETTING_BTN_SOUND)) {
             this.btnSwitch.node.active = true;
             var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BACKGROUND_MUSIC, false);
             this.UpdateBtnSwitch(ret);
@@ -90,7 +90,7 @@ cc.Class({
         }
         cc.TextureUtil.UpdateTypeButtonImage({
             btn: this.btnSwitch,
-            bg: cc.CloudRes.main().rootPath + "/" + strImage,
+            bg: cc.CloudRes.main().uiRootPath + "/" + strImage,
             success: function () {
             }.bind(this),
         });
@@ -122,7 +122,7 @@ cc.Class({
         var oft = 20;
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageBg,
-            pic: cc.CloudRes.main().rootPath + "/" + pic,
+            pic: cc.CloudRes.main().uiRootPath + "/" + pic,
             type: cc.Sprite.Type.SLICED,//SLICED
             left: oft,
             right: oft,
@@ -158,6 +158,14 @@ cc.Class({
                 cc.AudioPlay.main().PlayStopBgMusic();
             }
         }
+
+        if (this.info.tag == UISetting.TAG_SETTING_BTN_SOUND) {
+            var ret = cc.Common.GetBoolOfKey(cc.AppRes.KEY_BTN_SOUND, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
+            var v = !ret;
+            cc.Common.SetBoolOfKey(cc.AppRes.KEY_BTN_SOUND, v);
+            this.UpdateBtnSwitch(v);
+        }
+
     },
 });
 

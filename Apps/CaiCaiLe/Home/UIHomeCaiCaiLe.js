@@ -10,10 +10,7 @@ var GameViewController = require("GameViewController");
 cc.Class({
     extends: UIHomeBase,
     properties: {
-        btnPlay: {
-            default: null,
-            type: cc.Button
-        },
+        btnPlay: cc.UITypeButton,
         btnBoard: {
             default: null,
             type: cc.Button
@@ -33,18 +30,18 @@ cc.Class({
     onLoad: function () {
         this._super();
         var x, y, w, h;
-    
 
-        cc.TextureUtil.UpdateTypeButtonImage({
-            btn: this.btnPlay,
-            bg: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().rootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_PLAY,
+        this.uiHomeCenterBar.node.active = false;
+
+        this.btnPlay.UpdateImage({
+            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
+            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_PLAY,
             success: function () {
             }.bind(this),
         });
 
- 
-       
+
+
 
 
     },
