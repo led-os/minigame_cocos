@@ -55,7 +55,7 @@ var tableView = cc.Class({
     editor: CC_EDITOR && {
         menu: "UIKit/TableView/TableView",
         help: "https://github.com/a1076559139/creator_tableView",
-        inspector: 'packages://tableView/inspector.js',
+        // inspector: 'packages://tableView/inspector.js',
     },
     properties: {
         // 缓存的数据
@@ -79,8 +79,8 @@ var tableView = cc.Class({
         _scrollDirection: ScrollDirection.None,
 
         _cellPool: null,
-        _view: null,
-
+        //_view: cc.Node,//@moon
+        viewNode: cc.Node,//@moon
         _page: 0,//当前处于那一页
         _pageTotal: 0,//总共有多少页
 
@@ -410,14 +410,14 @@ var tableView = cc.Class({
         this._count = Math.ceil(this._paramCount / this._groupCellCount);
 
         if (this.ScrollModel === ScrollModel.Horizontal) {
-            this._view.width = this.node.width;
-            this._view.x = (this._view.anchorX - this.node.anchorX) * this._view.width;
+            this.viewNode.width = this.node.width;
+            this.viewNode.x = (this.viewNode.anchorX - this.node.anchorX) * this.viewNode.width;
 
-            this._cellCount = Math.ceil(this._view.width / this._cellSize.width) + 1;
+            this._cellCount = Math.ceil(this.viewNode.width / this._cellSize.width) + 1;
             if (this.ViewType === ViewType.Flip) {
                 if (this._cellCount > this._count) {
                     if (this.isFill) {
-                        this._cellCount = Math.floor(this._view.width / this._cellSize.width);
+                        this._cellCount = Math.floor(this.viewNode.width / this._cellSize.width);
                     } else {
                         this._cellCount = this._count;
                     }
@@ -431,7 +431,7 @@ var tableView = cc.Class({
             } else {
                 if (this._cellCount > this._count) {
                     if (this.isFill) {
-                        this._cellCount = Math.floor(this._view.width / this._cellSize.width);
+                        this._cellCount = Math.floor(this.viewNode.width / this._cellSize.width);
                     } else {
                         this._cellCount = this._count;
                     }
@@ -442,22 +442,22 @@ var tableView = cc.Class({
             }
 
             this.content.width = this._count * this._cellSize.width;
-            // if (this.content.width <= this._view.width) {
-            //     this.content.width = this._view.width + 1;
+            // if (this.content.width <= this.viewNode.width) {
+            //     this.content.width = this.viewNode.width + 1;
             // }
 
             //停止_scrollView滚动
             this.stopAutoScroll();
             this.scrollToLeft();
         } else {
-            this._view.height = this.node.height;
-            this._view.y = (this._view.anchorY - this.node.anchorY) * this._view.height;
+            this.viewNode.height = this.node.height;
+            this.viewNode.y = (this.viewNode.anchorY - this.node.anchorY) * this.viewNode.height;
 
-            this._cellCount = Math.ceil(this._view.height / this._cellSize.height) + 1;
+            this._cellCount = Math.ceil(this.viewNode.height / this._cellSize.height) + 1;
             if (this.ViewType === ViewType.Flip) {
                 if (this._cellCount > this._count) {
                     if (this.isFill) {
-                        this._cellCount = Math.floor(this._view.height / this._cellSize.height);
+                        this._cellCount = Math.floor(this.viewNode.height / this._cellSize.height);
                     } else {
                         this._cellCount = this._count;
                     }
@@ -471,7 +471,7 @@ var tableView = cc.Class({
             } else {
                 if (this._cellCount > this._count) {
                     if (this.isFill) {
-                        this._cellCount = Math.floor(this._view.height / this._cellSize.height);
+                        this._cellCount = Math.floor(this.viewNode.height / this._cellSize.height);
                     } else {
                         this._cellCount = this._count;
                     }
@@ -482,8 +482,8 @@ var tableView = cc.Class({
             }
 
             this.content.height = this._count * this._cellSize.height;
-            // if (this.content.height <= this._view.height) {
-            //     this.content.height = this._view.height + 1;
+            // if (this.content.height <= this.viewNode.height) {
+            //     this.content.height = this.viewNode.height + 1;
             // }
 
             //停止_scrollView滚动
@@ -511,9 +511,9 @@ var tableView = cc.Class({
             this.vertical = true;
             this.horizontal = false;
         }
-        /* @moon ng
-       this._view = this.content.parent;
-       */
+        // @moon ng
+        this.viewNode = this.content.parent;
+
         //为scrollBar添加size改变的监听
         this.verticalScrollBar && this.verticalScrollBar.node.on('size-changed', function () {
             this._updateScrollBar(this._getHowMuchOutOfBoundary());
@@ -678,8 +678,8 @@ var tableView = cc.Class({
 
         this._changePageNum(page - this._page);
 
-        var x = this._view.width;
-        var y = this._view.height;
+        var x = this.viewNode.width;
+        var y = this.viewNode.height;
         x = (this._page - 1) * x;
         y = (this._page - 1) * y;
         this.scrollToOffset({ x: x, y: y }, time);
@@ -798,8 +798,8 @@ var tableView = cc.Class({
     // },
     //移动距离小于25%则不翻页
     _pageMove: function (event) {
-        var x = this._view.width;
-        var y = this._view.height;
+        var x = this.viewNode.width;
+        var y = this.viewNode.height;
 
         if (this.ViewType === ViewType.Flip) {
             var offset = this.getScrollOffset();
@@ -810,7 +810,7 @@ var tableView = cc.Class({
                     return;
                 }
                 y = 0;
-                if (Math.abs(event.getLocation().x - event.getStartLocation().x) > this._view.width / 4) {
+                if (Math.abs(event.getLocation().x - event.getStartLocation().x) > this.viewNode.width / 4) {
                     if (this._scrollDirection === ScrollDirection.Left) {
                         if (this._page < this._pageTotal) {
                             this._changePageNum(1);
@@ -830,7 +830,7 @@ var tableView = cc.Class({
                     return;
                 }
                 x = 0;
-                if (Math.abs(event.getLocation().y - event.getStartLocation().y) > this._view.height / 4) {
+                if (Math.abs(event.getLocation().y - event.getStartLocation().y) > this.viewNode.height / 4) {
                     if (this._scrollDirection === ScrollDirection.Up) {
                         if (this._page < this._pageTotal) {
                             this._changePageNum(1);
@@ -861,7 +861,7 @@ var tableView = cc.Class({
         if (this.ScrollModel === ScrollModel.Horizontal) {
             if (this._scrollDirection === ScrollDirection.Left) {
                 if (this._maxCellIndex < this._count - 1) {
-                    var viewBox = this._getBoundingBoxToWorld(this._view);
+                    var viewBox = this._getBoundingBoxToWorld(this.viewNode);
                     do {
                         var node = getChildByCellIndex(this.content, this._minCellIndex);
                         var nodeBox = this._getBoundingBoxToWorld(node);
@@ -882,7 +882,7 @@ var tableView = cc.Class({
 
             } else if (this._scrollDirection === ScrollDirection.Rigth) {
                 if (this._minCellIndex > 0) {
-                    var viewBox = this._getBoundingBoxToWorld(this._view);
+                    var viewBox = this._getBoundingBoxToWorld(this.viewNode);
                     do {
                         var node = getChildByCellIndex(this.content, this._maxCellIndex);
                         var nodeBox = this._getBoundingBoxToWorld(node);
@@ -904,7 +904,7 @@ var tableView = cc.Class({
         } else {
             if (this._scrollDirection === ScrollDirection.Up) {
                 if (this._maxCellIndex < this._count - 1) {
-                    var viewBox = this._getBoundingBoxToWorld(this._view);
+                    var viewBox = this._getBoundingBoxToWorld(this.viewNode);
                     do {
                         var node = getChildByCellIndex(this.content, this._minCellIndex);
                         var nodeBox = this._getBoundingBoxToWorld(node);
@@ -924,7 +924,7 @@ var tableView = cc.Class({
                 }
             } else if (this._scrollDirection === ScrollDirection.Down) {
                 if (this._minCellIndex > 0) {
-                    var viewBox = this._getBoundingBoxToWorld(this._view);
+                    var viewBox = this._getBoundingBoxToWorld(this.viewNode);
                     do {
                         var node = getChildByCellIndex(this.content, this._maxCellIndex);
                         var nodeBox = this._getBoundingBoxToWorld(node);
@@ -988,10 +988,12 @@ var tableView = cc.Class({
     UpdateSize: function (size) {
         this.node.setContentSize(size);
         this.content.setContentSize(size);
-        this._view.setContentSize(size);
+        this.viewNode.setContentSize(size);
     },
 
     start: function () {
+        // @moon 
+        this.viewNode = this.content.parent;
 
         var rctran = this.node.getComponent(cc.RectTransform);
         if (rctran != null) {

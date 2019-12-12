@@ -35,7 +35,7 @@ var PrefabCache = cc.Class({
             cc.loader.loadRes(filepath, function (err, prefab) {
                 //cc.url.raw('res/textures/content.png')
                 if (err) {
-                    cc.Debug.Log("PrefabCache loadRes fail");
+                    cc.Debug.Log("PrefabCache loadRes fail filepath="+filepath+" err="+err.message || err);
                     cc.Debug.Log(err.message || err);
                     if (completeCallback) {
                         completeCallback(err, prefab);

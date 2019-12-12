@@ -50,7 +50,7 @@ var AnimateButton = cc.Class({
         var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, false);
         if (ret) {
             //play sound click
-            cc.AudioPlay.main().PlayCloudAudio("BtnClick");
+            cc.AudioPlay.main().PlayCloudAudio("BtnClick.mp3");
         }
 
     },

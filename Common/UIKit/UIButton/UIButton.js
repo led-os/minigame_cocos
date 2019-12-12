@@ -87,6 +87,9 @@ var UIButton = cc.Class({
         text:
         {
             get: function () {
+                if (this.textTitle == null) {
+                    return "text";
+                }
                 return this.textTitle.string;
             },
             set: function (value) {

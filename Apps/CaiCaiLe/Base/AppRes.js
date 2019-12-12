@@ -23,29 +23,29 @@ var AppRes = cc.Class({
         PLACE_BG: "UI/Bg/PlaceBg.jpg",
         LearnProgress_Bg: "UI/Bg/LearnBg.jpg",
         HOME_BG: "UI/Bg/startup.jpg",
-        SETTING_BG: "UI/Bg/SettingBg.png",
+        SETTING_BG: "UI/Bg/SettingBg.jpg",
         AUDIO_GAME_DragOk: "audio/DragOk.mp3",
         AUDIO_GAME_DragFail: "audio/DragFail.mp3",
         AUDIO_GAME_GuankaOk: "audio/GuankaOk.mp3",
         AUDIO_BtnClick: "audio/BtnClick.mp3",
         //image
-        IMAGE_BtnMusicOn: "App/UI/Common/Button/BtnIconMusic",
-        IMAGE_BtnMusicOff: "App/UI/Common/Button/BtnIconMusic",
-        IMAGE_BtnSoundOn: "App/UI/Common/Button/BtnIconMusic",
-        IMAGE_BtnSoundOff: "App/UI/Common/Button/BtnIconMusic",
+        IMAGE_BtnMusicOn: "App/UI/Common/Button/BtnIconMusic.png",
+        IMAGE_BtnMusicOff: "App/UI/Common/Button/BtnIconMusic.png",
+        IMAGE_BtnSoundOn: "App/UI/Common/Button/BtnIconMusic.png",
+        IMAGE_BtnSoundOff: "App/UI/Common/Button/BtnIconMusic.png",
 
-        IMAGE_BTN_SWITCH_UNSEL: "UI/Common/BtnSwitchUnSel",
-        IMAGE_BTN_SWITCH_SEL: "UI/Common/BtnSwitchSel",
+        IMAGE_BTN_SWITCH_UNSEL: "UI/Common/BtnSwitchUnSel.png",
+        IMAGE_BTN_SWITCH_SEL: "UI/Common/BtnSwitchSel.png",
 
 
-        IMAGE_BTN_COMMON: "UI/Common/BtnCommon",
-        IMAGE_ALERT_BG: "UI/Common/AlertBg",
+        IMAGE_BTN_COMMON: "UI/Common/BtnCommon.png",
+        IMAGE_ALERT_BG: "UI/Common/AlertBg.png",
         IMAGE_HOME_NAME_BG: "UI/Home/NameBg.png",
 
-        IMAGE_CELL_BG_BLUE: "UI/Setting/SettingCellBgBlue",
-        IMAGE_CELL_BG_ORINGE: "UI/Setting/SettingCellBgOringe",
-        IMAGE_CELL_BG_YELLOW: "UI/Setting/SettingCellBgYellow",
-        IMAGE_Language_Bg: "UI/Setting/Language/LanguageBoxBg",
+        IMAGE_CELL_BG_BLUE: "UI/Setting/SettingCellBgBlue.png",
+        IMAGE_CELL_BG_ORINGE: "UI/Setting/SettingCellBgOringe.png",
+        IMAGE_CELL_BG_YELLOW: "UI/Setting/SettingCellBgYellow.png",
+        IMAGE_Language_Bg: "UI/Setting/Language/LanguageBoxBg.png",
 
 
 
@@ -71,9 +71,9 @@ var AppRes = cc.Class({
         IMAGE_BTN_ICON_VIDEO: "UI/Common/Button/BtnIconVideo.png",
 
         //guanka
-        IMAGE_GUANKA_CELL_ITEM_BG_UNLOCK: "UI/Guanka/guanka_item_unlock",
-        IMAGE_GUANKA_CELL_ITEM_BG_LOCK: "UI/Guanka/guanka_item_lock",
-        IMAGE_GUANKA_CELL_ITEM_BG_PLAY: "UI/Guanka/guanka_item_playing",
+        IMAGE_GUANKA_CELL_ITEM_BG_UNLOCK: "UI/Guanka/guanka_item_unlock.png",
+        IMAGE_GUANKA_CELL_ITEM_BG_LOCK: "UI/Guanka/guanka_item_lock.png",
+        IMAGE_GUANKA_CELL_ITEM_BG_PLAY: "UI/Guanka/guanka_item_playing.png",
 
         //game
         IMAGE_WORD_BG: "UI/Common/word.png",
@@ -88,7 +88,7 @@ var AppRes = cc.Class({
         SHARE_IMAGE_URL: "https://6c69-lianlianle-shkb3-1259451541.tcb.qcloud.la/Share/2.jpg?sign=a21483ceeee8c806804803ce2de6ff65&t=1560564896",
 
         //clound
-        URL_CLOUND_RES: "https://6c69-lianlianle-shkb3-1259451541.tcb.qcloud.la/CloudRes.zip?sign=0763ef1a87ef54872f92151f308881d9&t=1560564859",
+        URL_CLOUND_RES: "https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/Idiom/CloudRes.zip?sign=00a8d2a68586d613c01f31f01cb28c3a&t=1576135810",
         URL_CLOUND_RES_HD: "https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/CloudRes.zip?sign=eab5b69e0643867ebccdb86b85b47759&t=1555923509",
     },
 

@@ -79,11 +79,21 @@ var GameLevelParse = cc.Class({
 
     StartParseWord3500() {
         var filepath = cc.CloudRes.main().rootPath + "/words_3500.json";
+        // var filepath = cc.Common.GAME_RES_DIR + "/words_3500.json"; 
+
         if (cc.Common.main().isWeiXin) {
+            //  filepath = "https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/words_3500.json";
             // 加载json文件
             cc.loader.load({ url: filepath, type: "json" }, function (err, rootJson) {
-                this.ParseWord3500(err, rootJson.json);
+                this.ParseWord3500(err, rootJson);
             }.bind(this));
+
+            //var obj = str.parseJSON(); //由JSON字符串转换为JSON对象
+            // cc.loader.load({ url: filepath }, function (err, data) {
+            //     var json = data.parseJSON();
+            //     this.ParseWord3500(err, json);
+            // }.bind(this));
+
         } else {
             //cc.JsonAsset   cc.loader.load
             //去除后缀
@@ -101,7 +111,9 @@ var GameLevelParse = cc.Class({
 
     },
     ParseWord3500(json) {
-        this.strWord3500 = json.words;
+        if (json != null) {
+            this.strWord3500 = json.words;
+        }
         cc.Debug.Log("GameLevelParse:this.listGuanka=" + this.listGuanka.length + "json.strWord3500=" + this.strWord3500);
         this.ParseGuankaDidFinish();
     },
