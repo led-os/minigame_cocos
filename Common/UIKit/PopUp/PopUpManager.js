@@ -45,7 +45,7 @@ var PopUpManager = cc.Class({
         // var panel = new cc.Node("Panel");
         node.setParent(nodeRoot);
         node.setContentSize(cc.Common.appSceneMain.sizeCanvas);
-        node.color =  new cc.Color(52, 52, 52,50);
+        node.color = new cc.Color(52, 52, 52, 50);
         //拦截点击
         //  panel.addComponent(cc.BlockInputEvents);
         this.nodePannel = node;
@@ -107,7 +107,11 @@ var PopUpManager = cc.Class({
         _onClose = onClose;
         currentPopups.Push(popup);
         */
-
+        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, false);
+        if (ret) {
+            //play sound click
+            cc.AudioPlay.main().PlayCloudAudio("PopUp/PopupOpen.mp3");
+        }
     },
 
 
@@ -159,6 +163,11 @@ var PopUpManager = cc.Class({
             _onClose(topmostPopup.GetComponent<UIViewPop>());
         }
         */
+        var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, false);
+        if (ret) {
+            //play sound click
+            cc.AudioPlay.main().PlayCloudAudio("PopUp/PopupClose.mp3");
+        }
     },
 
 

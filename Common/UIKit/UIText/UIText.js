@@ -11,7 +11,6 @@ var UIText = cc.Class({
     },
     properties: {
         label: cc.Label,
-
         text:
         {
             get: function () {

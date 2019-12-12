@@ -31,6 +31,10 @@ var UIGameWinBase = cc.Class({
 
     LayOut() {
         this._super();
+        var sizeCanvas = cc.Common.appSceneMain.sizeCanvas;
+        var ratio = 0.8; 
+        this.node.setContentSize(sizeCanvas * ratio);
+        this._super();
     },
     UpdateItem(info) {
 

@@ -13,7 +13,7 @@ var AppRes = cc.Class({
         GOLD_GUANKA_STEP: 4,
 
         //key
-     
+
         KEY_GAME_LOCK: "KEY_GAME_LOCK",
 
         //audio 
@@ -78,8 +78,11 @@ var AppRes = cc.Class({
         //game
         IMAGE_WORD_BG: "UI/Common/word.png",
         IMAGE_BoardPic: "UI/Game/BoardPic.png",
-
-
+        IMAGE_BTN_GameWinBtn: "UI/Game/GameWinBtn.png",
+        IMAGE_BTN_GameWinHead: "UI/Game/GameWinHead.png",
+        IMAGE_BTN_GameWinBg: "UI/Game/GameWinBg.png",
+        
+        
         //share
         SHARE_TITLE: "通过物品的连线快速学习事物",
         SHARE_IMAGE_URL: "https://6c69-lianlianle-shkb3-1259451541.tcb.qcloud.la/Share/2.jpg?sign=a21483ceeee8c806804803ce2de6ff65&t=1560564896",

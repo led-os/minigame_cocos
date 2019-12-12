@@ -22,6 +22,7 @@ var UIButton = cc.Class({
         imageBg: cc.Sprite,
         imageIcon: cc.Sprite,
         textTitle: cc.Label,
+        enableFitTextSize: false,
         _type: Type.IMAGE,
         type: {
             type: Type,
@@ -68,6 +69,21 @@ var UIButton = cc.Class({
         },
 
 
+        fontSize: {
+            get: function () {
+                if (this.textTitle == null) {
+                    return 12;
+                }
+                return this.textTitle.fontSize;
+            },
+            set: function (value) {
+                if (this.textTitle == null) {
+                    return;
+                }
+                this.textTitle.fontSize = value;
+                this.LayOut();
+            },
+        },
         text:
         {
             get: function () {
@@ -75,12 +91,31 @@ var UIButton = cc.Class({
             },
             set: function (value) {
                 this.textTitle.string = value;
+                if (this.enableFitTextSize) {
+                    var w = cc.Common.GetTextSize(value, this.fontSize).width + this.fontSize;
+                    var h = this.node.getContentSize().height;
+                    cc.Debug.Log("GetTextSize w = " + w + " h=" + h);
+                    this.node.setContentSize(w, h);
+                }
                 this.LayOut();
+            },
+        },
+        color: {
+            get: function () {
+                if (this.textTitle == null) {
+                    return cc.Color.BLACK;
+                }
+                return this.textTitle.node.color;
+            },
+            set: function (value) {
+                this.textTitle.node.color = value;
             },
         },
     },
 
-
+    LayOut() {
+        this._super();
+    },
     onLoad: function () {
         this._super();
         this.type = this._type;

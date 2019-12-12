@@ -154,7 +154,8 @@ var UIWordBar = cc.Class({
         }
         else {
             //游戏失败
-            this.OnGameFail();
+            //this.OnGameFail();
+            this.scheduleOnce(this.OnGameFail, 1);
         }
     },
 

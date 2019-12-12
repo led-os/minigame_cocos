@@ -71,6 +71,8 @@ var AppSceneBase = cc.Class({
         // }else{
         //     cc.Debug.Log(" AppSceneBase.main onLoad size is not null");
         // }
+        //关闭fps显示
+        cc.debug.setDisplayStats(false);
 
         cc.Common.appSceneMain = this;
         this.isHasRunApp = false;

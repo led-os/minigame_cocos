@@ -35,9 +35,9 @@ var UIGameWinIdiom = cc.Class({
         this.uiSegment.InitValue(64, cc.Color.RED, cc.Color.BLACK);
         this.UpdateSegment();
 
-        var oft = 32;
+        var oft = 110;
         this.imageBg.UpdateImage({
-            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BoardPic,//IMAGE_HOME_NAME_BG
+            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_GameWinBg,//IMAGE_HOME_NAME_BG
             type: cc.Sprite.Type.SLICED,//SLICED
             left: oft,
             right: oft,
@@ -47,10 +47,21 @@ var UIGameWinIdiom = cc.Class({
             }.bind(this),
         });
 
+        oft = 20;
+        this.imageHead.UpdateImage({
+            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_GameWinHead,//IMAGE_HOME_NAME_BG
+            type: cc.Sprite.Type.SLICED,//SLICED
+            left: oft,
+            right: oft,
+            top: oft,
+            bottom: oft,
+            success: function () {
+            }.bind(this),
+        });
 
         oft = 20;
         this.btnNext.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_COMMON,
+            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_GameWinBtn,
             type: cc.Sprite.Type.SLICED,//SLICED
             left: oft,
             right: oft,
@@ -59,24 +70,35 @@ var UIGameWinIdiom = cc.Class({
             success: function () {
             }.bind(this),
         });
-
+        
         this.btnClose.UpdateImage({
             bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
             icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_CLOSE,
             success: function () {
             }.bind(this),
         });
+
+        this.btnNext.enableFitTextSize = true;
         this.btnNext.text = cc.Language.main().GetString("STR_GameWin_BtnNext");
     },
 
     LayOut() {
         this._super();
+        
+        var w1= cc.Common.GetTextSize(this.textTitle.text, this.textTitle.fontSize).width + this.textTitle.fontSize;
+        var w2= cc.Common.GetTextSize(this.textPinyin.text, this.textPinyin.fontSize).width + this.textPinyin.fontSize;
+        var w = Math.max(w1, w2);
+        var h = this.imageHead.node.getContentSize().height;
+        cc.Debug.Log("GetTextSize w = " + w + " h=" + h);
+        this.imageHead.node.setContentSize(w, h);
+        this.imageHead.LayOut();
     },
     UpdateItem(info) {
         this.infoItem = info;
         this.textTitle.text = info.title;
         this.textPinyin.text = info.pronunciation;
         this.uiSegment.UpdateList();
+        this.LayOut();
     },
 
     UpdateText(info) {
