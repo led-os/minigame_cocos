@@ -3,6 +3,10 @@ var UIGameWinIdiom = require("UIGameWinIdiom");
 var UIViewPop = require("UIViewPop");
 var PopUpManager = cc.Class({
     extends: cc.Object,
+    statics: {
+        //enum
+        ANIMATE_DURATION: 0.8,
+    },
     properties: {
         listItem: {
             default: [],
@@ -112,6 +116,15 @@ var PopUpManager = cc.Class({
             //play sound click
             cc.AudioPlay.main().PlayCloudAudio("PopUp/PopupOpen.mp3");
         }
+
+
+        var duration = PopUpManager.ANIMATE_DURATION;
+        var actionTo1 = cc.scaleTo(duration / 2, 0.8);
+        var actionTo2 = cc.scaleTo(duration / 2, 1);
+        var seq = cc.sequence([actionTo1, actionTo2, cc.callFunc(function () {
+            // this.DoClickItem(event, customEventData);
+        }.bind(this))]);
+        nodePop.runAction(seq);
     },
 
 
@@ -168,6 +181,14 @@ var PopUpManager = cc.Class({
             //play sound click
             cc.AudioPlay.main().PlayCloudAudio("PopUp/PopupClose.mp3");
         }
+
+        var duration = PopUpManager.ANIMATE_DURATION;
+        var actionTo1 = cc.scaleTo(duration / 2, 1.2);
+        var actionTo2 = cc.scaleTo(duration / 2, 0);
+        var seq = cc.sequence([actionTo1, actionTo2, cc.callFunc(function () {
+            ui.DoClose();
+        }.bind(this))]);
+        ui.node.runAction(seq);
     },
 
 

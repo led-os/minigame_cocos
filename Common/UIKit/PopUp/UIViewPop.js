@@ -32,7 +32,7 @@ var UIViewPop = cc.Class({
         // }
 
         cc.PopUpManager.main().ClosePopup();
-        this.DoClose();
+     
     },
 
 
@@ -41,16 +41,7 @@ var UIViewPop = cc.Class({
         // DestroyImmediate(gameObject);
         this.node.destroy();
     },
-
-    /// <summary>
-    /// Utility coroutine to automatically destroy the popup after its closing animation has finished.
-    /// </summary>
-    /// <returns>The coroutine.</returns>
-    DestroyPopup() {
-        // yield return new WaitForSeconds(0.5f);
-        this.DoClose();
-    },
-
+ 
 
 });
 
