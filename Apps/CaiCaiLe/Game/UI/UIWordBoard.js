@@ -76,9 +76,23 @@ var UIWordBoard = cc.Class({
     },
 
     InitItem() {
-        this.row = 3;
-        this.col = 8;
+        var nodeItem = cc.instantiate(this.uiWordItemPrefab);
+        var rctranItem = nodeItem.getComponent(cc.RectTransform);
+        //  rctranItem.LayOut();
+        var rctran = this.node.getComponent(cc.RectTransform);
+        var ly = this.node.getComponent(cc.LayOutGrid);
+        var w_item= ly.space.x + nodeItem.getContentSize().width;
+        var max_col = rctran.width /w_item - 1;
+        cc.Debug.Log("max_col =" + max_col + " rctran.width=" + rctran.width + " ly.space.x=" + ly.space.x + " w_item=" + w_item);
+        if (max_col < 8) {
+            this.row = 4;
+            this.col = 6;
+        } else {
+            this.row = 3;
+            this.col = 8;
+        }
 
+        nodeItem.destroy();
         this.listItem.forEach(function (value, index) {
             if (value != null) {
                 value.node.destroy();
@@ -86,7 +100,7 @@ var UIWordBoard = cc.Class({
             }
         }.bind(this));
 
-        var ly = this.node.getComponent(cc.LayOutGrid);
+
         if (ly != null) {
             ly.row = this.row;
             ly.col = this.col;

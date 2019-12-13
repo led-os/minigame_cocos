@@ -87,6 +87,12 @@ cc.Class({
             btn.hoverSprite = btn.normalSprite;
         }
     },
+
+    SetContentSize: function (w, h) {
+        this.node.setContentSize(w, h);
+        this.LayOut();
+    },
+
 });
 
 

@@ -117,9 +117,10 @@ var PopUpManager = cc.Class({
             cc.AudioPlay.main().PlayCloudAudio("PopUp/PopupOpen.mp3");
         }
 
-
+        nodePop.scaleX = 0;
+        nodePop.scaleY = 0;
         var duration = PopUpManager.ANIMATE_DURATION;
-        var actionTo1 = cc.scaleTo(duration / 2, 0.8);
+        var actionTo1 = cc.scaleTo(duration / 2, 1.2);
         var actionTo2 = cc.scaleTo(duration / 2, 1);
         var seq = cc.sequence([actionTo1, actionTo2, cc.callFunc(function () {
             // this.DoClickItem(event, customEventData);

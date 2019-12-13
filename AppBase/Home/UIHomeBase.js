@@ -60,8 +60,7 @@ cc.Class({
         });
 
         //w = 1024;
-        var fontsize = this.textName.fontSize;
-        w = cc.Common.GetTextWidth(name, this.textName.fontSize) + fontsize;
+
         var oft = 50;
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageNameBg.image,
@@ -72,8 +71,6 @@ cc.Class({
             top: oft,
             bottom: oft,
             success: function () {
-                h = fontsize * 2;//this.imageNameBg.node.getContentSize().height;
-                this.imageNameBg.node.setContentSize(w, h);
                 this.LayOut();
             }.bind(this),
         });
@@ -159,7 +156,18 @@ cc.Class({
         //   size = this.textName.node.getContentSize();
         //  cc.Debug.Log("size TextName= " + size);
 
+        var ratio = 1.5;
+        var fontsize = this.textName.fontSize;
+        w = cc.Common.GetTextWidth(this.textName.text, fontsize) + fontsize*3;
+        var w_max = size.width * 0.7;
+        if (w > w_max) {
+            w = w_max;
+            h = fontsize * 3 * ratio;
+        } else {
+            h = fontsize * ratio;
+        }
 
+        this.imageNameBg.SetContentSize(w, h); 
     },
 
 

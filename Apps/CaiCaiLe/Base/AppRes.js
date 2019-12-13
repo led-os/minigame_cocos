@@ -84,11 +84,11 @@ var AppRes = cc.Class({
         
         
         //share
-        SHARE_TITLE: "通过物品的连线快速学习事物",
-        SHARE_IMAGE_URL: "https://6c69-lianlianle-shkb3-1259451541.tcb.qcloud.la/Share/2.jpg?sign=a21483ceeee8c806804803ce2de6ff65&t=1560564896",
+        SHARE_TITLE: "猜成语弘扬中华文化",
+        SHARE_IMAGE_URL: "https://6d6f-moonma-dbb297-1258816908.tcb.qcloud.la/Idiom/share.png?sign=9ee5c02aa5ea4549645be47747f0ea41&t=1576209847",
 
         //clound
-        URL_CLOUND_RES: "https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/Idiom/CloudRes.zip?sign=00a8d2a68586d613c01f31f01cb28c3a&t=1576135810",
+        URL_CLOUND_RES: "https://6d6f-moonma-dbb297-1258816908.tcb.qcloud.la/Idiom/CloudRes.zip?sign=dbeba52e1963e9b2eab0b4c388da9adc&t=1576157777",
         URL_CLOUND_RES_HD: "https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/CloudRes.zip?sign=eab5b69e0643867ebccdb86b85b47759&t=1555923509",
     },
 

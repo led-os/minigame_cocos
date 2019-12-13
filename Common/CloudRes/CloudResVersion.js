@@ -82,6 +82,11 @@ var CloudResVersion = cc.Class({
         if (this.rootJson == null) {
             cc.Debug.Log("CloudResVersion:ParseData  is null");
         }
+
+        var word = json.words;
+        if (word != null) {
+            cc.Debug.Log("CloudResVersion:word =" + word);
+        }
     },
 
 

@@ -46,7 +46,7 @@ var UIWordImageText = cc.Class({
             }.bind(this),
         });
 
-        var oft = 32;
+        var oft = 110;
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imagePicBoard,
             pic: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BoardPic,//IMAGE_HOME_NAME_BG

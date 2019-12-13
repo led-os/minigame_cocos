@@ -53,7 +53,7 @@ var CloudRes = cc.Class({
                 }
             }.bind(this),
             fail: function (res) {
-                console.log("readFile fail=" + file)
+                console.log("readFile fail=" + obj.url)
                 if (obj.fail != null) {
                     obj.fail(res);
                 }

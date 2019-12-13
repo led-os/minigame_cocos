@@ -14,6 +14,14 @@ var LayOutGrid = cc.Class({
         row: 1,//行
         col: 1,//列  
 
+        //是否控制大小
+        childControlHeight: false,
+        childControlWidth: false,
+
+        //是否整个区域展开
+        childForceExpandHeight: false,
+        childForceExpandWidth: false,
+
     },
 
 
@@ -92,27 +100,99 @@ var LayOutGrid = cc.Class({
 
     },
 
+
     // r 行 ; c 列  返回中心位置 Vector2
     GetItemPostion: function (nodeItem, r, c) {
         var x, y, w, h;
+
         var rctran = this.node.getComponent(cc.RectTransform);
-        if (rctran == null) {
-            cc.Debug.Log("GetItemPostion  rctran= null");
-            return cc.Vec2.ZERO;
+        w = rctran.width;
+        h = rctran.height;
+        var item_w = 0, item_h = 0, x_left = 0, y_bottom = 0, w_total = 0, h_total = 0;
+
+        var rctranItem = nodeItem.getComponent(cc.RectTransform);
+
+        if (this.childControlWidth) {
+            item_w = (w - (this.space.x * (this.col - 1))) / this.col;
+            // rctranItem.sizeDelta = new Vector2(item_w, rctranItem.sizeDelta.y);
+            rctranItem.width = item_w;
+        }
+        else {
+            item_w = rctranItem.width;
         }
 
-        w = rctran.width - (this.offsetMin.x + this.offsetMax.x);
-        h = rctran.height - (this.offsetMin.y + this.offsetMax.y);
+        if (this.childControlHeight) {
+            item_h = (h - (this.space.y * (this.row - 1))) / this.row;
+            // rctranItem.sizeDelta = new Vector2(rctranItem.sizeDelta.x, item_h);
+            rctranItem.height = item_w;
+        }
+        else {
+            item_h = rctranItem.height;
+        }
 
-        var item_w = (w - (this.space.x * (this.col - 1))) / this.col;
-        var item_h = (h - (this.space.y * (this.row - 1))) / this.row;
-        x = (-rctran.width / 2 + this.offsetMin.x) + item_w * c + item_w / 2 + this.space.x * c;
-        y = (-rctran.height / 2 + this.offsetMin.y) + item_h * r + item_h / 2 + this.space.y * r;
-        //  y=-192;
-        cc.Debug.Log("GetItemPostion w=" + w + " h=" + h + " x=" + x + " y=" + y + " r=" + r + " c=" + c + " row=" + this.row + " col=" + this.col);
+        w_total = item_w * this.col + (this.space.x * (this.col - 1));
+        h_total = item_h * this.row + (this.space.y * (this.row - 1));
+
+        if (this.childForceExpandWidth) {
+            x_left = -w / 2;
+        }
+        else {
+            if (this.align == cc.Align.LEFT) {
+                x_left = -w / 2;
+            }
+            else if (this.align == cc.Align.RIGHT) {
+                x_left = w / 2 - w_total;
+            }
+            else {
+                //CENTER
+                x_left = -w_total / 2;
+            }
+        }
+
+        x = x_left + item_w * c + item_w / 2 + this.space.x * c;
+        cc.Debug.Log("x_left=" + " item_w=" + item_w);
+
+        if (this.childForceExpandHeight) {
+            y_bottom = -h / 2;
+        }
+        else {
+            if (this.align == cc.Align.DOWN) {
+                y_bottom = -h / 2;
+            }
+            else if (this.align == cc.Align.UP) {
+                y_bottom = h / 2 - h_total;
+            }
+            else {
+                //CENTER
+                y_bottom = -h_total / 2;
+            }
+        }
+        y = y_bottom + item_h * r + item_h / 2 + this.space.y * r;
         return new cc.Vec2(x, y);
 
     },
+
+    // // r 行 ; c 列  返回中心位置 Vector2
+    // GetItemPostion: function (nodeItem, r, c) {
+    //     var x, y, w, h;
+    //     var rctran = this.node.getComponent(cc.RectTransform);
+    //     if (rctran == null) {
+    //         cc.Debug.Log("GetItemPostion  rctran= null");
+    //         return cc.Vec2.ZERO;
+    //     }
+
+    //     w = rctran.width - (this.offsetMin.x + this.offsetMax.x);
+    //     h = rctran.height - (this.offsetMin.y + this.offsetMax.y);
+
+    //     var item_w = (w - (this.space.x * (this.col - 1))) / this.col;
+    //     var item_h = (h - (this.space.y * (this.row - 1))) / this.row;
+    //     x = (-rctran.width / 2 + this.offsetMin.x) + item_w * c + item_w / 2 + this.space.x * c;
+    //     y = (-rctran.height / 2 + this.offsetMin.y) + item_h * r + item_h / 2 + this.space.y * r;
+    //     //  y=-192;
+    //     cc.Debug.Log("GetItemPostion w=" + w + " h=" + h + " x=" + x + " y=" + y + " r=" + r + " c=" + c + " row=" + this.row + " col=" + this.col);
+    //     return new cc.Vec2(x, y);
+
+    // },
 
 
 
