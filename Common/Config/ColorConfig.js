@@ -79,7 +79,27 @@ var ColorConfig = cc.Class({
 
     },
 
+    //同步 synchronization
+    GetColorSync(key) {
+        var cr = cc.Color.BLACK;
+        // key = "PlaceItemTitle";
+        // key = "APP_TYPE";
+        /*
+        js中的变量作为json的key 的语法：https://blog.csdn.net/xiaomanonyo/article/details/78642148
+        */
+        if (this.jsonRoot != null) {
+            if (this.jsonRoot[key] != null) {
+                var str = this.jsonRoot[key];
+                cr = this.RGBString2ColorA(str);
+            }
+            else {
+                cc.Debug.Log("ColorConfig ContainsKey no key =" + key);
+            }
+        }
+        return cr;
+    },
 
+    //异步
     /*
     {
         key: "",
@@ -99,7 +119,6 @@ var ColorConfig = cc.Class({
     },
 
     GetColorInternal(obj) {
-        var cr = cc.Color.BLACK;
         var key = "key";
         if (obj != null) {
             if (obj.def == null) {
@@ -108,29 +127,12 @@ var ColorConfig = cc.Class({
             cr = obj.def;
             key = obj.key;
         }
-
-        // key = "PlaceItemTitle";
-        // key = "APP_TYPE";
-        /*
-js中的变量作为json的key 的语法：https://blog.csdn.net/xiaomanonyo/article/details/78642148
-*/
-
-        if (this.jsonRoot != null) {
-            if (this.jsonRoot[key] != null) {
-                var str = this.jsonRoot[key];
-                cr = this.RGBString2ColorA(str);
-            }
-            else {
-                cc.Debug.Log("ColorConfig ContainsKey no key =" + key);
-            }
-        }
-
+        this.GetColorSync(key);
         if (obj != null) {
             if (obj.success != null) {
                 obj.success(cr);
             }
         }
-        return cr;
     },
 
 

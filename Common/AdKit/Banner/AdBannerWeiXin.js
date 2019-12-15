@@ -1,3 +1,5 @@
+
+//https://blog.csdn.net/pikefish/article/details/88895851
 var AdBannerWeiXin = cc.Class({
     extends: cc.AdBannerPlatformWrapper,// cc.ItemInfo,
     properties: {

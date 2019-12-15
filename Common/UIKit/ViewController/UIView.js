@@ -20,6 +20,9 @@ cc.Class({
         },
         title: 'title',
         objTag: cc.Object,
+        keyText: "",
+        keyColor: "",
+        keyImage: "",
     },
 
     onLoad: function () {
@@ -91,6 +94,25 @@ cc.Class({
     SetContentSize: function (w, h) {
         this.node.setContentSize(w, h);
         this.LayOut();
+    },
+
+    //js 默认参数方法： https://www.cnblogs.com/luotingliang/p/7250990.html
+    GetKeyColor(def) {
+        var ret = cc.Color.BLACK;
+        if (def) {
+            ret = def;
+        }
+        if (!cc.Common.isBlankString(this.keyColor)) {
+            ret = cc.ColorConfig.main().GetColorSync(this.keyColor);
+        }
+        return ret;
+    },
+    GetKeyText() {
+        var ret = "";
+        if (!cc.Common.isBlankString(this.keyText)) {
+            ret = cc.Language.main().GetString(this.keyText);
+        }
+        return ret;
     },
 
 });
