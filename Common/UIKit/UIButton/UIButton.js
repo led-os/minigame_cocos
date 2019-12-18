@@ -19,9 +19,9 @@ var UIButton = cc.Class({
         Type: Type,
     },
     properties: {
-        imageBg: cc.Sprite,
-        imageIcon: cc.Sprite,
-        textTitle: cc.Label,
+        imageBg: cc.UIImage,
+        imageIcon: cc.UIImage,
+        textTitle: cc.UIText,
         enableFitTextSize: false,
         _type: Type.IMAGE,
         type: {
@@ -90,10 +90,10 @@ var UIButton = cc.Class({
                 if (this.textTitle == null) {
                     return "text";
                 }
-                return this.textTitle.string;
+                return this.textTitle.text;
             },
             set: function (value) {
-                this.textTitle.string = value;
+                this.textTitle.text = value;
                 if (this.enableFitTextSize) {
                     var w = cc.Common.GetTextSize(value, this.fontSize).width + this.fontSize;
                     var h = this.node.getContentSize().height;

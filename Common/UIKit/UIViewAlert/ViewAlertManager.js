@@ -61,6 +61,22 @@ var ViewAlertManager = cc.Class({
 
 
     },
+
+    /*
+ {
+     title: "",
+     msg: "",
+     yes: "",
+     no: "",
+     name: "",
+     finish: function (ui,isYes) {
+     }, 
+ }
+*/
+
+    ShowFull: function (obj) {
+        this.ShowFull(obj.title, obj.msg, obj.yes, obj.no, obj.isShowBtnNo, obj.name, obj.finish);
+    },
     //string
     ShowFull: function (title, msg, yes, no, isShowBtnNo, name, _callback) {
         this.keyName = name;

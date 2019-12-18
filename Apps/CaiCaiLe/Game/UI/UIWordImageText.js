@@ -49,13 +49,13 @@ var UIWordImageText = cc.Class({
         var oft = 110;
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imagePicBoard,
-            pic: cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.IMAGE_BoardPic,//IMAGE_HOME_NAME_BG
+            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BoardPic,//IMAGE_HOME_NAME_BG
             type: cc.Sprite.Type.SLICED,//SLICED
             left: oft,
             right: oft,
             top: oft,
             bottom: oft,
-            success: function () { 
+            success: function () {
             }.bind(this),
         });
 
@@ -84,9 +84,7 @@ var UIWordImageText = cc.Class({
 
     //base
     UpdateGuankaLevel(level) {
-    },
-    OnTips() {
-    },
+    }, 
 
     OnAddWord(word) {
     },
