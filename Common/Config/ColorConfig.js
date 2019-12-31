@@ -12,6 +12,7 @@ var ColorConfig = cc.Class({
     },
     properties: {
         jsonRoot: null,
+        infoPreload:null,
     },
 
     SetLoadFinishCallBack: function (callback, info) {
@@ -104,6 +105,7 @@ var ColorConfig = cc.Class({
     {
         key: "",
         def: cc.Color,
+        info:,
         success: function (color) {
         },
         fail: function () {
@@ -120,6 +122,7 @@ var ColorConfig = cc.Class({
 
     GetColorInternal(obj) {
         var key = "key";
+        var cr;
         if (obj != null) {
             if (obj.def == null) {
                 obj.def = cc.Color.BLACK;
@@ -127,7 +130,7 @@ var ColorConfig = cc.Class({
             cr = obj.def;
             key = obj.key;
         }
-        this.GetColorSync(key);
+        cr = this.GetColorSync(key);
         if (obj != null) {
             if (obj.success != null) {
                 obj.success(cr);

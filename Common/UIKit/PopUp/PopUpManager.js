@@ -1,6 +1,6 @@
 
 var UIGameWinIdiom = require("UIGameWinIdiom");
-var UIViewPop = require("UIViewPop");
+var UIViewPop = require("UIViewPop"); 
 var PopUpManager = cc.Class({
     extends: cc.Object,
     statics: {
@@ -77,7 +77,7 @@ var PopUpManager = cc.Class({
         if (ui == null) {
             cc.Debug.Log("OpenPopup ui is null");
         }
-        this.listItem.push(ui);
+        this.listItem.push(ui); 
 
         if (this.objPop.open != null) {
             this.objPop.open(ui);

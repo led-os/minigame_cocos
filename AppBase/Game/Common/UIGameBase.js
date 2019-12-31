@@ -78,7 +78,7 @@ var UIGameBase = cc.Class({
         this.btnMusic.UpdateImage({
             bg: cc.CloudRes.main().uiRootPath + "/" + bg,
             icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_MUSIC,
-            success: function () { 
+            success: function () {
             }.bind(this),
         });
 
@@ -141,16 +141,22 @@ var UIGameBase = cc.Class({
         var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_USER_GUIDE");
         var no = yes;
 
-        cc.ViewAlertManager.main().ShowFull(title, msg, yes, no, false, "STR_KEYNAME_VIEWALERT_USER_GUIDE",
-            function (alert, isYes) {
+        cc.ViewAlertManager.main().ShowFull({
+            title: title,
+            msg: msg,
+            yes: yes,
+            no: no,
+            isShowBtnNo: false,
+            name: "STR_KEYNAME_VIEWALERT_USER_GUIDE",
+            finish: function (ui, isYes) {
                 if (isYes) {
                 } else {
 
                 }
                 cc.Common.SetBoolOfKey(key, true);
+            }.bind(this),
+        });
 
-            }.bind(this)
-        );
     },
 
     ShowAdInsert(step) {
@@ -185,16 +191,23 @@ var UIGameBase = cc.Class({
         var yes = cc.Language.main().GetString("STR_UIVIEWALERT_YES_GAME_FINISH");
         var no = cc.Language.main().GetString("STR_UIVIEWALERT_NO_GAME_FINISH");
         cc.Debug.Log("game finish ShowFull");
-        cc.ViewAlertManager.main().ShowFull(title, msg, yes, no, true, "STR_KEYNAME_VIEWALERT_GAME_FINISH",
-            function (alert, isYes) {
+
+        cc.ViewAlertManager.main().ShowFull({
+            title: title,
+            msg: msg,
+            yes: yes,
+            no: no,
+            isShowBtnNo: true,
+            name: "STR_KEYNAME_VIEWALERT_GAME_FINISH",
+            finish: function (ui, isYes) {
                 if (isYes) {
                     cc.LevelManager.main().GotoNextLevelWithoutPlace();
                 } else {
                     //replay
                     cc.GameManager.main().GotoPlayAgain();
                 }
-            }.bind(this)
-        );
+            }.bind(this),
+        });
 
     },
 

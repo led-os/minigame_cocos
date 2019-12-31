@@ -35,7 +35,7 @@ fail: function () {
             //cf.ParseJson(false);
         }
 
-        //color
+        // color
         {
             var info = new cc.LoadItemInfo();
             info.id = "color";
@@ -45,6 +45,33 @@ fail: function () {
                 key: "apppreload",
                 def: cc.Color.BLACK,
                 success: function (color) {
+                    for (let infotmp of this.listProLoad) {
+                        if (infotmp.id == "color") {
+                            infotmp.isLoad = true;
+                        }
+                    }
+                    cc.Debug.Log("AppPreLoadDidFinish color");
+                    this.AppPreLoadDidFinish(info);
+                }.bind(this),
+            });
+
+        }
+
+        //image
+        {
+            var info = new cc.LoadItemInfo();
+            info.id = "image";
+            info.isLoad = false;
+            this.listProLoad.push(info);
+            cc.ImageRes.main().GetImage({
+                key: "apppreload",
+                success: function (image) {
+                    for (let infotmp of this.listProLoad) {
+                        if (infotmp.id == "image") {
+                            infotmp.isLoad = true;
+                        }
+                    }
+                    cc.Debug.Log("AppPreLoadDidFinish image");
                     this.AppPreLoadDidFinish(info);
                 }.bind(this),
             });
@@ -65,7 +92,7 @@ fail: function () {
 
     },
     AppPreLoadDidFinish: function (p) {
-        cc.Debug.Log("AppPreLoadDidFinish ");
+        cc.Debug.Log("AppPreLoadDidFinish info.id=" + p.id);
         this.CheckAllLoad();
     },
     CheckAllLoad: function () {
@@ -90,8 +117,8 @@ AppPreLoad._main = null;
 AppPreLoad.main = function () {
     // 
     if (!AppPreLoad._main) {
-        AppPreLoad._main = new AppPreLoad(); 
-    } else { 
+        AppPreLoad._main = new AppPreLoad();
+    } else {
     }
 
     return AppPreLoad._main;

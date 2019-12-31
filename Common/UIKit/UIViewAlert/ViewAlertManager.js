@@ -68,6 +68,7 @@ var ViewAlertManager = cc.Class({
      msg: "",
      yes: "",
      no: "",
+     isShowBtnNo:false,
      name: "",
      finish: function (ui,isYes) {
      }, 

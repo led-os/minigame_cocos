@@ -1,7 +1,7 @@
 var UIView = require("UIView");
 var UICellItemBase = require("UICellItemBase");
 var UISetting = require("UISetting");
-
+var AppSceneBase = require("AppSceneBase");
 cc.Class({
     extends: UICellItemBase,
     //extends: require('viewCell'),
@@ -27,12 +27,14 @@ cc.Class({
         this.info = data.array[index];
         this.UpdateItem(this.info);
     },
-    
+
     OnClickItem: function () {
         var uiViewParent = this.GetUIViewParent();// 
         var lan = cc.Language.main();
         cc.Debug.Log("language id= " + this.info.id);
         lan.SetLanguage(this.info.id);
+        AppSceneBase.main.UpdateLanguage();
+
         cc.Common.SetItemOfKey(cc.CommonRes.KEY_LANGUAGE, this.info.id);
         this.target.OnClickBtnBack();
     },
@@ -63,7 +65,7 @@ cc.Class({
         var oft = 20;
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.imageBg,
-            pic: cc.CloudRes.main().uiRootPath+ "/" + pic,
+            pic: cc.CloudRes.main().uiRootPath + "/" + pic,
             type: cc.Sprite.Type.SLICED,//SLICED
             left: oft,
             right: oft,

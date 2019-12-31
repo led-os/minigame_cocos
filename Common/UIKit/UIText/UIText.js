@@ -46,14 +46,19 @@ var UIText = cc.Class({
 
 
     onLoad: function () {
-
-        this.Init();
+        this._super();
+        if (!cc.Common.isBlankString(this.keyColor)) {
+            this.color = this.GetKeyColor();
+        }
+        if (!cc.Common.isBlankString(this.keyText)) {
+            this.text = this.GetKeyText();
+        }
     },
 
-    Init: function () {
 
+    LayOut() {
+        this._super();
     },
-
 
 
 });

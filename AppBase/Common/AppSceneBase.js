@@ -224,6 +224,18 @@ var AppSceneBase = cc.Class({
 
     },
 
+    UpdateLanguage() {
+        if (this.rootViewController != null) {
+            this.rootViewController.UpdateLanguage();
+        }
+
+        var listPopup = cc.PopUpManager.main().listItem;
+        var len = this.listPopup.length;
+        for (var i = 0; i < len; i++) {
+            var ui = listPopup[i];
+            ui.UpdateLanguage();
+        }
+    },
 
     // update (dt) {},
 });

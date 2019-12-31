@@ -17,7 +17,7 @@ cc.Class({
             default: null,
             type: UIView
         },
-        naviController:null,
+        naviController: null,
 
         title: 'title'
     },
@@ -27,18 +27,18 @@ cc.Class({
 
         if (this.objController == null) {
             this.objController = new cc.Node('Controller');
-            this.objController.setContentSize(cc.Common.appSceneMain.sizeCanvas); 
-          
+            this.objController.setContentSize(cc.Common.appSceneMain.sizeCanvas);
+
         }
         this.ViewDidLoad();
-        
+
 
     },
 
     DestroyObjController: function () {
         this.ViewDidUnLoad();
         if (this.objController != null) {
-            this.objController.destroy(); 
+            this.objController.destroy();
             this.objController = null;
         }
     },
@@ -70,8 +70,21 @@ cc.Class({
     },
 
     ViewDidUnLoad: function () {
-    }
-
+    },
+    UpdateLanguage() {
+        if (this.view == null) {
+            return;
+        }
+        //child
+        var children = this.objController._children;
+        for (var i = 0; i < children.length; i++) {
+            var child = children[i];
+            var viewchild = child.getComponent(cc.UIView);
+            if (viewchild != null) {
+                viewchild.UpdateLanguage();
+            }
+        }
+    },
 
 });
 

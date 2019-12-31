@@ -18,6 +18,9 @@ var JsonUtil = cc.Class({
         },
         //bool   //JsonData data, string key
         ContainsKey: function (data, key) {
+            if (cc.Common.isBlankString(key)) {
+                return false;
+            }
             if (data == null) {
                 return false;
             }

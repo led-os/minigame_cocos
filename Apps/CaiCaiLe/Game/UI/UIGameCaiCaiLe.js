@@ -218,16 +218,16 @@ var UIGameCaiCaiLe = cc.Class({
 
             // ViewAlertManager.main.ShowFull(title, msg, yes, no, false, STR_KEYNAME_VIEWALERT_GOLD, OnUIViewAlertFinished);
 
-            cc.ViewAlertManager.main().ShowFull(title, msg, yes, no, false, ,
-                function (alert, isYes) {
-                    if (isYes) {
-                    } else {
+            // cc.ViewAlertManager.main().ShowFull(title, msg, yes, no, false, 
+            //     function (alert, isYes) {
+            //         if (isYes) {
+            //         } else {
 
-                    }
-                    cc.Common.SetBoolOfKey(key, true);
+            //         }
+            //         cc.Common.SetBoolOfKey(key, true);
 
-                }.bind(this)
-            );
+            //     }.bind(this)
+            // );
             /*
             {
                 title: "",
@@ -245,6 +245,7 @@ var UIGameCaiCaiLe = cc.Class({
                 msg: msg,
                 yes: yes,
                 no: no,
+                isShowBtnNo: false,
                 name: "STR_KEYNAME_VIEWALERT_USER_GUIDE",
                 finish: function (ui, isYes) {
                     if (isYes) {
@@ -252,124 +253,124 @@ var UIGameCaiCaiLe = cc.Class({
 
                     }
                 }.bind(this),
-            })
+            });
         };
-    }
 
-},
-    OnClickBtnTips() {
-
-    if(cc.Common.gold <= 0) {
-        this.OnNotEnoughGold(this.uiWordBar, false);
-return;
-        }
-
-//if (isonlytext && (Common.appKeyName != GameRes.GAME_RIDDLE))
-if (!this.uiWordBar.node.active) {
-    if (this.uiWordContent != null) {
-        this.uiWordContent.OnTips();
-    }
-
-    cc.Common.gold--;
-    if (cc.Common.gold < 0) {
-        cc.Common.gold = 0;
-    }
-    this.OnNotEnoughGold(this.uiWordBar, true);
-    if (this.CheckAllAnswerFinish()) {
-        this.OnGameWinFinish(this.uiWordBar, false);
-    }
-}
-else {
-    if (this.uiWordBar != null) {
-        this.uiWordBar.OnTips();
-    }
-}
 
     },
-//interface
-OnGameWinFinish(ui, isFail) {
-    var info = cc.GameLevelParse.main().GetItemInfo();
-    var strPrefab = "";
-    //show game win
-    if (isFail) {
-        strPrefab = "App/Prefab/Game/UIGameFail";
+    OnClickBtnTips() {
 
-    }
-    else {
-        cc.Debug.Log("caicaile OnGameWin");
-        // LevelManager.main.gameLevelFinish = LevelManager.main.gameLevel;
-        //   this.OnGameWinBase();
-        // this.ShowGameWinAlert();
-        // if (gameBase != null) {
-        //     Debug.Log("caicaile OnGameWin GAME_STATUS_FINISH+info.id=" + info.id);
-        //     gameBase.SetGameItemStatus(info, GameBase.GAME_STATUS_FINISH);
+        //     if(cc.Common.gold <= 0) {
+        //         this.OnNotEnoughGold(this.uiWordBar, false);
+        // return;
+        //         }
+
+        //if (isonlytext && (Common.appKeyName != GameRes.GAME_RIDDLE))
+        // if (!this.uiWordBar.node.active) {
+        //     if (this.uiWordContent != null) {
+        //         this.uiWordContent.OnTips();
+        //     }
+
+        //     cc.Common.gold--;
+        //     if (cc.Common.gold < 0) {
+        //         cc.Common.gold = 0;
+        //     }
+        //     this.OnNotEnoughGold(this.uiWordBar, true);
+        //     if (this.CheckAllAnswerFinish()) {
+        //         this.OnGameWinFinish(this.uiWordBar, false);
+        //     }
+        // }
+        // else {
+        //     if (this.uiWordBar != null) {
+        //         this.uiWordBar.OnTips();
+        //     }
         // }
 
-        if (info.gameType == cc.GameRes.GAME_TYPE_CONNECT) {
-            //PopUpManager.main.Show<UIGameWinIdiomConnect>("App/Prefab/Game/UIGameWinIdiomConnect");
+    },
+    //interface
+    OnGameWinFinish(ui, isFail) {
+        var info = cc.GameLevelParse.main().GetItemInfo();
+        var strPrefab = "";
+        //show game win
+        if (isFail) {
+            strPrefab = "App/Prefab/Game/UIGameFail";
+
         }
         else {
-            //PopUpManager.main.Show<UIGameWin>("App/Prefab/Game/UIGameWin");
-        }
-        // if (cc.Config.main().appKeyName == cc.GameRes.GAME_IDIOM) 
-        {
-            strPrefab = "App/Prefab/Game/UIGameWinIdiom";
-        }
+            cc.Debug.Log("caicaile OnGameWin");
+            // LevelManager.main.gameLevelFinish = LevelManager.main.gameLevel;
+            //   this.OnGameWinBase();
+            // this.ShowGameWinAlert();
+            // if (gameBase != null) {
+            //     Debug.Log("caicaile OnGameWin GAME_STATUS_FINISH+info.id=" + info.id);
+            //     gameBase.SetGameItemStatus(info, GameBase.GAME_STATUS_FINISH);
+            // }
 
-
-    }
-
-
-    cc.PopUpManager.main().Show({
-        prefab: strPrefab,
-        open: function (ui) {
-            ui.UpdateItem(info);
-        }.bind(this),
-        close: function (ui) {
-        }.bind(this),
-    });
-
-},
-
-OnUIWordBoardDidClick: function (uiBorad, item) {
-
-    cc.Debug.Log("UIWordBoardDidClick");
-    var infoGuanka = cc.GameLevelParse.main().GetItemInfo();
-    if (infoGuanka.gameType == cc.GameRes.GAME_TYPE_TEXT) {
-        if (this.uiWordContent.CheckAllFill()) {
-            this.uiWordContent.OnAddWord(item.wordDisplay);
-            item.ShowContent(false);
-            if (CheckAllAnswerFinish()) {
-                this.OnGameWinFinish(this.uiWordBar, false);
+            if (info.gameType == cc.GameRes.GAME_TYPE_CONNECT) {
+                //PopUpManager.main.Show<UIGameWinIdiomConnect>("App/Prefab/Game/UIGameWinIdiomConnect");
             }
             else {
-                this.OnGameWinFinish(this.uiWordBar, true);
+                //PopUpManager.main.Show<UIGameWin>("App/Prefab/Game/UIGameWin");
             }
-        }
-    }
-    if (this.uiWordBar.node.active) {
-        if (!this.uiWordBar.CheckAllFill()) {
-            this.uiWordBar.AddWord(item.wordDisplay);
-            item.ShowContent(false);
-        }
-    }
-    else {
-        if (this.uiWordContent != null) {
-            this.uiWordContent.OnAddWord(item.wordDisplay);
-            item.ShowContent(false);
-            var ret = this.uiWordContent.CheckAllAnswerFinish();
-            cc.Debug.Log("CheckAllAnswer ret=" + ret);
-            if (ret) {
-                this.OnGameWinFinish(this.uiWordBar, false);
+            // if (cc.Config.main().appKeyName == cc.GameRes.GAME_IDIOM) 
+            {
+                strPrefab = "App/Prefab/Game/UIGameWinIdiom";
             }
+
+
         }
 
-    }
-},
 
-OnUIWordBarDidBackWord: function (ui, item) {
-    this.uiWordBoard.BackWord(item.wordDisplay);
-}
+        cc.PopUpManager.main().Show({
+            prefab: strPrefab,
+            open: function (ui) {
+                ui.UpdateItem(info);
+            }.bind(this),
+            close: function (ui) {
+            }.bind(this),
+        });
+
+    },
+
+    OnUIWordBoardDidClick: function (uiBorad, item) {
+
+        cc.Debug.Log("UIWordBoardDidClick");
+        var infoGuanka = cc.GameLevelParse.main().GetItemInfo();
+        if (infoGuanka.gameType == cc.GameRes.GAME_TYPE_TEXT) {
+            if (this.uiWordContent.CheckAllFill()) {
+                this.uiWordContent.OnAddWord(item.wordDisplay);
+                item.ShowContent(false);
+                if (CheckAllAnswerFinish()) {
+                    this.OnGameWinFinish(this.uiWordBar, false);
+                }
+                else {
+                    this.OnGameWinFinish(this.uiWordBar, true);
+                }
+            }
+        }
+        if (this.uiWordBar.node.active) {
+            if (!this.uiWordBar.CheckAllFill()) {
+                this.uiWordBar.AddWord(item.wordDisplay);
+                item.ShowContent(false);
+            }
+        }
+        else {
+            if (this.uiWordContent != null) {
+                this.uiWordContent.OnAddWord(item.wordDisplay);
+                item.ShowContent(false);
+                var ret = this.uiWordContent.CheckAllAnswerFinish();
+                cc.Debug.Log("CheckAllAnswer ret=" + ret);
+                if (ret) {
+                    this.OnGameWinFinish(this.uiWordBar, false);
+                }
+            }
+
+        }
+    },
+
+    OnUIWordBarDidBackWord: function (ui, item) {
+        this.uiWordBoard.BackWord(item.wordDisplay);
+    }
 
 
 });

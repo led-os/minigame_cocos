@@ -1,6 +1,6 @@
 var UIViewController = require("UIViewController");
 var UIHomeBase = require("UIHomeBase");
-//var Common = require("Common");
+var AdConfigParser = require("AdConfigParser");
 var GameViewController = require("GameViewController");
 
 var HomeViewController = cc.Class({
@@ -17,6 +17,7 @@ var HomeViewController = cc.Class({
             default: null,
             type: UIHomeBase
         },
+        runCount: 0,
 
 
     },
@@ -26,7 +27,7 @@ var HomeViewController = cc.Class({
         // cc.CloudRes.main().StartDownload();
     },
     CreateUI: function () {
-        cc.Debug.Log("HomeViewController CreateUI"); 
+        cc.Debug.Log("HomeViewController CreateUI");
         var node = cc.instantiate(this.uiPrefab);
         this.ui = node.getComponent(UIHomeBase);
         this.ui.SetController(this);
@@ -36,7 +37,22 @@ var HomeViewController = cc.Class({
         );
 
         // CloudResViewController.main().Show(null, null);
+        if (this.runCount == 0) {
+            //至少在home界面显示一次视频广告
+            //AdKitCommon.main.callbackAdVideoFinish = OnAdKitAdVideoFinish;
+            //   if (uiHome != null)
+            // {
+            //     uiHome.OnClickBtnAdVideo();
+            // }
 
+            //至少在home界面显示一次开机插屏
+            // var type = AdConfigParser.SOURCE_TYPE_INSERT;
+            // var source = cc.Source.GDT;
+            // cc.AdInsert.main().InitAd(source); 
+            // cc.AdKitCommon.main.ShowAdInsert(100);
+
+        }
+        this.runCount++;
     },
 
     LoadPrefabDefault: function () {

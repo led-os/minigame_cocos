@@ -17,12 +17,28 @@ var UIImage = cc.Class({
 
 
     onLoad: function () {
-        this.Init();
+        this._super();
+        var res = this.GetKeyImage();
+        var board = null;
+        if (cc.ImageRes.main().ContainsBoard(this.keyImage)) {
+            board = cc.ImageRes.main().GetImageBoardSync(this.keyImage);
+        }
+        if (!cc.Common.isBlankString(res)) {
+            this.UpdateImage({
+                pic: cc.CloudRes.main().uiRootPath + "/" + res,
+                type: board ? cc.Sprite.Type.SLICED : cc.Sprite.Type.SIMPLE,//SLICED
+                left: board ? board.x : 0,
+                right: board ? board.y : 0,
+                top: board ? board.z : 0,
+                bottom: board ? board.w : 0,
+                success: function () {
+                    this.LayOut();
+                }.bind(this),
+            });
+        }
+
     },
 
-    Init: function () {
-
-    },
 
 
     /*
@@ -53,6 +69,9 @@ var UIImage = cc.Class({
                 if (obj.success != null) {
                     obj.success();
                 }
+                if (this.objCallBack != null) {
+                    this.objCallBack.OnUpdateImageFinish(this);
+                }
             }.bind(this),
             fail: function () {
                 if (obj.fail != null) {
@@ -62,7 +81,9 @@ var UIImage = cc.Class({
         });
     },
 
-
+    LayOut() {
+        this._super();
+    },
 
 });
 

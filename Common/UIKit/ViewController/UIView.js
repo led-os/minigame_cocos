@@ -23,6 +23,16 @@ cc.Class({
         keyText: "",
         keyColor: "",
         keyImage: "",
+
+
+        /*
+     { 
+     OnUpdateImageFinish: function (ui) {
+     },  
+ 
+     }
+     */
+        objCallBack: null,
     },
 
     onLoad: function () {
@@ -113,6 +123,18 @@ cc.Class({
             ret = cc.Language.main().GetString(this.keyText);
         }
         return ret;
+    },
+
+    GetKeyImage() {
+        var ret = "";
+        if (!cc.Common.isBlankString(this.keyImage)) {
+            ret = cc.ImageRes.main().GetImageSync(this.keyImage);
+        }
+        return ret;
+    },
+
+    UpdateLanguage() {
+
     },
 
 });
