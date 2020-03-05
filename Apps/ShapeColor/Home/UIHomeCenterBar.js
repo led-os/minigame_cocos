@@ -77,7 +77,7 @@ cc.Class({
         }.bind(this)
         );
     },
-    GotoGameByModeInteranl: function () {
+    GotoGameByModeInteranl: function () { 
         if (this.controller != null) {
             var navi = this.controller.naviController;
             var total = cc.LevelManager.main().placeTotal;

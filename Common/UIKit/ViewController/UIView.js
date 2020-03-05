@@ -1,7 +1,7 @@
 var UIViewController = require("UIViewController");
 // var Common = require("Common");
 
-cc.Class({
+var UIView = cc.Class({
     extends: cc.Component,
     properties: {
         mainCam: {
@@ -9,7 +9,7 @@ cc.Class({
             default: null,
             type: cc.Camera//GameObject
         },
-        controller: {
+        _controller: {
             default: null,
             type: UIViewController,
         },
@@ -23,6 +23,40 @@ cc.Class({
         keyText: "",
         keyColor: "",
         keyImage: "",
+
+        controller: {
+            get: function () {
+                if (this._controller == null) {
+                    while (1) {
+                        var par = this.node.parent;
+                        // cc.Debug.Log("UIHomeCenterBar controller ");
+                        if (par == null) {
+                            cc.Debug.Log("UIView controller par is null");
+                            break;
+                        } else {
+                            cc.Debug.Log("UIView controller par");
+                        }
+                        var view = par.getComponent(UIView);
+                        //view = par.view;
+                        if (view != null) {
+                            var type = typeof view;
+                            cc.Debug.Log("UIView type=" + type);
+                            this._controller = view._controller;
+                            if (this._controller != null) {
+                                break;
+                            }
+                        } else {
+                            break;
+                        }
+
+                    }
+                }
+                return this._controller;
+            },
+            set: function (value) {
+                this._controller = value;
+            },
+        },
 
 
         /*
@@ -38,6 +72,7 @@ cc.Class({
     onLoad: function () {
         //this._super();
         //this.node.setContentSize(this.node.parent.getContentSize());
+        // this.node.view = this;
     },
 
     //UIViewController

@@ -13,7 +13,7 @@ cc.Class({
             default: null,
             type: cc.Button
         },
-
+  
         indexAction: 0,
         listBtns: {
             default: [],
