@@ -36,10 +36,10 @@ var ViewAlertManager = cc.Class({
     },
 
     ShowInternal: function (title, msg, yes, no) {
-
+        //cc.Debug.Log("ShowInternal SetText title ="+title+" msg="+msg);
         var node = cc.instantiate(this.uiPrefab);
         this.ui = node.getComponent(UIViewAlert);
-        this.ui.callback = this.OnUIViewAlertFinished.bind(this);
+       // this.ui.callback = this.OnUIViewAlertFinished.bind(this);
 
         this.ui.keyName = this.keyName;
         this.ui.SetText(title, msg, yes, no);
@@ -76,18 +76,13 @@ var ViewAlertManager = cc.Class({
 */
 
     ShowFull: function (obj) {
-        this.ShowFull(obj.title, obj.msg, obj.yes, obj.no, obj.isShowBtnNo, obj.name, obj.finish);
-    },
-    //string
-    ShowFull: function (title, msg, yes, no, isShowBtnNo, name, _callback) {
-        this.keyName = name;
-        this.callback = _callback;
-        this.Show(title, msg, yes, no);
-
+       // cc.Debug.Log("ShowFull SetText title ="+obj.title+" msg="+obj.msg); 
+        this.keyName = obj.name;
+        this.callback = obj.finish;
+        this.Show(obj.title, obj.msg, obj.yes, obj.no);
         //必须在show之后设置
-        this.ShowBtnNo(isShowBtnNo);
-    },
-
+        this.ShowBtnNo(obj.isShowBtnNo);
+    }, 
     Hide: function () {
         if (this.ui != null) {
             // GameObject.DestroyImmediate(ui);

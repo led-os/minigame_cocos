@@ -37,16 +37,8 @@ var UIGameBase = cc.Class({
             success: function () {
             }.bind(this),
         });
-
-
-        this.btnBack.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
-            success: function () {
-            }.bind(this),
-        });
-
-        this.UpdateBtnMusic();
+ 
+        //this.UpdateBtnMusic();
     },
     LoadGamePrefab: function () {
         var strPrefab = "AppCommon/Prefab/Game/Game" + cc.Config.main().appType;

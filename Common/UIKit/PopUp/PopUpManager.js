@@ -1,5 +1,3 @@
-
-var UIGameWinIdiom = require("UIGameWinIdiom");
 var UIViewPop = require("UIViewPop"); 
 var PopUpManager = cc.Class({
     extends: cc.Object,

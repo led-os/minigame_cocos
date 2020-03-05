@@ -35,7 +35,7 @@ var GameManager = cc.Class({
     },  
  
     GotoPlayAgain: function () {
-        GameViewController.main().gameBase.UpdateGuankaLevel(this.gameLevel);
+        GameViewController.main().gameBase.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
     },
   
 });

@@ -30,7 +30,7 @@ cc.Class({
         this.textTitle.node.active = false;
         this.UpdateImage(this.info.pic);
 
-        this.textTitle.node.active = true;
+        // this.textTitle.node.active = true;
         this.textTitle.fontSize = 128;
         var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(index);
 

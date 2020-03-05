@@ -15,7 +15,7 @@ cc.Class({
 
     },
 
-    init: function init(index, data, reload, group) {
+    init: function(index, data, reload, group) {
         this.node.active = true;
         this.index = index;
         if (index >= data.array.length) {

@@ -60,18 +60,18 @@ var LayOutBetween = cc.Class({
         }
         //左右
         if (this.align == cc.Align.Horizontal) {
-            x = cc.LayoutUtil.main().GetBetweenCenterX(this.targetMain, this.target2);
+            x = cc.LayoutUtil.main().GetBetweenCenterX(this.targetMain, this.target2) + this.offset.x;
         }
         if (this.align == cc.Align.Vertical) {
-            y = cc.LayoutUtil.main().GetBetweenCenterY(this.targetMain, this.target2);
+            y = cc.LayoutUtil.main().GetBetweenCenterY(this.targetMain, this.target2) + this.offset.y;
         }
 
         //屏幕边界
         if ((this.align == cc.Align.LEFT) || (this.align == cc.Align.RIGHT)) {
-            x = cc.LayoutUtil.main().GetBetweenScreenCenter(this.targetMain, this.align);
+            x = cc.LayoutUtil.main().GetBetweenScreenCenter(this.targetMain, this.align) + this.offset.x;
         }
         if ((this.align == cc.Align.UP) || (this.align == cc.Align.DOWN)) {
-            y = cc.LayoutUtil.main().GetBetweenScreenCenter(this.targetMain, this.align);
+            y = cc.LayoutUtil.main().GetBetweenScreenCenter(this.targetMain, this.align) + this.offset.y;
         }
         cc.Debug.Log("LayOutBetween x=" + x + " y=" + y + " align=" + this.align);
         this.node.setPosition(x, y);

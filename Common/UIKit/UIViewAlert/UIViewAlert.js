@@ -17,23 +17,24 @@ var UIViewAlert = cc.Class({
         this._super();
         var oft = 32;
         this.imageBg.UpdateImage({
-            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_ALERT_BG,//IMAGE_HOME_NAME_BG
+            pic: cc.CloudRes.main().uiRootPath + "/" + this.GetImageOfKey("IMAGE_ALERT_BG"),//IMAGE_HOME_NAME_BG
             type: cc.Sprite.Type.SLICED,//SLICED
             left: oft,
             right: oft,
             top: oft,
             bottom: oft,
             success: function () {
+                this.LayOut();
             }.bind(this),
         });
 
         this.btnYes.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_COMMON,
+            bg: cc.CloudRes.main().uiRootPath + "/" + this.GetImageOfKey("IMAGE_BTN_COMMON"),
             success: function () {
             }.bind(this),
         });
         this.btnNo.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_COMMON,
+            bg: cc.CloudRes.main().uiRootPath + "/" + this.GetImageOfKey("IMAGE_BTN_COMMON"),
             success: function () {
             }.bind(this),
         });
@@ -49,12 +50,12 @@ var UIViewAlert = cc.Class({
             var size = cc.Common.appSceneMain.sizeCanvas;
             w = Math.min(size.width, size.height) * ratio;
             h = w * 9 / 16;
-            this.node.setContentSize(sizeCanvas * ratio);
+            this.node.setContentSize(size * ratio);
             this._super();
         }
     },
     SetText: function (title, msg, yes, no) {
-
+        //cc.Debug.Log("SetText title ="+title+" msg="+msg);
         this.textTitle.text = title;
         this.textMsg.text = msg;
 

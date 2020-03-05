@@ -133,6 +133,14 @@ cc.Class({
         return ret;
     },
 
+    GetImageOfKey(key) {
+        var ret = "";
+        if (!cc.Common.isBlankString(key)) {
+            ret = cc.ImageRes.main().GetImageSync(key);
+        }
+        return ret;
+    },
+
     UpdateLanguage() {
 
     },
