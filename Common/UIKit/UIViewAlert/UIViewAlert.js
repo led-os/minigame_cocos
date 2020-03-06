@@ -15,29 +15,7 @@ var UIViewAlert = cc.Class({
     },
     onLoad: function () {
         this._super();
-        var oft = 32;
-        this.imageBg.UpdateImage({
-            pic: cc.CloudRes.main().uiRootPath + "/" + this.GetImageOfKey("IMAGE_ALERT_BG"),//IMAGE_HOME_NAME_BG
-            type: cc.Sprite.Type.SLICED,//SLICED
-            left: oft,
-            right: oft,
-            top: oft,
-            bottom: oft,
-            success: function () {
-                this.LayOut();
-            }.bind(this),
-        });
 
-        this.btnYes.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + this.GetImageOfKey("IMAGE_BTN_COMMON"),
-            success: function () {
-            }.bind(this),
-        });
-        this.btnNo.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + this.GetImageOfKey("IMAGE_BTN_COMMON"),
-            success: function () {
-            }.bind(this),
-        });
         this.LayOut();
     },
 
@@ -50,7 +28,10 @@ var UIViewAlert = cc.Class({
             var size = cc.Common.appSceneMain.sizeCanvas;
             w = Math.min(size.width, size.height) * ratio;
             h = w * 9 / 16;
-            this.node.setContentSize(size * ratio);
+            // h = w / 2;
+            cc.Debug.Log("UIViewAlert setContentSize = w=" + w + " h=" + h);
+            this.node.setContentSize(new cc.Size(w, h));
+
             this._super();
         }
     },

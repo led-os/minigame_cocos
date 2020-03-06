@@ -89,6 +89,8 @@ var ViewAlertManager = cc.Class({
                 //ui.UpdateItem(info);
                 ui.keyName = obj.name;
                 ui.SetText(obj.title, obj.msg, obj.yes, obj.no);
+                ui.ShowBtnNo(obj.isShowBtnNo);
+                ui.callback = obj.finish;
             }.bind(this),
             close: function (ui) {
             }.bind(this),

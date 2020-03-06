@@ -18,25 +18,7 @@ var UIImage = cc.Class({
 
     onLoad: function () {
         this._super();
-        var res = this.GetKeyImage();
-        var board = null;
-        if (cc.ImageRes.main().ContainsBoard(this.keyImage)) {
-            board = cc.ImageRes.main().GetImageBoardSync(this.keyImage);
-        }
-        if (!cc.Common.isBlankString(res)) {
-            this.UpdateImage({
-                pic: cc.CloudRes.main().uiRootPath + "/" + res,
-                type: board ? cc.Sprite.Type.SLICED : cc.Sprite.Type.SIMPLE,//SLICED
-                left: board ? board.x : 0,
-                right: board ? board.y : 0,
-                top: board ? board.z : 0,
-                bottom: board ? board.w : 0,
-                success: function () {
-                    this.LayOut();
-                }.bind(this),
-            });
-        }
-
+        this.UpdateImageKey(this.keyImage); 
     },
 
 
@@ -56,6 +38,29 @@ var UIImage = cc.Class({
           }, 
       }
   */
+
+    UpdateImageKey: function (key) {
+        this.keyImage = key;
+        var pic = this.GetImageOfKey(key);
+        var board = null;
+        if (cc.ImageRes.main().ContainsBoard(key)) {
+            board = cc.ImageRes.main().GetImageBoardSync(key);
+        }
+        if (!cc.Common.isBlankString(pic)) {
+            this.UpdateImage({
+                pic: cc.CloudRes.main().uiRootPath + "/" + pic,
+                type: board ? cc.Sprite.Type.SLICED : cc.Sprite.Type.SIMPLE,//SLICED
+                left: board ? board.x : 0,
+                right: board ? board.y : 0,
+                top: board ? board.z : 0,
+                bottom: board ? board.w : 0,
+                success: function () {
+                    this.LayOut();
+                }.bind(this),
+            });
+        }
+    }
+    ,
     UpdateImage: function (obj) {
         cc.TextureUtil.UpdateSpriteImage({
             sprite: this.image,

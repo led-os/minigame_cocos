@@ -105,19 +105,7 @@ cc.Class({
     OnClickBtnShape: function (event, customEventData) {
 
         ////3.主动拉起分享接口
-        // cc.loader.loadRes(cc.AppRes.IMAGE_HOME_BG, function (err, data) {
-        //     console.log("share image=" + data.url);
-        //     wx.shareAppMessage({
-        //         title: "经典打飞机游戏始终好玩如初，来吧！一起回味经典的乐趣。",
-        //         imageUrl: data.url,
-        //         success(res) {
-        //             console.log(res)
-        //         },
-        //         fail(res) {
-        //             console.log(res)
-        //         }
-        //     })
-        // }); pp
+         
 
         // if (!this.isActionFinish) {
         //    // return;

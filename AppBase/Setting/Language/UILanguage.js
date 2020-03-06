@@ -11,10 +11,10 @@ cc.Class({
         btnBack: cc.UIButton,
         tableView: cc.TableView,
 
-        imageBg: cc.Sprite,
-        imageBoard: cc.Sprite,
+        imageBg: cc.UIImage,
+        imageBoard: cc.UIImage,
         nodeContent: cc.Node,
-        textTitle: cc.Label,
+        textTitle: cc.UIText,
         oneCellNum: 1,
         heightCell: 160,
         listItem: {
@@ -27,28 +27,22 @@ cc.Class({
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
         this.oneCellNum = 1;
-        this.textTitle.string = cc.Language.main().GetString("STR_LANGUAGE");
+        this.textTitle.text = cc.Language.main().GetString("STR_LANGUAGE");
         this.UpdateItem();
 
         var oft = 64;
-        cc.TextureUtil.UpdateSpriteImage({
-            sprite: this.imageBoard,
-            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_Language_Bg,
-            type: cc.Sprite.Type.SLICED,//SLICED
-            left: oft,
-            right: oft,
-            top: oft,
-            bottom: oft,
-            success: function () {
-            }.bind(this),
-        });
-
-        this.btnBack.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_CLOSE,
-            success: function () {
-            }.bind(this),
-        });
+        // cc.TextureUtil.UpdateSpriteImage({
+        //     sprite: this.imageBoard,
+        //     pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_Language_Bg,
+        //     type: cc.Sprite.Type.SLICED,//SLICED
+        //     left: oft,
+        //     right: oft,
+        //     top: oft,
+        //     bottom: oft,
+        //     success: function () {
+        //     }.bind(this),
+        // });
+ 
 
         this.LayOut();
     },

@@ -31,19 +31,12 @@ var AppRes = cc.Class({
 
         //audio 
         AUDIO_BG: "audio/Bg",
-        GUANKA_BG: "UI/GuankaBg.jpg",
-        PLACE_BG: "UI/LearnProgressBg.png",
-        HOME_BG: "UI/LearnProgressBg.png",
-        SETTING_BG: "UI/SettingBg.png",
 
 
         //image
         IMAGE_BtnMusicOn: "AppCommon/UI/Home/BtnMusicOn",
         IMAGE_BtnMusicOff: "AppCommon/UI/Home/BtnMusicOff",
-
-        IMAGE_HOME_BG: "AppCommon/UI/Home/LearnProgressBg",
-        IMAGE_BTN_SWITCH_UNSEL: "AppCommon/UI/Common/BtnSwitchUnSel",
-        IMAGE_BTN_SWITCH_SEL: "AppCommon/UI/Common/BtnSwitchSel",
+ 
 
 
         IMAGE_GUANKA_CELL_ITEM_BG_UNLOCK: "UI/Guanka/guanka_item_unlock",

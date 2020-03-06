@@ -6,8 +6,8 @@ cc.Class({
     extends: UICellItemBase,
     //extends: require('viewCell'),
     properties: {
-        imageBg: cc.Sprite,
-        textTitle: cc.Label,
+        imageBg: cc.UIImage,
+        textTitle: cc.UIText,
     },
     onLoad: function () {
         this._super();
@@ -33,13 +33,13 @@ cc.Class({
         var lan = cc.Language.main();
         cc.Debug.Log("language id= " + this.info.id);
         lan.SetLanguage(this.info.id);
-        AppSceneBase.main.UpdateLanguage();
+        cc.Common.appSceneMain.UpdateLanguage();
 
         cc.Common.SetItemOfKey(cc.CommonRes.KEY_LANGUAGE, this.info.id);
         this.target.OnClickBtnBack();
     },
     UpdateItem: function (info) {
-        this.textTitle.string = info.title;
+        this.textTitle.text = info.title;
         this.UpdateImageBg(UISetting.listImage[this.index % 3]);
     },
     UpdateImageBg: function (pic) {
@@ -62,18 +62,19 @@ cc.Class({
         //     }
         // }.bind(this));
 
-        var oft = 20;
-        cc.TextureUtil.UpdateSpriteImage({
-            sprite: this.imageBg,
-            pic: cc.CloudRes.main().uiRootPath + "/" + pic,
-            type: cc.Sprite.Type.SLICED,//SLICED
-            left: oft,
-            right: oft,
-            top: oft,
-            bottom: oft,
-            success: function () {
-            }.bind(this),
-        });
+        // var oft = 20;
+        // cc.TextureUtil.UpdateSpriteImage({
+        //     sprite: this.imageBg,
+        //     pic: cc.CloudRes.main().uiRootPath + "/" + pic,
+        //     type: cc.Sprite.Type.SLICED,//SLICED
+        //     left: oft,
+        //     right: oft,
+        //     top: oft,
+        //     bottom: oft,
+        //     success: function () {
+        //     }.bind(this),
+        // });
+        this.imageBg.UpdateImageKey(pic);
     },
 });
 

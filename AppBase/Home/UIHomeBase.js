@@ -20,7 +20,7 @@ cc.Class({
             type: cc.Node
         },
         btnFrendBoard: cc.Button,
-        imageBg: cc.Sprite,
+        imageBg: cc.UIImage,
         imageNameBg: cc.UIImage,// cc.Sprite,
         textName: cc.UIText,//cc.Label,
         uiPrefabAppCenter: cc.Prefab,
@@ -50,15 +50,7 @@ cc.Class({
                 cc.Tts.Speak(name);
             }
 
-        }
-
-        cc.TextureUtil.UpdateSpriteImage({
-            sprite: this.imageBg,
-            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.HOME_BG,
-            success: function () {
-            }.bind(this),
-        });
-
+        } 
         //w = 1024;
 
         var oft = 50;

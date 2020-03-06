@@ -47,28 +47,7 @@ cc.Class({
  
         if (cc.Common.main().isAndroid) {
 
-        }
-
-        var dirRoot = cc.Common.CLOUD_RES_DIR;
-        if (cc.Common.main().isWeiXin) {
-            dirRoot = cc.FileSystemWeixin.main().GetRootDirPath() + "/" + cc.Common.CLOUD_RES_DIR_NAME;
-        }
-        var strbg = dirRoot + "/" + cc.AppRes.HOME_BG;
-        cc.TextureCache.main.Load(strbg, function (err, tex) {
-            if (err) {
-                cc.Debug.Log(err.message || err);
-                return;
-            }
-            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
-            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
-            if (lyscale) {
-                lyscale.LayOut();
-            }
-        }.bind(this));
-
-       // cc.ShaderManager.main().Add(require("ShaderShapeColor"));
-       // cc.ShaderManager.main().Add(require("Glowing"));
-
+        } 
         //var ev = this.node.addComponent(cc.UITouchEvent);
 
         // cc.AudioPlay.main().PlayFile("App/Audio/BtnClick");

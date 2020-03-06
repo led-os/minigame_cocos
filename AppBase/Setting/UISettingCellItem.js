@@ -7,8 +7,8 @@ cc.Class({
     extends: UICellItemBase,
     //extends: require('viewCell'),
     properties: {
-        imageBg: cc.Sprite,
-        textTitle: cc.Label,
+        imageBg: cc.UIImage,
+        textTitle: cc.UIText,
         btnSwitch: cc.UIButton,
     },
 
@@ -73,7 +73,7 @@ cc.Class({
 
 
     UpdateItem: function (info) {
-        this.textTitle.string = info.title;
+        this.textTitle.text = info.title;
         this.btnSwitch.node.active = false;
         if ((info.tag == UISetting.TAG_SETTING_BACKGROUND_MUSIC) || (info.tag == UISetting.TAG_SETTING_BTN_SOUND)) {
             this.btnSwitch.node.active = true;
@@ -83,11 +83,11 @@ cc.Class({
         this.UpdateImageBg(UISetting.listImage[this.index % 3]);
     },
     UpdateBtnSwitch: function (isSel) {
-        var strImage = cc.AppRes.IMAGE_BTN_SWITCH_UNSEL;
+        var strImage = this.GetImageOfKey("IMAGE_BTN_SWITCH_UNSEL");
         if (isSel) {
-            strImage = cc.AppRes.IMAGE_BTN_SWITCH_SEL;
+            strImage = this.GetImageOfKey("IMAGE_BTN_SWITCH_SEL");
         }
-        this.btnSwitch.UpdateImage({ 
+        this.btnSwitch.UpdateImage({
             bg: cc.CloudRes.main().uiRootPath + "/" + strImage,
             success: function () {
             }.bind(this),
@@ -117,19 +117,20 @@ cc.Class({
         //     }
         // }.bind(this));
 
-        var oft = 20;
-        cc.TextureUtil.UpdateSpriteImage({
-            sprite: this.imageBg,
-            pic: cc.CloudRes.main().uiRootPath + "/" + pic,
-            type: cc.Sprite.Type.SLICED,//SLICED
-            left: oft,
-            right: oft,
-            top: oft,
-            bottom: oft,
-            success: function () {
-            }.bind(this),
-        });
+        // var oft = 20;
+        // cc.TextureUtil.UpdateSpriteImage({
+        //     sprite: this.imageBg,
+        //     pic: cc.CloudRes.main().uiRootPath + "/" + pic,
+        //     type: cc.Sprite.Type.SLICED,//SLICED
+        //     left: oft,
+        //     right: oft,
+        //     top: oft,
+        //     bottom: oft,
+        //     success: function () {
+        //     }.bind(this),
+        // });
 
+        this.imageBg.UpdateImageKey(pic);
     },
 
     OnClickBtnSwitch: function (event, customEventData) {

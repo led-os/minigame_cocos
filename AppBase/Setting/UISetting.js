@@ -18,7 +18,7 @@ var UISetting = cc.Class({
         TAG_SETTING_RESTORE_IAP: 6,
         TAG_SETTING_LAST: 7,
 
-        listImage: [cc.AppRes.IMAGE_CELL_BG_BLUE, cc.AppRes.IMAGE_CELL_BG_ORINGE, cc.AppRes.IMAGE_CELL_BG_YELLOW],
+        listImage: ["IMAGE_CELL_BG_BLUE", "IMAGE_CELL_BG_ORINGE", "IMAGE_CELL_BG_YELLOW"],
     },
     properties: {
         btnBack: {
@@ -26,8 +26,8 @@ var UISetting = cc.Class({
             type: cc.UIButton
         },
         tableView: cc.TableView,
-        textTitle: cc.Label,
-        imageBg: cc.Sprite,
+        textTitle: cc.UIText,
+        imageBg: cc.UIImage,
         topBar: cc.Node,
         oneCellNum: 1,
         heightCell: 160,
@@ -43,23 +43,11 @@ var UISetting = cc.Class({
         this.node.setContentSize(this.node.parent.getContentSize());
 
 
-        this.btnBack.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
-            success: function () {
-            }.bind(this),
-        });
-
         this.UpdateItem();
 
-        this.textTitle.string = cc.Language.main().GetString("STR_SETTING");
+        this.textTitle.text = cc.Language.main().GetString("STR_SETTING");
 
-        cc.TextureUtil.UpdateSpriteImage({
-            sprite: this.imageBg,
-            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.SETTING_BG,
-            success: function () {
-            }.bind(this),
-        });
+
 
     },
 

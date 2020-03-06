@@ -31,19 +31,7 @@ cc.Class({
             this.UpdateItem();
         }.bind(this)
         );
-        var strbg = cc.CloudRes.main().uiRootPath+ "/" + cc.AppRes.PLACE_BG; 
-        cc.TextureCache.main.Load(strbg, function (err, tex) {
-            if (err) { 
-                cc.Debug.Log(err.message || err);
-                return;
-            }
-            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
-            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
-            if (lyscale) {
-                lyscale.LayOut();
-            }
-        }.bind(this));
-
+        
     },
 
     start: function () {

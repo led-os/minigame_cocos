@@ -230,11 +230,14 @@ var AppSceneBase = cc.Class({
         }
 
         var listPopup = cc.PopUpManager.main().listItem;
-        var len = this.listPopup.length;
-        for (var i = 0; i < len; i++) {
-            var ui = listPopup[i];
-            ui.UpdateLanguage();
+        if (this.listPopup != null) {
+            var len = this.listPopup.length;
+            for (var i = 0; i < len; i++) {
+                var ui = listPopup[i];
+                ui.UpdateLanguage();
+            }
         }
+
     },
 
     // update (dt) {},

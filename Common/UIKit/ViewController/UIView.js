@@ -27,7 +27,7 @@ var UIView = cc.Class({
         controller: {
             get: function () {
                 if (this._controller == null) {
-                    var max = 10;
+                    var max = 100;
                     var i = 0;
                     while (i < max) {
                         i++;
