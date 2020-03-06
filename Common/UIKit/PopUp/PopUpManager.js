@@ -1,4 +1,4 @@
-var UIViewPop = require("UIViewPop"); 
+var UIViewPop = require("UIViewPop");
 var PopUpManager = cc.Class({
     extends: cc.Object,
     statics: {
@@ -11,18 +11,21 @@ var PopUpManager = cc.Class({
             type: cc.UIViewPop
         },
         nodePannel: cc.Node,
+
+        /*
+        {
+        prefab: "", 
+        open: function (ui) {
+        },
+        close: function (ui) {
+         }, 
+         }
+        */
+
         objPop: null,
     },
 
-    /*
-      {
-          prefab: "", 
-          open: function (ui) {
-          },
-          close: function (ui) {
-          }, 
-      }
-    */
+
 
     Show(obj) {
         this.objPop = obj;
@@ -75,7 +78,7 @@ var PopUpManager = cc.Class({
         if (ui == null) {
             cc.Debug.Log("OpenPopup ui is null");
         }
-        this.listItem.push(ui); 
+        this.listItem.push(ui);
 
         if (this.objPop.open != null) {
             this.objPop.open(ui);

@@ -1,7 +1,7 @@
 var UIView = require("UIView");
-
+var UIViewPop = require("UIViewPop");
 var UIViewAlert = cc.Class({
-    extends: UIView,
+    extends: UIViewPop,
     properties: {
         imageBg: cc.UIImage,
         textTitle: cc.UIText,
@@ -76,6 +76,7 @@ var UIViewAlert = cc.Class({
         if (this.callback != null) {
             this.callback(this, true);
         }
+
     },
 
 
@@ -87,10 +88,11 @@ var UIViewAlert = cc.Class({
     },
 
     Remove: function () {
-        if (this.node != null) {
-            this.node.destroy();
-            //this.node = null;
-        }
+        // if (this.node != null) {
+        //     this.node.destroy();
+        //     //this.node = null;
+        // }
+        this.Close();
     },
 
     Hide: function () {

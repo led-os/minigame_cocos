@@ -120,6 +120,16 @@ var UIGameShapeColor = cc.Class({
         this.game.listColor = cc.GameLevelParse.main().listColor;
         this.game.textTitle = this.textTitle;
         this.textTitle.node.active = false;
+
+        this.game.objGameFinish = {
+            onWin: function (ui) {
+                this.OnGameWinFinish(ui, false);
+            }.bind(this),
+            onFail: function (ui) {
+                this.OnGameWinFinish(ui, true);
+            }.bind(this),
+        };
+
         this.game.LoadGame(cc.GameManager.gameMode);
         //必须在loadgame之后loadbg
         this.LoadBg();
@@ -221,12 +231,36 @@ var UIGameShapeColor = cc.Class({
             var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
             lyscale.LayOut();
 
-           this.ShowUserGuide();
+            this.ShowUserGuide();
         }.bind(this));
 
     },
 
 
+    //interface
+    OnGameWinFinish(ui, isFail) {
+        var info = cc.GameLevelParse.main().GetItemInfo();
+        var strPrefab = "";
+        //show game win
+        if (isFail) {
+            strPrefab = "AppCommon/Prefab/Game/UIGameFail";
+
+        }
+        else {
+            cc.Debug.Log("  OnGameWin");
+            strPrefab = "AppCommon/Prefab/Game/UIGameWin";
+        }
+
+        cc.PopUpManager.main().Show({
+            prefab: strPrefab,
+            open: function (ui) {
+                ui.UpdateItem(info);
+            }.bind(this),
+            close: function (ui) {
+            }.bind(this),
+        });
+
+    },
 
 
 

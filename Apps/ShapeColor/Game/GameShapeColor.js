@@ -2,13 +2,13 @@ var UIViewController = require("UIViewController");
 var UIGameItem = require("UIGameItem");
 var UIBoard = require("UIBoard");
 var UIView = require("UIView");
-
+var GameBase = require("GameBase");
 //shu： wx621ff1107207384c
 //weixin小程序appid: heng: wx2c5d3abfad26e8b1
 //cocos: wx6ac3f5090a6b99c5
 //weixin test app：wx844d0aa648111acb
 var GameShapeColor = cc.Class({
-    extends: UIView,
+    extends: GameBase,
     statics: {
         GUANKA_NUM_PER_ITEM: 5,
         GAME_MODE_SHAPE: 0,
@@ -199,7 +199,7 @@ var GameShapeColor = cc.Class({
 
         if (isAllItemLock) {
             //show game win  
-            this.OnGameWin();
+            this.ShowGameWin();
 
         }
     },
@@ -231,7 +231,10 @@ var GameShapeColor = cc.Class({
 
     },
 
-    OnGameWin: function () {
+
+
+
+    ShowGameWin: function () {
 
         cc.Debug.Log("OnGameWin gameLevelFinish=" + cc.GameManager.main().gameLevelFinish + " gameLevel=" + cc.GameManager.main().gameLevel);
         if (cc.GameManager.main().gameLevelFinish < cc.GameManager.main().gameLevel) {
@@ -271,24 +274,24 @@ var GameShapeColor = cc.Class({
         var no = cc.Language.main().GetString("STR_UIVIEWALERT_NO_GAME_FINISH");
         cc.Debug.Log("game finish ShowFull");
 
-        cc.ViewAlertManager.main().ShowFull({
-            title: title,
-            msg: msg,
-            yes: yes,
-            no: no,
-            isShowBtnNo: true,
-            name: "STR_KEYNAME_VIEWALERT_GAME_FINISH",
-            finish: function (ui, isYes) {
-                if (isYes) {
-                    cc.GameManager.main().GotoNextLevelWithoutPlace();
-                } else {
-                    //replay
-                    cc.GameManager.main().GotoPlayAgain();
-                }
-            }.bind(this),
-        });
+        // cc.ViewAlertManager.main().ShowFull({
+        //     title: title,
+        //     msg: msg,
+        //     yes: yes,
+        //     no: no,
+        //     isShowBtnNo: true,
+        //     name: "STR_KEYNAME_VIEWALERT_GAME_FINISH",
+        //     finish: function (ui, isYes) {
+        //         if (isYes) {
+        //             cc.GameManager.main().GotoNextLevelWithoutPlace();
+        //         } else {
+        //             //replay
+        //             cc.GameManager.main().GotoPlayAgain();
+        //         }
+        //     }.bind(this),
+        // });
 
-
+        this.OnGameWin();
     },
 
     OnTouchDown: function (pos) {
@@ -417,6 +420,7 @@ var GameShapeColor = cc.Class({
                         }
 
                         this.cbGameDidError(this, error, "");
+                        this.OnGameFail();
                     }
                     continue;
                 }

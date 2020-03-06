@@ -30,7 +30,7 @@ var AudioPlay = cc.Class({
             if (err) {
                 cc.Debug.Log(err.message || err);
                 cc.Debug.Log(" audio filepath PlayFile fail=" + err.message || err);
-                return ret;
+                return;
             }
             cc.Debug.Log(" audio filepath PlayFile ok");
             this.PlayAudioClip(audioClip);

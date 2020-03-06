@@ -39,7 +39,7 @@ var ViewAlertManager = cc.Class({
         //cc.Debug.Log("ShowInternal SetText title ="+title+" msg="+msg);
         var node = cc.instantiate(this.uiPrefab);
         this.ui = node.getComponent(UIViewAlert);
-       // this.ui.callback = this.OnUIViewAlertFinished.bind(this);
+        // this.ui.callback = this.OnUIViewAlertFinished.bind(this);
 
         this.ui.keyName = this.keyName;
         this.ui.SetText(title, msg, yes, no);
@@ -76,13 +76,24 @@ var ViewAlertManager = cc.Class({
 */
 
     ShowFull: function (obj) {
-       // cc.Debug.Log("ShowFull SetText title ="+obj.title+" msg="+obj.msg); 
-        this.keyName = obj.name;
-        this.callback = obj.finish;
-        this.Show(obj.title, obj.msg, obj.yes, obj.no);
-        //必须在show之后设置
-        this.ShowBtnNo(obj.isShowBtnNo);
-    }, 
+        // this.keyName = obj.name;
+        // this.callback = obj.finish;
+        // this.Show(obj.title, obj.msg, obj.yes, obj.no);
+        // //必须在show之后设置
+        // this.ShowBtnNo(obj.isShowBtnNo);
+
+        var strPrefab = "Common/Prefab/UIKit/UIViewAlert/UIViewAlert";
+        cc.PopUpManager.main().Show({
+            prefab: strPrefab,
+            open: function (ui) {
+                //ui.UpdateItem(info);
+                ui.keyName = obj.name;
+                ui.SetText(obj.title, obj.msg, obj.yes, obj.no);
+            }.bind(this),
+            close: function (ui) {
+            }.bind(this),
+        });
+    },
     Hide: function () {
         if (this.ui != null) {
             // GameObject.DestroyImmediate(ui);
