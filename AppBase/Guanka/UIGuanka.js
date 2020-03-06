@@ -27,12 +27,7 @@ cc.Class({
         }.bind(this)
         );
 
-        this.btnBack.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
-            success: function () {
-            }.bind(this),
-        });
+      
 
         // this.tableView.node.active = false;
         var ev = this.node.addComponent(cc.UITouchEvent);

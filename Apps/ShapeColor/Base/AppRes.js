@@ -31,10 +31,10 @@ var AppRes = cc.Class({
 
         //audio 
         AUDIO_BG: "audio/Bg",
-        GUANKA_BG: "ui/GuankaBg.jpg",
-        PLACE_BG: "ui/LearnProgressBg.png",
+        GUANKA_BG: "UI/GuankaBg.jpg",
+        PLACE_BG: "UI/LearnProgressBg.png",
         HOME_BG: "UI/LearnProgressBg.png",
-        SETTING_BG: "ui/SettingBg.png",
+        SETTING_BG: "UI/SettingBg.png",
 
 
         //image

@@ -13,18 +13,11 @@ cc.Class({
         textTitle: cc.Label,
         oneCellNum: 4,
         listItem: null,
-    },
+    },  
 
     onLoad: function () {
         this._super(); 
-
-        this.btnBack.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_BACK,
-            success: function () {
-            }.bind(this),
-        });
-        
+  
         this.textTitle.string = cc.Language.main().GetString("STR_PLACE");
         cc.LevelManager.main().StartParsePlace(function () {
             this.UpdateItem();

@@ -27,7 +27,10 @@ var UIView = cc.Class({
         controller: {
             get: function () {
                 if (this._controller == null) {
-                    while (1) {
+                    var max = 10;
+                    var i = 0;
+                    while (i < max) {
+                        i++;
                         var par = this.node.parent;
                         // cc.Debug.Log("UIHomeCenterBar controller ");
                         if (par == null) {

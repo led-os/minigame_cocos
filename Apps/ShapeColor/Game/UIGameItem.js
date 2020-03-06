@@ -48,6 +48,20 @@ var UIGameItem = cc.Class({
     },
 
     UpdateItemColor: function (sprite, color) {
+        /*
+        cc.loader.loadRes(materialPath, cc.Material, function(err, res) {
+    var material = cc.Material.getInstantiatedMaterial(res, self.node)
+    self.node.getComponent(cc.Sprite).setMaterial(0, material)
+}) 
+*/
+        var mat = sprite.getMaterial(0);
+        mat.setProperty('enableColor', 1.0);
+        mat.setProperty('showColor', color);//cc.Color.WHITE
+
+        
+
+        //  mat.setProperty()
+        // sprite.setMaterial 
         // const renderEngine = cc.renderer.renderEngine;
         // const renderer = renderEngine.renderer;
         // const name = 'ShaderShapeColor';
