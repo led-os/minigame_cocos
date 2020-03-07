@@ -279,7 +279,11 @@ var RectTransform = cc.Class({
 
         //this.node.setPosition(x, y, 0);
     },
-
+    UpdateSize: function (w,h) {
+        this.width = w;
+        this.height =h;
+        this.node.setContentSize(w,h);
+    },
 
     UpdateAlign: function (type) {
         this._alignType = type;

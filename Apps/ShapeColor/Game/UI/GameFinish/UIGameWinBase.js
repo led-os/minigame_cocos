@@ -10,8 +10,7 @@ var UIGameWinBase = cc.Class({
         KEY_GAMEWIN_INFO_AUTHOR_INTRO: "KEY_GAMEWIN_INFO_AUTHOR_INTRO",
         KEY_GAMEWIN_INFO_ALBUM: "KEY_GAMEWIN_INFO_ALBUM",
     },
-    properties: {
-        uiSegment: cc.UISegment,
+    properties: { 
         textView: cc.UITextView,
         textTitle: cc.UIText,
         imageBg: cc.UIImage,

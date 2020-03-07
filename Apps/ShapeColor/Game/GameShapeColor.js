@@ -3,14 +3,15 @@ var UIGameItem = require("UIGameItem");
 var UIBoard = require("UIBoard");
 var UIView = require("UIView");
 var GameBase = require("GameBase");
+var GameLevelParse = require("GameLevelParse");
+
 //shu： wx621ff1107207384c
 //weixin小程序appid: heng: wx2c5d3abfad26e8b1
 //cocos: wx6ac3f5090a6b99c5
 //weixin test app：wx844d0aa648111acb
 var GameShapeColor = cc.Class({
     extends: GameBase,
-    statics: {
-        GUANKA_NUM_PER_ITEM: 5,
+    statics: { 
         GAME_MODE_SHAPE: 0,
         GAME_MODE_COLOR: 1,
         GAME_MODE_SHAPE_COLOR: 2,
@@ -248,10 +249,10 @@ var GameShapeColor = cc.Class({
 
         //记录游戏完成
         var level = cc.GameManager.main().gameLevel;
-        var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
-        var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
-        cc.Debug.Log("game finish idx_sub=" + idx_sub + " GUANKA_NUM_PER_ITEM=" + GameShapeColor.GUANKA_NUM_PER_ITEM);
-        if ((idx_sub + 1) == GameShapeColor.GUANKA_NUM_PER_ITEM) {
+        var idx = Math.floor(level / GameLevelParse.GUANKA_NUM_PER_ITEM);
+        var idx_sub = level % GameLevelParse.GUANKA_NUM_PER_ITEM;
+        cc.Debug.Log("game finish idx_sub=" + idx_sub + " GUANKA_NUM_PER_ITEM=" + GameLevelParse.GUANKA_NUM_PER_ITEM);
+        if ((idx_sub + 1) == GameLevelParse.GUANKA_NUM_PER_ITEM) {
             var infoitem = null;
             var key = null;
             if (cc.GameManager.gameMode == GameShapeColor.GAME_MODE_SHAPE) {
@@ -443,8 +444,8 @@ var GameShapeColor = cc.Class({
 
                 //记录游戏开始进行中
                 var level = cc.GameManager.main().gameLevel;
-                var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
-                var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
+                var idx = Math.floor(level / GameLevelParse.GUANKA_NUM_PER_ITEM);
+                var idx_sub = level % GameLevelParse.GUANKA_NUM_PER_ITEM;
                 if (idx_sub == 0) {
                     var infoitem = null;
                     var key = null;
@@ -735,7 +736,7 @@ var GameShapeColor = cc.Class({
     LoadGameByShape: function (mode) {
 
         var level = cc.LevelManager.main().gameLevel;
-        var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
+        var idx = Math.floor(level / GameLevelParse.GUANKA_NUM_PER_ITEM);
         var infoshape = this.GetItemInfoShapeColor(idx, this.listShape);
         if (infoshape == null) {
             cc.Debug.Log("CreateItem LoadGameByShape null idx=" + idx + " level=" + level);
@@ -746,7 +747,7 @@ var GameShapeColor = cc.Class({
         var mainShapePair = [1, 2, 2, 2, 3];
         var otherShapeNum = [0, 0, 1, 2, 2];
 
-        var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
+        var idx_sub = level % GameLevelParse.GUANKA_NUM_PER_ITEM;
         var totalMainShape = mainShapePair[idx_sub] * 2;
         var totalOtherShape = otherShapeNum[idx_sub];
 
@@ -807,7 +808,7 @@ var GameShapeColor = cc.Class({
     },
     LoadGameByColor: function (mode) {
         var level = cc.GameManager.main().gameLevel;
-        var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
+        var idx = Math.floor(level / GameLevelParse.GUANKA_NUM_PER_ITEM);
         var infocolor = this.GetItemInfoShapeColor(idx, this.listColor);
         if (infocolor == null) {
             return;
@@ -819,7 +820,7 @@ var GameShapeColor = cc.Class({
         var mainColorPair = [1, 2, 2, 2, 3];
         var otherColorNum = [0, 0, 1, 2, 2];
 
-        var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
+        var idx_sub = level % GameLevelParse.GUANKA_NUM_PER_ITEM;
         var totalMainColor = mainColorPair[idx_sub] * 2;
         var totalOtherColor = otherColorNum[idx_sub];
 
@@ -871,7 +872,7 @@ var GameShapeColor = cc.Class({
     },
     LoadGameByShapeColor: function (mode) {
         var level = cc.GameManager.main().gameLevel;
-        var idx = Math.floor(level / GameShapeColor.GUANKA_NUM_PER_ITEM);
+        var idx = Math.floor(level / GameLevelParse.GUANKA_NUM_PER_ITEM);
         var infoshape = this.GetItemInfoShapeColor(idx, this.listShape);
         if (infoshape == null) {
 
@@ -882,7 +883,7 @@ var GameShapeColor = cc.Class({
         var mainShapePair = [2, 3, 3, 3, 4];
         var otherShapeNum = [0, 1, 2, 3, 3];
 
-        var idx_sub = level % GameShapeColor.GUANKA_NUM_PER_ITEM;
+        var idx_sub = level % GameLevelParse.GUANKA_NUM_PER_ITEM;
         var totalMainShape = mainShapePair[idx_sub] * 2;
         var totalOtherShape = otherShapeNum[idx_sub];
 

@@ -1,6 +1,6 @@
 var UIViewController = require("UIViewController");
 var UIGameBase = require("UIGameBase");
-var AppType = require("AppType");
+var AppType = require("AppType"); 
 
 var GameLevelParse = cc.Class({
     extends: cc.LevelParseBase,
@@ -11,6 +11,7 @@ var GameLevelParse = cc.Class({
 
     statics: {
         PLACE_MATH: "Math",
+        GUANKA_NUM_PER_ITEM: 5,
     },
 
     properties: {
@@ -40,7 +41,7 @@ var GameLevelParse = cc.Class({
         // var count = this.ParseGuanka();
         var count = 0;
         if (this.listShape != null) {
-            count = GameShapeColor.GUANKA_NUM_PER_ITEM * this.listShape.length;
+            count = GameLevelParse.GUANKA_NUM_PER_ITEM * this.listShape.length;
         }
         return count;
     },

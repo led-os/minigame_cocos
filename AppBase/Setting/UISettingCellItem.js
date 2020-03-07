@@ -83,15 +83,12 @@ cc.Class({
         this.UpdateImageBg(UISetting.listImage[this.index % 3]);
     },
     UpdateBtnSwitch: function (isSel) {
-        var strImage = this.GetImageOfKey("IMAGE_BTN_SWITCH_UNSEL");
+        var key = "IMAGE_BTN_SWITCH_UNSEL";
         if (isSel) {
-            strImage = this.GetImageOfKey("IMAGE_BTN_SWITCH_SEL");
+            key = "IMAGE_BTN_SWITCH_SEL"
         }
-        this.btnSwitch.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + strImage,
-            success: function () {
-            }.bind(this),
-        });
+        this.btnSwitch.imageBg.UpdateImageKey(key); 
+
     },
 
     UpdateImageBg: function (pic) {

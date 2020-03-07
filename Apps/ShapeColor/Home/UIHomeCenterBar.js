@@ -17,7 +17,7 @@ cc.Class({
         btnShape: cc.UIButton,
         btnColor: cc.UIButton,
         btnShapeColor: cc.UIButton,
- 
+
 
     },
     onLoad: function () {
@@ -61,7 +61,16 @@ cc.Class({
         var rctran = this.node.getComponent(cc.RectTransform);
         cc.Debug.Log("UIHomeCenterBar  w=  " + rctran.width + " h=" + rctran.height);
         if (ly != null) {
-            ly.col = cc.LayoutUtil.main().GetChildCount(this.node, false);
+            if (cc.Device.main.isLandscape) {
+                ly.col = cc.LayoutUtil.main().GetChildCount(this.node, false);
+                ly.row = 1;
+            } else {
+                ly.row = 3;
+                var v = cc.LayoutUtil.main().GetChildCount(this.node, false) / ly.row;
+                //向上取整
+                ly.col = Math.ceil(v);
+
+            }
             cc.Debug.Log("GetItemPostion ly.col =" + ly.col);
             //有些按钮隐藏后重新布局
             ly.LayOut();
@@ -69,7 +78,7 @@ cc.Class({
 
     },
 
-    
+
     GotoGameByMode: function (mode) {
         cc.GameManager.gameMode = mode;
         cc.LevelManager.main().StartParsePlace(function () {
@@ -77,7 +86,7 @@ cc.Class({
         }.bind(this)
         );
     },
-    GotoGameByModeInteranl: function () { 
+    GotoGameByModeInteranl: function () {
         if (this.controller != null) {
             var navi = this.controller.naviController;
             var total = cc.LevelManager.main().placeTotal;
@@ -105,7 +114,7 @@ cc.Class({
     OnClickBtnShape: function (event, customEventData) {
 
         ////3.主动拉起分享接口
-         
+
 
         // if (!this.isActionFinish) {
         //    // return;
@@ -120,14 +129,14 @@ cc.Class({
 
     },
     OnClickBtnColor: function (event, customEventData) {
-      
+
         this.GotoGameByMode(GameShapeColor.GAME_MODE_COLOR);
 
         // let score = '' + 50;
         // cc.FrendBoard.main().SaveData(score);
     },
     OnClickBtnShapeColor: function (event, customEventData) {
-     
+
         this.GotoGameByMode(GameShapeColor.GAME_MODE_SHAPE_COLOR);
     },
 

@@ -18,15 +18,12 @@ var UIHomeAppCenter = cc.Class({
             type: cc.Object
         },
 
-        btnAppIcon0: cc.Button,
-        btnAppIcon1: cc.Button,
-        btnAppIcon2: cc.Button,
+        btnApp0: cc.UIButton,
+        btnApp1: cc.UIButton,
+        btnApp2: cc.UIButton,
     },
- 
-    onLoad: function() { 
-        this.UnifyButtonSprite(this.btnAppIcon0);
-        this.UnifyButtonSprite(this.btnAppIcon1);
-        this.UnifyButtonSprite(this.btnAppIcon2);
+
+    onLoad: function () {
 
         this.listItem.length = 0;
         // for (var i = 0; i < 10; i++) {
@@ -56,6 +53,31 @@ var UIHomeAppCenter = cc.Class({
             ly._doLayout();
         }
 
+        var ly = this.node.getComponent(cc.LayOutGrid);
+        var rctran = this.node.getComponent(cc.RectTransform);
+        var sizeParent = this.node.parent.getContentSize();
+        if (ly != null) {
+            var align = cc.Align.NONE;
+            if (cc.Device.main.isLandscape) {
+                align = cc.Align.RIGHT;
+                rctran.width = 160;
+                rctran.height = sizeParent.height;
+                ly.row = cc.LayoutUtil.main().GetChildCount(this.node, false);
+                ly.col = 1;
+            } else {
+                align = cc.Align.DOWN;
+                ly.col = cc.LayoutUtil.main().GetChildCount(this.node, false);
+                ly.row = 1;
+                rctran.width = sizeParent.width;
+                rctran.height = 160;
+            }
+            rctran.UpdateSize(rctran.width, rctran.height);
+            rctran.alignType = align;
+            rctran.LayOut();
+            //有些按钮隐藏后重新布局
+            ly.LayOut();
+        }
+
     },
 
 
@@ -63,7 +85,7 @@ var UIHomeAppCenter = cc.Class({
         if (this.listItem.length == 0) {
             return;
         }
-        var size = this.node.getContentSize(); 
+        var size = this.node.getContentSize();
     },
 
     StartParserAppList: function () {
@@ -126,7 +148,13 @@ var UIHomeAppCenter = cc.Class({
         this.UpdateList();
     },
 
-    OnClickBtnNoAd: function (event, customEventData) {
+    OnClickBtnApp0: function (event, customEventData) {
+        //cc.Common.OpenApp(this.info.id);
+    },
+
+    OnClickBtnApp1: function (event, customEventData) {
+    },
+    OnClickBtnApp2: function (event, customEventData) {
     },
 
 }); 

@@ -126,7 +126,7 @@ var UIGameBase = cc.Class({
         var key = cc.CommonRes.KEY_USER_GUIDE + cc.Common.main().GetAppVersion();
         var isshowplay = cc.Common.GetBoolOfKey(key, false);
         if (isshowplay == true) {
-            //  return;
+            return;
         }
         var title = cc.Language.main().GetString("STR_UIVIEWALERT_TITLE_USER_GUIDE");
         var msg = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_USER_GUIDE");

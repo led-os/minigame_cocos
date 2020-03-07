@@ -54,7 +54,7 @@ var TextureUtil = cc.Class({
                 }
                 obj.sprite.spriteFrame = new cc.SpriteFrame(tex);
                 var spf = obj.sprite.spriteFrame;
-                if (obj.type) {
+                if (obj.type==cc.Sprite.Type.SLICED) {
                     spf.type = obj.type;
                     // 纹理的四个边距
                     spf.insetBottom = obj.bottom;
