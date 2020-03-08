@@ -26,6 +26,7 @@ var LayOutGrid = cc.Class({
 
 
     onLoad: function () {
+        //this.dispLayVertical = cc.LayOutBase.DispLayVertical.TOP_TO_BOTTOM;
         // cc.Debug.Log("onLoad this.alignType=" + this.alignType);
         this.LayOut();
 
@@ -76,15 +77,15 @@ var LayOutGrid = cc.Class({
             r = Math.floor(idx / this.col);
             c = idx - Math.floor(r * this.col);
 
-            // //从顶部往底部显示
-            // if (this.dispLayVertical == cc.LayOutBase.DispLayVertical.TOP_TO_BOTTOM) {
-            //     r = this.row - 1 - r;
-            // }
+            //从顶部往底部显示
+            if (this.dispLayVertical == cc.LayOutBase.DispLayVertical.TOP_TO_BOTTOM) {
+                r = this.row - 1 - r;
+            }
 
-            // //从右往左显示
-            // if (this.dispLayHorizontal == cc.LayOutBase.DispLayHorizontal.RIGHT_TO_LEFT) {
-            //     c = this.col - 1 - c;
-            // }
+            //从右往左显示
+            if (this.dispLayHorizontal == cc.LayOutBase.DispLayHorizontal.RIGHT_TO_LEFT) {
+                c = this.col - 1 - c;
+            }
 
             var pt = this.GetItemPostion(child, r, c);
             var rctran = child.getComponent(cc.RectTransform);

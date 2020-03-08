@@ -14,6 +14,7 @@ var LayOutVertical = cc.Class({
 
     },
     onLoad: function () {
+        //this.dispLayVertical = cc.LayOutBase.DispLayVertical.TOP_TO_BOTTOM;
         this.col = 1; 
         this.LayOut();
 

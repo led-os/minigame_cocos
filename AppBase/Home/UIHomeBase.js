@@ -86,7 +86,7 @@ cc.Class({
 
 
         //home app center
-        // this.LoadPrefabAppCenter();
+        this.LoadPrefabAppCenter();
 
     },
 

@@ -14,19 +14,19 @@
 //     CENTER: 9,
 // });
 
-// var DispLayVertical = cc.Enum({
-//     //区分大小写
-//     TOP_TO_BOTTOM: 0,
-//     BOTTOM_TO_TOP: 1,
+var DispLayVertical = cc.Enum({
+    //区分大小写
+    TOP_TO_BOTTOM: 0,
+    BOTTOM_TO_TOP: 1,
 
-// });
+});
 
-// var DispLayHorizontal = cc.Enum({
-//     //区分大小写
-//     LEFT_TO_RIGHT: 0,
-//     RIGHT_TO_LEFT: 1,
+var DispLayHorizontal = cc.Enum({
+    //区分大小写
+    LEFT_TO_RIGHT: 0,
+    RIGHT_TO_LEFT: 1,
 
-// });
+});
 
 
 
@@ -36,8 +36,8 @@ var LayOutBase = cc.Class({
     statics: {
         //enum
         // AlignType: AlignType,
-        // DispLayVertical: DispLayVertical,
-        // DispLayHorizontal: DispLayHorizontal,
+        DispLayVertical: DispLayVertical,
+        DispLayHorizontal: DispLayHorizontal,
     },
 
     properties: {
@@ -71,15 +71,21 @@ var LayOutBase = cc.Class({
             },
         },
 
-        //  dispLayVertical: DispLayVertical,
-        //   dispLayHorizontal: DispLayHorizontal,
         enableLayout: true,
-        enableHide: true,//是否过虑Hide
+        enableHide: true,//是否过虑Hide true 不过滤 false  过滤
         space: cc.Vec2,
         // align: cc.AlignNONE,
         align: {
             default: cc.Align.Horizontal,
             type: cc.Align
+        },
+        dispLayVertical: {
+            default: DispLayVertical.TOP_TO_BOTTOM,
+            type: DispLayVertical
+        },
+        dispLayHorizontal: {
+            default: DispLayHorizontal.LEFT_TO_RIGHT,
+            type: DispLayHorizontal
         },
 
     },
@@ -95,7 +101,7 @@ var LayOutBase = cc.Class({
     LayOut: function () {
     },
 
-     
+
 });
 
 cc.LayOutBase = module.export = LayOutBase; 

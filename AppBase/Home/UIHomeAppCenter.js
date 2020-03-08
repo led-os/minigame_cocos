@@ -1,4 +1,6 @@
 var UIView = require("UIView");
+var UIAppIcon = require("UIAppIcon");
+
 var UIHomeAppCenter = cc.Class({
     extends: UIView,
     // statics: {
@@ -14,31 +16,19 @@ var UIHomeAppCenter = cc.Class({
     properties: {
         listItem: {
             default: [],
-            type: cc.Object
+            type: cc.Object//UIAppIcon
         },
-        btnApp0: cc.UIButton,
-        btnApp1: cc.UIButton,
-        btnApp2: cc.UIButton,
+        uiAppIconPrefab: {
+            default: null,
+            type: cc.Prefab
+        },
     },
 
     onLoad: function () {
         this._super();
         this.listItem.length = 0;
-        // for (var i = 0; i < 10; i++) {
-        //     var info = new cc.ItemInfo();
-        //     info.title = "title";
-        //     info.pic = "https://is5-ssl.mzstatic.com/image/thumb/Purple128/v4/e6/c3/25/e6c325c8-afe0-5a52-1f59-0e432d8f8651/AppIcon-1x_U007emarketing-85-220-9.png/230x0w.jpg";
-        //     var store = cc.Source.WEIXIN;
-        //     var appid = "wx2c5d3abfad26e8b1";
-        //     if (appid != null) {
-        //         this.listItem.push(info);
-        //     }
-        //     this.UpdateList();
-        // }
 
-        this.btnApp0.node.active = false;
-        this.btnApp1.node.active = false;
-        this.btnApp2.node.active = false;
+
 
         this.StartParserAppList();
 
@@ -84,36 +74,12 @@ var UIHomeAppCenter = cc.Class({
     },
 
 
-    UpdateList: function () {
-        if (this.listItem.length == 0) {
-            return;
-        }
-        this.btnApp0.node.active = true;
-        this.btnApp1.node.active = true;
-        this.btnApp2.node.active = true;
-
-        {
-            var info = this.listItem[0];
-            this.UpdateImageItem(this.btnApp0, info.pic)
-        }
-        // {
-        //     var info = this.listItem[1];
-        //     this.UpdateImageItem(this.btnApp1, info.pic)
-        // }
-        // {
-        //     var info = this.listItem[2];
-        //     this.UpdateImageItem(this.btnApp2, info.pic)
-        // }
-    },
-
-    UpdateImageItem: function (btn, imagepic) {
-        btn.imageBg.UpdateImage({
-            pic: imagepic,
-            type: cc.Sprite.Type.SIMPLE,//SLICED 
-            success: function () {
-                //this.LayOut();
-            }.bind(this),
-        });
+    CreateItem: function (info) {
+        var node = cc.instantiate(this.uiAppIconPrefab);
+        var item = node.getComponent(UIAppIcon);
+        node.setParent(this.node);
+        item.UpdateItem(info);
+        this.listItem.push(item);
     },
 
     StartParserAppList: function () {
@@ -168,25 +134,11 @@ var UIHomeAppCenter = cc.Class({
             }
 
             if (appid != null) {
-                this.listItem.push(info);
+                // this.listItem.push(info);
+                this.CreateItem(info);
             }
 
         }
-        // cc.Debug.Log("HomeAppCenter applist=" + applist.length);
-        this.UpdateList();
-    },
 
-    OnClickBtnApp0: function (event, customEventData) {
-        var info = this.listItem[0];
-        cc.Common.OpenApp(this.info.id);
     },
-
-    OnClickBtnApp1: function (event, customEventData) {
-        var info = this.listItem[1];
-        cc.Common.OpenApp(this.info.id);
-    },
-    OnClickBtnApp2: function (event, customEventData) {
-        var info = this.listItem[2];
-        cc.Common.OpenApp(this.info.id);
-    }
 }); 
