@@ -29,38 +29,25 @@ cc.Class({
         this._super();
         var x, y, w, h;
 
-        //物理系统默认是关闭的，手动开启物理系统
-        //cc.Common.EnablePhysic(true, false);
-        cc.Common.EnablePhysic(true, false);
+        //物理系统默认是关闭的，手动开启物理系统 
+         cc.Common.EnablePhysic(true, false);
 
-        var game = GameViewController.main().gameBase;
-        if (game != null) {
-            game.LoadLanguageColor(function (p) { });
-        }
+        // var game = GameViewController.main().gameBase;
+        // if (game != null) {
+        //     game.LoadLanguageColor(function (p) { });
+        // }
 
 
         this.imageNameBg.node.active = false;
-        this.listBtns.length = 0;
-        // this.listBtns.push(this.btnShape);
-        // this.listBtns.push(this.btnColor);
-        // this.listBtns.push(this.btnShapeColor);
-        // this.listBtns.push(this.btnFrendBoard);
+        this.listBtns.length = 0; 
 
         this.isActionFinish = true;
 
-        if (cc.Common.main().isAndroid) {
 
-        }
-
-
-        this.LayOut();
-        // this.InitBtnPos();
+        this.LayOut(); 
         this.indexAction = 0;
 
-        this.RunActionImageName(this.timeAction, function () {
-            // this.RunActionBtn();
-        }.bind(this)
-        );
+
 
     },
 
@@ -82,12 +69,6 @@ cc.Class({
         var pt = this.imageNameBg.node.getPosition();
         var y_top = pt.y - this.imageNameBg.node.getContentSize().height / 2;
         var y_bottom = -size.height / 2;
-
-        //layoutbtn:
-        // x = 0;
-        // y = (y_top + y_bottom) / 2;
-        // this.layoutBtn.setPosition(x, y);
-        //  var ly = this.uiCenterBar.node.getComponent(cc.LayOutGrid);
 
 
     },

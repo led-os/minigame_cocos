@@ -24,36 +24,7 @@ cc.Class({
         var x, y, w, h;
         this.btnMore.node.active = false;
         this.btnNoAd.node.active = false;
-
-        this.btnSetting.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_SETTING,
-            success: function () {
-            }.bind(this),
-        });
-
-
-        this.btnMore.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_MORE,
-            success: function () {
-            }.bind(this),
-        });
-
-        this.btnShare.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_SHARE,
-            success: function () {
-            }.bind(this),
-        });
-
-        this.btnNoAd.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_NOAD,
-            success: function () {
-            }.bind(this),
-        });
-
+   
 
         this.UpdateBtnMusic();
         this.UpdateBtnSound();

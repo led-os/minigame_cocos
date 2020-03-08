@@ -1,30 +1,28 @@
 var UIView = require("UIView");
-
 var UIHomeAppCenter = cc.Class({
     extends: UIView,
-    statics: {
-        AD_JSON_FILE_KIDS: "applist_home_kids.json",
-        AD_JSON_FILE_SMALL_GAME: "applist_home_minigame.json",
-        APPCENTER_HTTP_URL_HEAD: "",
-        APPCENTER_HTTP_URL_HOME_SMALL_GAME: "https://6d6f-moonma-dbb297-1258816908.tcb.qcloud.la/Unity/app_center/applist_home_minigame.json?sign=4b79dab72806704c30be94312351cacd&t=1561688564",
-        APPCENTER_HTTP_URL_HOME_KIDS_GAME: "https://6d6f-moonma-dbb297-1258816908.tcb.qcloud.la/Unity/app_center/applist_home_kids.json?sign=0dc2a5bf8e85d12b9515afb3cf87cfe1&t=1561688516",
+    // statics: {
+    //     AD_JSON_FILE_KIDS: "applist_home_kids.json",
+    //     AD_JSON_FILE_SMALL_GAME: "applist_home_minigame.json",
+    //     APPCENTER_HTTP_URL_HEAD: "",
+    //     APPCENTER_HTTP_URL_HOME_SMALL_GAME: "https://6d6f-moonma-dbb297-1258816908.tcb.qcloud.la/Unity/app_center/applist_home_minigame.json?sign=4b79dab72806704c30be94312351cacd&t=1561688564",
+    //     APPCENTER_HTTP_URL_HOME_KIDS_GAME: "https://6d6f-moonma-dbb297-1258816908.tcb.qcloud.la/Unity/app_center/applist_home_kids.json?sign=0dc2a5bf8e85d12b9515afb3cf87cfe1&t=1561688516",
 
 
-    },
+    // },
 
     properties: {
         listItem: {
             default: [],
             type: cc.Object
         },
-
         btnApp0: cc.UIButton,
         btnApp1: cc.UIButton,
         btnApp2: cc.UIButton,
     },
 
     onLoad: function () {
-
+        this._super();
         this.listItem.length = 0;
         // for (var i = 0; i < 10; i++) {
         //     var info = new cc.ItemInfo();
@@ -37,6 +35,11 @@ var UIHomeAppCenter = cc.Class({
         //     }
         //     this.UpdateList();
         // }
+
+        this.btnApp0.node.active = false;
+        this.btnApp1.node.active = false;
+        this.btnApp2.node.active = false;
+
         this.StartParserAppList();
 
         this.LayOut();
@@ -85,7 +88,32 @@ var UIHomeAppCenter = cc.Class({
         if (this.listItem.length == 0) {
             return;
         }
-        var size = this.node.getContentSize();
+        this.btnApp0.node.active = true;
+        this.btnApp1.node.active = true;
+        this.btnApp2.node.active = true;
+
+        {
+            var info = this.listItem[0];
+            this.UpdateImageItem(this.btnApp0, info.pic)
+        }
+        // {
+        //     var info = this.listItem[1];
+        //     this.UpdateImageItem(this.btnApp1, info.pic)
+        // }
+        // {
+        //     var info = this.listItem[2];
+        //     this.UpdateImageItem(this.btnApp2, info.pic)
+        // }
+    },
+
+    UpdateImageItem: function (btn, imagepic) {
+        btn.imageBg.UpdateImage({
+            pic: imagepic,
+            type: cc.Sprite.Type.SIMPLE,//SLICED 
+            success: function () {
+                //this.LayOut();
+            }.bind(this),
+        });
     },
 
     StartParserAppList: function () {
@@ -149,12 +177,16 @@ var UIHomeAppCenter = cc.Class({
     },
 
     OnClickBtnApp0: function (event, customEventData) {
-        //cc.Common.OpenApp(this.info.id);
+        var info = this.listItem[0];
+        cc.Common.OpenApp(this.info.id);
     },
 
     OnClickBtnApp1: function (event, customEventData) {
+        var info = this.listItem[1];
+        cc.Common.OpenApp(this.info.id);
     },
     OnClickBtnApp2: function (event, customEventData) {
-    },
-
+        var info = this.listItem[2];
+        cc.Common.OpenApp(this.info.id);
+    }
 }); 

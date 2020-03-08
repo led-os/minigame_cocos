@@ -36,12 +36,7 @@ var AppRes = cc.Class({
         //image
         IMAGE_BtnMusicOn: "AppCommon/UI/Home/BtnMusicOn",
         IMAGE_BtnMusicOff: "AppCommon/UI/Home/BtnMusicOff",
- 
-
-
-        IMAGE_GUANKA_CELL_ITEM_BG_UNLOCK: "UI/Guanka/guanka_item_unlock",
-        IMAGE_GUANKA_CELL_ITEM_BG_LOCK: "UI/Guanka/guanka_item_lock",
-        IMAGE_GUANKA_CELL_ITEM_BG_PLAY: "UI/Guanka/guanka_item_playing",
+  
 
 
         IMAGE_CELL_BG_BLUE: "AppCommon/UI/Setting/SettingCellBgBlue",

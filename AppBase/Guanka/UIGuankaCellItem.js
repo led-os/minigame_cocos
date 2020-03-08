@@ -6,8 +6,8 @@ cc.Class({
     extends: UICellItemBase,
     //extends: require('viewCell'),
     properties: {
-        imageBg: cc.Sprite,
-        textTitle: cc.Label,
+        imageBg: cc.UIImage,
+        textTitle: cc.UIText,
     },
 
     onLoad: function () {
@@ -26,27 +26,22 @@ cc.Class({
         }
         this.target = data.target;
         this.info = data.array[index];
-        this.textTitle.string = index + 1;
+        this.textTitle.text = index + 1;
         var idx_playing = cc.LevelManager.main().gameLevelFinish + 1;
-        var strPic = "";
+        var keyPic = "";
         if (index > idx_playing) {
             this.textTitle.node.active = false;
-            strPic = cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_LOCK;
+            keyPic = "IMAGE_GUANKA_CELL_ITEM_BG_LOCK";
         }
         else if (index == idx_playing) {
             this.textTitle.node.active = false;
-            strPic = cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_PLAY;
+            keyPic =  "IMAGE_GUANKA_CELL_ITEM_BG_PLAY";
         } else {
             this.textTitle.node.active = true;
-            strPic = cc.AppRes.IMAGE_GUANKA_CELL_ITEM_BG_UNLOCK;
+            keyPic = "IMAGE_GUANKA_CELL_ITEM_BG_UNLOCK";
         }
 
-        cc.TextureUtil.UpdateSpriteImage({
-            sprite: this.imageBg,
-            pic: cc.CloudRes.main().uiRootPath + "/" + strPic,
-            success: function () {
-            }.bind(this),
-        });
+        this.imageBg.UpdateImageKey(keyPic);
 
     },
     clicked: function clicked() {

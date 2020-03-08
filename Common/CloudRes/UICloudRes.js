@@ -25,9 +25,9 @@ var UICloudRes = cc.Class({
 
             }.bind(this),
             progress: function (res) {
-                console.log('CloudRes下载进度=', res.progress)
-                console.log('CloudRes已经下载的数据长度=', res.totalBytesWritten)
-                console.log('CloudRes预期需要下载的数据总长度=', res.totalBytesExpectedToWrite)
+                //console.log('CloudRes下载进度=', res.progress)
+                //console.log('CloudRes已经下载的数据长度=', res.totalBytesWritten)
+                //console.log('CloudRes预期需要下载的数据总长度=', res.totalBytesExpectedToWrite)
                 this.UpdateProgress(res.progress / 100.0);
             }.bind(this),
         });

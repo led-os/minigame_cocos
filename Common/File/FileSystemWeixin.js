@@ -42,9 +42,9 @@ var FileSystemWeixin = cc.Class({
 
         })
         downloadTask.onProgressUpdate((res) => {
-            console.log('下载进度', res.progress)
-            console.log('已经下载的数据长度', res.totalBytesWritten)
-            console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
+            //console.log('下载进度', res.progress)
+            //console.log('已经下载的数据长度', res.totalBytesWritten)
+            //console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
 
             if (obj.progress != null) {
                 obj.progress(res);
@@ -62,13 +62,14 @@ var FileSystemWeixin = cc.Class({
             zipFilePath: obj.zipFilePath,
             targetPath: obj.targetPath,
             success: function (res) {
-                // console.log("unzip success=" + dir);
+                console.log("weixin unzip success=" + dir);
                 // this.readFile(dir + "/CloudRes/image/Bird/Albatross.png");
                 if (obj.success != null) {
                     obj.success(res);
                 }
             }.bind(this),
             fail: function (res) {
+                console.log("weixin unzip fail");
                 if (obj.fail != null) {
                     obj.fail(res);
                 }

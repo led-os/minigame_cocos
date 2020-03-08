@@ -47,25 +47,25 @@ cc.Class({
         cc.Debug.Log("KEY_BACKGROUND_MUSIC home=" + ret);
         if (ret) {
             if (cc.Config.main().APP_FOR_KIDS) {
-                cc.Tts.Speak(name);
+                //cc.Tts.Speak(name);
             }
 
-        } 
+        }
         //w = 1024;
 
-        var oft = 50;
-        cc.TextureUtil.UpdateSpriteImage({
-            sprite: this.imageNameBg.image,
-            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_HOME_NAME_BG,//IMAGE_HOME_NAME_BG
-            type: cc.Sprite.Type.SLICED,//SLICED
-            left: oft,
-            right: oft,
-            top: oft,
-            bottom: oft,
-            success: function () {
-                this.LayOut();
-            }.bind(this),
-        });
+        // var oft = 50;
+        // cc.TextureUtil.UpdateSpriteImage({
+        //     sprite: this.imageNameBg.image,
+        //     pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_HOME_NAME_BG,//IMAGE_HOME_NAME_BG
+        //     type: cc.Sprite.Type.SLICED,//SLICED
+        //     left: oft,
+        //     right: oft,
+        //     top: oft,
+        //     bottom: oft,
+        //     success: function () {
+        //         this.LayOut();
+        //     }.bind(this),
+        // });
 
 
         // this.LayOut();
@@ -86,7 +86,7 @@ cc.Class({
 
 
         //home app center
-        this.LoadPrefabAppCenter();
+        // this.LoadPrefabAppCenter();
 
     },
 
@@ -150,7 +150,7 @@ cc.Class({
 
         var ratio = 1.5;
         var fontsize = this.textName.fontSize;
-        w = cc.Common.GetTextWidth(this.textName.text, fontsize) + fontsize*3;
+        w = cc.Common.GetTextWidth(this.textName.text, fontsize) + fontsize * 3;
         var w_max = size.width * 0.7;
         if (w > w_max) {
             w = w_max;
@@ -159,7 +159,7 @@ cc.Class({
             h = fontsize * ratio;
         }
 
-        this.imageNameBg.SetContentSize(w, h); 
+        this.imageNameBg.SetContentSize(w, h);
     },
 
 

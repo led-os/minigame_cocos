@@ -1,6 +1,6 @@
 var UIViewController = require("UIViewController");
 var UIGameBase = require("UIGameBase");
-var AppType = require("AppType"); 
+var AppType = require("AppType");
 
 var GameLevelParse = cc.Class({
     extends: cc.LevelParseBase,
@@ -125,7 +125,7 @@ var GameLevelParse = cc.Class({
 
 
     CheckAllLoad: function () {
-        cc.Debug.Log("UIGameShapeColor::CheckAllLoad this.isShowGame=" + this.isShowGame + " this.listGuanka=" + this.listGuanka.length);
+        // cc.Debug.Log("UIGameShapeColor::CheckAllLoad this.isShowGame=" + this.isShowGame + " this.listGuanka=" + this.listGuanka.length);
         if (cc.Common.CheckAllLoad(this.listProLoad) == true) {
             if (this.callbackGuankaFinish != null) {
                 cc.Debug.Log("UIGameShapeColor::CheckAllLoad callbackGuankaFinish this.listGuanka=" + this.listGuanka.length);

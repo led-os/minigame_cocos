@@ -42,6 +42,7 @@ var CloudRes = cc.Class({
         */
 
     StartDownload: function (obj) {
+        console.log("CloudRes StartDownload url="+obj.url);
         cc.FileSystem.main().DownloadFile({
             url: obj.url,
             success: function (res) {
@@ -59,9 +60,9 @@ var CloudRes = cc.Class({
                 }
             }.bind(this),
             progress: function (res) {
-                console.log('CloudRes下载进度=', res.progress)
-                console.log('CloudRes已经下载的数据长度=', res.totalBytesWritten)
-                console.log('CloudRes预期需要下载的数据总长度=', res.totalBytesExpectedToWrite)
+                // console.log('CloudRes  下载进度=  ', res.progress)
+                // console.log('CloudRes已经下载的数据长度=', res.totalBytesWritten)
+                // console.log('CloudRes预期需要下载的数据总长度=', res.totalBytesExpectedToWrite)
                 if (obj.progress != null) {
                     obj.progress(res);
                 }
@@ -76,12 +77,12 @@ var CloudRes = cc.Class({
             zipFilePath: filePath,
             targetPath: dir,
             success: function (res) {
-                console.log("unzip success=" + this.tmp_filepath);
+                console.log("CloudRes unzip success=" + this.tmp_filepath);
                 // this.readFile(dir + "/CloudRes/image/Bird/Albatross.png");
                 cc.FileSystem.main().DeleteFile(this.tmp_filepath);
             }.bind(this),
             fail: function (res) {
-
+                console.log("CloudRes unzip fail");
             }.bind(this),
         });
     },

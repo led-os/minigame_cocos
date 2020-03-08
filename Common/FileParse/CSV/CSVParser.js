@@ -28,7 +28,7 @@ var CSVParser = cc.Class({
 
     //整个str分割行数
     SplitAllLine: function (str) {
-        cc.Debug.Log("SplitAllLine=" + str);
+        // cc.Debug.Log("SplitAllLine=" + str);
         var list = str.split("\n");
         // list.forEach(function (value, index) {
         //     cc.Debug.Log("line "+index+" =" + value);

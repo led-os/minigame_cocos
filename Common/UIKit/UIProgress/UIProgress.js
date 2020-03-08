@@ -22,7 +22,7 @@ cc.Class({
         var size = this.node.getContentSize();
         w = size.width * value;
         h = size.height;
-        cc.Debug.Log("UpdateProgress w=" + w + " h=" + h + " size.width=" + size.width);
+        // cc.Debug.Log("UpdateProgress w=" + w + " h=" + h + " size.width=" + size.width);
 
         var sizeFt = cc.size(w, h);
         this.imageFt.node.setContentSize(sizeFt);

@@ -116,7 +116,7 @@ var LTLocalization = cc.Class({
             return false;
         }
         var ret = this.dicData.Contains(key);
-        cc.Debug.Log("IsContainsKey ret=" + ret);
+        //cc.Debug.Log("IsContainsKey ret=" + ret);
         return ret;
     },
 

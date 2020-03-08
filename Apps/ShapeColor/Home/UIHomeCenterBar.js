@@ -23,28 +23,7 @@ cc.Class({
     onLoad: function () {
         this._super();
         var x, y, w, h;
-
-        this.btnLearn.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_LEARN,
-            success: function () {
-            }.bind(this),
-        });
-
-        this.btnAdVideo.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_VIDEO,
-            success: function () {
-            }.bind(this),
-        });
-
-
-        this.btnAddLove.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_BG,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_LOVE,
-            success: function () {
-            }.bind(this),
-        });
+ 
 
         this.LayOut();
 
@@ -77,7 +56,7 @@ cc.Class({
         }
 
     },
-
+  
 
     GotoGameByMode: function (mode) {
         cc.GameManager.gameMode = mode;
