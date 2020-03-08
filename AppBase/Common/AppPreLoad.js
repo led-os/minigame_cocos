@@ -57,8 +57,8 @@ fail: function () {
 
         }
 
-        //image
-        {
+        //本地 imageres.json
+        if (!cc.Common.main().isWeiXin) {
             var info = new cc.LoadItemInfo();
             info.id = "image";
             info.isLoad = false;
@@ -75,7 +75,6 @@ fail: function () {
                     this.AppPreLoadDidFinish(info);
                 }.bind(this),
             });
-
         }
 
         //language
