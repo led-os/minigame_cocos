@@ -237,18 +237,18 @@ var GameShapeColor = cc.Class({
 
     ShowGameWin: function () {
 
-        cc.Debug.Log("OnGameWin gameLevelFinish=" + cc.GameManager.main().gameLevelFinish + " gameLevel=" + cc.GameManager.main().gameLevel);
-        if (cc.GameManager.main().gameLevelFinish < cc.GameManager.main().gameLevel) {
-            cc.GameManager.main().gameLevelFinish = cc.GameManager.main().gameLevel;
+        cc.Debug.Log("OnGameWin gameLevelFinish=" + cc.LevelManager.main().gameLevelFinish + " gameLevel=" + cc.LevelManager.main().gameLevel);
+        if (cc.LevelManager.main().gameLevelFinish < cc.LevelManager.main().gameLevel) {
+            cc.LevelManager.main().gameLevelFinish = cc.LevelManager.main().gameLevel;
             //好友排行榜
-            let score = cc.GameManager.main().placeLevel + "-" + cc.GameManager.main().gameLevel;
+            let score = cc.GameManager.main().placeLevel + "-" + cc.LevelManager.main().gameLevel;
             cc.Debug.Log("OnGameWin score=" + score);
             cc.FrendBoard.main().SaveData(score);
         }
 
 
         //记录游戏完成
-        var level = cc.GameManager.main().gameLevel;
+        var level = cc.LevelManager.main().gameLevel;
         var idx = Math.floor(level / GameLevelParse.GUANKA_NUM_PER_ITEM);
         var idx_sub = level % GameLevelParse.GUANKA_NUM_PER_ITEM;
         cc.Debug.Log("game finish idx_sub=" + idx_sub + " GUANKA_NUM_PER_ITEM=" + GameLevelParse.GUANKA_NUM_PER_ITEM);
@@ -443,7 +443,7 @@ var GameShapeColor = cc.Class({
 
 
                 //记录游戏开始进行中
-                var level = cc.GameManager.main().gameLevel;
+                var level = cc.LevelManager.main().gameLevel;
                 var idx = Math.floor(level / GameLevelParse.GUANKA_NUM_PER_ITEM);
                 var idx_sub = level % GameLevelParse.GUANKA_NUM_PER_ITEM;
                 if (idx_sub == 0) {
@@ -807,10 +807,11 @@ var GameShapeColor = cc.Class({
         }
     },
     LoadGameByColor: function (mode) {
-        var level = cc.GameManager.main().gameLevel;
+        var level = cc.LevelManager.main().gameLevel;
         var idx = Math.floor(level / GameLevelParse.GUANKA_NUM_PER_ITEM);
         var infocolor = this.GetItemInfoShapeColor(idx, this.listColor);
         if (infocolor == null) {
+            cc.Debug.Log("LoadGameByColor infocolor == null");
             return;
         }
 
@@ -871,7 +872,7 @@ var GameShapeColor = cc.Class({
 
     },
     LoadGameByShapeColor: function (mode) {
-        var level = cc.GameManager.main().gameLevel;
+        var level = cc.LevelManager.main().gameLevel;
         var idx = Math.floor(level / GameLevelParse.GUANKA_NUM_PER_ITEM);
         var infoshape = this.GetItemInfoShapeColor(idx, this.listShape);
         if (infoshape == null) {

@@ -37,8 +37,9 @@ var UIGameBase = cc.Class({
             success: function () {
             }.bind(this),
         });
-
-        //this.UpdateBtnMusic();
+    },
+    start: function () {
+        this.UpdateBtnMusic();
     },
     LoadGamePrefab: function () {
         var strPrefab = "AppCommon/Prefab/Game/Game" + cc.Config.main().appType;
@@ -65,14 +66,7 @@ var UIGameBase = cc.Class({
     },
     UpdateBtnMusic: function () {
         var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);
-        var bg = ret ? cc.AppRes.IMAGE_BTN_BG : cc.AppRes.IMAGE_BTN_BG_GREY;
-
-        this.btnMusic.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + bg,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_MUSIC,
-            success: function () {
-            }.bind(this),
-        });
+        this.btnMusic.UpdateSwitch(ret);
 
     },
 

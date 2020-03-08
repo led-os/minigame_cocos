@@ -60,12 +60,12 @@ var HorizontalOrVerticalLayoutBase = cc.Class({
             c = idx - Math.floor(r * this.col);
 
             //从顶部往底部显示
-            if (this.dispLayVertical == cc.LayOutBase.DispLayVertical.TOP_TO_BOTTOM) {
+            if (this.directionVertical == cc.LayOutBase.Direction.TOP_TO_BOTTOM) {
                 r = this.row - 1 - r;
             }
 
             //从右往左显示
-            if (this.dispLayHorizontal == cc.LayOutBase.DispLayHorizontal.RIGHT_TO_LEFT) {
+            if (this.directionHorizontal == cc.LayOutBase.Direction.RIGHT_TO_LEFT) {
                 c = this.col - 1 - c;
             }
 

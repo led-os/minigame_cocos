@@ -5,6 +5,8 @@ var Type = cc.Enum({
     IMAGE: 0,
     IMAGE_TEXT: 1,
     IMAGE_ICON: 2,
+    IMAGE_SWITCH: 3,
+    IMAGE_ICON_SWITCH: 4,
 
 });
 
@@ -23,6 +25,7 @@ var UIButton = cc.Class({
         imageIcon: cc.UIImage,
         textTitle: cc.UIText,
         enableFitTextSize: false,
+        isSwicthSelect: false,//选中
         _type: Type.IMAGE,
         type: {
             type: Type,
@@ -45,6 +48,7 @@ var UIButton = cc.Class({
 
                 switch (this._type) {
                     case Type.IMAGE:
+                    case Type.IMAGE_SWITCH:
                         {
                             this.imageIcon.node.active = false;
                             this.textTitle.node.active = false;
@@ -58,6 +62,7 @@ var UIButton = cc.Class({
                         }
                         break;
                     case Type.IMAGE_ICON:
+                    case Type.IMAGE_ICON_SWITCH:
                         {
                             this.imageIcon.node.active = true;
                             this.textTitle.node.active = false;
@@ -177,7 +182,16 @@ var UIButton = cc.Class({
             cc.TextureUtil.UpdateSpriteImage(objIcon);
         }
     },
-
+    UpdateSwitch: function (isSel) {
+        this.isSwicthSelect = isSel;
+        if (this.isSwicthSelect) {
+            this.imageBg.UpdateImageKey(this.imageBg.keyImage);
+            this.imageIcon.UpdateImageKey(this.imageIcon.keyImage);
+        } else {
+            this.imageBg.UpdateImageKey(this.imageBg.keyImage2);
+            this.imageIcon.UpdateImageKey(this.imageIcon.keyImage2);
+        }
+    },
 
 });
 

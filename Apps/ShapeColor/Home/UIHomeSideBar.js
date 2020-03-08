@@ -24,17 +24,14 @@ cc.Class({
         var x, y, w, h;
         this.btnMore.node.active = false;
         this.btnNoAd.node.active = false;
-   
-
-        this.UpdateBtnMusic();
-        this.UpdateBtnSound();
-
 
         this.LayOut();
 
     },
 
     start: function () {
+        this.UpdateBtnMusic();
+        this.UpdateBtnSound();
     },
     LayOut: function () {
         this._super();
@@ -55,29 +52,16 @@ cc.Class({
 
     UpdateBtnMusic: function () {
         var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);
-        var bg = ret ? cc.AppRes.IMAGE_BTN_BG : cc.AppRes.IMAGE_BTN_BG_GREY;
 
-        this.btnMusic.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + bg,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_MUSIC,
-            success: function () {
-            }.bind(this),
-        });
+        this.btnMusic.UpdateSwitch(ret);
 
     },
 
 
     UpdateBtnSound: function () {
         var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, false);
-        var bg = ret ? cc.AppRes.IMAGE_BTN_BG : cc.AppRes.IMAGE_BTN_BG_GREY;
-
-        this.btnSound.UpdateImage({
-            bg: cc.CloudRes.main().uiRootPath + "/" + bg,
-            icon: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.IMAGE_BTN_ICON_SOUND,
-            success: function () {
-            }.bind(this),
-        });
-
+        cc.Debug.Log("UpdateBtnSound ret=" + ret);
+        this.btnSound.UpdateSwitch(ret);
     },
 
     OnClickBtnMusic: function (event, customEventData) {
@@ -97,6 +81,7 @@ cc.Class({
     OnClickBtnSound: function (event, customEventData) {
         var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, false);//(AppString.STR_KEY_BACKGROUND_MUSIC);
         var v = !ret;
+        cc.Debug.Log("OnClickBtnSound UpdateBtnSwitch value=" + v);
         cc.Common.SetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, v);
         this.UpdateBtnSound();
     },

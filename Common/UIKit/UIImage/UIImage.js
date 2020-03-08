@@ -13,12 +13,13 @@ var UIImage = cc.Class({
     },
     properties: {
         image: cc.Sprite,
+        keyImage2: "",
     },
 
 
     onLoad: function () {
         this._super();
-        this.UpdateImageKey(this.keyImage); 
+        this.UpdateImageKey(this.keyImage);
     },
 
 
@@ -40,7 +41,7 @@ var UIImage = cc.Class({
   */
 
     UpdateImageKey: function (key) {
-        this.keyImage = key;
+        //this.keyImage = key;
         var pic = this.GetImageOfKey(key);
         var board = null;
         if (cc.ImageRes.main().ContainsBoard(key)) {

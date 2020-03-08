@@ -26,7 +26,7 @@ var UIGameShapeColor = cc.Class({
         this.textTitle.node.active = false;
     },
     start: function () {
-
+        this._super();
     },
     LoadLanguageColor: function (callback) {
         var filepath = cc.Common.GAME_RES_DIR + "/language/language_color.csv";
@@ -55,7 +55,7 @@ var UIGameShapeColor = cc.Class({
         this.game.node.zIndex = -10;
         this.isShowGame = true;
         this.callbackGuankaFinish = null;
-        this.UpdateGuankaLevel(cc.GameManager.main().gameLevel);
+        this.UpdateGuankaLevel(cc.LevelManager.main().gameLevel);
 
     },
 
