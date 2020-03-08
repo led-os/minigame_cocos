@@ -30,6 +30,12 @@ var UICloudRes = cc.Class({
                 //console.log('CloudRes预期需要下载的数据总长度=', res.totalBytesExpectedToWrite)
                 this.UpdateProgress(res.progress / 100.0);
             }.bind(this),
+
+            unzipSuccess: function () {
+                this.scheduleOnce(this.OnCloudResDidFinish, 0.25);
+            }.bind(this),
+
+
         });
 
         this.LayOut();
@@ -50,11 +56,6 @@ var UICloudRes = cc.Class({
         var str = cc.Language.main().GetString("STR_CLOUDRES_STATUS");
         str = str.replace("xxx", percent.toString());
         this.textStatus.string = str;
-
-        if (progress >= 1) {
-            this.scheduleOnce(this.OnCloudResDidFinish, 0.25);
-        }
-
     },
     OnCloudResDidFinish: function () {
         cc.Common.SetBoolOfKey(cc.CommonRes.KEY_DOWNLOAD_CLOUNDRES, true);

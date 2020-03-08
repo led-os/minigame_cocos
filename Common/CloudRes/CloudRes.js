@@ -26,6 +26,8 @@ var CloudRes = cc.Class({
                 return ret;
             }
         },
+        objDownload: null,
+
     },
 
 
@@ -38,11 +40,14 @@ var CloudRes = cc.Class({
             },
             progress: function (res) {
             } ,
+             unzipSuccess: function () {
+            },
         }
         */
 
     StartDownload: function (obj) {
-        console.log("CloudRes StartDownload url="+obj.url);
+        this.objDownload = obj;
+        console.log("CloudRes StartDownload url=" + obj.url);
         cc.FileSystem.main().DownloadFile({
             url: obj.url,
             success: function (res) {
@@ -80,6 +85,11 @@ var CloudRes = cc.Class({
                 console.log("CloudRes unzip success=" + this.tmp_filepath);
                 // this.readFile(dir + "/CloudRes/image/Bird/Albatross.png");
                 cc.FileSystem.main().DeleteFile(this.tmp_filepath);
+                if (this.objDownload != null) {
+                    if (this.objDownload.unzipSuccess != null) {
+                        this.objDownload.unzipSuccess();
+                    }
+                }
             }.bind(this),
             fail: function (res) {
                 console.log("CloudRes unzip fail");
