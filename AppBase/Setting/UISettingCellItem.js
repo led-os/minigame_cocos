@@ -75,19 +75,23 @@ cc.Class({
     UpdateItem: function (info) {
         this.textTitle.text = info.title;
         this.btnSwitch.node.active = false;
-        if ((info.tag == UISetting.TAG_SETTING_BACKGROUND_MUSIC) || (info.tag == UISetting.TAG_SETTING_BTN_SOUND)) {
+        if (info.tag == UISetting.TAG_SETTING_BACKGROUND_MUSIC) {
             this.btnSwitch.node.active = true;
             var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);
             this.UpdateBtnSwitch(ret);
         }
+
+        if (info.tag == UISetting.TAG_SETTING_BTN_SOUND) {
+            this.btnSwitch.node.active = true;
+            var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BTN_SOUND, false);
+            this.UpdateBtnSwitch(ret);
+        }
+
         this.UpdateImageBg(UISetting.listImage[this.index % 3]);
     },
     UpdateBtnSwitch: function (isSel) {
-        var key = "IMAGE_BTN_SWITCH_UNSEL";
-        if (isSel) {
-            key = "IMAGE_BTN_SWITCH_SEL"
-        }
-        this.btnSwitch.imageBg.UpdateImageKey(key); 
+
+        this.btnSwitch.UpdateSwitch(isSel);
 
     },
 

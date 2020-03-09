@@ -58,7 +58,8 @@ fail: function () {
         }
 
         //本地 imageres.json
-        if (!cc.Common.main().isWeiXin) {
+        //if (!cc.Common.main().isWeiXin) 
+        {
             var info = new cc.LoadItemInfo();
             info.id = "image";
             info.isLoad = false;

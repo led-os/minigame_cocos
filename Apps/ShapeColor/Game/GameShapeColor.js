@@ -11,7 +11,7 @@ var GameLevelParse = require("GameLevelParse");
 //weixin test app：wx844d0aa648111acb
 var GameShapeColor = cc.Class({
     extends: GameBase,
-    statics: { 
+    statics: {
         GAME_MODE_SHAPE: 0,
         GAME_MODE_COLOR: 1,
         GAME_MODE_SHAPE_COLOR: 2,
@@ -241,7 +241,7 @@ var GameShapeColor = cc.Class({
         if (cc.LevelManager.main().gameLevelFinish < cc.LevelManager.main().gameLevel) {
             cc.LevelManager.main().gameLevelFinish = cc.LevelManager.main().gameLevel;
             //好友排行榜
-            let score = cc.GameManager.main().placeLevel + "-" + cc.LevelManager.main().gameLevel;
+            let score = cc.LevelManager.main().placeLevel + "-" + cc.LevelManager.main().gameLevel;
             cc.Debug.Log("OnGameWin score=" + score);
             cc.FrendBoard.main().SaveData(score);
         }

@@ -23,7 +23,10 @@ cc.Class({
     onLoad: function () {
         this._super();
         var x, y, w, h;
- 
+        if (cc.Common.main().isWeiXin) {
+            this.btnLearn.node.active = false;
+            this.btnAdVideo.node.active = false;
+        }
 
         this.LayOut();
 

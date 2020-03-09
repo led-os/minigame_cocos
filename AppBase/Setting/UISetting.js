@@ -78,9 +78,9 @@ var UISetting = cc.Class({
         }
 
         var isHasBgMusic = true;
-        if (cc.Config.main().appType == cc.AppType.SHAPECOLOR) {
-            isHasBgMusic = false;
-        }
+        // if (cc.Config.main().appType == cc.AppType.SHAPECOLOR) {
+        //     isHasBgMusic = false;
+        // }
         if (isHasBgMusic) {
             var info = new cc.ItemInfo();
             info.title = cc.Language.main().GetString("STR_SETTING_BACKGROUND_MUSIC");

@@ -28,8 +28,6 @@ var UIHomeAppCenter = cc.Class({
         this._super();
         this.listItem.length = 0;
 
-
-
         this.StartParserAppList();
 
         this.LayOut();

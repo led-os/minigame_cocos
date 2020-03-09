@@ -133,6 +133,8 @@ var UIGameShapeColor = cc.Class({
         this.game.LoadGame(cc.GameManager.gameMode);
         //必须在loadgame之后loadbg
         this.LoadBg();
+
+        //this.game.ShowGameWin();
     },
     OnGameShapeColorDidError: function (g, error, str) {
         this.UpdateError(error, str);

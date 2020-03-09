@@ -22,8 +22,11 @@ cc.Class({
     onLoad: function () {
         this._super();
         var x, y, w, h;
-        this.btnMore.node.active = false;
-        this.btnNoAd.node.active = false;
+
+        if (cc.Common.main().isWeiXin) {
+            this.btnMore.node.active = false;
+            this.btnNoAd.node.active = false;
+        }
 
         this.LayOut();
 
