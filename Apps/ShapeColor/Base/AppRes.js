@@ -30,7 +30,7 @@ var AppRes = cc.Class({
         //https://7368-shapecolor-4f2a07-1258767259.tcb.qcloud.la/GameRes/image/banyuan/banyuan.png?sign=6f70fe6cbbb02943d6b433348ce66ba8&t=1552029703
 
         //audio 
-        AUDIO_BG: "audio/Bg",
+        AUDIO_BG: "Bg.mp3",
 
 
         //image

@@ -25,7 +25,12 @@ var UIViewAlert = cc.Class({
         this._super();
         {
             ratio = 0.8;
-            var size = cc.Common.appSceneMain.sizeCanvas;
+            var size = cc.Common.appSceneMain.sizeCanvas; 
+            var ratio = 0.8;
+            //显示异常
+            //this.node.setContentSize(size * ratio);
+            //显示异常
+
             w = Math.min(size.width, size.height) * ratio;
             h = w * 9 / 16;
             // h = w / 2;

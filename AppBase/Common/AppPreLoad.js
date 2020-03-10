@@ -59,24 +59,24 @@ fail: function () {
 
         //本地 imageres.json
         //if (!cc.Common.main().isWeiXin) 
-        {
-            var info = new cc.LoadItemInfo();
-            info.id = "image";
-            info.isLoad = false;
-            this.listProLoad.push(info);
-            cc.ImageRes.main().GetImage({
-                key: "apppreload",
-                success: function (image) {
-                    for (let infotmp of this.listProLoad) {
-                        if (infotmp.id == "image") {
-                            infotmp.isLoad = true;
-                        }
-                    }
-                    cc.Debug.Log("AppPreLoadDidFinish image");
-                    this.AppPreLoadDidFinish(info);
-                }.bind(this),
-            });
-        }
+        // {
+        //     var info = new cc.LoadItemInfo();
+        //     info.id = "image";
+        //     info.isLoad = false;
+        //     this.listProLoad.push(info);
+        //     cc.ImageRes.main().GetImage({
+        //         key: "apppreload",
+        //         success: function (image) {
+        //             for (let infotmp of this.listProLoad) {
+        //                 if (infotmp.id == "image") {
+        //                     infotmp.isLoad = true;
+        //                 }
+        //             }
+        //             cc.Debug.Log("AppPreLoadDidFinish image");
+        //             this.AppPreLoadDidFinish(info);
+        //         }.bind(this),
+        //     });
+        // }
 
         //language
         {

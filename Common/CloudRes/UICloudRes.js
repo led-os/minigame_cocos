@@ -33,18 +33,7 @@ var UICloudRes = cc.Class({
 
             unzipSuccess: function () {
                 cc.Debug.Log(" unzipSuccess ");
-
-                //提前预加载image
-                {
-                    cc.ImageRes.main().GetImage({
-                        key: "apppreload",
-                        success: function (image) {
-                            this.scheduleOnce(this.OnCloudResDidFinish, 0.25);
-                        }.bind(this),
-                    });
-
-                }
-
+                this.scheduleOnce(this.OnCloudResDidFinish, 0.25);
             }.bind(this),
 
 

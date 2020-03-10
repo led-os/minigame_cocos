@@ -97,7 +97,8 @@ var AudioPlay = cc.Class({
         if (ret) {
             var url = cc.CloudRes.main().audioRootPath + "/" + cc.AppRes.AUDIO_BG;
             if (cc.Common.main().isWeiXin) {
-                this.PlayUrl(url + ".mp3");
+                this.PlayUrl(url);
+                //this.PlayUrl(url);
                 return;
             }
 
