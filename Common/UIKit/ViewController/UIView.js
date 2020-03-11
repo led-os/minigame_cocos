@@ -183,6 +183,11 @@ var UIView = cc.Class({
 
     },
 
+
+    AddChild(child) {
+        child.node.setParent(this.node);
+        this.LayOut();
+    },
 });
 
 

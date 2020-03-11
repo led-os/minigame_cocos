@@ -3,7 +3,6 @@ var AppRes = require("AppRes");
 //var LayoutScale = require("LayoutScale");
 // var Common = require("Common");
 var GameViewController = require("GameViewController");
-var LearnProgressViewController = require("LearnProgressViewController");
 var AlertLockViewController = require("AlertLockViewController");
 var UIHomeCenterBar = require("UIHomeCenterBar");
 
@@ -161,14 +160,5 @@ cc.Class({
         }
     },
 
-
-    OnClickBtnBoard: function (event, customEventData) {
-
-        if (this.controller != null) {
-            var navi = this.controller.naviController;
-            navi.Push(LearnProgressViewController.main());
-        }
-
-    },
 });
 

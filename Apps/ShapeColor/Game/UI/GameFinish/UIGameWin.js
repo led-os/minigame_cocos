@@ -1,7 +1,7 @@
 var UIGameWinBase = require("UIGameWinBase");
 var UIViewPop = require("UIViewPop");
 var UIView = require("UIView");
-var UIGameWin = cc.Class({ 
+var UIGameWin = cc.Class({
     extends: UIGameWinBase,
     statics: {
     },
@@ -26,10 +26,10 @@ var UIGameWin = cc.Class({
             //显示异常
             //this.node.setContentSize(sizeCanvas * ratio);
             //显示异常
-            
+            var h_topbar = 160;
             var size = cc.Common.appSceneMain.sizeCanvas;
-            w = size.width * ratio;
-            h = size.height * ratio;
+            var w = size.width * ratio;
+            var h = (size.height-h_topbar) * ratio;
             cc.Debug.Log(" UIGameWin setContentSize = w=" + w + " h=" + h);
             this.node.setContentSize(new cc.Size(w, h));
 

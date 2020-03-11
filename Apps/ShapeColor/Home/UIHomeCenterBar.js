@@ -3,6 +3,7 @@ var AppRes = require("AppRes");
 var GameShapeColor = require("GameShapeColor");
 var PlaceViewController = require("PlaceViewController");
 var GuankaViewController = require("GuankaViewController");
+var LearnProgressViewController = require("LearnProgressViewController");
 
 cc.Class({
     extends: UIView,
@@ -17,14 +18,14 @@ cc.Class({
         btnShape: cc.UIButton,
         btnColor: cc.UIButton,
         btnShapeColor: cc.UIButton,
-
+        btnShare: cc.UIButton,
 
     },
     onLoad: function () {
         this._super();
         var x, y, w, h;
         if (cc.Common.main().isWeiXin) {
-            this.btnLearn.node.active = false;
+            //this.btnLearn.node.active = false;
             this.btnAdVideo.node.active = false;
         }
 
@@ -43,9 +44,11 @@ cc.Class({
         var rctran = this.node.getComponent(cc.RectTransform);
         cc.Debug.Log("UIHomeCenterBar  w=  " + rctran.width + " h=" + rctran.height);
         if (ly != null) {
-            if (cc.Device.main.isLandscape) {
-                ly.col = cc.LayoutUtil.main().GetChildCount(this.node, false);
-                ly.row = 1;
+            if (cc.Device.main.isLandscape) { 
+                ly.row = 2;
+                var v = cc.LayoutUtil.main().GetChildCount(this.node, false) / ly.row;
+                //向上取整
+                ly.col = Math.ceil(v);
             } else {
                 ly.row = 3;
                 var v = cc.LayoutUtil.main().GetChildCount(this.node, false) / ly.row;
@@ -59,7 +62,7 @@ cc.Class({
         }
 
     },
-  
+
 
     GotoGameByMode: function (mode) {
         cc.GameManager.gameMode = mode;
@@ -86,11 +89,21 @@ cc.Class({
     },
 
     OnClickBtnLearn: function (event, customEventData) {
+        cc.LevelManager.main().StartParseGuanka(function () {
+            if (this.controller != null) {
+                var navi = this.controller.naviController;
+                navi.Push(LearnProgressViewController.main());
+            }
+        }.bind(this)
+        );
     },
     OnClickBtnAddLove: function (event, customEventData) {
     },
 
     OnClickBtnAdVideo: function (event, customEventData) {
+    },
+    OnClickBtnShare: function (event, customEventData) {
+        cc.Share.main().ShareImageText("", cc.AppRes.SHARE_TITLE, cc.AppRes.SHARE_IMAGE_URL, "");
     },
 
     OnClickBtnShape: function (event, customEventData) {

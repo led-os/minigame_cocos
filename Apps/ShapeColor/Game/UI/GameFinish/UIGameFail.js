@@ -32,11 +32,13 @@ var UIGameFail = cc.Class({
         {
             var sizeCanvas = cc.Common.appSceneMain.sizeCanvas;
             var ratio = 0.8;
+            //显示异常
             //this.node.setContentSize(sizeCanvas * ratio);
-
+            //显示异常
+            var h_topbar = 160;
             var size = cc.Common.appSceneMain.sizeCanvas;
-            w = size.width * ratio;
-            h = size.height * ratio;
+            var w = size.width * ratio;
+            var h = (size.height - h_topbar) * ratio;
             cc.Debug.Log(" UIGameFail setContentSize = w=" + w + " h=" + h);
             this.node.setContentSize(new cc.Size(w, h));
 

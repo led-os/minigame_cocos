@@ -8,16 +8,13 @@ var GameViewController = require("GameViewController");
 var UILearnProgress = cc.Class({
     extends: UIView,
     properties: {
-        imageBg: cc.Sprite,
+        imageBg: cc.UIImage,
         tableView: cc.TableView,
-        btnBack: {
-            default: null,
-            type: cc.Button
-        },
-        btnShape: cc.Button,
-        btnColor: cc.Button,
+        btnBack: cc.UIButton,
+        btnShape: cc.UIButton,
+        btnColor: cc.UIButton,
 
-        textTitle: cc.Label,
+        textTitle: cc.UIText,
         oneCellNum: 4,
         totalItem: 0,
         oneCellNum: 0,
@@ -38,39 +35,34 @@ var UILearnProgress = cc.Class({
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
 
-        this.UnifyButtonSprite(this.btnBack);
-        this.UnifyButtonSprite(this.btnShape);
-        this.UnifyButtonSprite(this.btnColor);
-
-        this.textTitle.string = cc.Language.main().GetString("STR_TITLE_LEARN_PROGRESS");
         this.colorSel = cc.Color.WHITE;
         this.colorUnSel = cc.Color.GRAY;
 
-        var w, h, fontsize;
+        // var w, h, fontsize;
 
-        var textBtn = null;
-        {
+        // var textBtn = null;
+        // {
 
-            textBtn = cc.Common.GetButtonText(this.btnShape);
-            textBtn.string = cc.Language.main().GetString("STR_TITLE_SHAPE");
-            fontsize = textBtn.fontSize;
-            w = cc.Common.GetTextWidth(textBtn.string, fontsize) + fontsize / 2;
-            h = this.btnShape.node.getContentSize().height;
-            this.btnShape.node.setContentSize(w, h);
-        }
-        {
-            textBtn = cc.Common.GetButtonText(this.btnColor);
-            textBtn.string = cc.Language.main().GetString("STR_TITLE_COLOR");
+        //     textBtn = cc.Common.GetButtonText(this.btnShape);
+        //     textBtn.string = cc.Language.main().GetString("STR_TITLE_SHAPE");
+        //     fontsize = textBtn.fontSize;
+        //     w = cc.Common.GetTextWidth(textBtn.string, fontsize) + fontsize / 2;
+        //     h = this.btnShape.node.getContentSize().height;
+        //     this.btnShape.node.setContentSize(w, h);
+        // }
+        // {
+        //     textBtn = cc.Common.GetButtonText(this.btnColor);
+        //     textBtn.string = cc.Language.main().GetString("STR_TITLE_COLOR");
 
-            fontsize = textBtn.fontSize;
-            w = cc.Common.GetTextWidth(textBtn.string, fontsize) + fontsize / 2;
-            h = this.btnColor.node.getContentSize().height;
-            this.btnColor.node.setContentSize(w, h);
-        }
+        //     fontsize = textBtn.fontSize;
+        //     w = cc.Common.GetTextWidth(textBtn.string, fontsize) + fontsize / 2;
+        //     h = this.btnColor.node.getContentSize().height;
+        //     this.btnColor.node.setContentSize(w, h);
+        // }
 
         this.OnBtnClickShape();
- 
-      
+
+
     },
 
     start: function () {
@@ -78,13 +70,12 @@ var UILearnProgress = cc.Class({
     },
 
     UpdateList: function (type) {
-        this.itemType = type;
-        var game = GameViewController.main().gameBase;
+        this.itemType = type; 
         if (type == UILearnProgressCellItem.ITEM_TYPE_SHAPE) {
-            this.listItem = game.listShape;
+            this.listItem = cc.GameLevelParse.main().listShape;
         }
         if (type == UILearnProgressCellItem.ITEM_TYPE_COLOR) {
-            this.listItem = game.listColor;
+            this.listItem = cc.GameLevelParse.main().listColor;
         }
         // this.listItem = game.listShape;
 
@@ -99,8 +90,7 @@ var UILearnProgress = cc.Class({
         if (!cc.Device.main.isLandscape) {
             this.oneCellNum = this.oneCellNum / 2;
         }
-
-        cc.Debug.Log("this.listShape=" + game.listGuanka.length);
+ 
 
         this.tableView.oneCellNum = this.oneCellNum;
         this.tableView.cellHeight = 256;
@@ -120,11 +110,11 @@ var UILearnProgress = cc.Class({
 
     OnBtnClickShape: function () {
 
-        var textBtn = cc.Common.GetButtonText(this.btnShape);
+        // var textBtn = cc.Common.GetButtonText(this.btnShape);
 
-        textBtn.node.color = this.colorSel;
-        textBtn = cc.Common.GetButtonText(this.btnColor);
-        textBtn.node.color = this.colorUnSel;
+        // textBtn.node.color = this.colorSel;
+        // textBtn = cc.Common.GetButtonText(this.btnColor);
+        // textBtn.node.color = this.colorUnSel;
 
         this.UpdateList(UILearnProgressCellItem.ITEM_TYPE_SHAPE);
     },
@@ -132,10 +122,10 @@ var UILearnProgress = cc.Class({
 
 
     OnBtnClickColor: function () {
-        var textBtn = cc.Common.GetButtonText(this.btnShape);
-        textBtn.node.color = this.colorUnSel;
-        textBtn = cc.Common.GetButtonText(this.btnColor);
-        textBtn.node.color = this.colorSel;
+        // var textBtn = cc.Common.GetButtonText(this.btnShape);
+        // textBtn.node.color = this.colorUnSel;
+        // textBtn = cc.Common.GetButtonText(this.btnColor);
+        // textBtn.node.color = this.colorSel;
 
         this.UpdateList(UILearnProgressCellItem.ITEM_TYPE_COLOR);
     }

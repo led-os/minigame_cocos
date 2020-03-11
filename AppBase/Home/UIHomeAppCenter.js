@@ -75,7 +75,8 @@ var UIHomeAppCenter = cc.Class({
     CreateItem: function (info) {
         var node = cc.instantiate(this.uiAppIconPrefab);
         var item = node.getComponent(UIAppIcon);
-        node.setParent(this.node);
+        //node.setParent(this.node);
+        this.AddChild(item);
         item.UpdateItem(info);
         this.listItem.push(item);
     },
@@ -117,10 +118,12 @@ var UIHomeAppCenter = cc.Class({
             var appid = item.APPID.appstore;
             if (cc.Common.main().isWeiXin) {
                 appid = item.APPID.weixin;
+                cc.Debug.Log("HomeAppCenter:appid="+appid);
             }
             //appid = "wx2c5d3abfad26e8b1";
             if (appid != null) {
                 info.id = appid;
+          
                 if (cc.Config.main().appid == appid) {
                     continue;
                 }
@@ -137,6 +140,8 @@ var UIHomeAppCenter = cc.Class({
             }
 
         }
+
+        //this.LayOut();
 
     },
 }); 

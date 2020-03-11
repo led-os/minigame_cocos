@@ -854,7 +854,7 @@ var tableView = cc.Class({
         }
     },
     _getBoundingBoxToWorld: function (node) {
-        var p = node.convertToWorldSpace(cc.p(0, 0));
+        var p = node.convertToWorldSpace(cc.Vec2(0, 0));//p
         return cc.rect(p.x, p.y, node.width, node.height);
     },
     _updateCells: function () {

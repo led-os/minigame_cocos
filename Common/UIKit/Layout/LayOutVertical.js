@@ -21,7 +21,7 @@ var LayOutVertical = cc.Class({
     },
  
     LayOut: function () {
-        this.row = cc.LayoutUtil.main().GetChildCount(this.node,false);
+        this.row = cc.LayoutUtil.main().GetChildCount(this.node,this.enableHide);
         this._super();
     },
 
