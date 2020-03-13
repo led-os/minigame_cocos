@@ -44,6 +44,7 @@ var Config = cc.Class({
         appId:
         {
             get: function () {
+                cc.Debug.Log("GetAppIdOfStore get=");
                 var key_store = cc.Source.APPSTORE;
                 if (cc.Common.main().isAndroid) {
                     key_store = this.channel;
@@ -51,6 +52,7 @@ var Config = cc.Class({
                 if (cc.Common.main().isWeiXin) {
                     key_store = cc.Source.WEIXIN;
                 }
+                cc.Debug.Log("GetAppIdOfStore key_store=" + key_store);
                 var strid = this.GetAppIdOfStore(key_store);
                 return strid;
             }
@@ -128,7 +130,7 @@ var Config = cc.Class({
 
         var strDir = cc.Common.RES_CONFIG_DATA + "/config";
         var loadInfoId = "";
-        var fileName = "";
+        var fileName = "config_android";
         if (this == Config._main) {
             loadInfoId = Config.MAIN;
             //Defualt 
@@ -232,11 +234,13 @@ var Config = cc.Class({
         return this.GetStringJson(this.rootJson, key, def);
     },
     GetAppIdOfStore(store) {
+        cc.Debug.Log("GetAppIdOfStore store=" + store);
         var appid = this.rootJson.APPID;
         var strid = "0";
         if (appid.store != null) {
             strid = appid.store;
         }
+        cc.Debug.Log("GetAppIdOfStore appid= " + strid + "store=" + store);
         return strid;
     },
 
@@ -318,6 +322,8 @@ Config.main = function () {
     } else {
         //cc.Debug.Log("_main is not null");
     }
+
+    cc.Debug.Log("GetAppIdOfStore main=");
     return Config._main;
 }
 

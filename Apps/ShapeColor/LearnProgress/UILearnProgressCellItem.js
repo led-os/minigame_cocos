@@ -28,7 +28,7 @@ var UILearnProgressCellItem = cc.Class({
         colorSel: cc.Color,
         colorUnSel: cc.Color,
         languageColor: null,
-
+  
     },
 
     onLoad: function () {

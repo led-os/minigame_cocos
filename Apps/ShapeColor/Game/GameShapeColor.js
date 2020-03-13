@@ -372,18 +372,31 @@ var GameShapeColor = cc.Class({
         var uiGameItemSel = this.itemInfoSel.node.getComponent(UIGameItem);
         uiGameItemSel.UpdatePosition(positemNew);
 
+    },
+    OnTouchUp: function (pos) {
+        cc.Debug.Log("OnTouchUp");
+        if (!this.isItemHasSel) {
+            return;
+        }
+        var isLock = this.IsItemLock(this.itemInfoSel);
+        if (isLock) {
+            return;
+        }
+ 
+        //var posnew = new cc.Vec2(pos.x - this.node.getContentSize().width / 2, pos.y - this.node.getContentSize().height / 2);
+        var posnew = pos;
+       
+        var x, y, w, h;
 
-        //尾巴添加节点
-        // if (itemInfoSel.objTrail != null)
-        // {
-        //     Debug.Log("itemInfoSel.objTrail");
-        //     ShapeTrail trail = itemInfoSel.objTrail.GetComponent<ShapeTrail>();
-        //     if (trail != null)
-        //     {
-        //         // trail.AddPoint(posword);
-        //         trail.OnDraw();
-        //     }
-        // }
+        var ptStep = new cc.Vec2(posnew.x - this.ptDown.x, posnew.y - this.ptDown.y);
+        var positemNew = new cc.Vec2(this.posItemDown.x + ptStep.x, this.posItemDown.y + ptStep.y); 
+
+        //将选中item暂时置顶
+        //posword.z = this.itemPosZ - 2; 
+        //var body = this.itemInfoSel.node.getComponent(cc.RigidBody);
+        var uiGameItemSel = this.itemInfoSel.node.getComponent(UIGameItem);
+        uiGameItemSel.UpdatePosition(positemNew);
+ 
 
 
         for (let info of this.listItem) {
@@ -469,17 +482,8 @@ var GameShapeColor = cc.Class({
             }
         }
 
-        //this.CheckGameWin();
-    },
-    OnTouchUp: function (pos) {
-        cc.Debug.Log("OnTouchUp");
-        if (!this.isItemHasSel) {
-            return;
-        }
-        var isLock = this.IsItemLock(this.itemInfoSel);
-        if (isLock) {
-            return;
-        }
+
+
 
         var rc = this.GetRectDisplay();
         cc.Common.LimitNodePos(this.itemInfoSel.node, rc);

@@ -21,7 +21,7 @@ var UIGameBase = cc.Class({
         },
         btnMusic: cc.UIButton,
         btnBack: cc.UIButton,
-        imageBg: cc.Sprite,
+        imageBg: cc.UIImage,
         textTitle: cc.UIText,
         callbackGuankaFinish: null,
         callbackPlaceFinish: null,
@@ -31,12 +31,7 @@ var UIGameBase = cc.Class({
     onLoad: function () {
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
-        cc.TextureUtil.UpdateSpriteImage({
-            sprite: this.imageBg,
-            pic: cc.CloudRes.main().uiRootPath + "/" + cc.AppRes.Game_BG,
-            success: function () {
-            }.bind(this),
-        });
+        
     },
     start: function () {
         this.UpdateBtnMusic();

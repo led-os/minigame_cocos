@@ -15,8 +15,6 @@ var UIGameShapeColor = cc.Class({
             default: null,
             type: GameShapeColor
         },
-
-
         isShowGame: false,
     },
     onLoad: function () {
@@ -134,7 +132,6 @@ var UIGameShapeColor = cc.Class({
         //必须在loadgame之后loadbg
         this.LoadBg();
 
-        //this.game.ShowGameWin();
     },
     OnGameShapeColorDidError: function (g, error, str) {
         this.UpdateError(error, str);
@@ -221,20 +218,13 @@ var UIGameShapeColor = cc.Class({
         }
         var url = dirRoot + "/image_bg/" + info.pic;
         cc.Debug.Log("listBgNew.count = " + listBgNew.length + " url=" + url);
-        cc.TextureCache.main.Load(url, function (err, tex) {
-            if (err) {
-
-                cc.Debug.Log(err.message || err);
-                return;
-            }
-            // cc.Debug.Log("TextureCache loadRes ok");
-
-            this.imageBg.spriteFrame = new cc.SpriteFrame(tex);
-            var lyscale = this.imageBg.node.getComponent(cc.LayoutScale);
-            lyscale.LayOut();
-
-            this.ShowUserGuide();
-        }.bind(this));
+        this.imageBg.UpdateImage({
+            pic: url,
+            type: cc.Sprite.Type.SIMPLE,//SLICED 
+            success: function () {
+                this.imageBg.LayOut();
+            }.bind(this),
+        });
 
     },
 

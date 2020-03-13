@@ -44,15 +44,6 @@ cc.Class({
             fail: function () {
             }.bind(this),
         });
-
-
-        cc.ColorConfig.main().GetColor({
-            key: cc.GameRes.KEY_COLOR_PlaceItemTitle,
-            def: cc.Color.BLACK,
-            success: function (color) {
-                this.textTitle.color = color;
-            }.bind(this),
-        });
     },
 
     UpdateImage: function (pic) {

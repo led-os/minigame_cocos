@@ -116,15 +116,16 @@ var UIHomeAppCenter = cc.Class({
             info.title = cc.JsonUtil.GetItem(item, "title", "");
             info.pic = cc.JsonUtil.GetItem(item, "pic", "");
             var appid = item.APPID.appstore;
+            cc.Debug.Log("HomeAppCenter:appid =" + appid + " this appid=" + cc.Config.main().appId);
             if (cc.Common.main().isWeiXin) {
                 appid = item.APPID.weixin;
-                cc.Debug.Log("HomeAppCenter:appid="+appid);
+                cc.Debug.Log("HomeAppCenter:appid=" + appid);
             }
             //appid = "wx2c5d3abfad26e8b1";
             if (appid != null) {
                 info.id = appid;
-          
-                if (cc.Config.main().appid == appid) {
+
+                if (cc.Config.main().appId == appid) {
                     continue;
                 }
             }

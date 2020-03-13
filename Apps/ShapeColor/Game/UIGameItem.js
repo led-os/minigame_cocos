@@ -58,7 +58,7 @@ var UIGameItem = cc.Class({
         mat.setProperty('enableColor', 1.0);
         mat.setProperty('showColor', color);//cc.Color.WHITE
 
-        
+          
 
         //  mat.setProperty()
         // sprite.setMaterial 

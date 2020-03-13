@@ -12,26 +12,24 @@ cc.Class({
             default: null,
             type: cc.UIButton
         },
-        textTitle: cc.Label,
+        textTitle: cc.UIText,
         oneCellNum: 3,
         listItem: null,
     },
 
     onLoad: function () {
-        this._super();
-
-        this.textTitle.string = cc.Language.main().GetString("STR_GUANKA");
+        this._super(); 
         cc.LevelManager.main().StartParseGuanka(function () {
             cc.Debug.Log("UIGuanka::UpdateItem");
             this.UpdateItem();
         }.bind(this)
         );
 
-      
+
 
         // this.tableView.node.active = false;
         var ev = this.node.addComponent(cc.UITouchEvent);
-  
+
         // this.UpdateItem();
     },
 
@@ -39,10 +37,13 @@ cc.Class({
     InitList: function () {
         this.tableView.uiViewParent = this;
         this.tableView.cellHeight = 256;
-        var size = this.node.getContentSize();
-        this.oneCellNum = Math.floor(size.width / this.tableView.cellHeight);
-        this.tableView.oneCellNum = this.oneCellNum;
+        var size = this.node.getContentSize(); 
 
+        var v = size.width / this.tableView.cellHeight;
+        this.oneCellNum = Math.ceil(v);//向上取整
+        this.heightCell = Math.floor(size.width / this.oneCellNum);
+
+        this.tableView.oneCellNum = this.oneCellNum;
         this.tableView.initTableView(this.listItem.length, { array: this.listItem, target: this });
     },
 
