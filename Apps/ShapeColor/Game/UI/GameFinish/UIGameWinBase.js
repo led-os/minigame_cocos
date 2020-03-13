@@ -10,7 +10,7 @@ var UIGameWinBase = cc.Class({
         KEY_GAMEWIN_INFO_AUTHOR_INTRO: "KEY_GAMEWIN_INFO_AUTHOR_INTRO",
         KEY_GAMEWIN_INFO_ALBUM: "KEY_GAMEWIN_INFO_ALBUM",
     },
-    properties: { 
+    properties: {
         textView: cc.UITextView,
         textTitle: cc.UIText,
         imageBg: cc.UIImage,
@@ -19,6 +19,7 @@ var UIGameWinBase = cc.Class({
         btnAddLove: cc.UIButton,
         btnFriend: cc.UIButton,
         btnNext: cc.UIButton,
+        btnShare: cc.UIButton,
         objLayoutBtn: cc.Node,
 
         indexSegment: 0,
@@ -66,6 +67,9 @@ var UIGameWinBase = cc.Class({
             cc.LoveDB.main().AddItem(info);
         }
         this.UpdateLoveStatus();
+    },
+    OnClickBtnShare: function (event, customEventData) {
+        cc.Share.main().ShareImageText("", cc.AppRes.SHARE_TITLE, cc.AppRes.SHARE_IMAGE_URL, "");
     },
 });
 

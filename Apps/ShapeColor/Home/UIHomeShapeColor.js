@@ -36,7 +36,7 @@ cc.Class({
         //     game.LoadLanguageColor(function (p) { });
         // }
 
-
+  
         this.imageNameBg.node.active = false;
         this.listBtns.length = 0; 
 

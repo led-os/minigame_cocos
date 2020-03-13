@@ -11,10 +11,8 @@ var UIGameWin = cc.Class({
     },
 
     onLoad: function () {
-        this._super();
-        this.textTitle.text = cc.Language.main().GetString("STR_UIVIEWALERT_TITLE_GAME_FINISH");
-        this.textView.text = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_GAME_FINISH");
-        this.btnNext.text = cc.Language.main().GetString("STR_GameWin_BtnNext");
+        this._super(); 
+        this.textView.text = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_GAME_FINISH"); 
         this.LayOut();
     },
 
