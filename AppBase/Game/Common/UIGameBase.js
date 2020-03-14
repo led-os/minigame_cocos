@@ -31,9 +31,9 @@ var UIGameBase = cc.Class({
     onLoad: function () {
         this._super();
         this.node.setContentSize(this.node.parent.getContentSize());
-        
     },
     start: function () {
+        this._super();
         this.UpdateBtnMusic();
     },
     LoadGamePrefab: function () {
@@ -45,6 +45,7 @@ var UIGameBase = cc.Class({
             }
             this.gamePrefab = prefab;
             this.CreateGame();
+            this.UpdateBtnMusic();
         }.bind(this)
         );
     },
