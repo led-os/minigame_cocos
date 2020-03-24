@@ -24,7 +24,7 @@ cc.Class({
     onLoad: function () {
         this._super();
         var x, y, w, h;
-        this.btnLearn.node.active = false;
+        // this.btnLearn.node.active = false;
         if (cc.Common.main().isWeiXin) {
             //this.btnLearn.node.active = false;
             this.btnAdVideo.node.active = false;
@@ -107,7 +107,7 @@ cc.Class({
 
     OnClickBtnPlay: function (event, customEventData) {
         this.GotoGame();
-    }, 
+    },
 
 });
 

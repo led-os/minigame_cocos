@@ -162,6 +162,32 @@ var LevelParseBase = cc.Class({
         }
     },
 
+    StartParseGuankaItemId(idx, cbFinish) {
+
+        var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(idx);
+        this.callbackGuankaIdFinish = cbFinish;
+        // var filepath = cc.CloudRes.main().rootPath + "/guanka/item_" + infoPlace.id + ".json";
+        var filepath = cc.Common.GAME_RES_DIR + "/guanka/item_" + infoPlace.id + ".json";
+        cc.Debug.Log("StartParseGuankaItemId:idx=" + idx + " filepath=" + filepath);
+        // cc.Debug.Log("LoadGuankaItemId  :this.listGuanka= filepath=" + filepath);
+        // if (cc.Common.main().isWeiXin) {
+        //     // 加载json文件
+        //     cc.loader.load({ url: filepath, type: "json" }, function (err, rootJson) {
+        //         this.LoadGuankaItemIdFinish(err, rootJson);
+        //     }.bind(this));
+        // } else 
+
+        {
+            //cc.JsonAsset   cc.loader.load
+            //去除后缀
+            filepath = cc.FileUtil.GetFileBeforeExtWithOutDot(filepath);
+            cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
+                this.LoadGuankaItemIdFinish(err, rootJson, idx);
+            }.bind(this));
+        }
+    },
+
+
     LoadGuankaItemId(cbFinish) {
         var idx = cc.LevelManager.main().placeLevel;
         var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(idx);
@@ -182,30 +208,30 @@ var LevelParseBase = cc.Class({
             //去除后缀
             filepath = cc.FileUtil.GetFileBeforeExtWithOutDot(filepath);
             cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
-                this.LoadGuankaItemIdFinish(err, rootJson);
+                this.LoadGuankaItemIdFinish(err, rootJson, idx);
             }.bind(this));
         }
     },
 
-    LoadGuankaItemIdFinish(err, rootJson) {
+    LoadGuankaItemIdFinish(err, rootJson, idxPlace) {
         if (err) {
             // return;
             cc.Debug.Log("LoadGuankaItemIdFinish error:this.listGuanka=");
         }
         if (err == null) {
             if (rootJson.json == null) {
-                this.ParseGuankaItemId(rootJson);
+                this.ParseGuankaItemId(idxPlace, rootJson);
             } else {
                 //resource里的json文件
-                this.ParseGuankaItemId(rootJson.json);
+                this.ParseGuankaItemId(idxPlace, rootJson.json);
             }
         }
     },
 
-    ParseGuankaItemId(rootJson) {
+    ParseGuankaItemId(idxPlace, rootJson) {
         // cc.Debug.Log("ParseGuankaItemId:this.listGuanka=");
         //         //search_items
-        var idx = cc.LevelManager.main().placeLevel;
+        var idx = idxPlace;// cc.LevelManager.main().placeLevel;
         var infoPlace = cc.LevelManager.main().GetPlaceItemInfo(idx);
         var picRoot = cc.CloudRes.main().rootPath + "/image/" + infoPlace.id + "/";
 

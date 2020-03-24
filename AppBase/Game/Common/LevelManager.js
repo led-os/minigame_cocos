@@ -5,10 +5,10 @@ var GameViewController = require("GameViewController");
 var LevelManager = cc.Class({
     extends: cc.Object,
     statics: {
-      
+
 
     },
-    properties: { 
+    properties: {
         callbackGuankaFinish: null,
         placeLevel: 0,
         //get 和 set 函数不能放在statics里
@@ -59,16 +59,16 @@ var LevelManager = cc.Class({
     },
     Init: function () {
         //this.ParseGuanka();
-    }, 
+    },
 
 
     GetPlaceItemInfo: function (idx) {
-        var game = GameViewController.main().gameBase;
-        var info =this.listPlace[idx];
+        //var game = GameViewController.main().gameBase;
+        var info = this.listPlace[idx];
         cc.Debug.Log("GetPlaceItemInfo idx=" + idx + " LevelManager.listPlace.length=" + this.listPlace.length);
         return info;
     },
- 
+
     CleanGuankaList: function () {
         cc.GameLevelParse.main().CleanGuankaList();
     },
@@ -85,7 +85,7 @@ var LevelManager = cc.Class({
         cc.GameLevelParse.main().StartParsePlaceList(callback);
     },
 
-  
+
 
     GotoPreLevel: function () {
 

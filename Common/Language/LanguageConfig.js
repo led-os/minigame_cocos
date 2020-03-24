@@ -63,6 +63,11 @@ var LanguageConfig = cc.Class({
             }
             if (isSetLan) {
                 this.SetLanguageInternal(obj);
+                // if (obj != null) {
+                //     if (obj.success != null) {
+                //         obj.success("");
+                //     }
+                // }
             } else {
                 this.GetStringInternal(obj);
             }

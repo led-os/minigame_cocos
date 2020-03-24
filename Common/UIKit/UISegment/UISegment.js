@@ -35,7 +35,7 @@ var UISegment = cc.Class({
                 },  
             }
             */
-        objCallBack: null,
+        callBackDidClick: null,
         align: {
             default: cc.Align.Horizontal,
             type: cc.Align
@@ -122,18 +122,21 @@ var UISegment = cc.Class({
         var nodeItem = cc.instantiate(this.itemPrefab);
         nodeItem.setParent(this.scrollContent);
         var item = nodeItem.getComponent(UISegmentItem);
-        item.objCallBack = {
+        item.callBackDidClick = {
             OnDidClickItem: function (ui) {
                 this.Select(item.index);
-                if (this.objCallBack != null) {
-                    this.objCallBack.OnUISegmentDidClickItem(this, item);
+                if (this.callBackDidClick != null) {
+                    cc.Debug.Log("UISegment OnUISegmentDidClickItem idx=" + item.index);
+                    this.callBackDidClick.OnUISegmentDidClickItem(this, item);
                 }
             }.bind(this),
         };
         item.index = this.listItem.length;
         item.colorSel = this.colorSel;
         item.colorUnSel = this.colorUnSel;
-        item.fontSize = this.fontSize;
+        if (this.fontSize != 0) {
+            item.fontSize = this.fontSize;
+        }
         cc.Debug.Log("item.fontSize =" + item.fontSize);
         // int str_width = Common.GetStringLength(info.title, AppString.STR_FONT_NAME, itemFontSize);
         // int offsetx = space_x * listItem.Count + totalStringWidth;
@@ -154,9 +157,17 @@ var UISegment = cc.Class({
     },
 
     UpdateList() {
-        this.Select(0,true);
+        this.Select(0, true);
         //numRows = totalItem; 
     },
+
+    UpdateItemText(idx, str) {
+        var item = this.GetItem(idx);
+        if (item != null) {
+            item.UpdateItemText(str);
+        }
+    },
+
     GetItem(idx) {
         var item = this.listItem[idx];
         return item;

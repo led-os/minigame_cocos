@@ -41,6 +41,12 @@ var LanguageManager = cc.Class({
         this.UpdateLanguagePlace(obj.file);
         this.languagePlace.GetString(obj);
     },
+
+
+
+    LoadLanguageGame: function () {
+        this.languageGame = new cc.LanguageConfig();
+    },
     GetStringGame(obj) {
         this.UpdateLanguageGame(obj.file);
         this.languageGame.GetString(obj);
@@ -62,7 +68,6 @@ var LanguageManager = cc.Class({
             fail: function () {
             },
         };
-
         this.languagePlace.SetLanguage(obj);
     },
 
@@ -74,6 +79,21 @@ var LanguageManager = cc.Class({
         } else {
             this.languageGame.filepath = file;
         }
+
+
+        // var objLoad =
+        // {
+        //     key: "",
+        //     def: "",
+        //     success: function (str) {
+
+        //     },
+        //     fail: function () {
+        //     },
+        // };
+
+        // this.languageGame.Load(objLoad, true);
+
         var obj =
         {
             key: cc.Language.main().GetLanguage(),//cc.sys.LANGUAGE_CHINESE
@@ -83,7 +103,6 @@ var LanguageManager = cc.Class({
             fail: function () {
             },
         };
-
         this.languageGame.SetLanguage(obj);
     },
 
