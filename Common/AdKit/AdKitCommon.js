@@ -49,16 +49,16 @@ var AdKitCommon = cc.Class({
         //     }
         // }
 
-        // if (isShowAdBanner) {
-        //     AdBanner.SetScreenSize(Screen.width, Screen.height);
-        //     AdBanner.SetScreenOffset(0, Device.heightSystemHomeBar);
-        //     {
-        //         var type = AdConfigParser.SOURCE_TYPE_BANNER;
-        //         string source = AdConfig.main.GetAdSource(type);
-        //         AdBanner.InitAd(source);
-        //         AdBanner.ShowAd(true);
-        //     }
-        // }
+        if (isShowAdBanner) {
+            //cc.AdBanner.main().SetScreenSize(Screen.width, Screen.height);
+           //s cc.AdBanner.main().SetScreenOffset(0, Device.heightSystemHomeBar);
+            {
+                var type = AdConfigParser.main().SOURCE_TYPE_BANNER;
+                var source = AdConfig.main().GetAdSource(type);
+                cc.AdBanner.main().InitAd(source);
+                cc.AdBanner.main().ShowAd(true);
+            }
+        }
 
 
     },

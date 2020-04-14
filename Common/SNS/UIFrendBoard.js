@@ -43,8 +43,11 @@ cc.Class({
             type: cc.Object
         },
 
-        displayOpenData: cc.Sprite,//微信小程序 开放数据域
-        texCanvas: cc.Texture2D,
+        displayOpenData: cc.Sprite,//微信小程序 开放数据域 
+        texCanvas: {
+            type: cc.Texture2D,// use 'type:' to declare Texture2D object directly
+            default: null,     // object's default value is null
+          },
         isShowRanking: false,
 
     },

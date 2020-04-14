@@ -261,5 +261,5 @@ AdConfig.main = function () {
     }
     return AdConfig._main;
 }
-
+cc.AdConfig = module.export = AdConfig; 
 
