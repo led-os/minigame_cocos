@@ -51,6 +51,17 @@ var AdKitCommon = cc.Class({
         }
         isShowAdBanner = true;
         if (isShowAdBanner) {
+            cc.AdBanner.main().SetConfig({
+                adKey: "", 
+                DidReceiveAdFail: function () {
+                    this.AdBannerDidReceiveAdFail();
+                }.bind(this),
+                DidReceiveAd: function (w, h) {
+                    this.AdBannerDidReceiveAd(w,h);
+                }.bind(this),
+
+            });
+
             //cc.AdBanner.main().SetScreenSize(Screen.width, Screen.height);
             //  cc.AdBanner.main().SetScreenOffset(0, Device.heightSystemHomeBar);
             {
@@ -149,7 +160,7 @@ var AdKitCommon = cc.Class({
     },
 
 
-    AdBannerDidReceiveAd: function (str) {
+    AdBannerDidReceiveAd: function (w,h) {
 
         var w = 0;
         var h = 0;
@@ -160,9 +171,9 @@ var AdKitCommon = cc.Class({
         // int.TryParse(strH, out h);
         cc.Debug.Log("AdBannerDidReceiveAd::w=" + w + " h=" + h);
 
-        if (callbackFinish != null) {
-            callbackFinish(AdType.BANNER, AdStatus.SUCCESFULL, str);
-        }
+        // if (callbackFinish != null) {
+        //     callbackFinish(AdType.BANNER, AdStatus.SUCCESFULL, str);
+        // }
 
     },
     AdBannerDidReceiveAdFail: function (adsource) {

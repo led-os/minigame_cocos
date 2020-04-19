@@ -101,6 +101,7 @@ var GameViewController = cc.Class({
         this._super();
         this.ui.node.destroy();
         this.ui = null;
+        cc.AdKitCommon.main.ShowAdBanner(false);
 
     },
     LayOutView: function () {

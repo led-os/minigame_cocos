@@ -11,7 +11,14 @@ var AdBanner = cc.Class({
 	Init: function () {
 		var p = new cc.AdBannerPlatformWrapper();
 		this.platform = p.GetPlatform();
-	}, 
+	},
+ 
+	SetConfig(obj) {
+		if (this.platform == null) {
+			return;
+		}
+		this.platform.SetConfig(obj);
+	},
 	InitAd(source) {
 
 		if (this.platform == null) {
