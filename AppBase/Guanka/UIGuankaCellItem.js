@@ -50,7 +50,7 @@ cc.Class({
 
     OnClickItem: function () {
         this.target.GotoGame(this.index);
-    },
-
+        
+    }, 
 });
 

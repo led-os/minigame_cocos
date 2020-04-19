@@ -18,6 +18,8 @@ var AdConfigParser = cc.Class({
         // 声明静态变量
         COMMON: "common",
         MAIN: "main",
+        COUNTRY_CN: "cn",
+        COUNTRY_OTHER: "other",
         callbackFinish: null,
         listLoad: [],
         loadInfo: cc.LoadItemInfo,
@@ -76,12 +78,12 @@ var AdConfigParser = cc.Class({
         indexPriorityVideo: 0,
         indexPriorityNative: 0,
 
-        adSourceSplash = cc.Source.ADMOB,
-        adSourceSplashInsert = cc.Source.ADMOB,
-        adSourceInsert = cc.Source.ADMOB,
-        adSourceBanner = cc.Source.ADMOB,
-        adSourceNative = cc.Source.GDT,
-        adSourceVideo = cc.Source.UNITY,
+        adSourceSplash: "",
+        adSourceSplashInsert:"",
+        adSourceInsert: "",
+        adSourceBanner:"",
+        adSourceNative:"",
+        adSourceVideo: "",
 
     },
 
@@ -189,120 +191,7 @@ var AdConfigParser = cc.Class({
             }
         }
     },
-    ParseData: function (json) {
-        if (json == null) {
-            cc.Debug.Log("AdConfigParser:ParseData=null");
-        }
-        var appid = json.APPID.huawei;
-        cc.Debug.Log("AdConfigParser:appid=" + appid);
 
-    },
-
-    ParseJson: function (ishd) {
-
-        // if (AdConfigParser.callbackFinish != null) {
-        //     AdConfigParser.loadInfo.isLoad = true;
-        //     // cc.Debug.Log("isLoadAll= 2 " + isLoadAll);
-        //     Config.callbackFinish(this);
-        // }
-
-        // if (this.rootJson != null) {
-        //     return;
-        // }
-
-        var strDir = cc.Common.RES_CONFIG_DATA + "/config";
-
-        var fileName = "";
-
-        //Defualt
-        fileName = "config_" + this.osDefault;
-        if (this.osDefault == cc.Source.ANDROID) {
-            fileName = "config_android";
-        }
-        if (this.osDefault == cc.Source.IOS) {
-            fileName = "config_ios";
-        }
-        if (this.osDefault == cc.Source.WIN) {
-
-        }
-
-
-        if (cc.Common.main().isAndroid) {
-            fileName = "config_android";
-        }
-        if (cc.Common.isWin) {
-            fileName = "config_" + cc.Source.WIN;
-            fileName = "config_android";
-        }
-
-
-        if (ishd == true)//AppVersion.appForPad
-        {
-            fileName += "_hd";
-        }
-        //fileName += ".json";
-        var filepath = strDir + "/" + fileName;
-        cc.Debug.Log("AdConfigParser:filepath=" + filepath);
-        this.Load(filepath, AdConfigParser.MAIN);
-        /*
-                string json = FileUtil.ReadStringFromResources(strDir + "/" + fileName);//ReadStringAsset
-                rootJson = JsonMapper.ToObject(json);
-        
-                //appid
-        
-                JsonData jsonAppId = rootJson["APPID"];
-                foreach (string key in jsonAppId.Keys)
-                {
-                    string value = (string)jsonAppId[key];
-                    Debug.Log("APPID:key=" + key + " value=" + value);
-                    ItemInfo iteminfo = new ItemInfo();
-                    iteminfo.source = key;
-                    iteminfo.appid = value;
-                    listAppStore.Add(iteminfo);
-        
-                }
-        
-        
-        
-        
-        
-        
-                jsonShare = rootJson["SHARE"];
-                jsonPay = rootJson["PAY"];
-        
-                if (listSharePlatform == null)
-                {
-                    listSharePlatform = new List<SharePlatformInfo>();
-                }
-        
-                JsonData jsonPlatform = jsonShare["platform"];
-                foreach (JsonData data in jsonPlatform)
-                {
-                    SharePlatformInfo info = new SharePlatformInfo();
-                    info.source = (string)data["source"];
-                    info.appId = (string)data["id"];
-                    info.appKey = (string)data["key"];
-                    listSharePlatform.Add(info);
-                    if (info.source == Source.WEIXIN)
-                    {
-                        //同时添加朋友圈
-                        AddShareBrother(Source.WEIXINFRIEND, info.appId, info.appKey);
-                    }
-        
-                    if (info.source == Source.QQ)
-                    {
-                        //同时添加qq空间
-                        AddShareBrother(Source.QQZONE, info.appId, info.appKey);
-                    }
-        
-                }
-        
-                //统一添加email和短信
-                AddShareBrother(Source.EMAIL, "0", "0");
-                AddShareBrother(Source.SMS, "0", "0");
-        
-                */
-    },
 
     //return AdInfo
     GetAdInfo: function (source) {
@@ -433,7 +322,9 @@ var AdConfigParser = cc.Class({
     InitPriority: function (src, type) {
 
         var listPriority = this.GetListPriority(type);
-        listPriority.forEach(function (info, index) {
+        for (var i = 0; i < listPriority.length; i++) {
+            var info = listPriority[i];
+
             if (info.source == src) {
                 switch (type) {
                     case AdType.SPLASH:
@@ -455,9 +346,11 @@ var AdConfigParser = cc.Class({
                         this.indexPriorityVideo = index;
                         break;
                 }
+
+
                 break;
             }
-        }.bind(this));
+        }
 
     },
 
@@ -500,11 +393,11 @@ var AdConfigParser = cc.Class({
 
         //直接从本地读取
         //OnHttpRequestFinished(null, false, null);
-        this.ParseJsonDataApp();
+        this.StartParseJsonDataApp();
 
         //common 在后面
-        this.ParseJsonDataCommon();
-        this.ParseJsonPriority();
+        this.StartParseJsonDataCommon();
+        this.StartParseJsonPriority();
 
         // HttpRequest http = new HttpRequest(OnHttpRequestFinished);
         // http.Get(url);
@@ -513,7 +406,9 @@ var AdConfigParser = cc.Class({
 
     },
 
-    ParseJsonDataApp: function () {
+
+
+    StartParseJsonDataApp: function () {
         var filename = "ad_config_ios";
 
         if (cc.Common.main().isAndroid) {
@@ -524,19 +419,185 @@ var AdConfigParser = cc.Class({
         }
 
 
-        if (cc.Common.main().isWin)
-        {
+        if (cc.Common.main().isWin) {
             filename = "ad_config_win"
-        } 
+        }
 
         if (cc.AppVersion.main().appForPad) {
             filename = filename + "_hd";
         }
-        var filepath = Common.GAME_DATA_DIR + "/adconfig/" + filename + ".json";
+        var filepath = cc.Common.RES_CONFIG_DATA + "/adconfig/" + filename + ".json";
         //  byte[] datatmp = FileUtil.ReadDataAuto(filepath);
         //  this.ParseData(datatmp);
-    }
+        cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
+            if (err) {
+                cc.Debug.Log("config:err=" + err);
+            }
+            if (err == null) {
+                this.ParsePlatformData(rootJson.json);
+            }
+        }.bind(this));
+
+    },
+
+    StartParseJsonDataCommon: function () {
+
+        var filename = "ad_config_common_ios";
+
+        if (cc.Common.main().isAndroid) {
+            filename = "ad_config_common_android";
+        }
+        if (cc.Common.main().isWeiXin) {
+            filename = "ad_config_common_weixin";
+        }
+
+
+        if (cc.Common.main().isWin) {
+            filename = "ad_config_common_win"
+        }
+
+        if (cc.AppVersion.main().appForPad) {
+            filename = filename + "_hd";
+        }
+
+        var key = AdConfigParser.COUNTRY_CN;
+        if (this.IsInChina()) {
+            key = AdConfigParser.COUNTRY_CN;
+        }
+        else {
+            key = AdConfigParser.COUNTRY_OTHER;
+        }
+
+        var filepath = cc.Common.RES_CONFIG_DATA_COMMON + "/adconfig/" + key + "/" + filename + ".json";
+
+
+        cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
+
+            if (err) {
+                cc.Debug.Log("config:err=" + err);
+            }
+            if (err == null) {
+                var adsource = rootJson.json["ad_source"];
+                this.adSourceSplash = cc.JsonUtil.GetItem(adsource, "source_splash", "");
+                this.adSourceInsert = cc.JsonUtil.GetItem(adsource, "source_insert", "");
+                this.adSourceBanner = cc.JsonUtil.GetItem(adsource, "source_banner", "");
+                this.adSourceSplashInsert = cc.JsonUtil.GetItem(adsource, "source_splash_insert", "");
+                this.adSourceNative = cc.JsonUtil.GetItem(adsource, "source_native", "");
+                this.adSourceVideo = cc.JsonUtil.GetItem(adsource, "source_video", "");
+
+                this.ParsePlatformData(rootJson.json);
+            }
+        }.bind(this));
+
+
+
+    },
+
+    StartParseJsonPriority: function () {
+        var filename = "ad_config_priority_ios";
+
+        if (cc.Common.main().isAndroid) {
+            filename = "ad_config_priority_android";
+        }
+        if (cc.Common.main().isWeiXin) {
+            filename = "ad_config_priority_weixin";
+        }
+
+
+        if (cc.Common.main().isWin) {
+            filename = "ad_config_priority_win"
+        }
+
+
+        var key = AdConfigParser.COUNTRY_CN;
+        if (this.IsInChina()) {
+            key = AdConfigParser.COUNTRY_CN;
+        }
+        else {
+            key = AdConfigParser.COUNTRY_OTHER;
+        }
+
+        var filepath = cc.DATA_COMMON + "/adconfig/" + key + "/" + filename + ".json";
+
+        cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
+
+            if (err) {
+                cc.Debug.Log("config:err=" + err);
+            }
+            if (err == null) {
+
+                var root = rootJson.json;
+                this.ParsePriorityItem(this.listPriorityBanner, "priority_banner", root);
+
+                this.ParsePriorityItem(this.listPriorityInsert, "priority_insert", root);
+
+                this.ParsePriorityItem(this.listPrioritySplash, "priority_splash", root);
+
+                this.ParsePriorityItem(this.istPrioritySplashInsert, "priority_splash_insert", root);
+
+                this.ParsePriorityItem(this.listPriorityVideo, "priority_video", root);
+
+                this.ParsePriorityItem(this.listPriorityNative, "priority_native", root);
+
+            }
+        }.bind(this));
+
+
+    },
+
+    ParsePriorityItem: function (ls, key, json) {
+        var jsonItems = json[key];
+        for (var i = 0; i < jsonItems.length; i++) {
+            var info = new cc.AdInfo();
+            var current = jsonItems[i];
+            info.source = current["source"];
+            ls.Add(info);
+        }
+    },
+
+    ParsePlatformData: function (rootData) {
+        var key = "platform";
+        if (!cc.JsonUtil.ContainsKey(rootData, key)) {
+            return;
+        }
+
+        var jsonItems = rootData[key];
+
+        for (var i = 0; i < jsonItems.length; i++) {
+            var info = new cc.AdInfo();
+            var item = jsonItems[i];
+            info.source = item["source"];
+            if (this.IsInPlatformList(info.source)) {
+                continue;
+            }
+
+            info.appid = cc.JsonUtil.GetItem(item, "appid", "");
+            info.appkey = cc.JsonUtil.GetItem(item, "appkey", "");
+            info.key_splash = cc.JsonUtil.GetItem(item, "key_splash", "");
+            info.key_splash_insert = cc.JsonUtil.GetItem(item, "key_splash_insert", "");
+            info.key_insert = cc.JsonUtil.GetItem(item, "key_insert", "");
+            info.key_native = cc.JsonUtil.GetItem(item, "key_native", "");
+            info.key_banner = cc.JsonUtil.GetItem(item, "key_banner", "");
+            info.key_video = cc.JsonUtil.GetItem(item, "key_video", "");
+            info.key_insert_video = cc.JsonUtil.GetItem(item, "key_insert_video", "");
+
+            this.listPlatform.Add(info);
+
+        }
+    },
+
+    IsInPlatformList: function (src) {
+        var ret = false;
+        for (var i = 0; i < this.listPlatform.length; i++) {
+            var info = this.listPlatform[i];
+            if (info.source == src) {
+                ret = true;
+                break;
+            }
+        };
+        return ret;
+    }
 
 });
 

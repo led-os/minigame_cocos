@@ -1,25 +1,25 @@
 ﻿
+
+var VideoType = cc.Enum({
+	//区分大小写
+	NSERT: 0,//插屏视频 
+	REWARD: 1,//激励视频  
+
+});
+
 var AdVideo = cc.Class({
 	extends: cc.Object,// cc.ItemInfo,
 	properties: {
 		platform: cc.AdVideoPlatformWrapper,
 	},
 	statics: {
-
+		VideoType: VideoType,
 	},
 
 	Init: function () {
 		var p = new cc.AdVideoPlatformWrapper();
 		this.platform = p.GetPlatform();
-	},
-	InitAd(source) {
-
-		if (this.platform == null) {
-			return;
-		}
-		// Moonma.AdKit.AdConfig.AdConfig.main.InitPriority(source, AdConfigParser.SOURCE_TYPE_BANNER);
-		this.platform.InitAd(source);
-	},
+	}, 
 	// public const int ADVIDEO_TYPE_INSERT = 0;//插屏视频
 	//   public const int ADVIDEO_TYPE_REWARD = 1;//激励视频
 

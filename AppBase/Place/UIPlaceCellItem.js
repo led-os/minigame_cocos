@@ -79,6 +79,16 @@ cc.Class({
             cc.Debug.Log('goto GuankaViewController');
             navi.Push(GuankaViewController.main());
         }
+
+       // cc.AdKitCommon.main.ShowAdVideo();
+        this.ShowAdInsert();
+    },
+
+    ShowAdInsert: function()
+    { 
+        var source =cc.Source.GDT;
+        cc.AdInsert.main().InitAd(source);
+        cc.AdKitCommon.main.ShowAdInsert(100); 
     },
 
 });

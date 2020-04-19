@@ -12,8 +12,7 @@ var AdVideoPlatformWrapper = cc.Class({
         return p;
     },
 
-    InitAd(source) { 
-    },
+     
     SetObjectInfo(objName, objMethod) {
 
     },

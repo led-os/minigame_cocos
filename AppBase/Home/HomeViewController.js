@@ -37,22 +37,7 @@ var HomeViewController = cc.Class({
         );
 
         // CloudResViewController.main().Show(null, null);
-        if (this.runCount == 0) {
-            //至少在home界面显示一次视频广告
-            //AdKitCommon.main.callbackAdVideoFinish = OnAdKitAdVideoFinish;
-            //   if (uiHome != null)
-            // {
-            //     uiHome.OnClickBtnAdVideo();
-            // }
 
-            //至少在home界面显示一次开机插屏
-            // var type = AdConfigParser.SOURCE_TYPE_INSERT;
-            // var source = cc.Source.GDT;
-            // cc.AdInsert.main().InitAd(source); 
-            // cc.AdKitCommon.main.ShowAdInsert(100);
-
-        }
-        this.runCount++;
     },
 
     LoadPrefabDefault: function () {
@@ -100,6 +85,8 @@ var HomeViewController = cc.Class({
         } else {
             this.LoadPrefab();
         }
+        // this.ShowAd();
+
     },
     ViewDidUnLoad: function () {
         cc.Debug.Log("HomeViewController ViewDidUnLoad");
@@ -111,6 +98,41 @@ var HomeViewController = cc.Class({
         //  base.LayOutView();
 
     },
+
+    ShowAd: function () {
+
+        if (this.runCount == 0) {  
+
+            //至少在home界面显示一次视频广告
+            cc.AdKitCommon.main.callbackFinish = this.OnAdKitCallBack.bind(this);
+            if (cc.Common.main().isiOS) {
+                //原生开机插屏
+                cc.AdKitCommon.main.ShowAdNativeSplash(cc.Source.ADMOB);
+            }
+            else {
+                //至少在home界面显示一次开机插屏  
+                this.ShowAdInsert();
+
+            }
+        }
+        this.runCount++;
+
+         //显示横幅广告
+        //  cc.AdKitCommon.main.InitAdBanner();
+    },
+
+      ShowAdInsert: function()
+    { 
+        var source =cc.Source.GDT;
+        cc.AdInsert.main().InitAd(source);
+        cc.AdKitCommon.main.ShowAdInsert(100); 
+    },
+
+    OnAdKitCallBack: function()
+    { 
+         
+    },
+
 
 });
 

@@ -92,6 +92,9 @@ var GameViewController = cc.Class({
         this._super();
         //this.LoadPrefab();
         this.CreateUI();
+
+         //显示横幅广告
+         cc.AdKitCommon.main.InitAdBanner();
     },
     ViewDidUnLoad: function () {
         cc.Debug.Log("GameViewController ViewDidUnLoad");
@@ -107,6 +110,7 @@ var GameViewController = cc.Class({
     },
 
     GotoGame: function (name) {
+       
     },
 
 });
