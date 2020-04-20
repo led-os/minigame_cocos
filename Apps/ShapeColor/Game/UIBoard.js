@@ -54,8 +54,9 @@ var UIBoard = cc.Class({
 
             w = this.lineWidth;
             h = posend.y-posstart.y;
-            x = -w_node / 2 + oft_line;
-            y = 0;
+            x = posstart.x;
+            y = posstart.y;
+            y = this.offsetBottomWithAdBanner;
         }
         if (draw == this.drawRight) {
             posstart = new cc.Vec2(w_node / 2 - oft_line, -h_node / 2);
@@ -63,8 +64,9 @@ var UIBoard = cc.Class({
             posstart.y += this.offsetBottomWithAdBanner;
             w = this.lineWidth;
             h = h_node;
-            x = w_node / 2 - oft_line;
-            y = 0;
+            x = posstart.x;
+            y = posstart.y;
+            y = this.offsetBottomWithAdBanner;
         }
 
         if (draw == this.drawTop) {
@@ -73,8 +75,9 @@ var UIBoard = cc.Class({
 
             h = this.lineWidth;
             w = w_node;
-            y = h_node / 2 - oft_line;
-            x = 0;
+            y = posstart.y;
+            x = posstart.x;
+            x =0;
         }
 
         if (draw == this.drawBottom) {
@@ -85,8 +88,10 @@ var UIBoard = cc.Class({
 
             h = this.lineWidth;
             w = w_node;
+            y = this.offsetBottomWithAdBanner;
+           
             y = posstart.y;
-            x = 0;
+            x =0;
         }
 
 
@@ -97,7 +102,8 @@ var UIBoard = cc.Class({
         var collider = draw.node.getComponent(cc.PhysicsBoxCollider);
         if (collider != null) {
 
-            collider.size = cc.size(w, h);
+            collider.size = cc.size(w, h); 
+            //offset 坐标原点在屏幕左下角
             collider.offset = cc.v2(x, y);
             cc.Debug.Log("collider.size=  " + collider.size);
 

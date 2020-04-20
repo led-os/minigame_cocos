@@ -4,7 +4,7 @@ var UILearnProgressCellItem = require("UILearnProgressCellItem");
 var UIGameShapeColor = require("UIGameShapeColor");
 var GameViewController = require("GameViewController");
 //var GameManager = require("GameManager");
-
+  
 var UILearnProgress = cc.Class({
     extends: UIView,
     properties: {

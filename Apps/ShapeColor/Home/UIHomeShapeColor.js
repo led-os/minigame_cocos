@@ -14,7 +14,7 @@ cc.Class({
             default: null,
             type: cc.Button
         },
-
+  
         indexAction: 0,
         listBtns: {
             default: [],
@@ -29,8 +29,9 @@ cc.Class({
         var x, y, w, h;
 
         //物理系统默认是关闭的，手动开启物理系统 
-         cc.Common.EnablePhysic(true, false);
-
+          cc.Common.EnablePhysic(true, false);
+        // cc.Common.EnablePhysic(true, true);
+         
         // var game = GameViewController.main().gameBase;
         // if (game != null) {
         //     game.LoadLanguageColor(function (p) { });
@@ -45,9 +46,9 @@ cc.Class({
 
         this.LayOut(); 
         this.indexAction = 0;
+     
 
-
-
+  
     },
 
     start: function () {

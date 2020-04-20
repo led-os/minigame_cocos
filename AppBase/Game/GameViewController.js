@@ -89,8 +89,7 @@ var GameViewController = cc.Class({
 
     ViewDidLoad: function () {
         cc.Debug.Log("GameViewController ViewDidLoad");
-        this._super();
-        //this.LoadPrefab();
+        this._super(); 
         this.CreateUI();
   
     },
