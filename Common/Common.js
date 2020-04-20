@@ -71,7 +71,7 @@ var Common = cc.Class({
 
             //cc.Debug.Log("canvasMain size=" + size);
             //cc.Debug.Log("screen size width=" + screenSize.width + ",height=" + screenSize.height);
-           // cc.Debug.Log("sizeCanvas size=" + sizeCanvas);
+            // cc.Debug.Log("sizeCanvas size=" + sizeCanvas);
             return sizeCanvas;
         },
 
@@ -337,7 +337,7 @@ var Common = cc.Class({
 
         GetButtonText: function (btn) {
             return "btn";
-          //  return btn.node.getChildByName("Label").getComponent(cc.Label);
+            //  return btn.node.getChildByName("Label").getComponent(cc.Label);
         },
 
         //字符串显示大小
@@ -430,6 +430,31 @@ var Common = cc.Class({
                 })
             }
         },
+        ScreenToCanvasWidth(canvasSize, w) {
+            var sz = cc.view.getVisibleSize();//屏幕分辨率
+            var ret = w * canvasSize.width / sz.width;
+            //float image_screen_w = rcImageLeft.rect.width*Screen.width/sizeCanvas.x;
+            return ret;
+        },
+        ScreenToCanvasHeight(canvasSize, h) {
+            var sz = cc.view.getVisibleSize();//屏幕分辨率
+            var ret = h * canvasSize.height / sz.height;
+            return ret;
+        },
+        CanvasToScreenWidth(canvasSize, w) {
+            var sz = cc.view.getVisibleSize();//屏幕分辨率
+            var ret = w * sz.width / canvasSize.width;
+            //float image_screen_w = rcImageLeft.rect.width*Screen.width/sizeCanvas.x;
+            return ret;
+        },
+
+        CanvasToScreenHeight(canvasSize, h) {
+            var sz = cc.view.getVisibleSize();//屏幕分辨率
+            var ret = h * sz.height / canvasSize.height;
+            return ret;
+        },
+
+
 
         appSceneMain: null,
 

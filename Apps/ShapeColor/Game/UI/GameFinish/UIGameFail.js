@@ -54,10 +54,10 @@ var UIGameFail = cc.Class({
         this.LayOut();
     },
 
-    OnAdKitFinish(type, status, str) {
+    OnAdKitFinish(obj) {
         cc.Debug.Log(" gamefail OnAdKitFinish  ");
-        if (type == cc.AdKitCommon.AdType.VIDEO) {
-            if (status == cc.AdKitCommon.AdStatus.SUCCESFULL) {
+        if (obj.type == cc.AdKitCommon.AdType.VIDEO) {
+            if (obj.status == cc.AdKitCommon.AdStatus.SUCCESFULL) {
                 this.Close();
             }
         }

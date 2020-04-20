@@ -13,23 +13,33 @@ var UIBoard = cc.Class({
         drawTop: cc.Graphics,
         drawBottom: cc.Graphics,
         lineWidth: 0,
+
+        offsetBottomWithAdBanner: 0,
+
     },
 
     onLoad: function () {
         this.lineWidth = UIBoard.LINE_WIDTH;
         this.node.setContentSize(this.node.parent.getContentSize());
-        //left
-        {
-            this.InitDraw(this.drawLeft);
-            this.InitDraw(this.drawRight);
-            this.InitDraw(this.drawTop);
-            this.InitDraw(this.drawBottom);
+       
+        this.LayOut();
+    },
+    LayOut: function () {
+        this._super();
+        this.Draw();
+    },
 
-        }
-
+    Draw: function () {
+        this.offsetBottomWithAdBanner = cc.AdKitCommon.main.heightAdCanvas;
+        cc.Debug.Log("offsetBottomWithAdBanner ="+this.offsetBottomWithAdBanner);
+        this.InitDraw(this.drawLeft);
+        this.InitDraw(this.drawRight);
+        this.InitDraw(this.drawTop);
+        this.InitDraw(this.drawBottom);
     },
 
     InitDraw: function (draw) {
+        draw.clear(true);
         draw.lineWidth = this.lineWidth;
         draw.strokeColor = cc.Color.WHITE;
         var x, y, w, h, posstart, posend, w_node, h_node;
@@ -40,16 +50,17 @@ var UIBoard = cc.Class({
         if (draw == this.drawLeft) {
             posstart = new cc.Vec2(-w_node / 2 + oft_line, -h_node / 2);
             posend = new cc.Vec2(-w_node / 2 + oft_line, h_node / 2);
+            posstart.y += this.offsetBottomWithAdBanner;
 
             w = this.lineWidth;
-            h = h_node;
+            h = posend.y-posstart.y;
             x = -w_node / 2 + oft_line;
             y = 0;
         }
         if (draw == this.drawRight) {
             posstart = new cc.Vec2(w_node / 2 - oft_line, -h_node / 2);
             posend = new cc.Vec2(w_node / 2 - oft_line, h_node / 2);
-
+            posstart.y += this.offsetBottomWithAdBanner;
             w = this.lineWidth;
             h = h_node;
             x = w_node / 2 - oft_line;
@@ -69,10 +80,12 @@ var UIBoard = cc.Class({
         if (draw == this.drawBottom) {
             posstart = new cc.Vec2(-w_node / 2, -h_node / 2 + oft_line);
             posend = new cc.Vec2(w_node / 2, -h_node / 2 + oft_line);
+            posstart.y += this.offsetBottomWithAdBanner;
+            posend.y += this.offsetBottomWithAdBanner;
 
             h = this.lineWidth;
             w = w_node;
-            y = -h_node / 2 + oft_line;
+            y = posstart.y;
             x = 0;
         }
 

@@ -25,7 +25,18 @@ var AdKitCommon = cc.Class({
     },
     properties: {
         //get 和 set 函数不能放在statics里
-        callbackFinish: null,//OnAdKitFinishDelegate(AdKitCommon.AdType type, AdKitCommon.AdStatus status, string str);
+        /*
+             this.callbackFinish({
+                type: AdType.BANNER,
+                status:AdStatus.SUCCESFULL, 
+                width:w,
+                height:h,
+            });
+            */
+        callbackFinish: null, 
+
+        heightAdScreen:0,
+        heightAdCanvas:0, 
 
     },
 
@@ -184,21 +195,20 @@ var AdKitCommon = cc.Class({
     },
 
 
-    AdBannerDidReceiveAd: function (w, h) {
-
-        var w = 0;
-        var h = 0;
-        // var idx = str.IndexOf(":");
-        // var strW = str.Substring(0, idx);
-        // int.TryParse(strW, out w);
-        // var strH = str.Substring(idx + 1);
-        // int.TryParse(strH, out h);
-        cc.Debug.Log("AdBannerDidReceiveAd::w=" + w + " h=" + h);
-        var str = w+":"+h;
+    AdBannerDidReceiveAd: function (w, h) {  
+        cc.Debug.Log("AdBannerDidReceiveAd::w=" + w + " h=" + h); 
 
         if (this.callbackFinish != null) {
-            this.callbackFinish(AdType.BANNER, AdStatus.SUCCESFULL, str);
+            // this.callbackFinish(AdType.BANNER, AdStatus.SUCCESFULL, str);
+            this.callbackFinish({
+                type: AdType.BANNER,
+                status:AdStatus.SUCCESFULL, 
+                width:w,
+                height:h,
+            });
         }
+
+    
 
     },
     AdBannerDidReceiveAdFail: function (adsource) {
@@ -211,7 +221,11 @@ var AdKitCommon = cc.Class({
         }
         else {
             if (this.callbackFinish != null) {
-                this.callbackFinish(AdType.BANNER, AdStatus.FAIL, null);
+                // this.callbackFinish(AdType.BANNER, AdStatus.FAIL, null);
+                this.callbackFinish({
+                    type: AdType.BANNER,
+                    status:AdStatus.FAIL,  
+                });
             }
         }
 
@@ -223,12 +237,20 @@ var AdKitCommon = cc.Class({
     AdInsertWillShow: function (str) {
 
         if (this.callbackFinish != null) {
-            this.callbackFinish(AdType.INSERT, AdStatus.START, null);
+           // this.callbackFinish(AdType.INSERT, AdStatus.START, null);
+           this.callbackFinish({
+            type: AdType.INSERT,
+            status:AdStatus.START,  
+        });
         }
     },
     AdInsertDidClose: function (str) {
         if (this.callbackFinish != null) {
-            this.callbackFinish(AdType.INSERT, AdStatus.CLOSE, null);
+           // this.callbackFinish(AdType.INSERT, AdStatus.CLOSE, null);
+           this.callbackFinish({
+            type: AdType.INSERT,
+            status:AdStatus.CLOSE,  
+        });
         }
     },
 
@@ -241,7 +263,11 @@ var AdKitCommon = cc.Class({
         }
         else {
             if (this.callbackFinish != null) {
-                this.callbackFinish(AdType.INSERT, AdStatus.FAIL, null);
+                //this.callbackFinish(AdType.INSERT, AdStatus.FAIL, null);
+                this.callbackFinish({
+                    type: AdType.INSERT,
+                    status:AdStatus.FAIL,  
+                });
             }
         }
 
@@ -257,7 +283,11 @@ var AdKitCommon = cc.Class({
         }
         else {
             if (this.callbackFinish != null) {
-                this.callbackFinish(AdType.VIDEO, AdStatus.FAIL, null);
+               // this.callbackFinish(AdType.VIDEO, AdStatus.FAIL, null);
+                this.callbackFinish({
+                    type: AdType.VIDEO,
+                    status:AdStatus.FAIL, 
+                });
             }
         }
     },
@@ -265,7 +295,11 @@ var AdKitCommon = cc.Class({
     AdVideoDidStart: function (str) {
         // AudioPlay.main.Pause();
         if (this.callbackFinish != null) {
-            this.callbackFinish(AdType.VIDEO, AdStatus.START, null);
+           // this.callbackFinish(AdType.VIDEO, AdStatus.START, null);
+            this.callbackFinish({
+                type: AdType.VIDEO,
+                status:AdStatus.START, 
+            });
         }
 
     },
@@ -280,7 +314,11 @@ var AdKitCommon = cc.Class({
         }
     cc.Debug.Log("DoAdVideoDidFinish ");
         if (this.callbackFinish != null) {
-            this.callbackFinish(AdType.VIDEO, AdStatus.SUCCESFULL, str);
+           // this.callbackFinish(AdType.VIDEO, AdStatus.SUCCESFULL, str);
+            this.callbackFinish({
+                type: AdType.VIDEO,
+                status:AdStatus.SUCCESFULL, 
+            });
         }
     },
 

@@ -2,7 +2,7 @@ var UIViewController = require("UIViewController");
 var UIGameBase = require("UIGameBase");
 var GameShapeColor = require("GameShapeColor");
 var AppType = require("AppType");
-//var LoadItemInfo = require("LoadItemInfo");
+var UIBoard = require("UIBoard");
 
 var UIGameShapeColor = cc.Class({
     extends: UIGameBase,
@@ -15,6 +15,7 @@ var UIGameShapeColor = cc.Class({
             default: null,
             type: GameShapeColor
         },
+        uiBoard: UIBoard,
         isShowGame: false,
     },
     onLoad: function () {
@@ -131,6 +132,7 @@ var UIGameShapeColor = cc.Class({
         this.game.LoadGame(cc.GameManager.gameMode);
         //必须在loadgame之后loadbg
         this.LoadBg();
+        this.LayOut();
 
     },
     OnGameShapeColorDidError: function (g, error, str) {
@@ -173,8 +175,17 @@ var UIGameShapeColor = cc.Class({
         this.textTitle.node.color = color;
     },
 
-
-
+    LayOut: function () {
+        this._super();
+        cc.Debug.Log("uigameshapecolor  layout");
+        if (this.game != null) {
+            this.game.LayOut();
+        }
+        if (this.uiBoard != null) {
+            this.uiBoard.LayOut();
+        }
+        
+    },
     IsInColorFilter: function (colorfilter, info) {
         var isfilter = false;
         for (let infocolor of colorfilter.listColorFilter) {

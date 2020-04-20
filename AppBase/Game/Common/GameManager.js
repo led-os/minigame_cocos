@@ -15,7 +15,7 @@ var GameManager = cc.Class({
             default: null,
             type: cc.Prefab
         }, 
- 
+
         
     },
     Init: function () {

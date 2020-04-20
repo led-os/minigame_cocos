@@ -93,7 +93,7 @@ var GameShapeColor = cc.Class({
     },
 
     LayOut: function () {
-
+        this._super();
         var x, y, w, h;
         this.LayOutItems(false);
 

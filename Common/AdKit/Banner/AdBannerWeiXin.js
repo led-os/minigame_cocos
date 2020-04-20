@@ -50,6 +50,9 @@ var AdBannerWeiXin = cc.Class({
             var scale = wx.getSystemInfoSync().pixelRatio;
             var w = res.width;
             var h = res.height;
+            if(cc.Device.main.isLandscape){
+                h = h/2;
+            }
             this.UpdatePositon(this.bannerAd, w, h);
             if (this.objConfig != null) {
                 this.objConfig.DidReceiveAd(w * scale, h * scale);

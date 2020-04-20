@@ -93,7 +93,9 @@ var UIGameBase = cc.Class({
                 //AlertLockViewController.main().Show(null, null);
             }
         }
-
+        //显示横幅广告
+        cc.AdKitCommon.main.callbackFinish = this.OnAdKitFinish.bind(this);
+        cc.AdKitCommon.main.InitAdBanner();
     },
     UpdatePlaceLevel: function (level) {
     },
@@ -109,6 +111,22 @@ var UIGameBase = cc.Class({
         cc.Debug.Log("LoadLanguageGame::filepath=" + filepath);
         cc.Language._game = new cc.Language();
         cc.Language._game.Init2(filepath, this.LoadLanguageGameDidFinish.bind(this));
+
+    },
+
+    OnAdKitFinish(obj) {
+        if (obj.type == cc.AdKitCommon.AdType.BANNER) {
+            if (obj.status == cc.AdKitCommon.AdStatus.SUCCESFULL) {
+                var sizeCanvas = cc.Common.appSceneMain.sizeCanvas;
+                cc.AdKitCommon.main.heightAdScreen = obj.height;
+                cc.AdKitCommon.main.heightAdCanvas = cc.Common.ScreenToCanvasHeight(sizeCanvas, obj.height);
+                cc.Debug.Log("OnAdKitFinish heightAdCanvas="+cc.AdKitCommon.main.heightAdCanvas+" sizeCanvas="+sizeCanvas+" obj.h="+obj.height);
+            }
+            cc.Debug.Log("uigameshapecolor  OnAdKitFinish start");
+            this.LayOut();
+            cc.Debug.Log("uigameshapecolor  OnAdKitFinish end");
+        }
+
 
     },
 
@@ -154,7 +172,7 @@ var UIGameBase = cc.Class({
             //GameManager.main.isShowGameAdInsert = true;
         }
     },
- 
+
 
     OnGameWinBase: function () {
         this.ShowAdInsert(UIGameBase.GAME_AD_INSERT_SHOW_STEP);

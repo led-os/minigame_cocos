@@ -55,6 +55,9 @@ var AppVersion = cc.Class({
                 //     }
 
                 // }
+                if(cc.Device.main.isLandscape){
+                    ret = true;
+                }
 
                 return ret;
             },

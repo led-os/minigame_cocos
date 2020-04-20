@@ -128,7 +128,7 @@ var HomeViewController = cc.Class({
         cc.AdKitCommon.main.ShowAdInsert(100); 
     },
 
-    OnAdKitCallBack: function()
+    OnAdKitCallBack: function(obj)
     { 
          
     },

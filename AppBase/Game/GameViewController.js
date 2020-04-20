@@ -92,17 +92,14 @@ var GameViewController = cc.Class({
         this._super();
         //this.LoadPrefab();
         this.CreateUI();
-
-         //显示横幅广告
-         cc.AdKitCommon.main.callbackFinish = this.OnAdKitFinish.bind(this);
-        //  cc.AdKitCommon.main.InitAdBanner();
+  
     },
     ViewDidUnLoad: function () {
         cc.Debug.Log("GameViewController ViewDidUnLoad");
         this._super();
         this.ui.node.destroy();
         this.ui = null;
-        // cc.AdKitCommon.main.ShowAdBanner(false);
+        cc.AdKitCommon.main.ShowAdBanner(false);
 
     },
     LayOutView: function () {
@@ -115,25 +112,7 @@ var GameViewController = cc.Class({
        
     },
 
-    OnAdKitFinish(type, status, str) {
-    if (type == cc.AdKitCommon.AdType.BANNER) {
-            if (status == cc.AdKitCommon.AdStatus.SUCCESFULL) {
-                // int w = 0;
-                // int h = 0;
-                // int idx = str.IndexOf(":");
-                // string strW = str.Substring(0, idx);
-                // int.TryParse(strW, out w);
-                // string strH = str.Substring(idx + 1);
-                // int.TryParse(strH, out h);
-                // Debug.Log("OnGameAdKitFinish AdBannerDidReceiveAd::w=" + w + " h=" + h);
-
-                // Vector2 sizeCanvas = AppSceneBase.main.sizeCanvas;
-                // GameManager.main.heightAdScreen = h + Device.heightSystemHomeBar;
-                // GameManager.main.heightAdWorld = Common.ScreenToWorldHeight(mainCam, h);
-                // GameManager.main.heightAdCanvas = Common.ScreenToCanvasHeigt(sizeCanvas, h);
-            }
-        }
-    },
+   
 
 });
 
