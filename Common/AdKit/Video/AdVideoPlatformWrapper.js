@@ -1,7 +1,7 @@
 var AdVideoPlatformWrapper = cc.Class({
     extends: cc.Object,// cc.ItemInfo,
     properties: {
-
+        objConfig: null,
     },
 
     GetPlatform: function () {
@@ -12,7 +12,19 @@ var AdVideoPlatformWrapper = cc.Class({
         return p;
     },
 
-     
+    /*
+   {
+   adKey: "",  
+   Finish: function () {
+   }, 
+   Fail: function (w,h) {
+   }, 
+   
+   }
+   */
+    SetConfig(obj) {
+        this.objConfig = obj;
+    },
     SetObjectInfo(objName, objMethod) {
 
     },

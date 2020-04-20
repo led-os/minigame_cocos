@@ -239,6 +239,7 @@ var UIGameShapeColor = cc.Class({
 
         }
         else {
+            this.OnGameWinBase();
             cc.Debug.Log("  OnGameWin");
             strPrefab = "AppCommon/Prefab/Game/UIGameWin";
         }

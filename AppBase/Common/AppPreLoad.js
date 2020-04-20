@@ -89,6 +89,8 @@ fail: function () {
             lan.SetLoadFinishCallBack(this.AppPreLoadDidFinish.bind(this), info);
         }
 
+        //adconfig
+        var ad = cc.AdConfig.main();
 
     },
     AppPreLoadDidFinish: function (p) {

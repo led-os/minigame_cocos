@@ -79,10 +79,10 @@ var AdConfigParser = cc.Class({
         indexPriorityNative: 0,
 
         adSourceSplash: "",
-        adSourceSplashInsert:"",
+        adSourceSplashInsert: "",
         adSourceInsert: "",
-        adSourceBanner:"",
-        adSourceNative:"",
+        adSourceBanner: "",
+        adSourceNative: "",
         adSourceVideo: "",
 
     },
@@ -195,12 +195,23 @@ var AdConfigParser = cc.Class({
 
     //return AdInfo
     GetAdInfo: function (source) {
-        this.listPlatform.forEach(function (value, index) {
-            if (value.source == source) {
-                return value;
+        // this.listPlatform.forEach(function (value, index) {
+        //     cc.Debug.Log("GetAdInfo source="+value.source+" key_banner="+value.key_banner);
+        //     if (value.source == source) {
+        //         return value;
+        //     }
+        // }.bind(this));
+        var ret = null;
+        for (var i = 0; i < this.listPlatform.length; i++) {
+            var info = this.listPlatform[i];
+            cc.Debug.Log("GetAdInfo info.source="+info.source+" source="+source);
+            if (info.source == source) {
+                cc.Debug.Log(" ret GetAdInfo info.source="+info.source+" source="+source);
+                ret = info;
+                break; 
             }
-        }.bind(this));
-        return null;
+        }
+        return ret;
     },
     IsInChina: function () {
         var ret = false;
@@ -263,6 +274,8 @@ var AdConfigParser = cc.Class({
 
     GetAdKey: function (source, type) {
         var ret = "";
+        cc.Debug.Log("GetAdKey source=" + source + " type=" + type);
+
         var info = this.GetAdInfo(source);
         if (info != null) {
             switch (type) {
@@ -289,6 +302,8 @@ var AdConfigParser = cc.Class({
                     ret = info.key_insert_video;
                     break;
             }
+        } else {
+            cc.Debug.Log("GetAdKey info=null");
         }
         return ret;
     },
@@ -389,7 +404,7 @@ var AdConfigParser = cc.Class({
 
 
     StartParseConfig: function (url) {
-        cc.Debug.Log("StartParseConfig:" + url);
+        cc.Debug.Log("StartParseConfig: url=" + url);
 
         //直接从本地读取
         //OnHttpRequestFinished(null, false, null);
@@ -410,7 +425,7 @@ var AdConfigParser = cc.Class({
 
     StartParseJsonDataApp: function () {
         var filename = "ad_config_ios";
-
+        cc.Debug.Log("StartParseJsonDataApp: 1");
         if (cc.Common.main().isAndroid) {
             filename = "ad_config_android";
         }
@@ -422,7 +437,7 @@ var AdConfigParser = cc.Class({
         if (cc.Common.main().isWin) {
             filename = "ad_config_win"
         }
-
+        cc.Debug.Log("StartParseJsonDataApp: 2");
         if (cc.AppVersion.main().appForPad) {
             filename = filename + "_hd";
         }
@@ -432,13 +447,16 @@ var AdConfigParser = cc.Class({
         cc.loader.loadRes(filepath, cc.JsonAsset, function (err, rootJson) {
 
             if (err) {
+                cc.Debug.Log("StartParseJsonDataApp: 4");
                 cc.Debug.Log("config:err=" + err);
             }
             if (err == null) {
+                cc.Debug.Log("StartParseJsonDataApp: 5");
                 this.ParsePlatformData(rootJson.json);
+                cc.Debug.Log("StartParseJsonDataApp: 6");
             }
         }.bind(this));
-
+        cc.Debug.Log("StartParseJsonDataApp: 3");
     },
 
     StartParseJsonDataCommon: function () {
@@ -552,7 +570,7 @@ var AdConfigParser = cc.Class({
             var info = new cc.AdInfo();
             var current = jsonItems[i];
             info.source = current["source"];
-            ls.Add(info);
+            ls.push(info);
         }
     },
 
@@ -581,8 +599,9 @@ var AdConfigParser = cc.Class({
             info.key_banner = cc.JsonUtil.GetItem(item, "key_banner", "");
             info.key_video = cc.JsonUtil.GetItem(item, "key_video", "");
             info.key_insert_video = cc.JsonUtil.GetItem(item, "key_insert_video", "");
+            cc.Debug.Log("ParsePlatformData source=" + info.source + " key_banner=" + info.key_banner);
 
-            this.listPlatform.Add(info);
+            this.listPlatform.push(info);
 
         }
     },

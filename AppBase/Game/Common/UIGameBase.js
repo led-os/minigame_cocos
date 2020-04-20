@@ -154,6 +154,7 @@ var UIGameBase = cc.Class({
             //GameManager.main.isShowGameAdInsert = true;
         }
     },
+ 
 
     OnGameWinBase: function () {
         this.ShowAdInsert(UIGameBase.GAME_AD_INSERT_SHOW_STEP);

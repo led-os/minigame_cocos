@@ -34,6 +34,9 @@ var AppVersion = cc.Class({
                     // }
                 }
                 var ret = cc.Common.GetItemOfKey(AppVersion.STRING_KEY_APP_CHECK_FINISHED, false);
+                if (cc.Common.main().isWeixin) {
+                    ret = true;
+                }
                 return ret;
             },
 
@@ -41,17 +44,17 @@ var AppVersion = cc.Class({
 
         appForPad: {
             get: function () {
-                var str = cc.Common.main().GetAppPackage();
                 var ret = false;
-                if (str.Contains(".pad") || str.Contains(".ipad")) {
-                    ret = true;
-                }
-                if (Common.isWinUWP) {
-                    if (Common.GetAppName().ToLower().Contains("hd")) {
-                        ret = true;
-                    }
+                // var str = cc.Common.main().GetAppPackage();
+                // if (str.Contains(".pad") || str.Contains(".ipad")) {
+                //     ret = true;
+                // }
+                // if (Common.isWinUWP) {
+                //     if (Common.GetAppName().ToLower().Contains("hd")) {
+                //         ret = true;
+                //     }
 
-                }
+                // }
 
                 return ret;
             },
@@ -194,16 +197,16 @@ var AppVersion = cc.Class({
             cc.Debug.Log("GotoToAppstoreApp appstore=" + appstore + " appPackage=" + appPackage + " marketPkg=" + marketPkg + " url" + url);
             if (Common.isAndroid) {
                 if (appstore != cc.Source.TAPTAP) {
-                    AndroidJavaClass intentClass = new AndroidJavaClass("android.content.Intent");
-                    AndroidJavaObject intentObject = new AndroidJavaObject("android.content.Intent");
-                    intentObject.Call<AndroidJavaObject>("setAction", intentClass.GetStatic<string>("ACTION_VIEW"));
-                    AndroidJavaClass uriClass = new AndroidJavaClass("android.net.Uri");
-                    AndroidJavaObject uriObject = uriClass.CallStatic<AndroidJavaObject>("parse", "market://details?id=" + appPackage);
-                    intentObject.Call<AndroidJavaObject>("setData", uriObject);
-                    intentObject.Call<AndroidJavaObject>("setPackage", marketPkg);
-                    AndroidJavaClass unity = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-                    AndroidJavaObject currentActivity = unity.GetStatic<AndroidJavaObject>("currentActivity");
-                    currentActivity.Call("startActivity", intentObject);
+                    // AndroidJavaClass intentClass = new AndroidJavaClass("android.content.Intent");
+                    // AndroidJavaObject intentObject = new AndroidJavaObject("android.content.Intent");
+                    // intentObject.Call<AndroidJavaObject>("setAction", intentClass.GetStatic<string>("ACTION_VIEW"));
+                    // AndroidJavaClass uriClass = new AndroidJavaClass("android.net.Uri");
+                    // AndroidJavaObject uriObject = uriClass.CallStatic<AndroidJavaObject>("parse", "market://details?id=" + appPackage);
+                    // intentObject.Call<AndroidJavaObject>("setData", uriObject);
+                    // intentObject.Call<AndroidJavaObject>("setPackage", marketPkg);
+                    // AndroidJavaClass unity = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                    // AndroidJavaObject currentActivity = unity.GetStatic<AndroidJavaObject>("currentActivity");
+                    // currentActivity.Call("startActivity", intentObject);
 
                     return;
                 }

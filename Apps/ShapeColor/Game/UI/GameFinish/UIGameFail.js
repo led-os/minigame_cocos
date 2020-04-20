@@ -19,12 +19,12 @@ var UIGameFail = cc.Class({
     onLoad: function () {
 
         if (cc.Common.main().isWeiXin) {
-            this.btnVideo.node.active = false;
+            // this.btnVideo.node.active = false;
         }
 
         this.btnRetry.text = cc.Language.main().GetString("STR_GameFail_btnRestart");
         this.btnVideo.text = cc.Language.main().GetString("STR_GameFail_btnRevive");
-
+       
 
     },
     LayOut() {
@@ -53,6 +53,15 @@ var UIGameFail = cc.Class({
         this.textDetail.text = cc.Language.main().GetString("STR_GameFail_Detail");
         this.LayOut();
     },
+
+    OnAdKitFinish(type, status, str) {
+        if (type == cc.AdKitCommon.AdType.VIDEO) {
+            if (status == cc.AdKitCommon.AdStatus.SUCCESFULL) {
+                this.Close();
+            }
+        }
+    },
+
     OnClickBtnClose() {
         this.Close();
     },
@@ -62,7 +71,8 @@ var UIGameFail = cc.Class({
         cc.GameManager.main().GotoPlayAgain();
     },
     OnClickBtnAdVideo() {
-
+        cc.AdKitCommon.main.callbackFinish = this.OnAdKitFinish.bind(this);
+        cc.AdKitCommon.main.ShowAdVideo();
     },
 });
 

@@ -63,7 +63,12 @@ var AdVideo = cc.Class({
 		this.platform.OnClickAd();
 	},
 
-
+	SetConfig(obj) {
+		if (this.platform == null) {
+			return;
+		}
+		this.platform.SetConfig(obj);
+	},
 
 
 });

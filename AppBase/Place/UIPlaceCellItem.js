@@ -80,14 +80,13 @@ cc.Class({
             navi.Push(GuankaViewController.main());
         }
 
-       // cc.AdKitCommon.main.ShowAdVideo();
+        // cc.AdKitCommon.main.ShowAdVideo();
         this.ShowAdInsert();
     },
 
     ShowAdInsert: function()
     { 
-        var source =cc.Source.GDT;
-        cc.AdInsert.main().InitAd(source);
+        cc.AdKitCommon.main.InitAdInsert();
         cc.AdKitCommon.main.ShowAdInsert(100); 
     },
 

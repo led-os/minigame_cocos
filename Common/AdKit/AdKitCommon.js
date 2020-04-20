@@ -25,7 +25,7 @@ var AdKitCommon = cc.Class({
     },
     properties: {
         //get 和 set 函数不能放在statics里
-
+        callbackFinish: null,//OnAdKitFinishDelegate(AdKitCommon.AdType type, AdKitCommon.AdStatus status, string str);
 
     },
 
@@ -52,12 +52,12 @@ var AdKitCommon = cc.Class({
         isShowAdBanner = true;
         if (isShowAdBanner) {
             cc.AdBanner.main().SetConfig({
-                adKey: "", 
+                adKey: "",
                 DidReceiveAdFail: function () {
                     this.AdBannerDidReceiveAdFail();
                 }.bind(this),
                 DidReceiveAd: function (w, h) {
-                    this.AdBannerDidReceiveAd(w,h);
+                    this.AdBannerDidReceiveAd(w, h);
                 }.bind(this),
 
             });
@@ -81,11 +81,22 @@ var AdKitCommon = cc.Class({
             return;
         }
         var isShowAdInsert = false;
-        if (cc.AppVersion.main().appCheckHasFinished) {
-            isShowAdInsert = true;
-        }
+        // if (cc.AppVersion.main().appCheckHasFinished) {
+        //     isShowAdInsert = true;
+        // }
         isShowAdInsert = true;
         if (isShowAdInsert) {
+
+            cc.AdInsert.main().SetConfig({
+                adKey: "",
+                Finish: function () {
+                    this.AdInsertWillShow();
+                }.bind(this),
+                Fail: function (w, h) {
+                    this.AdInsertDidFail();
+                }.bind(this),
+
+            });
             // cc.AdInsert.main().SetObjectInfo(this.gameObject.name);
             var type = cc.AdConfigParser.AdType.INSERT;
             var source = cc.AdConfig.main().GetAdSource(type);
@@ -100,6 +111,17 @@ var AdKitCommon = cc.Class({
             return;
         }
         if (cc.AppVersion.main().appCheckHasFinished) {
+            cc.AdVideo.main().SetConfig({
+                adKey: "",
+                Finish: function () {
+                    this.AdVideoDidFinish();
+                }.bind(this),
+                Fail: function (w, h) {
+                    this.AdVideoDidFail();
+                }.bind(this),
+
+            });
+
             cc.AdVideo.main().SetType(cc.AdVideo.VideoType.REWARD);
             var type = cc.AdConfigParser.AdType.VIDEO;
             var source = cc.AdConfig.main().GetAdSource(type);
@@ -160,7 +182,7 @@ var AdKitCommon = cc.Class({
     },
 
 
-    AdBannerDidReceiveAd: function (w,h) {
+    AdBannerDidReceiveAd: function (w, h) {
 
         var w = 0;
         var h = 0;
@@ -170,10 +192,11 @@ var AdKitCommon = cc.Class({
         // var strH = str.Substring(idx + 1);
         // int.TryParse(strH, out h);
         cc.Debug.Log("AdBannerDidReceiveAd::w=" + w + " h=" + h);
+        var str = w+":"+h;
 
-        // if (callbackFinish != null) {
-        //     callbackFinish(AdType.BANNER, AdStatus.SUCCESFULL, str);
-        // }
+        if (this.callbackFinish != null) {
+            this.callbackFinish(AdType.BANNER, AdStatus.SUCCESFULL, str);
+        }
 
     },
     AdBannerDidReceiveAdFail: function (adsource) {
@@ -185,8 +208,8 @@ var AdKitCommon = cc.Class({
             cc.AdBanner.main().ShowAd(true);
         }
         else {
-            if (callbackFinish != null) {
-                callbackFinish(AdType.BANNER, AdStatus.FAIL, null);
+            if (this.callbackFinish != null) {
+                this.callbackFinish(AdType.BANNER, AdStatus.FAIL, null);
             }
         }
 
@@ -197,13 +220,13 @@ var AdKitCommon = cc.Class({
     },
     AdInsertWillShow: function (str) {
 
-        if (callbackFinish != null) {
-            callbackFinish(AdType.INSERT, AdStatus.START, null);
+        if (this.callbackFinish != null) {
+            this.callbackFinish(AdType.INSERT, AdStatus.START, null);
         }
     },
     AdInsertDidClose: function (str) {
-        if (callbackFinish != null) {
-            callbackFinish(AdType.INSERT, AdStatus.CLOSE, null);
+        if (this.callbackFinish != null) {
+            this.callbackFinish(AdType.INSERT, AdStatus.CLOSE, null);
         }
     },
 
@@ -215,15 +238,15 @@ var AdKitCommon = cc.Class({
             cc.AdInsert.main().ShowAd();
         }
         else {
-            if (callbackFinish != null) {
-                callbackFinish(AdType.INSERT, AdStatus.FAIL, null);
+            if (this.callbackFinish != null) {
+                this.callbackFinish(AdType.INSERT, AdStatus.FAIL, null);
             }
         }
 
     },
 
 
-    AdVideoDidFail: function (str) {
+    AdVideoDidFail: function () {
         var type = cc.AdConfigParser.AdType.VIDEO;
         var info = cc.AdConfig.main().GetNextPriority(type);
         if (info != null) {
@@ -231,16 +254,16 @@ var AdKitCommon = cc.Class({
             cc.AdVideo.main().ShowAd();
         }
         else {
-            if (callbackFinish != null) {
-                callbackFinish(AdType.VIDEO, AdStatus.FAIL, null);
+            if (this.callbackFinish != null) {
+                this.callbackFinish(AdType.VIDEO, AdStatus.FAIL, null);
             }
         }
     },
 
     AdVideoDidStart: function (str) {
         // AudioPlay.main.Pause();
-        if (callbackFinish != null) {
-            callbackFinish(AdType.VIDEO, AdStatus.START, null);
+        if (this.callbackFinish != null) {
+            this.callbackFinish(AdType.VIDEO, AdStatus.START, null);
         }
 
     },
@@ -251,15 +274,15 @@ var AdKitCommon = cc.Class({
         var str = "advideo";
         var ret = cc.Common.GetBoolOfKey(cc.CommonRes.KEY_BACKGROUND_MUSIC, false);
         if (ret) {
-            AudioPlay.main.Play();
+            //  cc.AudioPlay.main().Play();
         }
 
-        if (callbackFinish != null) {
-            callbackFinish(AdType.VIDEO, AdStatus.SUCCESFULL, str);
+        if (this.callbackFinish != null) {
+            this.callbackFinish(AdType.VIDEO, AdStatus.SUCCESFULL, str);
         }
     },
 
-    AdVideoDidFinish: function (str) {
+    AdVideoDidFinish: function () {
 
         this.DoAdVideoDidFinish();
 

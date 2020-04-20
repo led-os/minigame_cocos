@@ -33,7 +33,12 @@ var AdInsert = cc.Class({
 		}
 		this.platform.ShowAd();
 	},
-
+	SetConfig(obj) {
+		if (this.platform == null) {
+			return;
+		}
+		this.platform.SetConfig(obj);
+	},
 });
 
 AdInsert._main = null;

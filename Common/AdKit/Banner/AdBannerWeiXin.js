@@ -3,7 +3,7 @@
 var AdBannerWeiXin = cc.Class({
     extends: cc.AdBannerPlatformWrapper,// cc.ItemInfo,
     properties: {
-        bannerAd:null,
+        bannerAd: null,
     },
     statics: {
 
@@ -12,78 +12,79 @@ var AdBannerWeiXin = cc.Class({
 
 
     InitAd(source) {
-    // 创建 Banner 广告实例，提前初始化
-    var adkey = "";
-    // if (this.objConfig != null) {
-    //     adkey = this.objConfig.adKey;
-    // }
-    adkey = cc.AdConfig.main().GetAdKey(cc.Source.WEIXIN, cc.AdConfigParser.AdType.BANNER)
- 
-    console.log('banner adkey=', adkey);
-    adkey = "adunit-663159c8925f939f";
+        // 创建 Banner 广告实例，提前初始化
+        var adkey = "";
+        // if (this.objConfig != null) {
+        //     adkey = this.objConfig.adKey;
+        // }
+        console.log('InitAd banner adkey=', adkey);
+        adkey = cc.AdConfig.main().GetAdKey(cc.Source.WEIXIN, cc.AdConfigParser.AdType.BANNER)
 
-    this.bannerAd = wx.createBannerAd({
-        adUnitId: adkey,//'adunit-663159c8925f939f'
-        style: {
-            left: 0,
-            top: 0,
-            width: 350
-        }
-    })
-    this.bannerAd.onError((errMsg, errCode) => {
-        console.log('banner广告加载失败!!!!', errMsg, errCode);
-        if (this.objConfig != null) {
-            this.objConfig.DidReceiveAdFail();
-        }
-    })
-    this.bannerAd.onResize((res) => {
-        console.log('onResize pixelRatio=', wx.getSystemInfoSync().pixelRatio);
+        console.log('banner adkey=', adkey);
+        // adkey = "adunit-663159c8925f939f";
 
-        console.log('onResize screen w=', wx.getSystemInfoSync().screenWidth);
-        console.log('onResize screen h=', wx.getSystemInfoSync().screenHeight);
-        console.log('onResize window w=', wx.getSystemInfoSync().windowWidth);
-        console.log('onResize window h=', wx.getSystemInfoSync().windowHeight);
+        this.bannerAd = wx.createBannerAd({
+            adUnitId: adkey,//'adunit-663159c8925f939f'
+            style: {
+                left: 0,
+                top: 0,
+                width: 350
+            }
+        })
+        this.bannerAd.onError((errMsg, errCode) => {
+            console.log('banner广告加载失败!!!!', errMsg, errCode);
+            if (this.objConfig != null) {
+                this.objConfig.DidReceiveAdFail();
+            }
+        })
+        this.bannerAd.onResize((res) => {
+            console.log('onResize pixelRatio=', wx.getSystemInfoSync().pixelRatio);
 
-        console.log('onResize banner w=', res.width);
-        console.log('onResize banner h=', res.height);
-        var scale = wx.getSystemInfoSync().pixelRatio;
-        var w = res.width * scale;
-        var h = res.height * scale;
-        this.UpdatePositon(this.bannerAd,w,h);
-        if (this.objConfig != null) {
-            this.objConfig.DidReceiveAd(w, h);
-        }
-    })
+            console.log('onResize screen w=', wx.getSystemInfoSync().screenWidth);
+            console.log('onResize screen h=', wx.getSystemInfoSync().screenHeight);
+            console.log('onResize window w=', wx.getSystemInfoSync().windowWidth);
+            console.log('onResize window h=', wx.getSystemInfoSync().windowHeight);
+
+            console.log('onResize banner w=', res.width);
+            console.log('onResize banner h=', res.height);
+            var scale = wx.getSystemInfoSync().pixelRatio;
+            var w = res.width;
+            var h = res.height;
+            this.UpdatePositon(this.bannerAd, w, h);
+            if (this.objConfig != null) {
+                this.objConfig.DidReceiveAd(w * scale, h * scale);
+            }
+        })
     },
 
-    UpdatePositon(banner,w,h ) { 
+    UpdatePositon(banner, w, h) {
         var scale = wx.getSystemInfoSync().pixelRatio;
         var w_screen = wx.getSystemInfoSync().screenWidth;
         var h_screen = wx.getSystemInfoSync().screenHeight;
-        var x = (w_screen-w)/2;
-        var y = (h_screen-h)/2;
+        var x = (w_screen - w) / 2;
+        var y = (h_screen - h);
         banner.style.left = x;
         banner.style.top = y;
+        console.log('onResize banner x=', x, " y=", y);
     },
 
     ShowAd(isShow) {
-        if(this.bannerAd==null)
-        {
+        if (this.bannerAd == null) {
             return;
         }
         // 在适合的场景显示 Banner 广告
-        if(isShow){
+        if (isShow) {
             this.bannerAd.show()
-        }else{
+        } else {
             this.bannerAd.hide()
         }
 
         var scale = wx.getSystemInfoSync().pixelRatio;
         var w = this.bannerAd.style.width * scale;
         var h = this.bannerAd.style.height * scale;
-       // this.UpdatePositon(this.bannerAd,w,h);
-        
-     
+        // this.UpdatePositon(this.bannerAd,w,h);
+
+
     },
 
     ShowAd2(isShow) {
