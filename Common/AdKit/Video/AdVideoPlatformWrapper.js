@@ -23,6 +23,7 @@ var AdVideoPlatformWrapper = cc.Class({
    }
    */
     SetConfig(obj) {
+        cc.Debug.Log("SetConfig AdVideoPlatformWrapper")
         this.objConfig = obj;
     },
     SetObjectInfo(objName, objMethod) {

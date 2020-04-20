@@ -23,7 +23,7 @@ var AdVideoWeiXin = cc.Class({
     },
 
     ShowAd() {
-        var adkey = ""; 
+        var adkey = "";
         adkey = cc.AdConfig.main().GetAdKey(cc.Source.WEIXIN, cc.AdConfigParser.AdType.VIDEO)
         //adunit-0c824880e72a5602
         // 创建激励视频广告实例，提前初始化
@@ -37,13 +37,17 @@ var AdVideoWeiXin = cc.Class({
             }
         })
         videoAd.onClose((res) => {
-           // isEnded	boolean	视频是否是在用户完整观看的情况下被关闭的
-           if(res.isEnded){
-               //视频完整观看
-            if (this.objConfig != null) {
-                this.objConfig.Finish();
+            // isEnded	boolean	视频是否是在用户完整观看的情况下被关闭的
+            console.log('video onClose isEnded=', res.isEnded);
+            if (res.isEnded) {
+                //视频完整观看
+                if (this.objConfig != null) {
+                    console.log('video onClose objConfig=Finish');
+                    this.objConfig.Finish();
+                } else {
+                    console.log('video onClose objConfig=null');
+                }
             }
-           }
         })
         // 用户触发广告后，显示激励视频广告
         videoAd.show().catch(() => {

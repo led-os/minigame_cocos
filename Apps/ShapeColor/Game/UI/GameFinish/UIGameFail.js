@@ -55,6 +55,7 @@ var UIGameFail = cc.Class({
     },
 
     OnAdKitFinish(type, status, str) {
+        cc.Debug.Log(" gamefail OnAdKitFinish  ");
         if (type == cc.AdKitCommon.AdType.VIDEO) {
             if (status == cc.AdKitCommon.AdStatus.SUCCESFULL) {
                 this.Close();

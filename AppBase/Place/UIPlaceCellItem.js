@@ -84,10 +84,9 @@ cc.Class({
         this.ShowAdInsert();
     },
 
-    ShowAdInsert: function()
-    { 
+    ShowAdInsert: function () {
         cc.AdKitCommon.main.InitAdInsert();
-        cc.AdKitCommon.main.ShowAdInsert(100); 
+        cc.AdKitCommon.main.ShowAdInsert(100);
     },
 
 });

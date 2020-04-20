@@ -110,10 +110,12 @@ var AdKitCommon = cc.Class({
         if (cc.Common.main().noad) {
             return;
         }
-        if (cc.AppVersion.main().appCheckHasFinished) {
+        // if (cc.AppVersion.main().appCheckHasFinished) 
+        {
             cc.AdVideo.main().SetConfig({
                 adKey: "",
                 Finish: function () {
+                    cc.Debug.Log("InitAdVideo Finish =");
                     this.AdVideoDidFinish();
                 }.bind(this),
                 Fail: function (w, h) {
@@ -276,7 +278,7 @@ var AdKitCommon = cc.Class({
         if (ret) {
             //  cc.AudioPlay.main().Play();
         }
-
+    cc.Debug.Log("DoAdVideoDidFinish ");
         if (this.callbackFinish != null) {
             this.callbackFinish(AdType.VIDEO, AdStatus.SUCCESFULL, str);
         }

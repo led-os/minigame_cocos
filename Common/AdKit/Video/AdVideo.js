@@ -64,7 +64,9 @@ var AdVideo = cc.Class({
 	},
 
 	SetConfig(obj) {
+		cc.Debug.Log("SetConfig")
 		if (this.platform == null) {
+			cc.Debug.Log("SetConfig platform == null")
 			return;
 		}
 		this.platform.SetConfig(obj);
