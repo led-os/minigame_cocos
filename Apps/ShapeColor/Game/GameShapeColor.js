@@ -83,6 +83,7 @@ var GameShapeColor = cc.Class({
     //百度tts:  http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=你要转换的文字 
     onLoad: function () {
         this._super();
+        this.height_adbanner_canvas = cc.AdKitCommon.main.heightAdCanvas;
         this.node.setContentSize(this.node.parent.getContentSize());
         var ev = this.node.addComponent(cc.UITouchEvent);
         ev.callBackTouch = this.OnUITouchEvent.bind(this);
@@ -94,6 +95,7 @@ var GameShapeColor = cc.Class({
 
     LayOut: function () {
         this._super();
+        this.height_adbanner_canvas = cc.AdKitCommon.main.heightAdCanvas;
         var x, y, w, h;
         this.LayOutItems(false);
 

@@ -31,7 +31,8 @@ var AdBannerWeiXin = cc.Class({
             style: {
                 left: 0,
                 top: 0,
-                width: 350
+                width: 350,
+                height: 50,
             }
         })
         this.bannerAd.onError((errMsg, errCode) => {
@@ -54,7 +55,8 @@ var AdBannerWeiXin = cc.Class({
             var w = res.width;
             var h = res.height;
             if (cc.Device.main.isLandscape) {
-                h = h / 2;
+                // h = h / 2;
+                //this.bannerAd.style.height = h;
             }
             this.UpdatePositon(this.bannerAd, w, h);
             if (this.objConfig != null) {
@@ -85,9 +87,9 @@ var AdBannerWeiXin = cc.Class({
             this.bannerAd.hide()
         }
 
-        var scale = wx.getSystemInfoSync().pixelRatio;
-        var w = this.bannerAd.style.width * scale;
-        var h = this.bannerAd.style.height * scale;
+        // var scale = wx.getSystemInfoSync().pixelRatio;
+        // var w = this.bannerAd.style.width * scale;
+        // var h = this.bannerAd.style.height * scale;
         // this.UpdatePositon(this.bannerAd,w,h);
 
 

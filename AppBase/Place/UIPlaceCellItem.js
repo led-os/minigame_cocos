@@ -81,7 +81,9 @@ cc.Class({
         }
 
         // cc.AdKitCommon.main.ShowAdVideo();
-        this.ShowAdInsert();
+        if(this.index>0){
+            this.ShowAdInsert();
+        }
     },
 
     ShowAdInsert: function () {

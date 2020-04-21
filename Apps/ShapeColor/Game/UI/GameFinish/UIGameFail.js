@@ -38,7 +38,7 @@ var UIGameFail = cc.Class({
             var h_topbar = 160;
             var size = cc.Common.appSceneMain.sizeCanvas;
             var w = size.width * ratio;
-            var h = (size.height - h_topbar) * ratio;
+            var h = (size.height - h_topbar-cc.AdKitCommon.main.heightAdCanvas) * ratio;
             cc.Debug.Log(" UIGameFail setContentSize = w=" + w + " h=" + h);
             this.node.setContentSize(new cc.Size(w, h));
 
