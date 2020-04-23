@@ -23,20 +23,34 @@ var AppVersion = cc.Class({
         appVersionBase: AppVersionBase,
         appCheckHasFinished: {
             get: function () {
-                if (cc.Common.main().isAndroid) {
-                    if (cc.Config.main().channel == cc.Source.TAPTAP) {
-                        return true;
-                    }
-                    // if (!IPInfo.isInChina)
-                    // {
-                    //     //android 国外 直接当作 审核通过
-                    //   //  return true;
-                    // }
-                }
-                var ret = cc.Common.GetItemOfKey(AppVersion.STRING_KEY_APP_CHECK_FINISHED, false);
-                if (cc.Common.main().isWeixin) {
+                var ret = false;
+
+                var isweixin = cc.Common.main().isWeixin;
+                cc.Debug.Log("AppVersion start isweixin =" + isweixin);
+                if (cc.sys.platform == cc.sys.WECHAT_GAME) {
+                    //版本为1.0.x表示在审核 
                     ret = true;
-                }
+                    cc.Debug.Log("AppVersion isWeixin");
+                    var version = cc.Config.main().version;
+                    var idx = version.indexOf("1.0.");
+                    cc.Debug.Log("AppVersion version=" + " idx=" + idx);
+                    if (idx == 0) {
+                        ret = false;
+                    }
+                } else {
+                    cc.Debug.Log("AppVersion not isWeixin");
+                    ret = cc.Common.GetItemOfKey(AppVersion.STRING_KEY_APP_CHECK_FINISHED, false);
+                    if (cc.Common.main().isAndroid) {
+                        if (cc.Config.main().channel == cc.Source.TAPTAP) {
+                            return true;
+                        }
+                        // if (!IPInfo.isInChina)
+                        // {
+                        //     //android 国外 直接当作 审核通过
+                        //   //  return true;
+                        // }
+                    }
+                } 
                 return ret;
             },
 
@@ -55,7 +69,7 @@ var AppVersion = cc.Class({
                 //     }
 
                 // }
-                if(cc.Device.main.isLandscape){
+                if (cc.Device.main.isLandscape) {
                     ret = true;
                 }
 

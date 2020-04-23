@@ -119,7 +119,7 @@ var UIGameBase = cc.Class({
             if (obj.status == cc.AdKitCommon.AdStatus.SUCCESFULL) {
                 var sizeCanvas = cc.Common.appSceneMain.sizeCanvas;
                 cc.AdKitCommon.main.heightAdScreen = obj.height;
-                cc.AdKitCommon.main.heightAdCanvas = cc.Common.ScreenToCanvasHeight(sizeCanvas, obj.height);
+                cc.AdKitCommon.main.heightAdCanvas = cc.Common.ScreenToCanvasHeight(sizeCanvas, obj.height*1.1);
                 cc.Debug.Log("OnAdKitFinish heightAdCanvas="+cc.AdKitCommon.main.heightAdCanvas+" sizeCanvas="+sizeCanvas+" obj.h="+obj.height);
             }
             cc.Debug.Log("uigameshapecolor  OnAdKitFinish start");

@@ -37,7 +37,18 @@ var Config = cc.Class({
         version:
         {
             get: function () {
-                return this.rootJsonCommon.version;
+                var json = this.rootJsonCommon.version;
+                if(cc.Device.main.isLandscape){
+                    json = this.rootJsonCommon.version_hd;
+                }
+                var key_store = cc.Source.APPSTORE;
+                if (cc.Common.main().isAndroid) {
+                    key_store = this.channel;
+                }
+                if (cc.Common.main().isWeiXin) {
+                    key_store = cc.Source.WEIXIN;
+                }
+                return json[key_store];
             },
         },
 

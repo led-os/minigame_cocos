@@ -12,7 +12,7 @@ var Device = cc.Class({
         //get 和 set 函数不能放在statics里
         isLandscape: {
             get: function () {
-                var sz = cc.view.getVisibleSize();//屏幕分辨率
+                var sz = cc.view.getVisibleSizeInPixel();//屏幕分辨率
                 cc.Debug.Log("sz=" + sz);
                 if (sz.width > sz.height) {
                     return true;

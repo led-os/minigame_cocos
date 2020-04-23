@@ -12,6 +12,12 @@ var AdBannerWeiXin = cc.Class({
 
 
     InitAd(source) {
+        if (cc.Device.main.isLandscape) {
+            if (!cc.AppVersion.main().appCheckHasFinished) {
+                // return;
+            }
+        }
+
         if (this.bannerAd != null) {
             return;
         }
@@ -55,12 +61,18 @@ var AdBannerWeiXin = cc.Class({
             var w = res.width;
             var h = res.height;
             if (cc.Device.main.isLandscape) {
-                // h = h / 2;
-                //this.bannerAd.style.height = h;
+                 if (cc.AppVersion.main().appCheckHasFinished)
+                 {
+                    h = h / 2;
+                    // this.bannerAd.style.height = h;
+                }
             }
             this.UpdatePositon(this.bannerAd, w, h);
             if (this.objConfig != null) {
-                this.objConfig.DidReceiveAd(w * scale, h * scale);
+                w = w * scale;
+                h = h * scale;
+                console.log('onResize DidReceiveAd w=', w," h="+h);
+                this.objConfig.DidReceiveAd(w , h  );
             }
         })
     },

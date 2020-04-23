@@ -58,7 +58,7 @@ var Common = cc.Class({
                 isFitWidth = canvas.fitWidth;
             }
             var sizeCanvas = cc.size(0, 0);
-            let screenSize = cc.view.getVisibleSize();//屏幕分辨率
+            let screenSize = cc.view.getVisibleSizeInPixel();//屏幕分辨率
             if (isFitHeight) {
                 sizeCanvas.height = size.height;
                 sizeCanvas.width = screenSize.width * sizeCanvas.height / screenSize.height;
@@ -431,25 +431,26 @@ var Common = cc.Class({
             }
         },
         ScreenToCanvasWidth(canvasSize, w) {
-            var sz = cc.view.getVisibleSize();//屏幕分辨率
+            var sz = cc.view.getVisibleSizeInPixel();//屏幕分辨率
             var ret = w * canvasSize.width / sz.width;
             //float image_screen_w = rcImageLeft.rect.width*Screen.width/sizeCanvas.x;
             return ret;
         },
         ScreenToCanvasHeight(canvasSize, h) {
-            var sz = cc.view.getVisibleSize();//屏幕分辨率
+            var sz = cc.view.getVisibleSizeInPixel();//屏幕分辨率  
             var ret = h * canvasSize.height / sz.height;
+            cc.Debug.Log("ScreenToCanvasHeight sz="+sz+" ret="+ret+" canvasSize="+canvasSize);
             return ret;
         },
         CanvasToScreenWidth(canvasSize, w) {
-            var sz = cc.view.getVisibleSize();//屏幕分辨率
+            var sz = cc.view.getVisibleSizeInPixel();//屏幕分辨率
             var ret = w * sz.width / canvasSize.width;
             //float image_screen_w = rcImageLeft.rect.width*Screen.width/sizeCanvas.x;
             return ret;
         },
 
         CanvasToScreenHeight(canvasSize, h) {
-            var sz = cc.view.getVisibleSize();//屏幕分辨率
+            var sz = cc.view.getVisibleSizeInPixel();//屏幕分辨率
             var ret = h * sz.height / canvasSize.height;
             return ret;
         },

@@ -46,6 +46,7 @@ var UIBoard = cc.Class({
 
         w_node = this.node.getContentSize().width;
         h_node = this.node.getContentSize().height;
+        cc.Debug.Log("UIBoard w_node ="+w_node+" h_node ="+h_node);
         var oft_line = this.lineWidth / 2;
         if (draw == this.drawLeft) {
             posstart = new cc.Vec2(-w_node / 2 + oft_line, -h_node / 2);

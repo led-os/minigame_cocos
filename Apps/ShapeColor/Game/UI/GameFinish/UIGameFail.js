@@ -31,16 +31,19 @@ var UIGameFail = cc.Class({
         this._super();
         {
             var sizeCanvas = cc.Common.appSceneMain.sizeCanvas;
-            var ratio = 0.8;
+            var ratio = 0.9;
             //显示异常
             //this.node.setContentSize(sizeCanvas * ratio);
-            //显示异常
+            //显示异常 
+
             var h_topbar = 160;
+            var oft = Math.max(h_topbar,cc.AdKitCommon.main.heightAdCanvas);
             var size = cc.Common.appSceneMain.sizeCanvas;
             var w = size.width * ratio;
-            var h = (size.height - h_topbar-cc.AdKitCommon.main.heightAdCanvas) * ratio;
+            var h = (size.height-oft*2) * ratio;
             cc.Debug.Log(" UIGameFail setContentSize = w=" + w + " h=" + h);
             this.node.setContentSize(new cc.Size(w, h));
+
 
             this._super();
         }

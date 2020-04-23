@@ -26,7 +26,7 @@ cc.Class({
         var x, y, w, h;
         if (cc.Common.main().isWeiXin) {
             //this.btnLearn.node.active = false;
-            this.btnAdVideo.node.active = false;
+            //this.btnAdVideo.node.active = false;
         }
 
         this.LayOut();
@@ -101,6 +101,7 @@ cc.Class({
     },
 
     OnClickBtnAdVideo: function (event, customEventData) {
+        cc.AdKitCommon.main.ShowAdVideo();
     },
     OnClickBtnShare: function (event, customEventData) {
         cc.Share.main().ShareImageText("", cc.AppRes.SHARE_TITLE, cc.AppRes.SHARE_IMAGE_URL, "");
