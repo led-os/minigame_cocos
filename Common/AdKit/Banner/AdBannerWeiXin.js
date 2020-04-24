@@ -61,9 +61,8 @@ var AdBannerWeiXin = cc.Class({
             var w = res.width;
             var h = res.height;
             if (cc.Device.main.isLandscape) {
-                 if (cc.AppVersion.main().appCheckHasFinished)
-                 {
-                    //h = h / 2;
+                if (cc.AppVersion.main().appCheckHasFinished) {
+                    h = h / 2;
                     // this.bannerAd.style.height = h;
                 }
             }
@@ -71,8 +70,8 @@ var AdBannerWeiXin = cc.Class({
             if (this.objConfig != null) {
                 w = w * scale;
                 h = h * scale;
-                console.log('onResize DidReceiveAd w=', w," h="+h);
-                this.objConfig.DidReceiveAd(w , h  );
+                console.log('onResize DidReceiveAd w=', w, " h=" + h);
+                this.objConfig.DidReceiveAd(w, h);
             }
         })
     },

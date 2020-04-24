@@ -19,7 +19,7 @@ var UIGameFail = cc.Class({
     onLoad: function () {
 
         if (cc.Common.main().isWeiXin) {
-            this.btnVideo.node.active = false;
+            // this.btnVideo.node.active = false;
         }
 
         this.btnRetry.text = cc.Language.main().GetString("STR_GameFail_btnRestart");

@@ -27,8 +27,7 @@ cc.Class({
         if (cc.Common.main().isWeiXin) {
             //this.btnLearn.node.active = false;
 
-            // if (!cc.AppVersion.main().appCheckHasFinished)
-            {
+            if (!cc.AppVersion.main().appCheckHasFinished) {
                 this.btnAdVideo.node.active = false;
             }
         }
