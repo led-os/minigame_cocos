@@ -26,7 +26,11 @@ cc.Class({
         var x, y, w, h;
         if (cc.Common.main().isWeiXin) {
             //this.btnLearn.node.active = false;
-            //this.btnAdVideo.node.active = false;
+
+            // if (!cc.AppVersion.main().appCheckHasFinished)
+            {
+                this.btnAdVideo.node.active = false;
+            }
         }
 
         this.LayOut();
@@ -44,7 +48,7 @@ cc.Class({
         var rctran = this.node.getComponent(cc.RectTransform);
         cc.Debug.Log("UIHomeCenterBar  w=  " + rctran.width + " h=" + rctran.height);
         if (ly != null) {
-            if (cc.Device.main.isLandscape) { 
+            if (cc.Device.main.isLandscape) {
                 ly.row = 2;
                 var v = cc.LayoutUtil.main().GetChildCount(this.node, false) / ly.row;
                 //向上取整

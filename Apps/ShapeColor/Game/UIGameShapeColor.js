@@ -25,7 +25,7 @@ var UIGameShapeColor = cc.Class({
         this.textTitle.node.active = false;
     },
     start: function () {
-        this._super();
+       this._super();
     },
     LoadLanguageColor: function (callback) {
         var filepath = cc.Common.GAME_RES_DIR + "/language/language_color.csv";

@@ -95,7 +95,7 @@ var UIGameBase = cc.Class({
         }
         //显示横幅广告
         cc.AdKitCommon.main.callbackFinish = this.OnAdKitFinish.bind(this);
-        cc.AdKitCommon.main.InitAdBanner();
+       // cc.AdKitCommon.main.InitAdBanner();
     },
     UpdatePlaceLevel: function (level) {
     },

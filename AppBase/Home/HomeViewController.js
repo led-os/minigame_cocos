@@ -85,12 +85,13 @@ var HomeViewController = cc.Class({
         } else {
             this.LoadPrefab();
         }
-        // this.ShowAd();
+      this.ShowAd();
 
     },
     ViewDidUnLoad: function () {
         cc.Debug.Log("HomeViewController ViewDidUnLoad");
         this._super();
+        cc.AdKitCommon.main.ShowAdBanner(false);
 
     },
     LayOutView: function () {
@@ -101,24 +102,25 @@ var HomeViewController = cc.Class({
 
     ShowAd: function () {
 
-        if (this.runCount == 0) {  
+        // if (this.runCount == 0) {  
 
-            //至少在home界面显示一次视频广告
-            cc.AdKitCommon.main.callbackFinish = this.OnAdKitCallBack.bind(this);
-            if (cc.Common.main().isiOS) {
-                //原生开机插屏
-                cc.AdKitCommon.main.ShowAdNativeSplash(cc.Source.ADMOB);
-            }
-            else {
-                //至少在home界面显示一次开机插屏  
-                this.ShowAdInsert();
+        //     //至少在home界面显示一次视频广告
+        //     cc.AdKitCommon.main.callbackFinish = this.OnAdKitCallBack.bind(this);
+        //     if (cc.Common.main().isiOS) {
+        //         //原生开机插屏
+        //         cc.AdKitCommon.main.ShowAdNativeSplash(cc.Source.ADMOB);
+        //     }
+        //     else {
+        //         //至少在home界面显示一次开机插屏  
+        //         this.ShowAdInsert();
 
-            }
-        }
+        //     }
+        // }
         this.runCount++;
 
          //显示横幅广告
-        //  cc.AdKitCommon.main.InitAdBanner();
+         cc.AdKitCommon.main.callbackFinish = this.OnAdKitFinish.bind(this);
+         cc.AdKitCommon.main.InitAdBanner();
     },
 
       ShowAdInsert: function()
@@ -133,6 +135,21 @@ var HomeViewController = cc.Class({
          
     },
 
+    OnAdKitFinish(obj) {
+        if (obj.type == cc.AdKitCommon.AdType.BANNER) {
+            if (obj.status == cc.AdKitCommon.AdStatus.SUCCESFULL) {
+                var sizeCanvas = cc.Common.appSceneMain.sizeCanvas;
+                cc.AdKitCommon.main.heightAdScreen = obj.height;
+                cc.AdKitCommon.main.heightAdCanvas = cc.Common.ScreenToCanvasHeight(sizeCanvas, obj.height*1.1);
+                cc.Debug.Log("OnAdKitFinish heightAdCanvas="+cc.AdKitCommon.main.heightAdCanvas+" sizeCanvas="+sizeCanvas+" obj.h="+obj.height);
+            }
+            cc.Debug.Log("uigameshapecolor  OnAdKitFinish start");
+           // this.LayOut();
+            cc.Debug.Log("uigameshapecolor  OnAdKitFinish end");
+        }
+
+
+    },
 
 });
 

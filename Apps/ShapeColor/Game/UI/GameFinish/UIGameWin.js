@@ -13,6 +13,7 @@ var UIGameWin = cc.Class({
     onLoad: function () {
         this._super(); 
         this.textView.text = cc.Language.main().GetString("STR_UIVIEWALERT_MSG_GAME_FINISH"); 
+        cc.AdKitCommon.main.ShowAdBanner(false);
         this.LayOut();
     },
 
@@ -26,6 +27,7 @@ var UIGameWin = cc.Class({
             //显示异常
             var h_topbar = 160;
             var oft = Math.max(h_topbar,cc.AdKitCommon.main.heightAdCanvas);
+            oft = h_topbar;
             var size = cc.Common.appSceneMain.sizeCanvas;
             var w = size.width * ratio;
             var h = (size.height-oft*2) * ratio;

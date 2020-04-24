@@ -91,6 +91,7 @@ var GameViewController = cc.Class({
         cc.Debug.Log("GameViewController ViewDidLoad");
         this._super(); 
         this.CreateUI();
+        cc.AdKitCommon.main.ShowAdBanner(false);
   
     },
     ViewDidUnLoad: function () {

@@ -46,7 +46,7 @@ cc.Class({
 
         this.LayOut(); 
         this.indexAction = 0;
-     
+        
 
   
     },

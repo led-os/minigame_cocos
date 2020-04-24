@@ -31,6 +31,9 @@ var UIBoard = cc.Class({
 
     Draw: function () {
         this.offsetBottomWithAdBanner = cc.AdKitCommon.main.heightAdCanvas;
+        if(cc.Device.main.isLandscape){
+            this.offsetBottomWithAdBanner = 0;
+        }
         cc.Debug.Log("offsetBottomWithAdBanner ="+this.offsetBottomWithAdBanner);
         this.InitDraw(this.drawLeft);
         this.InitDraw(this.drawRight);

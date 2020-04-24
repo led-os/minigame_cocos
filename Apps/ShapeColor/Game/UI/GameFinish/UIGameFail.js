@@ -19,13 +19,14 @@ var UIGameFail = cc.Class({
     onLoad: function () {
 
         if (cc.Common.main().isWeiXin) {
-            // this.btnVideo.node.active = false;
+            this.btnVideo.node.active = false;
         }
 
         this.btnRetry.text = cc.Language.main().GetString("STR_GameFail_btnRestart");
         this.btnVideo.text = cc.Language.main().GetString("STR_GameFail_btnRevive");
-       
 
+        cc.AdKitCommon.main.ShowAdBanner(false);
+        this.LayOut();
     },
     LayOut() {
         this._super();
@@ -37,10 +38,11 @@ var UIGameFail = cc.Class({
             //显示异常 
 
             var h_topbar = 160;
-            var oft = Math.max(h_topbar,cc.AdKitCommon.main.heightAdCanvas);
+            var oft = Math.max(h_topbar, cc.AdKitCommon.main.heightAdCanvas);
+            oft = h_topbar;
             var size = cc.Common.appSceneMain.sizeCanvas;
             var w = size.width * ratio;
-            var h = (size.height-oft*2) * ratio;
+            var h = (size.height - oft * 2) * ratio;
             cc.Debug.Log(" UIGameFail setContentSize = w=" + w + " h=" + h);
             this.node.setContentSize(new cc.Size(w, h));
 

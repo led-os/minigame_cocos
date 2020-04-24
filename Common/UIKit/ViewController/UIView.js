@@ -78,6 +78,9 @@ var UIView = cc.Class({
         // this.node.view = this;
     },
 
+    start: function () {
+    },
+
     //UIViewController
     SetController: function (con) {
         this.controller = con;

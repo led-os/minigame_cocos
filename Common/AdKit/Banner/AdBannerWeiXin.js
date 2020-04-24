@@ -63,7 +63,7 @@ var AdBannerWeiXin = cc.Class({
             if (cc.Device.main.isLandscape) {
                  if (cc.AppVersion.main().appCheckHasFinished)
                  {
-                    h = h / 2;
+                    //h = h / 2;
                     // this.bannerAd.style.height = h;
                 }
             }
